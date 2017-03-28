@@ -1,0 +1,50 @@
+{
+
+	"barra" : 
+	{
+		"botones" : 
+		{
+			"idioma": "Idioma"
+		}
+	},
+	"datatable": {
+		"toolbar" : {
+			"marcartodo": "MARCAR TODO"
+
+		}
+
+	},
+	"menu": 
+	{
+		"toolbar" :
+		{
+			"izquierdo" :
+			{
+				"regresar" : "Regresar",
+				"inicio" : "Inicio"
+			},
+			"derecho" :
+			{
+				"ajustes" : "Ajustes",
+				"bitacora" : "Bitacora",
+				"control_usuario" : "Control de Usuario",
+				"respaldo" : "Respaldo"
+			}
+		}
+	},
+	"objetos":
+	{
+		"usuario" : "Usuario",
+		"abogado" : "Abogado"
+	},
+	"maestros": {
+		"persona":{
+			"cedula": "Cedula",
+			"nombres" : "Nombres",
+			"apellidos": "Apellidos",
+			"email": "Email",
+			"telefono": "Telefono",
+			"fecha_de_nacimiento": "Fecha de Nacimiento"
+		}
+	}
+}

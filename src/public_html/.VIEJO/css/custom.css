@@ -1,0 +1,78 @@
+/* ------------------------------------------------------------------- 
+                       Custom CSS For Scrollbar 
+                               INICIO
+------------------------------------------------------------------- */
+	::-webkit-scrollbar {
+	      width: 7px;
+	}
+	::-webkit-scrollbar-track {
+	      background-color: #3041bb;
+	} 
+	::-webkit-scrollbar-thumb {
+	      background-color: rgba(0, 0, 0, 0.2);
+	} 
+	::-webkit-scrollbar-button {
+	      background-color: navy;
+	}
+	::-webkit-scrollbar-corner {
+	      background-color: black;
+	}
+	body {
+	    scrollbar-face-color: #3041bb;
+	}
+/* ------------------------------------------------------------------- 
+                       Custom CSS For Scrollbar 
+                               FIN
+------------------------------------------------------------------- */
+
+/* ------------------------------------------------------------------- 
+                       Full Calendar Custom CSS 
+                               INICIO
+------------------------------------------------------------------- */
+
+	#wrap {
+		width: 100%;
+		margin: 0 auto;
+	}
+		
+	#external-events {
+		float: left;
+		width: 13%;
+		padding: 0 10px;
+		border: 1px solid #ccc;
+		background: #eee;
+		text-align: left;
+	}
+		
+	#external-events h4 {
+		font-size: 16px;
+		margin-top: 0;
+		padding-top: 1em;
+	}
+		
+	#external-events .fc-event {
+		margin: 10px 0;
+		cursor: pointer;
+	}
+		
+	#external-events p {
+		margin: 1.5em 0;
+		font-size: 11px;
+		color: #666;
+	}
+		
+	#external-events p input {
+		margin: 0;
+		vertical-align: middle;
+	}
+
+	#calendar {
+		float: right;
+		width: 85%;
+	}
+
+/* ------------------------------------------------------------------- 
+                       Full Calendar Custom CSS 
+                               FIN
+------------------------------------------------------------------- */
+

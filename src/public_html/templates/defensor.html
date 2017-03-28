@@ -1,0 +1,110 @@
+<table id="example" class="display order-column compact" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Cedula</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Email</th>
+                <th>Telefono</th>
+                <th>Fecha de Nacimiento</th>
+             
+            </tr>
+        </thead>
+        
+</table>
+
+
+ <div class="fixed-action-btn toolbar" >
+    <a class="btn-floating btn-large blue">
+      <i class="large material-icons">mode_edit</i>
+    </a>
+    <ul>
+      <li class="waves-effect waves-light" ><a href="" ng-click="openModal('#modal1','registrar')"><i class="material-icons">add_circle</i></a></li>
+      <li class="waves-effect waves-light"><a href="" ng-click="openModal('#modal1','modificar')"><i class="material-icons">create</i></a></li>
+      <li class="waves-effect waves-light"><a ng-click="rowDelete()" href=""><i class="material-icons">delete</i></a></li>
+      <li class="waves-effect waves-light"><a href=""><i class="material-icons">file_download</i></a></li>
+    </ul>
+  </div>
+
+
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal modal-fixed-footer">
+
+    <div class="modal-content">
+
+
+      <h4>{{objeto}}</h4>
+      <div class="row">
+        <div class="input-field col s12">
+          <input name="id" type="hidden" ng-model="usuario.id" ng-value="usuario.id">
+          <input  name="id_usuario" type="hidden" ng-model="usuario.id_usuario" ng-value="usuario.id_usuario">
+          <input name="fecha_de_registro" type="hidden" ng-model="usuario.fecha_de_registro" ng-value="usuario.fecha_de_registro">
+
+          <!-- <angucomplete-alt id="ex2"
+              placeholder=""
+              pause="300"
+              selected-object="selectedPerson"
+              local-data="personas"
+              local-search="localSearch"
+              title-field="cedula"
+              description-field="descripcion"
+              image-field=""
+              minlength="1"
+              input-class="form-control form-control-small"
+              match-class="highlight" /> -->
+
+          <input name="cedula" ng-disabled="button == 'modificar'"  ng-blur="get(usuario.cedula)" id="cedula" type="text" class="validate" required ng-keyup="getPersonas(usuario)" ng-model="usuario.cedula" ng-value="usuario.cedula">
+
+          <ul class="collection autocomplete">
+            <li ng-click="get(x.cedula)"  ng-repeat="x in personas" class="collection-item">
+              <i class="material-icons left">perm_identity</i> {{x.descripcion}} <span class="right hide-on-small-only"><b>{{x.cedula}}</b></span>
+            </li>
+          </ul>
+
+          <label class="active" for="cedula">Cedula</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s12 m12 l4">
+          <input name="nombres" type="text" class="validate" ng-model="usuario.nombres" ng-value="usuario.nombres" required>
+          <label class="active" for="nombres">Nombres</label>
+        </div>
+
+        <div class="input-field col s12 m12 l4">
+          <input  name="apellidos" type="text" class="validate" ng-model="usuario.apellidos" ng-value="usuario.apellidos" required>
+          <label class="active" for="apellidos">Apellidos</label>
+        </div>
+
+        <div class="input-field col s12 m12 l4">
+          <input  name="fecha_de_nacimiento" id="fecha_de_nacimiento" type="text" class="validate" ng-model="usuario.fecha_de_nacimiento" ng-value="usuario.fecha_de_nacimiento" required>
+          <label class="active" for="fecha_de_nacimiento">Fecha de Nacimiento</label>
+        </div>
+      </div>
+
+     
+
+      <div class="row">
+
+
+        <div class="input-field col s12 m12 l6">
+          <input name="email" type="email" class="validate" ng-model="usuario.email" required>
+          <label class="active" for="email">Email</label>
+        </div>
+
+        <div class="input-field col s12 m12 l6">
+          <input name="telefono" id="telefono" type="text" class="validate" ng-model="usuario.telefono" required>
+          <label class="active" for="telefono">Telefono</label>
+        </div>
+
+
+      </div>
+       
+
+    </div>
+    <div class="modal-footer">
+      <a href="" ng-click="closeModal('#modal1');modalAction('cancelar')" class="waves-effect waves-green btn-flat">Cancelar</a>
+      <a href="" ng-click="closeModal('#modal1');modalAction('ok')" id="addRow" class="waves-effect waves-green btn-flat">OK</a>
+    </div>
+  </div>
