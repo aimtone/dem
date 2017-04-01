@@ -30,29 +30,15 @@
 
   <!-- Modal Structure -->
   <div id="modal1" class="modal modal-fixed-footer">
-
     <div class="modal-content">
-
-
       <h4>{{objeto}}</h4>
       <div class="row">
         <div class="input-field col s12">
           <input name="id" type="hidden" ng-model="usuario.id" ng-value="usuario.id">
-          <input  name="id_usuario" type="hidden" ng-model="usuario.id_usuario" ng-value="usuario.id_usuario">
-          <input name="fecha_de_registro" type="hidden" ng-model="usuario.fecha_de_registro" ng-value="usuario.fecha_de_registro">
 
-          <!-- <angucomplete-alt id="ex2"
-              placeholder=""
-              pause="300"
-              selected-object="selectedPerson"
-              local-data="personas"
-              local-search="localSearch"
-              title-field="cedula"
-              description-field="descripcion"
-              image-field=""
-              minlength="1"
-              input-class="form-control form-control-small"
-              match-class="highlight" /> -->
+          <input  name="id_usuario" type="hidden" ng-model="usuario.id_usuario" ng-value="usuario.id_usuario">
+
+          <input name="fecha_de_registro" type="hidden" ng-model="usuario.fecha_de_registro" ng-value="usuario.fecha_de_registro">
 
           <input name="cedula" ng-disabled="button == 'modificar'"  ng-blur="get(usuario.cedula)" id="cedula" type="text" class="validate" required ng-keyup="getPersonas(usuario)" ng-model="usuario.cedula" ng-value="usuario.cedula">
 
@@ -108,3 +94,6 @@
       <a href="" ng-click="closeModal('#modal1');modalAction('ok')" id="addRow" class="waves-effect waves-green btn-flat">OK</a>
     </div>
   </div>
+
+
+ 
