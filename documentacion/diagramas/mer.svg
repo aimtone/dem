@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="47cm" height="42cm" viewBox="181 -149 940 839" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <rect style="fill: #ffffff" x="539.3" y="142.343" width="90.3" height="38"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="539.3" y="142.343" width="90.3" height="38"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="584.45" y="165.243">
+      <tspan x="584.45" y="165.243">Persona</tspan>
+    </text>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="584.45" y="161.343">
+    <tspan x="584.45" y="161.343"></tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="359.036" y="244.702" width="92" height="38"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="359.036" y="244.702" width="92" height="38"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="405.036" y="267.602">
+      <tspan x="405.036" y="267.602">Secretaria</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="430.628" y="490.604" width="92" height="38"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="430.628" y="490.604" width="92" height="38"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="476.628" y="513.504">
+      <tspan x="476.628" y="513.504">Fiscal</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="367.9" y="369.9" width="92" height="38"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="367.9" y="369.9" width="92" height="38"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="413.9" y="392.8">
+      <tspan x="413.9" y="392.8">Defensor</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="725.2" y="344.2" width="92" height="38"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="725.2" y="344.2" width="92" height="38"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="771.2" y="367.1">
+      <tspan x="771.2" y="367.1">Alguacil</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="557.806" y="439.4" width="92" height="38"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="557.806" y="439.4" width="92" height="38"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="603.806" y="462.3">
+      <tspan x="603.806" y="462.3">Imputado</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="685.08" y="424.202" width="92" height="38"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="685.08" y="424.202" width="92" height="38"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="731.08" y="447.102">
+      <tspan x="731.08" y="447.102">Testigo</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="734.084" y="284.294" width="92" height="38"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="734.084" y="284.294" width="92" height="38"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="780.084" y="307.194">
+      <tspan x="780.084" y="307.194">Juez</tspan>
+    </text>
+  </g>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="584.45" y1="180.343" x2="584.64" y2="280.951"/>
+  <g>
+    <ellipse style="fill: #ffffff" cx="584.683" cy="303.466" rx="22.4947" ry="21.5336"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="584.683" cy="303.466" rx="22.4947" ry="21.5336"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="584.683" y="307.366">
+      <tspan x="584.683" y="307.366">d</tspan>
+    </text>
+  </g>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="487.108" y1="489.612" x2="574.127" y2="323.603"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="561.832" y1="298.408" x2="451.702" y2="274.031"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="452.755" y1="368.904" x2="563.902" y2="311.706"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="587.409" y1="325.556" x2="601.339" y2="438.409"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="606.961" y1="310.601" x2="724.195" y2="348.146"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="733.082" y1="303.335" x2="608.166" y2="303.445"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="710.127" y1="423.202" x2="601.303" y2="319.329"/>
+  <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 510.472,271.496 A 14.8247,14.8247 0 0 0 500.828,298.858"/>
+  <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 485,338 A 12.3104,12.3104 0 0 0 496,360"/>
+  <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 509.866,415.998 A 13.1422,13.1422 0 1 0 533.242,427.556"/>
+  <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 677.066,313.104 A 11.8688,11.8688 0 0 0 677.066,290.104"/>
+  <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 676,348 A 12.667,12.667 0 0 0 683.624,324.442"/>
+  <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 581.296,394.156 A 14.4527,14.4527 0 0 0 609.172,388.716"/>
+  <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 663,397 A 13.1602,13.1602 0 0 0 682,379"/>
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="300" y="427">
+    <tspan x="300" y="427"></tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="558.976" y="651.104" width="90.3" height="38"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="558.976" y="651.104" width="90.3" height="38"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="604.126" y="674.004">
+      <tspan x="604.126" y="674.004">Acto</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="362.4" y="82.5892" width="90.3" height="38"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="362.4" y="82.5892" width="90.3" height="38"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="407.55" y="105.489">
+      <tspan x="407.55" y="105.489">Sala</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="733.35" y="96.8728" width="90.3" height="38"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="733.35" y="96.8728" width="90.3" height="38"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="778.5" y="119.773">
+      <tspan x="778.5" y="119.773">Tribunal</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="715.248" y="-81.1766" width="127.35" height="38"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="715.248" y="-81.1766" width="127.35" height="38"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="778.923" y="-58.2766">
+      <tspan x="778.923" y="-58.2766">Tipo_de_tribunal</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="991.48" y="423.192" width="128.55" height="38"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="991.48" y="423.192" width="128.55" height="38"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1055.76" y="446.092">
+      <tspan x="1055.76" y="446.092">Tipo_de_testigo</tspan>
+    </text>
+  </g>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="359.036,263.702 279.954,263.702 279.954,670.104 557.975,670.104 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="367.9,388.9 333.694,388.9 333.694,651.104 558.976,651.104 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="476.628,528.604 476.628,581.09 581.552,581.09 581.552,651.104 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="826.084,303.294 847.064,303.294 847.064,670.104 649.276,670.104 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="771.2,382.2 798.97,382.2 798.97,651.104 649.276,651.104 "/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="731.08,462.202 731.08,585.332 626.702,585.332 626.702,651.104 "/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="603.836" y1="478.376" x2="604.096" y2="650.128"/>
+  <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="430.628,509.604 430.628,506.256 401.122,506.256 401.122,585.738 "/>
+  <g>
+    <polygon style="fill: #ffffff" points="240.356,539.586 279.606,516.036 318.856,539.586 279.606,563.136 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="240.356,539.586 279.606,516.036 318.856,539.586 279.606,563.136 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="234.356" y="533.586"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="324.856" y="533.586"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="279.606" y="543.586">tiene</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="356.322" y="586.746" width="89.6" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="356.322" y="586.746" width="89.6" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="361.322" y="591.746" width="79.6" height="26"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="401.122" y="608.746">Suplente</text>
+  </g>
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="401.122" y="604.746">
+    <tspan x="401.122" y="604.746"></tspan>
+  </text>
+  <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="401.122" y="604.746">
+    <tspan x="401.122" y="604.746"></tspan>
+  </text>
+  <g>
+    <polygon style="fill: #ffffff" points="642.346,585.982 681.596,562.432 720.846,585.982 681.596,609.532 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="642.346,585.982 681.596,562.432 720.846,585.982 681.596,609.532 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="636.346" y="579.982"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="726.846" y="579.982"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="681.596" y="589.982">tiene</text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="490.036,580.466 529.286,556.916 568.536,580.466 529.286,604.016 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="490.036,580.466 529.286,556.916 568.536,580.466 529.286,604.016 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="484.036" y="574.466"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="574.536" y="574.466"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="529.286" y="584.466">tiene</text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="292.47,447.672 331.72,424.122 370.97,447.672 331.72,471.222 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="292.47,447.672 331.72,424.122 370.97,447.672 331.72,471.222 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="286.47" y="441.672"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="376.97" y="441.672"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="331.72" y="451.672">tiene</text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="362.19,545.394 401.44,521.844 440.69,545.394 401.44,568.944 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="362.19,545.394 401.44,521.844 440.69,545.394 401.44,568.944 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="356.19" y="539.394"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="446.69" y="539.394"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="401.44" y="549.394">tiene</text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="808.234,471.572 847.484,448.022 886.734,471.572 847.484,495.122 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="808.234,471.572 847.484,448.022 886.734,471.572 847.484,495.122 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="802.234" y="465.572"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="892.734" y="465.572"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="847.484" y="475.572">tiene</text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="759.16,536.768 798.41,513.218 837.66,536.768 798.41,560.318 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="759.16,536.768 798.41,513.218 837.66,536.768 798.41,560.318 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="753.16" y="530.768"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="843.66" y="530.768"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="798.41" y="540.768">tiene</text>
+  </g>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="407.24" y1="121.586" x2="405.346" y2="243.705"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="778.669" y1="135.88" x2="779.915" y2="283.287"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="778.875" y1="-42.17" x2="778.548" y2="95.8662"/>
+  <g>
+    <polygon style="fill: #ffffff" points="367.99,187.174 407.24,163.624 446.49,187.174 407.24,210.724 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="367.99,187.174 407.24,163.624 446.49,187.174 407.24,210.724 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="361.99" y="181.174"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="452.49" y="181.174"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="407.24" y="191.174">tiene</text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="739.928,208.387 779.178,184.837 818.428,208.387 779.178,231.937 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="739.928,208.387 779.178,184.837 818.428,208.387 779.178,231.937 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="733.928" y="202.387"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="824.428" y="202.387"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="779.178" y="212.387">tiene</text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="739.928,24.5392 779.178,0.989154 818.428,24.5392 779.178,48.0892 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="739.928,24.5392 779.178,0.989154 818.428,24.5392 779.178,48.0892 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="733.928" y="18.5392"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="824.428" y="18.5392"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="779.178" y="28.5392">tiene</text>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="655.552" cy="39.0612" rx="27.7" ry="18"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="655.552" cy="39.0612" rx="27.7" ry="18"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="655.552" y="43.0612">id</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="647.852" y1="47.0612" x2="663.252" y2="47.0612"/>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="436.192" cy="-43.3154" rx="43.1" ry="18"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="436.192" cy="-43.3154" rx="43.1" ry="18"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="436.192" y="-39.3154">cedula</text>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="640.86" cy="-10.4364" rx="46.95" ry="18"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="640.86" cy="-10.4364" rx="46.95" ry="18"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="640.86" y="-6.4364">nombres</text>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="519.866" cy="-92.4608" rx="54.65" ry="18"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="519.866" cy="-92.4608" rx="54.65" ry="18"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="519.866" y="-88.4608">Apellidos</text>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="433.916" cy="-129.23" rx="93.15" ry="18"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="433.916" cy="-129.23" rx="93.15" ry="18"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="433.916" y="-125.23">fecha_de_nacimiento</text>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="422.442" cy="-0.53684" rx="39.25" ry="18"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="422.442" cy="-0.53684" rx="39.25" ry="18"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="422.442" y="3.46316">Email</text>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="581.07" cy="-54.277" rx="50.8" ry="18"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="581.07" cy="-54.277" rx="50.8" ry="18"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="581.07" y="-50.277">Telefono</text>
+  </g>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="596.063" y1="141.37" x2="645.267" y2="56.7496"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="569.963" y1="141.344" x2="449.263" y2="-25.2717"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="591.012" y1="141.359" x2="634.687" y2="8.36241"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="564.426" y1="141.335" x2="439.212" y2="16.2202"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="579.365" y1="141.359" x2="524.677" y2="-73.5541"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="584.138" y1="141.444" x2="581.367" y2="-35.2997"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="574.123" y1="141.408" x2="443.637" y2="-110.466"/>
+  <g>
+    <ellipse style="fill: #ffffff" cx="805.468" cy="-125.261" rx="27.7" ry="18"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="805.468" cy="-125.261" rx="27.7" ry="18"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="805.468" y="-121.261">id</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="797.768" y1="-117.261" x2="813.168" y2="-117.261"/>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="906.586" cy="-115.361" rx="62.35" ry="18"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="906.586" cy="-115.361" rx="62.35" ry="18"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="906.586" y="-111.361">descripcion</text>
+  </g>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="787.338" y1="-82.1753" x2="797.782" y2="-106.995"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="826.937" y1="-82.1793" x2="870.143" y2="-100.179"/>
+  <g>
+    <ellipse style="fill: #ffffff" cx="863.45" cy="71.315" rx="27.7" ry="18"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="863.45" cy="71.315" rx="27.7" ry="18"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="863.45" y="75.315">id</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="855.75" y1="79.315" x2="871.15" y2="79.315"/>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="924.106" cy="99.5994" rx="43.1" ry="18"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="924.106" cy="99.5994" rx="43.1" ry="18"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="924.106" y="103.599">numero</text>
+  </g>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="816.495" y1="95.9436" x2="841.03" y2="83.0745"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="824.651" y1="110.715" x2="881.475" y2="104.364"/>
+  <g>
+    <ellipse style="fill: #ffffff" cx="294.936" cy="84.1624" rx="27.7" ry="18"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="294.936" cy="84.1624" rx="27.7" ry="18"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="294.936" y="88.1624">id</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="287.236" y1="92.1624" x2="302.636" y2="92.1624"/>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="244.734" cy="122.346" rx="62.35" ry="18"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="244.734" cy="122.346" rx="62.35" ry="18"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="244.734" y="126.346">descripcion</text>
+  </g>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="322.876" y1="88.4861" x2="361.402" y2="94.4479"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="302.689" y1="114.958" x2="361.39" y2="107.474"/>
+  <g>
+    <ellipse style="fill: #ffffff" cx="439.03" cy="437.716" rx="43.1" ry="18"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="439.03" cy="437.716" rx="43.1" ry="18"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="439.03" y="441.716">numero</text>
+  </g>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="448.691" y1="456.188" x2="466.182" y2="489.631"/>
+  <g>
+    <ellipse style="fill: #ffffff" cx="431.33" cy="318.922" rx="35.4" ry="18"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="431.33" cy="318.922" rx="35.4" ry="18"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="431.33" y="322.922">tipo</text>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="351.774" cy="326.134" rx="43.1" ry="18"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="351.774" cy="326.134" rx="43.1" ry="18"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="351.774" y="330.134">impres</text>
+  </g>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="368.913" y1="343.45" x2="394.106" y2="368.903"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="426.638" y1="337.758" x2="418.881" y2="368.903"/>
+  <g>
+    <ellipse style="fill: #ffffff" cx="668.37" cy="523.982" rx="54.65" ry="18"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="668.37" cy="523.982" rx="54.65" ry="18"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="668.37" y="527.982">condicion</text>
+  </g>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="623.494" y1="478.398" x2="650.826" y2="506.162"/>
+  <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 808.36,443.9 A 9.6315,9.6315 0 1 0 790.682,444.252"/>
+  <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 855.944,443.362 A 9.6315,9.6315 0 1 0 838.266,443.714"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="778.066" y1="443.752" x2="790.682" y2="443.9"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="808.77" y1="443.178" x2="838.766" y2="443.192"/>
+  <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="857.196" y1="442.106" x2="990.476" y2="442.164"/>
+  <g>
+    <polygon style="fill: #ffffff" points="889.842,441.968 929.092,418.418 968.342,441.968 929.092,465.518 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="889.842,441.968 929.092,418.418 968.342,441.968 929.092,465.518 "/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:end;font-family:monospace;font-style:normal;font-weight:normal" x="883.842" y="435.968"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="974.342" y="435.968"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="929.092" y="445.968">tiene</text>
+  </g>
+</svg>

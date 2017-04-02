@@ -7,6 +7,8 @@
                 <th>Email</th>
                 <th>Telefono</th>
                 <th>Fecha de Nacimiento</th>
+                <th>Tipo</th>
+                <th>Impres</th>
              
             </tr>
         </thead>
@@ -34,16 +36,16 @@
       <h4>{{objeto}}</h4>
       <div class="row">
         <div class="input-field col s12">
-          <input name="id" type="hidden" ng-model="usuario.id" ng-value="usuario.id">
+          <input name="id" type="hidden" ng-model="datos.id" ng-value="datos.id">
 
-          <input  name="id_usuario" type="hidden" ng-model="usuario.id_usuario" ng-value="usuario.id_usuario">
+          <input  name="id_usuario" type="hidden" ng-model="datos.id_usuario" ng-value="datos.id_usuario">
 
-          <input name="fecha_de_registro" type="hidden" ng-model="usuario.fecha_de_registro" ng-value="usuario.fecha_de_registro">
+          <input name="fecha_de_registro" type="hidden" ng-model="data.fecha_de_registro" ng-value="data.fecha_de_registro">
 
-          <input name="cedula" ng-disabled="button == 'modificar'"  ng-blur="get(usuario.cedula)" id="cedula" type="text" class="validate" required ng-keyup="getPersonas(usuario)" ng-model="usuario.cedula" ng-value="usuario.cedula">
+          <input name="cedula" ng-disabled="button == 'modificar'"  ng-blur="getPersona(datos.cedula)" id="cedula" type="text" class="validate" required ng-keyup="getPersonas(datos)" ng-model="datos.cedula" ng-value="datos.cedula">
 
           <ul class="collection autocomplete">
-            <li ng-click="get(x.cedula)"  ng-repeat="x in personas" class="collection-item">
+            <li ng-click="getPersona(x.cedula)"  ng-repeat="x in personas" class="collection-item">
               <i class="material-icons left">perm_identity</i> {{x.descripcion}} <span class="right hide-on-small-only"><b>{{x.cedula}}</b></span>
             </li>
           </ul>
@@ -54,38 +56,72 @@
 
       <div class="row">
         <div class="input-field col s12 m12 l4">
-          <input name="nombres" type="text" class="validate" ng-model="usuario.nombres" ng-value="usuario.nombres" required>
+          <input name="nombres" type="text" class="validate" ng-model="datos.nombres" ng-value="datos.nombres" required>
           <label class="active" for="nombres">Nombres</label>
         </div>
 
         <div class="input-field col s12 m12 l4">
-          <input  name="apellidos" type="text" class="validate" ng-model="usuario.apellidos" ng-value="usuario.apellidos" required>
+          <input  name="apellidos" type="text" class="validate" ng-model="datos.apellidos" ng-value="datos.apellidos" required>
           <label class="active" for="apellidos">Apellidos</label>
         </div>
 
         <div class="input-field col s12 m12 l4">
-          <input  name="fecha_de_nacimiento" id="fecha_de_nacimiento" type="text" class="validate" ng-model="usuario.fecha_de_nacimiento" ng-value="usuario.fecha_de_nacimiento" required>
+          <input  name="fecha_de_nacimiento" id="fecha_de_nacimiento" type="text" class="validate" ng-model="datos.fecha_de_nacimiento" ng-value="datos.fecha_de_nacimiento" required>
           <label class="active" for="fecha_de_nacimiento">Fecha de Nacimiento</label>
         </div>
       </div>
 
+      <div class="row">
+
+
+        <div class="input-field col s12 m12 l6">
+
+        
+
+          <div class="input-field col s12">
+
+            <select name="tipo" ng-model="datos.tipo">
+              <option value="PUBLICO">PUBLICO</option>
+              <option value="PRIVADO">PRIVADO</option>
+            </select>
+
+            <label for="tipo">Tipo</label>
+          </div>
+
+
+
+        </div>
+
+        <div class="input-field col s12 m12 l6">
+          <input name="impres" id="impres" type="text" class="validate" ng-model="datos.impres" ng-value="datos.impres" required>
+          <label class="active" for="impres">Impres</label>
+        </div>
+
+
+      </div>
+      
      
 
       <div class="row">
 
 
         <div class="input-field col s12 m12 l6">
-          <input name="email" type="email" class="validate" ng-model="usuario.email" required>
+          <input name="email" type="email" class="validate" ng-model="datos.email" ng-value="datos.email" required>
           <label class="active" for="email">Email</label>
         </div>
 
         <div class="input-field col s12 m12 l6">
-          <input name="telefono" id="telefono" type="text" class="validate" ng-model="usuario.telefono" required>
+          <input name="telefono" id="telefono" type="text" class="validate" ng-model="datos.telefono" ng-value="datos.telefono" required>
           <label class="active" for="telefono">Telefono</label>
         </div>
 
 
       </div>
+
+
+
+
+      
        
 
     </div>

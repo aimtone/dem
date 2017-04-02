@@ -107,7 +107,6 @@
 		    		var filtro = {
 			    		campos: "cedula, concat(nombre_completo,' (',descripcion, ')') AS descripcion"			    	};
 		    	} else {
-		    		console.log(cedula);
 		    		var filtro = {
 			    		campos: "cedula, concat(nombre_completo,' (',descripcion, ')') AS descripcion",
 			    		donde: "where cedula like '" + cedula.cedula + "%'" 
@@ -132,6 +131,8 @@
 
 		    	}
 		    }
+
+
 		    // FUNCIONES PARA EL AUTOCOMPLETADO DE PERSONA - FIN
 
 		    
@@ -144,6 +145,63 @@
         	}
         	// SCRIPT DE EJECUCION PRINCIPAL (FIN)
         	// ----------------------------------------------------------------------- //
+
+
+        		// -----------------------------------------------------------------
+				// FUNCIONES PRINCIPALES | INICIO
+				// -----------------------------------------------------------------
+
+				$rootScope.get = function(url) {
+					var defered = $q.defer();
+			        var promise = defered.promise;
+					$http.get(url).then(function(response) {
+						defered.resolve(response.data.data[0]);
+					}, function(response) {
+						 defered.reject(response);
+					});
+					return promise;
+				};
+
+				$rootScope.post = function(url, data) {
+					var defered = $q.defer();
+			        var promise = defered.promise;
+					$http.post(url, data).then(function(response) {
+
+
+						defered.resolve(response.data.data);
+
+
+					}, function(response) {
+						 defered.reject(response);
+					});
+					return promise;
+				};
+
+				$rootScope.put = function(url, data) {
+					var defered = $q.defer();
+			        var promise = defered.promise;
+					$http.put(url, data).then(function(response) {
+						defered.resolve(response.data.data);
+					}, function(response) {
+						 defered.reject(response);
+					});
+					return promise;
+				};
+
+				$rootScope.delete = function(url) {
+					var defered = $q.defer();
+			        var promise = defered.promise;
+					$http.delete(url).then(function(response) {
+						defered.resolve(response.data.data);
+					}, function(response) {
+						 defered.reject(response);
+					});
+					return promise;
+				};
+
+			    // -----------------------------------------------------------------
+				// FUNCIONES PRINCIPALES | FIN
+				// -----------------------------------------------------------------
 
         	
 			

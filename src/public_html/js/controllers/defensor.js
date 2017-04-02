@@ -12,10 +12,6 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 	// -----------------------------------------------------------------
 	angular.element(document).ready(function() {
 
-
-			
-
-
 		// Mascaras de los campos
 		$("#fecha_de_nacimiento").mask("99/99/9999",{placeholder:"DD/MM/AAAA"});
 		$( "#fecha_de_nacimiento" ).datepicker($.datepicker.regional["es"]);
@@ -31,42 +27,87 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 		$scope.modal('.modal',false, null, function() { 
 			// Si el boton de la ventana modal pulsado es TRUE (OK)
 			if($rootScope.actionButton=="ok") {
+
+				$scope.persona = {
+					cedula : $scope.datos.cedula,
+					nombres : $scope.datos.nombres,
+					apellidos : $scope.datos.apellidos,
+					email : $scope.datos.email,
+					telefono : $scope.datos.telefono,
+					fecha_de_nacimiento : $scope.datos.fecha_de_nacimiento,
+					id_tipo_persona: 1
+				};
+
+				$scope.defensor = {
+					cedula : $scope.datos.cedula,
+					tipo : $scope.datos.tipo,
+					impres : $scope.datos.impres
+				};
+
 				// Si la accion del boton es registrar
 				if($rootScope.button == "registrar") {
-					$scope.usuario.id_tipo_persona = 1;
-					$scope.post($scope.url, $scope.usuario);
+
+					$rootScope.post('api/persona', $scope.persona).then(function(response) {
+						if(response!=null) {
+							var id = response[0].id;
+							$rootScope.post('api/defensor', $scope.defensor).then(function(response) {
+								if(response!=null) {
+									$scope.table.ajax.reload();
+									$rootScope.alert("Exito", "Se ha completado el proceso de manera exitosa", "success");
+									
+								} else {
+									$rootScope.alert("Error", "No se ha registrado los datos, por favor, verifique e intente de nuevo", "warning");
+								}
+								
+							}, function(response) {
+								$rootScope.alert("Error", "Ha ocurrido un error interno del sistema", "warning");
+							});
+						} else {
+							$rootScope.alert("Error", "No se ha registrado los datos, por favor, verifique e intente de nuevo", "warning");
+						}
+					}, function(response) {
+						$rootScope.alert("Error", "Ha ocurrido un error interno del sistema", "warning");
+					});
 				}
+
+
 				// Si la accion del boton es modificar
 				if($rootScope.button == "modificar") {
-					$scope.put($scope.url, $scope.usuario, $scope.usuario.id);
+					$rootScope.put('api/persona/' + $scope.datos.id, $scope.persona).then(function(response) {
+
+						var filter = {
+							donde : "where cedula = '" + response[0].cedula + "'" 
+						};
+
+						$rootScope.get('api/defensor?filter=' + JSON.stringify(filter)).then(function(response) {
+							$rootScope.put('api/defensor/' + response.id, $scope.defensor).then(function(response) {
+								$scope.table.ajax.reload();
+								$rootScope.alert("Exito", "Se ha completado el proceso de manera exitosa", "success");
+
+							}, function(response) {
+								$rootScope.alert("Error", "Ha ocurrido un error interno del sistema", "warning");
+							});
+
+
+						}, function(response) {
+							$rootScope.alert("Error", "Ha ocurrido un error interno del sistema", "warning");
+						});
+
+
+
+
+					}, function(response) {
+						$rootScope.alert("Error", "Ha ocurrido un error interno del sistema", "warning");
+					});
+
+					
 				}
 			// Si el boton de la ventana modal pulsado es FALSE (Cancelar)
 			} else {
-				$scope.usuario = {};
+				
 			}
 		});
 		// $rootScope.modal() | Fin
-
-		// Funcion que activa la eliminacion de registros segun el numero de filas seleccionada
-		$scope.rowDelete = function() {
-			$rootScope.confirm("Seguro", "se eliminara", "warning", function() {
-				
-				var cantidad = $scope.table.rows('.selected').data().length;
-				var i = null;
-				for (i = 0; i < cantidad; i++) {
-					$scope.delete($scope.url, $scope.table.rows('.selected').data()[i].id).then(function(response) {
-						if(response == true) {
-							$scope.table.row('.selected').remove().draw();
-						}
-					});
-				};
-
-				$rootScope.alert("Eliminado", "Se han eliminado " + i + " de " + cantidad + " registros seleccionados", "success");
-
-			}, function() { 
-				// codigo del boton cancelar
-			});
-		}
 
 		// Configuracion de la Datatable
 		$scope.tConfig();
@@ -75,101 +116,65 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 	});	
 	// Document Ready Function | Fin
 
-	// -----------------------------------------------------------------
-	// FUNCIONES PRINCIPALES | INICIO
-	// -----------------------------------------------------------------
 
-	$scope.get = function(cedula) {
-		var filtro = {
-			donde: "where cedula = '" + cedula + "'"
-		}
-		if(cedula!="") {
-			$http.get('api/persona?filter=' + JSON.stringify(filtro)).then(function(response) {
-				var data = response.data.data[0];
+	$scope.rowDelete = function() {
+		$rootScope.confirm("¿Estás seguro?", "Se procedera a eliminar los registros seleccionados", "warning", function() {
 
-				if(data != undefined) {
-					$scope.usuario = data;
-					$('.autocomplete').fadeOut('fast','linear');
-				}
+			var cantidad = $scope.table.rows('.selected').data().length;
+			var i = null;
+			var contador = 0;
+			for (i = 0; i < cantidad; i++) {
+				$rootScope.delete('api/persona/' + $scope.table.rows('.selected').data()[i].id).then(function(response) {
+					var filter = {
+						donde : "where cedula = '" + response[0].cedula + "'" 
+					};
+					$rootScope.get('api/defensor?filter=' + JSON.stringify(filter)).then(function(response) {
+						$rootScope.delete('api/defensor/' + response.id, $scope.defensor).then(function(response) {
 
-			}, function(response) {
+							$scope.table.ajax.reload();
 
-			});
-		}
-	}
+							if(cantidad == 1 ) {
+								$rootScope.alert("Exito", "Se ha eliminado " + contador + " de " + cantidad + " registro", "success");
 
-	// Funcion para insertar un nuevo registro
-	$scope.post = function(url, data) {
+							} else {
+								$rootScope.alert("Exito", "Se ha eliminado " + contador + " de " + cantidad + " registros", "success");
 
-		console.log(data);
+							}
+						
 
-		$http.post(url, data).then(function (response) {
-			var data = response.data.data;
-
-			// Si la respuesta de la solicitud trae algo
-			if(data != null) {
-				$rootScope.alert("Registro Completado", "Se ha registrado su solicitud de manera exitosa", "success");
-				$scope.table.row.add(data[0]).draw();
-				$scope.usuario = {};
-			// Si la respuesta de la solicitud no trae nada
-			} else {
-				$rootScope.alert("Error de Registro", "No se ha registrado su solicitud, por favor, verifique los datos e intente nuevamente", "error");
-			}		
-		}, function(response) {
-			// Codigo en caso de error de solicitud
-			$rootScope.alert("Error de Registro", "Ocurrio un error al intentar procesar la solicitud", "error");
-		});
-	}
-
-	// Funcion para modificar un registro
-	$scope.put = function(url, data, id) {
-		$http.put(url + id, data).then(function (response) {
-			var data = response.data.data;
-
-			// Si la respuesta de la solicitud trae algo
-			if(data!=null) {
-				$rootScope.alert("Registro Actualizado", "Se ha modificado su solicitud de manera exitosa", "success");
-				$scope.usuario = {};
+						}, function(response) {
+							$rootScope.alert("Error", "Ha ocurrido un error interno del sistema", "warning");
+						});
+					}, function(response) {
+						$rootScope.alert("Error", "Ha ocurrido un error interno del sistema", "warning");
+					});
+				});
+				contador++;
+			};
 				
-				$scope.table.ajax.reload();
-			// Si la respuesta de la solicitud no trae nada
-			} else {
-				$rootScope.alert("Error de Registro", "No se ha registrado su solicitud, por favor, verifique los datos e intente nuevamente", "error");
-			}
-
-		}, function(response) {
-			// Codigo en caso de error
-			$rootScope.alert("Error de Registro", "Ocurrio un error al intentar procesar la solicitud", "error");
+				
+		}, function() { 
+			// codigo del boton cancelar
 		});
-	}
 
-	// Funcion para modificar un registro
-	$scope.delete = function(url, id) {
-		var defered = $q.defer();
-        var promise = defered.promise;
-		$http.delete(url + id).then( function (response) {
-			var data = response.data.data;
+		
 
-			if(data != null) {
-				defered.resolve(true);
+	};
 
-			} else {
-				defered.reject(false);
-			}
+	// Funcion para autocompletar
+	$rootScope.getPersona = function(cedula) {
+		var filter = {
+			donde : "where cedula = '" + cedula + "'"
+		};
 
-		    }, function (response){
-			    defered.reject(false);
-			}
-		);
-		return promise;
-	}
+		$rootScope.get('api/vista_defensor?filter=' + JSON.stringify(filter)).then(function(response) {
+	        $scope.datos = response;
+	    }, function(response) {
+	       	console.log(response);
+	   	});
 
-
-
-	// -----------------------------------------------------------------
-	// FUNCIONES PRINCIPALES | FIN
-	// -----------------------------------------------------------------
-
+		
+    }
 
 	// -----------------------------------------------------------------
 	// FUNCIONES DE LA DATATABLE | INICIO
@@ -236,7 +241,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 	            }
 
 	        ],
-			ajax: $scope.url + "?filter=" + JSON.stringify($scope.dataFilter),
+			ajax: 'api/vista_defensor',
 			columns: 
 				[
 				    
@@ -247,7 +252,9 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 				    { "data": "apellidos" },
 				    { "data": "email" },
 				    { "data": "telefono" },
-				    { "data": "fecha_de_nacimiento" }
+				    { "data": "fecha_de_nacimiento" },
+				    { "data": "tipo" },
+				    { "data": "impres" }
 				]
 		} );
 
@@ -270,7 +277,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 	$scope.tEvents = function() {
 		$scope.table.on( 'select', function ( e, dt, type, indexes ) {
             var rowData = $scope.table.rows( indexes ).data().toArray();
-            $scope.usuario = rowData[0];
+            $scope.clave_primaria = rowData[0].id;
 
         }).on( 'deselect', function ( e, dt, type, indexes ) {
             var rowData = $scope.table.rows( indexes ).data().toArray();
@@ -317,7 +324,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 	        // Abre la ventana modal
 	        $(div).modal('open');	
 	        // Limpiar el modelo
-	        $scope.usuario = {};
+	        $scope.datos = {};
 	    }
 
 	    // Hacer esto si la accion seleccionada es modificar
@@ -330,7 +337,16 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 				$rootScope.alert("Error", "Debes seleccionar un registro a modificar", "warning");
 			// Si la cantidad de filas seleccionada es solo 1 (Solo se puede modificar una fila a la vez)
 	        } else {
-	        	$(div).modal('open');	
+	        	$(div).modal('open');
+
+
+	        	$rootScope.get('api/vista_defensor/' + $scope.clave_primaria).then(function(response) {
+	        		$scope.datos = response;
+	        	}, function(response) {
+	        		console.log(response);
+	        	});
+
+
 	        }
 	    }
 	}
