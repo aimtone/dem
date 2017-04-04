@@ -1,9 +1,9 @@
-app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
+app.controller('secretaria', function($rootScope,$scope,$http,$q,$localStorage) {
 
 	
 
 
-	$rootScope.objeto = "Defensor";
+	$rootScope.objeto = "Secretaria";
 	// Variables predefinidas
 	$scope.url = 'api/persona/'; // Siempre terminar URL Con Simbolo "/"
 	// Document Ready Function | Inicio
@@ -35,32 +35,28 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 					email : $scope.datos.email,
 					telefono : $scope.datos.telefono,
 					fecha_de_nacimiento : $scope.datos.fecha_de_nacimiento,
-					id_tipo_persona: 1
+					id_tipo_persona: 2
 				};
 
-				$scope.defensor = {
-					cedula : $scope.datos.cedula,
-					tipo: $scope.datos.tipo,
-					impres: $scope.datos.impres
+				$scope.secretaria = {
+					cedula : $scope.datos.cedula
 				};
 
-
-
+				console.log($scope.persona);
+				console.log($scope.secretaria);
 
 
 				// Si la accion del boton es registrar
 				if($rootScope.button == "registrar") {
 
-					
 					$rootScope.post('api/persona', $scope.persona).then(function(response) {
 						if(response!=null) {
 							var id = response[0].id;
 							
-							$rootScope.post('api/defensor', $scope.defensor).then(function(response) {
+							$rootScope.post('api/secretaria', $scope.secretaria).then(function(response) {
 								if(response!=null) {
 									$scope.table.ajax.reload();
 									$rootScope.alert("Exito", "Se ha completado el proceso de manera exitosa", "success");
-									$scope.datos = {};
 									
 								} else {
 									$rootScope.alert("Error", "No se ha registrado los datos, por favor, verifique e intente de nuevo", "warning");
@@ -86,11 +82,11 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 							donde : "where cedula = '" + response[0].cedula + "'" 
 						};
 
-						$rootScope.get('api/defensor?filter=' + JSON.stringify(filter)).then(function(response) {
-							$rootScope.put('api/defensor/' + response[0].id, $scope.defensor).then(function(response) {
+						$rootScope.get('api/secretaria?filter=' + JSON.stringify(filter)).then(function(response) {
+							$rootScope.put('api/secretaria/' + response[0].id, $scope.secretaria).then(function(response) {
 								$scope.table.ajax.reload();
 								$rootScope.alert("Exito", "Se ha completado el proceso de manera exitosa", "success");
-								$scope.datos = {};
+
 							}, function(response) {
 								$rootScope.alert("Error", "Ha ocurrido un error interno del sistema", "warning");
 							});
@@ -111,7 +107,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 				}
 			// Si el boton de la ventana modal pulsado es FALSE (Cancelar)
 			} else {
-				$scope.datos = {};
+				
 			}
 		});
 		// $rootScope.modal() | Fin
@@ -137,8 +133,8 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 					};
 
 					
-					$rootScope.get('api/defensor?filter=' + JSON.stringify(filter)).then(function(response) {
-						$rootScope.delete('api/defensor/' + response[0].id).then(function(response) {
+					$rootScope.get('api/secretaria?filter=' + JSON.stringify(filter)).then(function(response) {
+						$rootScope.delete('api/secretaria/' + response[0].id).then(function(response) {
 
 							
 
@@ -166,7 +162,6 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 				
 		}, function() { 
 			// codigo del boton cancelar
-
 		});
 
 		
@@ -179,7 +174,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 			donde : "where cedula = '" + cedula + "'"
 		};
 
-		$rootScope.get('api/vista_defensor?filter=' + JSON.stringify(filter)).then(function(response) {
+		$rootScope.get('api/vista_secretaria?filter=' + JSON.stringify(filter)).then(function(response) {
 			if(response!=undefined) {
 				$scope.datos = response[0];
 			} else {
@@ -260,7 +255,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 	            }
 
 	        ],
-			ajax: 'api/vista_defensor',
+			ajax: 'api/vista_secretaria',
 			columns: 
 				[
 				    
@@ -271,9 +266,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 				    { "data": "apellidos" },
 				    { "data": "email" },
 				    { "data": "telefono" },
-				    { "data": "fecha_de_nacimiento" },
-				    { "data": "tipo" },
-				    { "data": "impres" }
+				    { "data": "fecha_de_nacimiento" }
 				]
 		} );
 
@@ -342,7 +335,8 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 	        $scope.table.rows().deselect();
 	        // Abre la ventana modal
 	        $(div).modal('open');	
-	        
+	        // Limpiar el modelo
+	        $scope.datos = {};
 	    }
 
 	    // Hacer esto si la accion seleccionada es modificar
@@ -358,7 +352,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 	        	$(div).modal('open');
 
 
-	        	$rootScope.get('api/vista_defensor/' + $scope.clave_primaria).then(function(response) {
+	        	$rootScope.get('api/vista_secretaria/' + $scope.clave_primaria).then(function(response) {
 	        		$scope.datos = response[0];
 	        	}, function(response) {
 	        		console.log(response);
@@ -370,29 +364,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 	}
 	
 	$scope.closeModal = function(div,button) {
-		if(button=='ok') {
-			if($scope.datos==undefined) { $rootScope.alert("Campos vacios", "Rellene los campos en blanco", "warning"); return; }
-
-			if($scope.datos.cedula==undefined) { $rootScope.alert("Campos vacio", "Rellene el campo Cedula", "warning"); return; }
-			if($scope.datos.nombres==undefined) { $rootScope.alert("Campos vacio", "Rellene el campo Nombres", "warning"); return;}
-			if($scope.datos.apellidos==undefined) { $rootScope.alert("Campos vacio", "Rellene el campo Apellidos", "warning"); return;}
-			if($scope.datos.fecha_de_nacimiento==undefined) { $rootScope.alert("Campos vacio", "Rellene el campo Fecha de Nacimiento", "warning"); return;}
-			if($scope.datos.email==undefined) { $rootScope.alert("Campos vacio", "Rellene el campo Email", "warning"); return;}
-			if($scope.datos.telefono==undefined) { $rootScope.alert("Campos vacio", "Rellene el campo Telefono", "warning"); return;}
-			if($scope.datos.impres==undefined) { $rootScope.alert("Campos vacio", "Rellene el campo Impres", "warning"); return;}
-			if($scope.datos.tipo==undefined) { $rootScope.alert("Campos vacio", "Rellene el campo Tipo", "warning"); return;}
-			
-
-
-			$(div).modal('close');
-		}
-
-		if(button=='cancelar') {
-			$(div).modal('close');
-		}
-
-		
-
+		$(div).modal('close');
 	}
 	$scope.modalAction = function(button) {
 

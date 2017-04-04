@@ -1,9 +1,9 @@
-app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
+app.controller('fiscal', function($rootScope,$scope,$http,$q,$localStorage) {
 
 	
 
 
-	$rootScope.objeto = "Defensor";
+	$rootScope.objeto = "Fiscal";
 	// Variables predefinidas
 	$scope.url = 'api/persona/'; // Siempre terminar URL Con Simbolo "/"
 	// Document Ready Function | Inicio
@@ -35,13 +35,12 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 					email : $scope.datos.email,
 					telefono : $scope.datos.telefono,
 					fecha_de_nacimiento : $scope.datos.fecha_de_nacimiento,
-					id_tipo_persona: 1
+					id_tipo_persona: 8
 				};
 
-				$scope.defensor = {
+				$scope.fiscal = {
 					cedula : $scope.datos.cedula,
-					tipo: $scope.datos.tipo,
-					impres: $scope.datos.impres
+					numero: $scope.datos.numero
 				};
 
 
@@ -56,7 +55,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 						if(response!=null) {
 							var id = response[0].id;
 							
-							$rootScope.post('api/defensor', $scope.defensor).then(function(response) {
+							$rootScope.post('api/fiscal', $scope.fiscal).then(function(response) {
 								if(response!=null) {
 									$scope.table.ajax.reload();
 									$rootScope.alert("Exito", "Se ha completado el proceso de manera exitosa", "success");
@@ -86,8 +85,8 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 							donde : "where cedula = '" + response[0].cedula + "'" 
 						};
 
-						$rootScope.get('api/defensor?filter=' + JSON.stringify(filter)).then(function(response) {
-							$rootScope.put('api/defensor/' + response[0].id, $scope.defensor).then(function(response) {
+						$rootScope.get('api/fiscal?filter=' + JSON.stringify(filter)).then(function(response) {
+							$rootScope.put('api/fiscal/' + response[0].id, $scope.fiscal).then(function(response) {
 								$scope.table.ajax.reload();
 								$rootScope.alert("Exito", "Se ha completado el proceso de manera exitosa", "success");
 								$scope.datos = {};
@@ -137,8 +136,8 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 					};
 
 					
-					$rootScope.get('api/defensor?filter=' + JSON.stringify(filter)).then(function(response) {
-						$rootScope.delete('api/defensor/' + response[0].id).then(function(response) {
+					$rootScope.get('api/fiscal?filter=' + JSON.stringify(filter)).then(function(response) {
+						$rootScope.delete('api/fiscal/' + response[0].id).then(function(response) {
 
 							
 
@@ -179,7 +178,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 			donde : "where cedula = '" + cedula + "'"
 		};
 
-		$rootScope.get('api/vista_defensor?filter=' + JSON.stringify(filter)).then(function(response) {
+		$rootScope.get('api/vista_fiscal?filter=' + JSON.stringify(filter)).then(function(response) {
 			if(response!=undefined) {
 				$scope.datos = response[0];
 			} else {
@@ -260,7 +259,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 	            }
 
 	        ],
-			ajax: 'api/vista_defensor',
+			ajax: 'api/vista_fiscal',
 			columns: 
 				[
 				    
@@ -272,8 +271,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 				    { "data": "email" },
 				    { "data": "telefono" },
 				    { "data": "fecha_de_nacimiento" },
-				    { "data": "tipo" },
-				    { "data": "impres" }
+				    { "data": "numero" }
 				]
 		} );
 
@@ -358,7 +356,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 	        	$(div).modal('open');
 
 
-	        	$rootScope.get('api/vista_defensor/' + $scope.clave_primaria).then(function(response) {
+	        	$rootScope.get('api/vista_fiscal/' + $scope.clave_primaria).then(function(response) {
 	        		$scope.datos = response[0];
 	        	}, function(response) {
 	        		console.log(response);
@@ -379,10 +377,6 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 			if($scope.datos.fecha_de_nacimiento==undefined) { $rootScope.alert("Campos vacio", "Rellene el campo Fecha de Nacimiento", "warning"); return;}
 			if($scope.datos.email==undefined) { $rootScope.alert("Campos vacio", "Rellene el campo Email", "warning"); return;}
 			if($scope.datos.telefono==undefined) { $rootScope.alert("Campos vacio", "Rellene el campo Telefono", "warning"); return;}
-			if($scope.datos.impres==undefined) { $rootScope.alert("Campos vacio", "Rellene el campo Impres", "warning"); return;}
-			if($scope.datos.tipo==undefined) { $rootScope.alert("Campos vacio", "Rellene el campo Tipo", "warning"); return;}
-			
-
 
 			$(div).modal('close');
 		}

@@ -45,7 +45,7 @@
 	    <div class="navbar-wrapper" id="nav-primario">
 	    <a href="#!/" class="brand-logo center" onclick="cargarScripts();" style="font-family:'Faster One';">DEM</a>
 
-	     <a id="sidenav-left" onclick="Materialize.showStaggeredList('#mobile-demo')" href="#" data-activates="mobile-demo" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
+	     <a id="sidenav-left"  href="#" data-activates="mobile-demo" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
 
 
 			<ul class="right">
@@ -72,12 +72,12 @@
 	     	<div class="center">
 	     		 <h3 style="font-family:'Faster One';">DEM</h3>
 	     	</div>
-
+			
 			<ul>
 				<li class="no-padding blue darken-3">
 			        <ul class="collapsible collapsible-accordion">
 			          <li>
-			            <a class="collapsible-header">Tablas Principales<i class="material-icons">arrow_drop_down</i></a>
+			            <a class="collapsible-header">Tablas Principales<i class="material-icons right">arrow_drop_down</i></a>
 			            <div class="collapsible-body blue darken-2">
 			              <ul>
 			                <li><a href="">Configuracion</a></li>
@@ -86,26 +86,67 @@
 			          </li>
 			        </ul>
 		    	</li>
-
-		    	<li class="no-padding blue darken-3">
+				<li><a href="#!/sala">Sala</a></li>
+				<li><a href="#!/actividad">Actividad</a></li>
+				<li><a href="#!/acto">Acto</a></li>
+				<li><a href="#!/tribunal">Tribunal</a></li>
+				<li><a href="#!/tipo_de_tribunal">Tipo de Tribunal</a></li>
+				<li><a href="#!/defensor">Defensor</a></li>
+				<li><a href="#!/juez">Juez</a></li>
+			    <li><a href="#!/alguacil">Alguacil</a></li>
+	            <li><a href="#!/secretaria">Secretaria</a></li>
+			    <li><a href="#!/victima">Victima</a></li>
+			    <li><a href="#!/imputado">Imputado</a></li>
+			    <li><a href="#!/testigo">Testigo</a></li>
+			    <li><a href="#!/tipo_de_testigo">Tipo de Testigo</a></li>
+			    <li><a href="#!/fiscal">Fiscal (Principal)</a></li>
+			    <li><a href="#!/suplente">Fiscal (Suplente)</a></li>
+				
+		    	<!-- <li class="no-padding blue darken-3">
 			        <ul class="collapsible collapsible-accordion">
 			          <li>
 			            <a class="collapsible-header">Persona<i class="material-icons">arrow_drop_down</i></a>
 			            <div class="collapsible-body blue darken-2">
 			              <ul>
-			                <li><a href="#!/defensor">Defensor</a></li>
-			                <li><a href="#!">Fiscal</a></li>
-			                <li><a href="#!">Juez</a></li>
-			                <li><a href="#!">Alguacil</a></li>
-			                <li><a href="#!">Secretaria</a></li>
-			                <li><a href="#!">Victima</a></li>
-			                <li><a href="#!">Imputado</a></li>
-			          		<li><a href="#!">Testigo</a></li>
+
+			                
+			                
+			                
+			          		<li class="no-padding blue darken-3">
+						        <ul class="collapsible collapsible-accordion">
+						          <li>
+						            <a class="collapsible-header">Testigo<i class="material-icons">arrow_drop_down</i></a>
+						            <div class="collapsible-body blue darken-2">
+						              <ul>
+						                <li><a href="">Tipo de Testigo</a></li>
+						              </ul>
+						            </div>
+						          </li>
+						        </ul>
+					    	</li>
+			          		<li>
+								<ul>
+									<li class="no-padding blue darken-3">
+							        <ul class="collapsible collapsible-accordion">
+							          <li>
+							            <a class="collapsible-header">Fiscal<i class="material-icons">arrow_drop_down</i></a>
+							            <div class="collapsible-body blue darken-2">
+							              <ul>
+							                <li><a href="#!">Principal</a></li>
+							                <li><a href="#!">Suplente</a></li>
+							               
+							              </ul>
+							            </div>
+							          </li>
+							        </ul>
+						    	</li>
+								</ul>
+			                </li>
 			              </ul>
 			            </div>
 			          </li>
 			        </ul>
-		    	</li>
+		    	</li> -->
 		    
 		    </ul>
 		</div>
@@ -226,14 +267,21 @@
 
 			<!-- /Core -->
 			<!-- App Global -->
-				<script src="assets/js/app.js"></script>	
+				<script src="assets/js/app.js?ver=1.0"></script>	
 			<!-- /App Global -->
 			<!-- Routes -->
-				<script src="assets/js/routes.js"></script>	
+				<script src="assets/js/routes.js?ver=1.0"></script>	
 			<!-- /Routes -->
 			<!-- Controllers -->
-				<script src="assets/js/controllers/home.js"></script>
-				<script src="assets/js/controllers/defensor.js"></script>	
+				<script src="assets/js/controllers/home.js?ver=1.0"></script>
+				<script src="assets/js/controllers/defensor.js?ver=1.0"></script>	
+				<script src="assets/js/controllers/secretaria.js?ver=1.0"></script>	
+				<script src="assets/js/controllers/alguacil.js?ver=1.0"></script>
+				<script src="assets/js/controllers/imputado.js?ver=1.0"></script>	
+				<script src="assets/js/controllers/juez.js?ver=1.0"></script>	
+				<script src="assets/js/controllers/victima.js?ver=1.0"></script>	
+				<script src="assets/js/controllers/testigo.js?ver=1.0"></script>	
+				<script src="assets/js/controllers/fiscal.js?ver=1.0"></script>	
 			<!-- /Controllers -->
 		<!-- /AngularJS -->
 

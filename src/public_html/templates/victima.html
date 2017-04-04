@@ -7,8 +7,6 @@
                 <th>Email</th>
                 <th>Telefono</th>
                 <th>Fecha de Nacimiento</th>
-                <th>Tipo</th>
-                <th>Impres</th>
              
             </tr>
         </thead>
@@ -35,7 +33,7 @@
     <div class="modal-content">
       <h4>{{objeto}}</h4>
       <div class="row">
-        <div class="input-field col s12 m12 l12">
+        <div class="input-field col s12">
           <input name="id" type="hidden" ng-model="datos.id" ng-value="datos.id">
 
           <input  name="id_usuario" type="hidden" ng-model="datos.id_usuario" ng-value="datos.id_usuario">
@@ -51,15 +49,11 @@
           </ul>
 
           <label class="active" for="cedula">Cedula</label>
-
-
         </div>
-
-        
       </div>
 
       <div class="row">
-      <div class="input-field col s12 m12 l4">
+        <div class="input-field col s12 m12 l4">
           <input name="nombres" type="text" class="validate" ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);" ng-model="datos.nombres" ng-value="datos.nombres" required>
           <label class="active" for="nombres">Nombres</label>
         </div>
@@ -69,14 +63,10 @@
           <label class="active" for="apellidos">Apellidos</label>
         </div>
 
-        
-
         <div class="input-field col s12 m12 l4">
           <input  name="fecha_de_nacimiento" id="fecha_de_nacimiento" type="text" class="validate" ng-model="datos.fecha_de_nacimiento" ng-value="datos.fecha_de_nacimiento" required>
           <label class="active" for="fecha_de_nacimiento">Fecha de Nacimiento</label>
         </div>
-
-        
       </div>
 
       
@@ -85,28 +75,16 @@
       <div class="row">
 
 
-        <div class="input-field col s12 m12 l3">
+        <div class="input-field col s12 m12 l6">
           <input name="email" type="email" class="validate" ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);" ng-model="datos.email" ng-value="datos.email" required>
           <label class="active" for="email">Email</label>
         </div>
 
-        <div class="input-field col s12 m12 l3">
+        <div class="input-field col s12 m12 l6">
           <input name="telefono" id="telefono" type="text" class="validate" ng-model="datos.telefono" ng-value="datos.telefono" required>
           <label class="active" for="telefono">Telefono</label>
         </div>
-
-        <div class="input-field col s12 m12 l3">
-          <input name="impres" id="impres" type="number" class="validate" ng-model="datos.impres" ng-value="datos.impres" required>
-          <label class="active" for="impres">Impres</label>
-        </div>
-
-        <div class="input-field col s12 m12 l3">
-          <input name="tipo" id="tipo" type="text" class="validate" ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);" ng-model="datos.tipo" ng-value="datos.tipo" required>
-          <label class="active" for="tipo">Tipo</label>
-        </div>
       </div>
-
-      
 
 
 

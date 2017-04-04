@@ -155,7 +155,7 @@
 					var defered = $q.defer();
 			        var promise = defered.promise;
 					$http.get(url).then(function(response) {
-						defered.resolve(response.data.data[0]);
+						defered.resolve(response.data.data);
 					}, function(response) {
 						 defered.reject(response);
 					});
@@ -201,6 +201,29 @@
 
 			    // -----------------------------------------------------------------
 				// FUNCIONES PRINCIPALES | FIN
+				// -----------------------------------------------------------------
+
+
+				// -----------------------------------------------------------------
+				// INICIO | FIN
+				// -----------------------------------------------------------------
+
+				$rootScope.aMayusculas = function(e) {
+					var x = angular.element("input[name=" + e.currentTarget.name + "]").val();
+
+					var cadena = new String(x);
+					cadena = cadena.toUpperCase();
+					
+					angular.element("input[name=" + e.currentTarget.name + "]").val(cadena);
+					
+
+
+				};
+
+		
+
+				// ----------------------------------------------------------------- 
+				// VALIDACIONES | FIN
 				// -----------------------------------------------------------------
 
         	
