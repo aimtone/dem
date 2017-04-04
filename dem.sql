@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 28-03-2017 a las 13:57:23
+-- Tiempo de generación: 03-04-2017 a las 22:09:04
 -- Versión del servidor: 5.5.53-0ubuntu0.14.04.1
 -- Versión de PHP: 5.5.9-1ubuntu4.20
 
@@ -23,10 +23,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `evento`
+-- Estructura de tabla para la tabla `acto`
 --
 
-CREATE TABLE IF NOT EXISTS `evento` (
+CREATE TABLE IF NOT EXISTS `acto` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `inicio` datetime DEFAULT NULL,
   `fin` datetime DEFAULT NULL,
@@ -36,28 +36,127 @@ CREATE TABLE IF NOT EXISTS `evento` (
   `id_usuario` int(11) DEFAULT NULL,
   `fecha_de_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Volcado de datos para la tabla `evento`
---
-
-INSERT INTO `evento` (`id`, `inicio`, `fin`, `titulo`, `descripcion`, `id_sala`, `id_usuario`, `fecha_de_registro`) VALUES
-(1, '2017-02-24 03:00:00', '2017-02-24 08:00:00', 'Audiencia Juan Sanchez', 'Audiencia de Juan sanchez por el caso de su hijo', 2, 1, '2017-02-22 16:24:28'),
-(2, '2017-02-25 00:00:00', '2017-02-25 00:00:00', 'Evento nuevo', 'evento de citacion', 3, 1, '2017-02-22 16:36:14');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Estructura Stand-in para la vista `evento_sala`
+-- Estructura de tabla para la tabla `alguacil`
 --
-CREATE TABLE IF NOT EXISTS `evento_sala` (
-`id` int(11)
-,`resourceId` int(11)
-,`start` datetime
-,`end` datetime
-,`title` varchar(5000)
-);
+
+CREATE TABLE IF NOT EXISTS `alguacil` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cedula` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cedula` (`cedula`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+
+--
+-- Volcado de datos para la tabla `alguacil`
+--
+
+INSERT INTO `alguacil` (`id`, `cedula`) VALUES
+(18, 'V-028383'),
+(0, 'V-21301049'),
+(11, 'V-21301051'),
+(8, 'V-21939302'),
+(10, 'V-383839929'),
+(15, 'v099030923');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `defensor`
+--
+
+CREATE TABLE IF NOT EXISTS `defensor` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cedula` varchar(20) NOT NULL,
+  `tipo` varchar(20) NOT NULL,
+  `impres` text NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cedula` (`cedula`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Volcado de datos para la tabla `defensor`
+--
+
+INSERT INTO `defensor` (`id`, `cedula`, `tipo`, `impres`) VALUES
+(2, 'V-21301059', 'PUBLICO', '38393939'),
+(3, 'v-2929', '1', '3908309393'),
+(4, 'v393398', 'PRIVADO', '900');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `evento_sala`
+--
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `dem`.`evento_sala` AS select `dem`.`evento`.`id` AS `id`,`dem`.`sala`.`id` AS `resourceId`,`dem`.`evento`.`inicio` AS `start`,`dem`.`evento`.`fin` AS `end`,`dem`.`evento`.`titulo` AS `title` from (`dem`.`evento` join `dem`.`sala` on((`dem`.`evento`.`id_sala` = `dem`.`sala`.`id`))) where ((`dem`.`sala`.`id` <> '') and (`dem`.`evento`.`inicio` <> '') and (`dem`.`evento`.`fin` <> ''));
+-- Error leyendo datos: (#1356 - View 'dem.evento_sala' references invalid table(s) or column(s) or function(s) or definer/invoker of view lack rights to use them)
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `fiscal`
+--
+
+CREATE TABLE IF NOT EXISTS `fiscal` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cedula` text NOT NULL,
+  `numero` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `fiscal`
+--
+
+INSERT INTO `fiscal` (`id`, `cedula`, `numero`) VALUES
+(1, 'v8292', 388);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `imputado`
+--
+
+CREATE TABLE IF NOT EXISTS `imputado` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cedula` varchar(20) NOT NULL,
+  `condicion` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cedula` (`cedula`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+
+--
+-- Volcado de datos para la tabla `imputado`
+--
+
+INSERT INTO `imputado` (`id`, `cedula`, `condicion`) VALUES
+(0, 'V049340493', 'IMPUTADO');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `juez`
+--
+
+CREATE TABLE IF NOT EXISTS `juez` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cedula` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cedula` (`cedula`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `juez`
+--
+
+INSERT INTO `juez` (`id`, `cedula`) VALUES
+(1, 'V-23988323');
+
 -- --------------------------------------------------------
 
 --
@@ -71,15 +170,7 @@ CREATE TABLE IF NOT EXISTS `nivel` (
   `fecha_de_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `descripcion` (`descripcion`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Volcado de datos para la tabla `nivel`
---
-
-INSERT INTO `nivel` (`id`, `descripcion`, `id_usuario`, `fecha_de_registro`) VALUES
-(1, 'ADMINISTRADOR', NULL, '2017-02-18 19:45:06'),
-(2, 'USUARIO COMUN', 1, '2017-02-18 20:19:10');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -101,26 +192,29 @@ CREATE TABLE IF NOT EXISTS `persona` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `cedula` (`cedula`,`email`,`telefono`),
   UNIQUE KEY `cedula_2` (`cedula`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=35 ;
 
 --
 -- Volcado de datos para la tabla `persona`
 --
 
 INSERT INTO `persona` (`id`, `cedula`, `nombres`, `apellidos`, `email`, `telefono`, `fecha_de_nacimiento`, `id_tipo_persona`, `id_usuario`, `fecha_de_registro`) VALUES
-(25, 'V-21301059', 'ANTHONY JOSE', 'MEDINA FUENTES', 'ANTHONYJMEDINAF@GMAIL.COM', '+58 426 357 54 89', '20/10/1993', 1, NULL, '2017-03-14 13:16:33'),
-(26, 'V-89898989', 'juan', 'rodriguez', 'skjlksjdlks@wkjds', '+58 034 983 09 84', '08/03/2017', 2, NULL, '2017-03-18 11:52:14'),
-(27, 'V-43870398', 'LSKDJDLKJ', 'KJSDLKJLK', 'DJKFHDL@SDLKJS', '+58 893 479 83 77', '17/03/2017', 3, NULL, '2017-03-18 11:52:17'),
-(28, 'V-39330933', 'MILAGROS', 'MANZANARES', 'MILAGROSMANZANARES@HOTMAIL.COM', '+58 549 893 89 38', '14/03/1969', 1, 0, '2017-03-18 14:38:40'),
-(29, 'V-21301058', 'JUAN JOSE', 'SANCHEZ', 'JUANJOSE@GMAIL.COM', '+58 329 832 89 38', '21/10/1992', 1, 0, '2017-03-18 17:23:49'),
-(30, 'v-73849555', 'manuela josefina', 'bolivar perez', 'boli.manu@gmail.com', '+58 424 737 84 84', '01/03/2017', 1, 0, '2017-03-18 17:36:26'),
-(31, 'V-23839823', 'dsksjkKJ', 'KDK', 'KSJJKDW#@DNSDJ', '+58 398 298 38 32', '31/03/2017', 1, NULL, '2017-03-18 17:37:48'),
-(32, 'V2828282', 'CNCJ', 'JH', 'DSKSJKD@DFJSDJ', '+58 239 838 38 93', '06/03/2017', 1, NULL, '2017-03-18 17:38:03'),
-(33, 'V239898289', 'FKJKJ', 'KJD', '', '+58 298 329 83 89', '25/03/2017', 1, NULL, '2017-03-18 17:38:25'),
-(34, 'V287128399', 'KJSJKDS', 'JKDFKJ', '', '+58 398 934 90 39', '08/03/2017', 1, NULL, '2017-03-18 17:38:51'),
-(35, 'V328938392', 'JSDK', 'JKDSJK', '', '+58 320 998 93 29', '06/03/2017', 1, NULL, '2017-03-18 17:39:04'),
-(36, 'V329320949', 'KLFDJLKD', 'LKDLK', '', '+58 328 989 23 89', '14/03/2017', 1, NULL, '2017-03-18 17:39:18'),
-(37, 'V382389', 'SJKSKJ', 'KKJS3', '', '+58 349 839 48 90', '14/03/2017', 1, NULL, '2017-03-18 17:39:44');
+(8, 'V-21301059', 'ANTHONY', 'MEDINA', 'ANTHONYJMEDINAF@GMAIL.COM', '', '20/10/1992', 1, NULL, '2017-04-03 18:04:40'),
+(11, 'V-12364783', 'ANGUSTIA DEL CARMEN', 'PEREZ MOLINA', 'ANGUSTIAPEREZMOLINA@GMAIL.COM', '+58 416 738 92 23', '10/10/1950', 2, NULL, '2017-04-03 18:18:38'),
+(13, 'V-21939302', 'PEDRO JOSE', 'SANCHEZ TOLEDO', 'PEDRITOZ@GMAIL.COM', '+58 426 949 03 00', '20/10/1992', 3, NULL, '2017-04-03 18:30:53'),
+(15, 'V-38383992', 'ANTHONy', 'MEDINA', 'ANTHONY@GMAIL.COm', '+58 993 930 90 39', '01/04/2017', 3, NULL, '2017-04-03 20:01:12'),
+(16, 'V-21301051', 'ANTHONY JOSE', 'SANCHEZ', 'JUA@KA.COM', '+58 099 090 90 09', '20/10/1992', 3, NULL, '2017-04-03 20:50:53'),
+(20, 'v099030923', 'JUAN JOSE', 'SANCHEZ MEJIAS', 'JUANMEJIOAS@HOTMAIL.COM', '+58 398 383 89 93', '14/04/2017', 3, NULL, '2017-04-03 21:49:12'),
+(23, 'V-028383', 'ANTHONY JOSE', 'MEDINA', 'ANTHONY@SJHSHJ.COm', '+58 894 894 89 34', '16/04/2017', 3, NULL, '2017-04-04 00:07:40'),
+(24, 'V-293883', 'JOSE', 'MEDINA', 'HSHSH@SHsh', '+58 389 393 98 38', '20/04/2017', 4, NULL, '2017-04-03 23:07:26'),
+(26, 'V049340493', 'JUAN', 'PEREZ', 'ANJHAA@SJSJ.COm', '+58 984 834 93 84', '04/04/2017', 4, NULL, '2017-04-03 23:23:08'),
+(28, 'V-23988323', 'CARLOS', 'PERIe', 'JSHHSSJ@JDjsd', '+58 393 300 00 00', '22/04/2017', 5, NULL, '2017-04-04 00:12:02'),
+(29, 'v239023', 'JAj', 'MEDINA', 'JDJDJD@DJdjs', '+58 398 389 98 30', '29/04/2017', 6, NULL, '2017-04-03 23:41:16'),
+(30, 'V-28393939', 'MILAGROSDELCARMEN', 'PEREZ', 'JSSJ@Ssh', '+58 324 923 84 98', '07/04/2017', 7, NULL, '2017-04-04 00:11:02'),
+(31, 'V3093903', 'JUAn', 'MIGUEL', 'KSKJSKS@SKSKJkjs', '+58 233 243 24 23', '17/04/2017', 7, NULL, '2017-04-03 23:56:15'),
+(32, 'v8292', 'ANTHONY', 'JAAJAJ', 'KJSKD@SDJHsdjhk', '+58 324 324 23 40', '11/04/2017', 8, NULL, '2017-04-04 00:02:44'),
+(33, 'v-2929', 'JJSJSj', 'JSJsj', 'JSDKSD@JDj', '+58 000 000 00 00', '08/04/2017', 1, NULL, '2017-04-04 00:30:53'),
+(34, 'v393398', 'JUAn', 'PEREz', 'HAHHA@SJsj', '+58 393 903 90 33', '11/04/2017', 1, NULL, '2017-04-04 00:36:58');
 
 -- --------------------------------------------------------
 
@@ -145,17 +239,76 @@ CREATE TABLE IF NOT EXISTS `sala` (
   `id_usuario` int(11) DEFAULT NULL,
   `fecha_de_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
 
 --
--- Volcado de datos para la tabla `sala`
+-- Estructura de tabla para la tabla `secretaria`
 --
 
-INSERT INTO `sala` (`id`, `descripcion`, `colorEvento`, `id_usuario`, `fecha_de_registro`) VALUES
-(1, 'sala 1', 'red', 1, '2017-02-20 17:09:50'),
-(2, 'sala 2', 'orange', 1, '2017-02-22 13:32:46'),
-(3, 'sala 3', 'gray', 1, '2017-02-22 13:31:52'),
-(4, 'sala 4', 'pink', 1, '2017-02-22 16:38:54');
+CREATE TABLE IF NOT EXISTS `secretaria` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cedula` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cedula` (`cedula`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Volcado de datos para la tabla `secretaria`
+--
+
+INSERT INTO `secretaria` (`id`, `cedula`) VALUES
+(7, 'V-12364783');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `suplente`
+--
+
+CREATE TABLE IF NOT EXISTS `suplente` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cedula` varchar(20) NOT NULL,
+  `id_fiscal` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cedula` (`cedula`),
+  UNIQUE KEY `cedula_fiscal` (`id_fiscal`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `testigo`
+--
+
+CREATE TABLE IF NOT EXISTS `testigo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cedula` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cedula` (`cedula`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `testigo`
+--
+
+INSERT INTO `testigo` (`id`, `cedula`) VALUES
+(1, 'V-28393939');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipo_de_testigo`
+--
+
+CREATE TABLE IF NOT EXISTS `tipo_de_testigo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(100) NOT NULL,
+  `fecha_de_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `id_usuario` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -169,20 +322,21 @@ CREATE TABLE IF NOT EXISTS `tipo_persona` (
   `id_usuario` int(11) NOT NULL,
   `fecha_de_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Volcado de datos para la tabla `tipo_persona`
 --
 
 INSERT INTO `tipo_persona` (`id`, `descripcion`, `id_usuario`, `fecha_de_registro`) VALUES
-(1, 'DEFENSOR', 1, '2017-03-14 02:06:14'),
-(2, 'FISCAL', 1, '2017-03-14 02:06:43'),
-(3, 'JUEZ', 1, '2017-03-14 02:06:43'),
-(4, 'SECRETARIA', 1, '2017-03-14 02:07:40'),
-(5, 'VICTIMA', 1, '2017-03-14 02:07:40'),
-(6, 'IMPUTADO', 1, '2017-03-14 02:07:40'),
-(7, 'TESTIGO', 1, '2017-03-14 02:07:40');
+(1, 'DEFENSOR', 1, '2017-04-03 16:28:09'),
+(2, 'SECRETARIA', 1, '2017-04-03 16:28:12'),
+(3, 'ALGUACIL', 1, '2017-04-03 18:22:28'),
+(4, 'IMPUTADO', 1, '2017-04-03 23:00:40'),
+(5, 'JUEZ', 1, '2017-04-03 23:27:09'),
+(6, 'VICTIMA', 1, '2017-04-03 23:35:55'),
+(7, 'TESTIGO', 1, '2017-04-03 23:43:47'),
+(8, 'FISCAL', 1, '2017-04-03 23:49:19');
 
 -- --------------------------------------------------------
 
@@ -192,33 +346,175 @@ INSERT INTO `tipo_persona` (`id`, `descripcion`, `id_usuario`, `fecha_de_registr
 
 CREATE TABLE IF NOT EXISTS `usuario` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cedula_persona` varchar(11) NOT NULL,
+  `cedula` varchar(11) NOT NULL,
   `clave` varchar(100) NOT NULL,
   `id_nivel` int(11) NOT NULL,
   `id_usuario` int(11) DEFAULT NULL,
   `fecha_de_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `usuario` (`cedula_persona`),
-  UNIQUE KEY `id_persona` (`cedula_persona`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Volcado de datos para la tabla `usuario`
---
-
-INSERT INTO `usuario` (`id`, `cedula_persona`, `clave`, `id_nivel`, `id_usuario`, `fecha_de_registro`) VALUES
-(1, 'V0021301059', 'e807f1fcf82d132f9bb018ca6738a19f', 1, NULL, '2017-02-18 20:02:38'),
-(2, 'V0021301060', '21232f297a57a5a743894a0e4a801fc3', 1, 1, '2017-03-09 03:37:22');
+  UNIQUE KEY `usuario` (`cedula`),
+  UNIQUE KEY `id_persona` (`cedula`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Estructura para la vista `evento_sala`
+-- Estructura de tabla para la tabla `victima`
 --
-DROP TABLE IF EXISTS `evento_sala`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `evento_sala` AS select `evento`.`id` AS `id`,`sala`.`id` AS `resourceId`,`evento`.`inicio` AS `start`,`evento`.`fin` AS `end`,`evento`.`titulo` AS `title` from (`evento` join `sala` on((`evento`.`id_sala` = `sala`.`id`))) where ((`sala`.`id` <> '') and (`evento`.`inicio` <> '') and (`evento`.`fin` <> ''));
+CREATE TABLE IF NOT EXISTS `victima` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cedula` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
+--
+-- Volcado de datos para la tabla `victima`
+--
+
+INSERT INTO `victima` (`id`, `cedula`) VALUES
+(0, 'v239023');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vista_alguacil`
+--
+CREATE TABLE IF NOT EXISTS `vista_alguacil` (
+`id` int(9)
+,`cedula` varchar(10)
+,`nombres` varchar(100)
+,`apellidos` varchar(100)
+,`email` varchar(100)
+,`telefono` varchar(17)
+,`fecha_de_nacimiento` text
+,`id_tipo_persona` int(11)
+,`id_usuario` int(11)
+,`fecha_de_registro` timestamp
+);
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vista_defensor`
+--
+CREATE TABLE IF NOT EXISTS `vista_defensor` (
+`id` int(9)
+,`cedula` varchar(10)
+,`nombres` varchar(100)
+,`apellidos` varchar(100)
+,`email` varchar(100)
+,`telefono` varchar(17)
+,`fecha_de_nacimiento` text
+,`tipo` varchar(20)
+,`impres` text
+,`id_tipo_persona` int(11)
+,`id_usuario` int(11)
+,`fecha_de_registro` timestamp
+);
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vista_fiscal`
+--
+CREATE TABLE IF NOT EXISTS `vista_fiscal` (
+`id` int(9)
+,`cedula` varchar(10)
+,`nombres` varchar(100)
+,`apellidos` varchar(100)
+,`email` varchar(100)
+,`telefono` varchar(17)
+,`fecha_de_nacimiento` text
+,`numero` int(11)
+,`id_tipo_persona` int(11)
+,`id_usuario` int(11)
+,`fecha_de_registro` timestamp
+);
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vista_imputado`
+--
+CREATE TABLE IF NOT EXISTS `vista_imputado` (
+`id` int(9)
+,`cedula` varchar(10)
+,`nombres` varchar(100)
+,`apellidos` varchar(100)
+,`email` varchar(100)
+,`telefono` varchar(17)
+,`fecha_de_nacimiento` text
+,`condicion` varchar(20)
+,`id_tipo_persona` int(11)
+,`id_usuario` int(11)
+,`fecha_de_registro` timestamp
+);
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vista_juez`
+--
+CREATE TABLE IF NOT EXISTS `vista_juez` (
+`id` int(9)
+,`cedula` varchar(10)
+,`nombres` varchar(100)
+,`apellidos` varchar(100)
+,`email` varchar(100)
+,`telefono` varchar(17)
+,`fecha_de_nacimiento` text
+,`id_tipo_persona` int(11)
+,`id_usuario` int(11)
+,`fecha_de_registro` timestamp
+);
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vista_secretaria`
+--
+CREATE TABLE IF NOT EXISTS `vista_secretaria` (
+`id` int(9)
+,`cedula` varchar(10)
+,`nombres` varchar(100)
+,`apellidos` varchar(100)
+,`email` varchar(100)
+,`telefono` varchar(17)
+,`fecha_de_nacimiento` text
+,`id_tipo_persona` int(11)
+,`id_usuario` int(11)
+,`fecha_de_registro` timestamp
+);
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vista_testigo`
+--
+CREATE TABLE IF NOT EXISTS `vista_testigo` (
+`id` int(9)
+,`cedula` varchar(10)
+,`nombres` varchar(100)
+,`apellidos` varchar(100)
+,`email` varchar(100)
+,`telefono` varchar(17)
+,`fecha_de_nacimiento` text
+,`id_tipo_persona` int(11)
+,`id_usuario` int(11)
+,`fecha_de_registro` timestamp
+);
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vista_victima`
+--
+CREATE TABLE IF NOT EXISTS `vista_victima` (
+`id` int(9)
+,`cedula` varchar(10)
+,`nombres` varchar(100)
+,`apellidos` varchar(100)
+,`email` varchar(100)
+,`telefono` varchar(17)
+,`fecha_de_nacimiento` text
+,`id_tipo_persona` int(11)
+,`id_usuario` int(11)
+,`fecha_de_registro` timestamp
+);
 -- --------------------------------------------------------
 
 --
@@ -227,6 +523,78 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `persona_tipo_persona`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `persona_tipo_persona` AS select `persona`.`cedula` AS `cedula`,concat(`persona`.`nombres`,' ',`persona`.`apellidos`) AS `nombre_completo`,`tipo_persona`.`descripcion` AS `descripcion` from (`persona` join `tipo_persona` on((`persona`.`id_tipo_persona` = `tipo_persona`.`id`)));
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vista_alguacil`
+--
+DROP TABLE IF EXISTS `vista_alguacil`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_alguacil` AS select `p`.`id` AS `id`,`p`.`cedula` AS `cedula`,`p`.`nombres` AS `nombres`,`p`.`apellidos` AS `apellidos`,`p`.`email` AS `email`,`p`.`telefono` AS `telefono`,`p`.`fecha_de_nacimiento` AS `fecha_de_nacimiento`,`p`.`id_tipo_persona` AS `id_tipo_persona`,`p`.`id_usuario` AS `id_usuario`,`p`.`fecha_de_registro` AS `fecha_de_registro` from (`persona` `p` join `alguacil` `a` on((`p`.`cedula` = `a`.`cedula`)));
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vista_defensor`
+--
+DROP TABLE IF EXISTS `vista_defensor`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_defensor` AS select `p`.`id` AS `id`,`p`.`cedula` AS `cedula`,`p`.`nombres` AS `nombres`,`p`.`apellidos` AS `apellidos`,`p`.`email` AS `email`,`p`.`telefono` AS `telefono`,`p`.`fecha_de_nacimiento` AS `fecha_de_nacimiento`,`d`.`tipo` AS `tipo`,`d`.`impres` AS `impres`,`p`.`id_tipo_persona` AS `id_tipo_persona`,`p`.`id_usuario` AS `id_usuario`,`p`.`fecha_de_registro` AS `fecha_de_registro` from (`persona` `p` join `defensor` `d` on((`p`.`cedula` = `d`.`cedula`)));
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vista_fiscal`
+--
+DROP TABLE IF EXISTS `vista_fiscal`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_fiscal` AS select `persona`.`id` AS `id`,`persona`.`cedula` AS `cedula`,`persona`.`nombres` AS `nombres`,`persona`.`apellidos` AS `apellidos`,`persona`.`email` AS `email`,`persona`.`telefono` AS `telefono`,`persona`.`fecha_de_nacimiento` AS `fecha_de_nacimiento`,`fiscal`.`numero` AS `numero`,`persona`.`id_tipo_persona` AS `id_tipo_persona`,`persona`.`id_usuario` AS `id_usuario`,`persona`.`fecha_de_registro` AS `fecha_de_registro` from (`persona` join `fiscal` on((`persona`.`cedula` = `fiscal`.`cedula`)));
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vista_imputado`
+--
+DROP TABLE IF EXISTS `vista_imputado`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_imputado` AS select `persona`.`id` AS `id`,`persona`.`cedula` AS `cedula`,`persona`.`nombres` AS `nombres`,`persona`.`apellidos` AS `apellidos`,`persona`.`email` AS `email`,`persona`.`telefono` AS `telefono`,`persona`.`fecha_de_nacimiento` AS `fecha_de_nacimiento`,`imputado`.`condicion` AS `condicion`,`persona`.`id_tipo_persona` AS `id_tipo_persona`,`persona`.`id_usuario` AS `id_usuario`,`persona`.`fecha_de_registro` AS `fecha_de_registro` from (`persona` join `imputado` on((`persona`.`cedula` = `imputado`.`cedula`)));
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vista_juez`
+--
+DROP TABLE IF EXISTS `vista_juez`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_juez` AS select `persona`.`id` AS `id`,`persona`.`cedula` AS `cedula`,`persona`.`nombres` AS `nombres`,`persona`.`apellidos` AS `apellidos`,`persona`.`email` AS `email`,`persona`.`telefono` AS `telefono`,`persona`.`fecha_de_nacimiento` AS `fecha_de_nacimiento`,`persona`.`id_tipo_persona` AS `id_tipo_persona`,`persona`.`id_usuario` AS `id_usuario`,`persona`.`fecha_de_registro` AS `fecha_de_registro` from (`persona` join `juez` on((`persona`.`cedula` = `juez`.`cedula`)));
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vista_secretaria`
+--
+DROP TABLE IF EXISTS `vista_secretaria`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_secretaria` AS select `p`.`id` AS `id`,`p`.`cedula` AS `cedula`,`p`.`nombres` AS `nombres`,`p`.`apellidos` AS `apellidos`,`p`.`email` AS `email`,`p`.`telefono` AS `telefono`,`p`.`fecha_de_nacimiento` AS `fecha_de_nacimiento`,`p`.`id_tipo_persona` AS `id_tipo_persona`,`p`.`id_usuario` AS `id_usuario`,`p`.`fecha_de_registro` AS `fecha_de_registro` from (`persona` `p` join `secretaria` `s` on((`p`.`cedula` = `s`.`cedula`)));
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vista_testigo`
+--
+DROP TABLE IF EXISTS `vista_testigo`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_testigo` AS select `persona`.`id` AS `id`,`persona`.`cedula` AS `cedula`,`persona`.`nombres` AS `nombres`,`persona`.`apellidos` AS `apellidos`,`persona`.`email` AS `email`,`persona`.`telefono` AS `telefono`,`persona`.`fecha_de_nacimiento` AS `fecha_de_nacimiento`,`persona`.`id_tipo_persona` AS `id_tipo_persona`,`persona`.`id_usuario` AS `id_usuario`,`persona`.`fecha_de_registro` AS `fecha_de_registro` from (`persona` join `testigo` on((`persona`.`cedula` = `testigo`.`cedula`)));
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vista_victima`
+--
+DROP TABLE IF EXISTS `vista_victima`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_victima` AS select `persona`.`id` AS `id`,`persona`.`cedula` AS `cedula`,`persona`.`nombres` AS `nombres`,`persona`.`apellidos` AS `apellidos`,`persona`.`email` AS `email`,`persona`.`telefono` AS `telefono`,`persona`.`fecha_de_nacimiento` AS `fecha_de_nacimiento`,`persona`.`id_tipo_persona` AS `id_tipo_persona`,`persona`.`id_usuario` AS `id_usuario`,`persona`.`fecha_de_registro` AS `fecha_de_registro` from (`persona` join `victima` on((`persona`.`cedula` = `victima`.`cedula`)));
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
