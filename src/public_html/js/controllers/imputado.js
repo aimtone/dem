@@ -1,11 +1,8 @@
 app.controller('imputado', function($rootScope,$scope,$http,$q,$localStorage) {
-
-	
-
-
 	$rootScope.objeto = "Imputado";
 	// Variables predefinidas
-	$scope.url = 'api/persona/'; // Siempre terminar URL Con Simbolo "/"
+	$scope.obj_padre = 'persona'; // Siempre terminar URL Con Simbolo "/"
+	$scope.obj_hijo = 'imputado'; // Siempre terminar URL Con Simbolo "/"
 	// Document Ready Function | Inicio
 	// -----------------------------------------------------------------
 	// SE EJECUTA DE MANERA AUTOMATICA AL TERMINAR LA CARGA DE LA PAGINA
@@ -29,33 +26,30 @@ app.controller('imputado', function($rootScope,$scope,$http,$q,$localStorage) {
 			if($rootScope.actionButton=="ok") {
 
 				$scope.persona = {
-					cedula : $scope.datos.cedula,
-					nombres : $scope.datos.nombres,
-					apellidos : $scope.datos.apellidos,
-					email : $scope.datos.email,
+					cedula : $scope.datos.cedula.toUpperCase(),
+					nombres : $scope.datos.nombres.toUpperCase(),
+					apellidos : $scope.datos.apellidos.toUpperCase(),
+					email : $scope.datos.email.toUpperCase(),
 					telefono : $scope.datos.telefono,
 					fecha_de_nacimiento : $scope.datos.fecha_de_nacimiento,
 					id_tipo_persona: 4
 				};
 
-				$scope.imputado = {
-					cedula : $scope.datos.cedula,
-					condicion : $scope.datos.condicion
+				$scope.obj = {
+					id: null,
+					cedula : $scope.datos.cedula.toUpperCase(),
+					condicion : $scope.datos.condicion.toUpperCase()
 				};
-
-
-
-
 
 				// Si la accion del boton es registrar
 				if($rootScope.button == "registrar") {
-
 					
-					$rootScope.post('api/persona', $scope.persona).then(function(response) {
+					
+					$rootScope.post('api/' + $scope.obj_padre, $scope.persona).then(function(response) {
 						if(response!=null) {
 							var id = response[0].id;
 							
-							$rootScope.post('api/imputado', $scope.imputado).then(function(response) {
+							$rootScope.post('api/' + $scope.obj_hijo, $scope.obj).then(function(response) {
 								if(response!=null) {
 									$scope.table.ajax.reload();
 									$rootScope.alert("Exito", "Se ha completado el proceso de manera exitosa", "success");
@@ -79,14 +73,15 @@ app.controller('imputado', function($rootScope,$scope,$http,$q,$localStorage) {
 
 				// Si la accion del boton es modificar
 				if($rootScope.button == "modificar") {
-					$rootScope.put('api/persona/' + $scope.datos.id, $scope.persona).then(function(response) {
+				
+					$rootScope.put('api/' + $scope.obj_padre + '/' + $scope.datos.id, $scope.persona).then(function(response) {
 
 						var filter = {
 							donde : "where cedula = '" + response[0].cedula + "'" 
 						};
 
-						$rootScope.get('api/imputado?filter=' + JSON.stringify(filter)).then(function(response) {
-							$rootScope.put('api/imputado/' + response[0].id, $scope.imputado).then(function(response) {
+						$rootScope.get('api/' + $scope.obj_hijo + '?filter=' + JSON.stringify(filter)).then(function(response) {
+							$rootScope.put('api/' + $scope.obj_hijo +'/' + response[0].id, $scope.obj).then(function(response) {
 								$scope.table.ajax.reload();
 								$rootScope.alert("Exito", "Se ha completado el proceso de manera exitosa", "success");
 								$scope.datos = {};
@@ -130,14 +125,14 @@ app.controller('imputado', function($rootScope,$scope,$http,$q,$localStorage) {
 			var i = null;
 			var contador = 0;
 			for (i = 0; i < cantidad; i++) {
-				$rootScope.delete('api/persona/' + $scope.table.rows('.selected').data()[i].id).then(function(response) {
+				$rootScope.delete('api/' + $scope.obj_padre + '/' + $scope.table.rows('.selected').data()[i].id).then(function(response) {
 					var filter = {
 						donde : "where cedula = '" + response[0].cedula + "'" 
 					};
 
 					
-					$rootScope.get('api/imputado?filter=' + JSON.stringify(filter)).then(function(response) {
-						$rootScope.delete('api/imputado/' + response[0].id).then(function(response) {
+					$rootScope.get('api/' + $scope.obj_hijo + '?filter=' + JSON.stringify(filter)).then(function(response) {
+						$rootScope.delete('api/' + $scope.obj_hijo + '/' + response[0].id).then(function(response) {
 
 							
 
@@ -174,11 +169,13 @@ app.controller('imputado', function($rootScope,$scope,$http,$q,$localStorage) {
 
 	// Funcion para autocompletar
 	$rootScope.getPersona = function(cedula) {
+		$('.autocomplete').fadeOut('fast','linear');
+		
 		var filter = {
 			donde : "where cedula = '" + cedula + "'"
 		};
 
-		$rootScope.get('api/vista_imputado?filter=' + JSON.stringify(filter)).then(function(response) {
+		$rootScope.get('api/' + $scope.obj_padre + '?filter=' + JSON.stringify(filter)).then(function(response) {
 			if(response!=undefined) {
 				$scope.datos = response[0];
 			} else {
@@ -259,7 +256,7 @@ app.controller('imputado', function($rootScope,$scope,$http,$q,$localStorage) {
 	            }
 
 	        ],
-			ajax: 'api/vista_imputado',
+			ajax: 'api/vista_' + $scope.obj_hijo,
 			columns: 
 				[
 				    
@@ -356,7 +353,7 @@ app.controller('imputado', function($rootScope,$scope,$http,$q,$localStorage) {
 	        	$(div).modal('open');
 
 
-	        	$rootScope.get('api/vista_imputado/' + $scope.clave_primaria).then(function(response) {
+	        	$rootScope.get('api/vista_' + $scope.obj_hijo + '/' + $scope.clave_primaria).then(function(response) {
 	        		$scope.datos = response[0];
 	        	}, function(response) {
 	        		console.log(response);
@@ -369,16 +366,14 @@ app.controller('imputado', function($rootScope,$scope,$http,$q,$localStorage) {
 	
 	$scope.closeModal = function(div,button) {
 		if(button=='ok') {
-			if($scope.datos==undefined) { $rootScope.alert("Campos vacios", "Rellene los campos en blanco", "warning"); return; }
-
-			if($scope.datos.cedula==undefined) { $rootScope.alert("Campos vacio", "Rellene el campo Cedula", "warning"); return; }
-			if($scope.datos.nombres==undefined) { $rootScope.alert("Campos vacio", "Rellene el campo Nombres", "warning"); return;}
-			if($scope.datos.apellidos==undefined) { $rootScope.alert("Campos vacio", "Rellene el campo Apellidos", "warning"); return;}
-			if($scope.datos.fecha_de_nacimiento==undefined) { $rootScope.alert("Campos vacio", "Rellene el campo Fecha de Nacimiento", "warning"); return;}
-			if($scope.datos.email==undefined) { $rootScope.alert("Campos vacio", "Rellene el campo Email", "warning"); return;}
-			if($scope.datos.telefono==undefined) { $rootScope.alert("Campos vacio", "Rellene el campo Telefono", "warning"); return;}
-			if($scope.datos.condicion==undefined) { $rootScope.alert("Campos vacio", "Rellene el campo Telefono", "warning"); return;}
-
+			if($scope.datos==undefined) { $rootScope.toast("Rellene los campos"); return; }
+			if($scope.datos.cedula==undefined) {  $rootScope.toast("Campo 'cedula' vacio"); return; }
+			if($scope.datos.nombres==undefined) { $rootScope.toast("Campo 'nombres' vacio");  return;}
+			if($scope.datos.apellidos==undefined) { $rootScope.toast("Campo 'apellidos' vacio");  return;}
+			if($scope.datos.fecha_de_nacimiento==undefined) { $rootScope.toast("Campo 'fecha de nacimiento' vacio");  return;}
+			if($scope.datos.email==undefined) {  $rootScope.toast("Campo 'email' vacio");  return;}
+			if($scope.datos.telefono==undefined) {  $rootScope.toast("Campo 'telefono' vacio");  return;}
+			if($scope.datos.condicion==undefined) {  $rootScope.toast("Campo 'condicion' vacio");  return;}
 
 			$(div).modal('close');
 		}

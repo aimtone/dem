@@ -3,6 +3,15 @@
 	header("Access-Control-Allow-Origin: *");
 	// Permite la ejecucion de los metodos
 	header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");  
+
+	$headers = apache_request_headers();
+
+	if(isset($headers['Authorization'])) {
+		header("Authorization: " . $headers['Authorization']); 
+	}
+
+	
+	
 	// Se incluye el archivo que contiene la clase generica
 	include '../model/model.php';
 
@@ -93,14 +102,35 @@
 			// Si no existe, solicita todos los elementos
 			} else {
 
-				$filtro = explode("?", $_GET['filter']);
 
-				$array = json_decode($filtro['0'], true);
+				if(isset($_GET['filter'])) {
+					if(!empty($_GET['filter'])) {
+						$filtro = explode("?", $_GET['filter']);
+						$array = json_decode($filtro['0'], true);
 
-				$obj->fields = $array['campos'];
-				$obj->where = $array['donde'];
-				$obj->orderBy = $array['ordenarPor'];
-				$obj->groupBy = $array['agruparPor'];
+						if(isset($array['campos'])) {
+							$obj->fields = $array['campos'];
+						}
+
+						if(isset($array['donde'])) {
+							$obj->where = $array['donde'];
+						}
+
+						if(isset($array['ordenarPor'])) {
+							$obj->orderBy = $array['ordenarPor'];
+						}
+
+						if(isset($array['agruparPor'])) {
+							$obj->groupBy = $array['agruparPor'];
+						}
+						
+					
+					}
+					
+				}
+				
+
+				
 
 
 
@@ -261,7 +291,7 @@
 
 	// Esta funcion renderiza la informacion que sera enviada a la base de datos
 	function renderizeData($keys, $values) {
-
+		$str = "";
 		switch ($_SERVER['REQUEST_METHOD']) {
 			case 'POST':
 				# code...
@@ -291,10 +321,12 @@
 				break;
 			case 'PUT':
 				foreach ($keys as $key => $value) {
-					if($key == count($keys) - 1) {
-						$str = $str . $value . "='" . $values[$key] . "'"; 
-					} else {
-						$str = $str . $value . "='" . $values[$key] . "',"; 
+					if($key!="id") {
+						if($key == count($keys) - 1) {
+							$str = $str . $value . "='" . $values[$key] . "'"; 
+						} else {
+							$str = $str . $value . "='" . $values[$key] . "',"; 
+						}
 					}
 				}
 				return $str;
