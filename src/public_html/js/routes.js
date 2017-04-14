@@ -37,6 +37,18 @@
 		                templateUrl : 'assets/templates/fiscal.html?ver=1.0',
 		                controller  : 'fiscal'
 		            })
+		            .when('/sala', {
+		                templateUrl : 'assets/templates/sala.html?ver=1.0',
+		                controller  : 'sala'
+		            })
+		            .when('/tribunal', {
+		                templateUrl : 'assets/templates/tribunal.html?ver=1.0',
+		                controller  : 'tribunal'
+		            })
+		            .when('/tipo_de_tribunal', {
+		                templateUrl : 'assets/templates/tipo_de_tribunal.html?ver=1.0',
+		                controller  : 'tipo_de_tribunal'
+		            })
 		            .otherwise({
 			            redirectTo: '/'
 			        });
