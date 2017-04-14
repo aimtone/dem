@@ -6,14 +6,37 @@
 
 	$headers = apache_request_headers();
 
-	if(isset($headers['Authorization'])) {
-		header("Authorization: " . $headers['Authorization']); 
-	}
-
-	
-	
 	// Se incluye el archivo que contiene la clase generica
 	include '../model/model.php';
+	// Variable que guarda la instancia de la clase generica
+	$obj = get_obj();
+
+	
+
+	if(isset($headers['Authorization'])) {
+
+		//header("Authorization: " . base64_decode($headers['Authorization'])); 
+
+		$credenciales = base64_decode($headers["Authorization"]);
+		$credenciales = json_decode($credenciales, true);
+
+		$cedula = $credenciales['cedula'];
+		$clave = $credenciales['clave'];
+		
+		$data = $obj->validateToken($cedula,$clave);
+		
+		if(!$data) {
+			print_json(401, "Unauthorized", null);
+			exit();
+		}
+	
+	} else {
+		print_json(401, "Unauthorized", null);
+		exit();
+	}
+	
+	
+	
 
 	// Se toma la URL solicitada y se guarda en un array de datos
 	// Por ejemplo si la URL solicitada es http://localhost/api/usuario
@@ -86,8 +109,7 @@
 		$entity = $array[count($array)];
 	}
 
-	// Variable que guarda la instancia de la clase generica
-	$obj = get_obj();
+	
 
 	// Se pasa a la entidad el valor de la entidad con la que actualmente se esta trabajando
 	$obj->entity = $entity;

@@ -10,6 +10,15 @@
 
         		// Establecer y cargar el lenguaje seleccionado para la pagina
         		$rootScope.setLang($localStorage.locale);
+				
+				$rootScope.token = {
+					cedula: 'V-21301059',
+				  	clave : '21301059'
+				};
+
+				$rootScope.token = JSON.stringify($rootScope.token);
+				$rootScope.token = Base64.encode($rootScope.token);
+
         	});
 
         	 
@@ -155,20 +164,12 @@
 				// -----------------------------------------------------------------
 
 				$rootScope.get = function(url) {
-					var data = {
-					  	cedula: 'V-21301059',
-					  	clave : '21301059'
-					};
-
-					data = JSON.stringify(data);
-					data = Base64.encode(data);
-
 					var defered = $q.defer();
 			        var promise = defered.promise;
 					$http.get(url, {        
 					  headers: {
 					  	'Content-Type': 'application/x-www-form-urlencoded',
-					  	'Authorization': data
+					  	'Authorization': $rootScope.token
 					  }
 					}).then(function(response) {
 						defered.resolve(response.data.data);
@@ -181,7 +182,12 @@
 				$rootScope.post = function(url, data) {
 					var defered = $q.defer();
 			        var promise = defered.promise;
-					$http.post(url, data).then(function(response) {
+					$http.post(url, data, {        
+					  headers: {
+					  	'Content-Type': 'application/x-www-form-urlencoded',
+					  	'Authorization': $rootScope.token
+					  }
+					}).then(function(response) {
 
 
 						defered.resolve(response.data.data);
@@ -196,7 +202,12 @@
 				$rootScope.put = function(url, data) {
 					var defered = $q.defer();
 			        var promise = defered.promise;
-					$http.put(url, data).then(function(response) {
+					$http.put(url, data, {        
+					  headers: {
+					  	'Content-Type': 'application/x-www-form-urlencoded',
+					  	'Authorization': $rootScope.token
+					  }
+					}).then(function(response) {
 						defered.resolve(response.data.data);
 					}, function(response) {
 						 defered.reject(response);
@@ -207,7 +218,12 @@
 				$rootScope.delete = function(url) {
 					var defered = $q.defer();
 			        var promise = defered.promise;
-					$http.delete(url).then(function(response) {
+					$http.delete(url, {        
+					  headers: {
+					  	'Content-Type': 'application/x-www-form-urlencoded',
+					  	'Authorization': $rootScope.token
+					  }
+					}).then(function(response) {
 						defered.resolve(response.data.data);
 					}, function(response) {
 						 defered.reject(response);

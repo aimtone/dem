@@ -255,7 +255,13 @@ app.controller('alguacil', function($rootScope,$scope,$http,$q,$localStorage) {
 	            }
 
 	        ],
-			ajax: 'api/vista_' + $scope.obj_hijo,
+			ajax: {
+				url: 'api/vista_' + $scope.obj_hijo,
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					'Authorization' : $rootScope.token
+				}
+			},
 			columns: 
 				[
 				    

@@ -215,7 +215,13 @@ app.controller('tipo_de_tribunal', function($rootScope,$scope,$http,$q,$localSto
 	            }
 
 	        ],
-			ajax: 'api/' + $scope.obj_padre,
+			ajax: {
+				url: 'api/vista_' + $scope.obj_padre,
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					'Authorization' : $rootScope.token
+				}
+			},
 			columns: 
 				[
 				    

@@ -216,7 +216,13 @@ app.controller('sala', function($rootScope,$scope,$http,$q,$localStorage) {
 	            }
 
 	        ],
-			ajax: 'api/' + $scope.obj_padre,
+			ajax: {
+				url: 'api/' + $scope.obj_padre,
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					'Authorization' : $rootScope.token
+				}
+			},
 			columns: 
 				[
 				    

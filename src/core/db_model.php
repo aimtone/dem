@@ -11,7 +11,22 @@
     // La funcion construtora crea y abre la conexion al momento de instanciar esta clase
     function __construct() {
       $this->conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME); // Los parametros de la funcion mysqli() son las constantes previamente declaradas en el archivo config.php
+      
     }
+
+    function validateToken($username,$password) {
+      $query = $this->get_query(sprintf("SELECT * FROM usuario WHERE cedula = '%s' AND clave = '%s'", $username, $password));
+
+      $query = array_filter($query);
+     
+      if(count($query)!=0) {
+        return true;
+      } else {
+        return false;
+      }
+
+    }
+
 
     // Funcion para obtener un array de resultados
     // Solo se usara para las consultas de tipo SELECT
