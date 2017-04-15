@@ -1,4 +1,5 @@
 app.controller('tribunal', function($rootScope,$scope,$http,$q,$localStorage) {
+	$rootScope.validateToken();
 	$rootScope.objeto = "Tribunal";
 	// Variables predefinidas
 	$scope.obj_padre = 'tribunal'; // Siempre terminar URL Con Simbolo "/"
@@ -219,7 +220,7 @@ app.controller('tribunal', function($rootScope,$scope,$http,$q,$localStorage) {
 				url: 'api/vista_' + $scope.obj_padre,
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded',
-					'Authorization' : $rootScope.token
+					'Authorization' : $localStorage.token
 				}
 			},
 			

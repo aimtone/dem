@@ -5,6 +5,10 @@
 		                templateUrl : 'assets/templates/home.html?ver=1.0',
 		                controller  : 'home'
 		            })
+					.when('/login', {
+		                templateUrl : 'assets/templates/login.html?ver=1.0',
+		                controller  : 'login'
+		            })
 		            .when('/defensor', {
 		                templateUrl : 'assets/templates/defensor.html?ver=1.0',
 		                controller  : 'defensor'
@@ -49,8 +53,12 @@
 		                templateUrl : 'assets/templates/tipo_de_tribunal.html?ver=1.0',
 		                controller  : 'tipo_de_tribunal'
 		            })
+					.when('/404', {
+		                templateUrl : 'assets/error/404.html?ver=1.0',
+		                controller  : ''
+		            })
 		            .otherwise({
-			            redirectTo: '/'
+			            redirectTo: '/404'
 			        });
 
 

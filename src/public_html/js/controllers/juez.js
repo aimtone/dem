@@ -1,4 +1,8 @@
-app.controller('juez', function($rootScope,$scope,$http,$q,$localStorage) {
+app.controller('juez', function($rootScope,$scope,$http,$q,$localStorage, $location) {
+	
+	$rootScope.validateToken();
+
+
 	$rootScope.objeto = "Juez";
 	// Variables predefinidas
 	$scope.obj_padre = 'persona'; // Siempre terminar URL Con Simbolo "/"
@@ -8,12 +12,14 @@ app.controller('juez', function($rootScope,$scope,$http,$q,$localStorage) {
 	// SE EJECUTA DE MANERA AUTOMATICA AL TERMINAR LA CARGA DE LA PAGINA
 	// -----------------------------------------------------------------
 	angular.element(document).ready(function() {
-
+		
 		// Mascaras de los campos
 		$("#fecha_de_nacimiento").mask("99/99/9999",{placeholder:"DD/MM/AAAA"});
 		$( "#fecha_de_nacimiento" ).datepicker($.datepicker.regional["es"]);
 		$("#telefono").mask("+58 999 999 99 99",{placeholder:"+58 000 000 00 00"});
 		//$("#cedula").mask("l-99999999");
+
+
 
 
 
@@ -259,7 +265,7 @@ app.controller('juez', function($rootScope,$scope,$http,$q,$localStorage) {
 				url: 'api/vista_' + $scope.obj_hijo,
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded',
-					'Authorization' : $rootScope.token
+					'Authorization' : $localStorage.token
 				}
 			},
 			columns: 

@@ -1,4 +1,5 @@
 app.controller('sala', function($rootScope,$scope,$http,$q,$localStorage) {
+	$rootScope.validateToken();
 	$rootScope.objeto = "Sala";
 	// Variables predefinidas
 	$scope.obj_padre = 'sala'; // Siempre terminar URL Con Simbolo "/"
@@ -220,7 +221,7 @@ app.controller('sala', function($rootScope,$scope,$http,$q,$localStorage) {
 				url: 'api/' + $scope.obj_padre,
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded',
-					'Authorization' : $rootScope.token
+					'Authorization' : $localStorage.token
 				}
 			},
 			columns: 

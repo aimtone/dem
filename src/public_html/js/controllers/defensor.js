@@ -1,4 +1,5 @@
 app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
+	$rootScope.validateToken();
 	$rootScope.objeto = "Defensor";
 	// Variables predefinidas
 	$scope.obj_padre = 'persona'; // Siempre terminar URL Con Simbolo "/"
@@ -268,7 +269,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 				url: 'api/vista_' + $scope.obj_hijo,
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded',
-					'Authorization' : $rootScope.token
+					'Authorization' : $localStorage.token
 				}
 			},
 			columns: 
