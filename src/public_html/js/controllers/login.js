@@ -21,6 +21,7 @@
 
 			$http.get($rootScope.sprintf('api/v1/login/%s',$rootScope.token)).then(function(response) {
 				if(response.status == 200) {
+					$rootScope.x = true;
 					var data = response.data.data[0];
 					
 					$rootScope.token = {
@@ -34,7 +35,8 @@
 
 					$rootScope.toast(response.statusText);
 					console.log(data);
-					$location.url('/home');
+					
+					$location.url('/');
 				}
 				if(response.status == 201) {
 					$localStorage.token = "";

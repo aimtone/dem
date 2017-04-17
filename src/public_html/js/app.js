@@ -5,8 +5,10 @@
 		app.controller('main', function($rootScope,$scope,$http,$q,$localStorage,$location) {
 			
 
-			$rootScope.app_name = "SIPAS";
+			$rootScope.app_name = "NOMBRE-DE-SISTEMA";
 			$rootScope.token = "";
+
+			$rootScope.x = false;
         	// FUNCIONES QUE SE EJECUTAN AL CARGAR LA PAGINA (INICIO)
         	angular.element(document).ready(function() {
         		// Establecer y cargar el lenguaje seleccionado para la pagina
@@ -383,6 +385,7 @@
 				};
 
 					$('#logout').on('click', function() {
+						$rootScope.x = false;
 						$rootScope.token = {};
 						$localStorage.token = "";
 						$location.url('/login');

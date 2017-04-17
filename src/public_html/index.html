@@ -62,7 +62,7 @@
 					</ul>
 				</li>
 
-		        <li>
+		        <li ng-show="x === true">
 		        	<a id="sidenav-right" data-activates="left-side" class="waves-effect waves-light  right show-on-large"><i class="material-icons left">perm_identity</i> Anthony</a>
 		        </li>
 		    </ul>
@@ -86,20 +86,17 @@
 			          </li>
 			        </ul>
 		    	</li>
-				<li><a href="#!/sala">Sala</a></li>
-				<li><a href="#!/actividad">Actividad</a></li>
-				<li><a href="#!/tribunal">Tribunal</a></li>
-				<li><a href="#!/tipo_de_tribunal">Tipo de Tribunal</a></li>
-				<li><a href="#!/defensor">Defensor</a></li>
-				<li><a href="#!/juez">Juez</a></li>
-			    <li><a href="#!/alguacil">Alguacil</a></li>
-	            <li><a href="#!/secretaria">Secretaria</a></li>
-			    <li><a href="#!/victima">Victima</a></li>
-			    <li><a href="#!/imputado">Imputado</a></li>
-			    <li><a href="#!/testigo">Testigo</a></li>
-			    <li><a href="#!/tipo_de_testigo">Tipo de Testigo</a></li>
-			    <li><a href="#!/fiscal">Fiscal (Principal)</a></li>
-			    <li><a href="#!/suplente">Fiscal (Suplente)</a></li>
+				<li ng-show="x === true"><a href="#!/sala">Sala</a></li>
+				<li ng-show="x === true"><a href="#!/tribunal">Tribunal</a></li>
+				<li ng-show="x === true"><a href="#!/tipo_de_tribunal">Tipo de Tribunal</a></li>
+				<li ng-show="x === true"><a href="#!/defensor">Defensor</a></li>
+				<li ng-show="x === true"><a href="#!/juez">Juez</a></li>
+			    <li ng-show="x === true"><a href="#!/alguacil">Alguacil</a></li>
+	            <li ng-show="x === true"><a href="#!/secretaria">Secretaria</a></li>
+			    <li ng-show="x === true"><a href="#!/victima">Victima</a></li>
+			    <li ng-show="x === true"><a href="#!/imputado">Imputado</a></li>
+			    <li ng-show="x === true"><a href="#!/testigo">Testigo</a></li>
+			    <li ng-show="x === true"><a href="#!/fiscal">Fiscal</a></li>
 				
 		    	<!-- <li class="no-padding blue darken-3">
 			        <ul class="collapsible collapsible-accordion">
@@ -161,19 +158,12 @@
 				      <a href="#!user"><img class="circle" src="assets/images/placeholder.jpg"></a>
 				      <a href="#!name"><span class="white-text name">Anthony Medina</span></a>
 				      <a href="#!email"><span class="white-text email">anthonyjmedinaf@gmail.com</span></a>
-							<div class="row">
-                        <div class="col m12">
-                            <p class="right-align">
-                                <button class="btn btn-large waves-effect waves-light" type="button" ng-click="logout()" id="logout" name="logout">Adelante</button>
-                            </p>
-                        </div>
-                    </div>
+							<button class="btn blue darken-4 waves-effect waves-light" type="button" ng-click="logout()" id="logout" name="logout">Cerrar Sesion</button>
+                      
 				    </div>
 				</li>
 
-				<li><a class="white-text waves-effect waves-light" href="#!/usuario"><i class="material-icons">message</i> Usuario</a></li>
-				<li><a class="white-text waves-effect waves-light" href="#!/usuario"><i class="material-icons">message</i> Juex</a></li>
-				<li><a class="white-text waves-effect waves-light" href="#!/usuario"><i class="material-icons">message</i> Abogado</a></li>
+				
 			</ul>
 	    </div>
 	</nav>
@@ -183,7 +173,7 @@
 	<!-- Navbar Secundaria -->
 	<nav class="blue darken-5">
 	    <div class="navbar-wrapper" id="nav-secundario">
-			<ul class="left toolbar toolbar-left hide-on-med-and-down">
+			<ul ng-show="x === true" class="left toolbar toolbar-left hide-on-med-and-down">
 		        <li>
 		        	<a class="dropdown-button tooltipped" data-position="right"  data-tooltip="{{lang.menu.toolbar.izquierdo.regresar}}"  href="javascript:void(0);"><i class="material-icons">arrow_back</i></a>
 		        </li>
@@ -192,32 +182,32 @@
 				</li>
 	    	</ul>
 
-			<span id="dashboard-titulo">{{objeto}}</span>
+			<span ng-show="x === true" id="dashboard-titulo">{{objeto}}</span>
 
 	    	<ul class="right toolbar toolbar-right hide-on-med-and-down">
 
-		        <li>
+		        <li ng-show="x === true">
 		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.menu.toolbar.derecho.ajustes}}" data-activates='dropdown1' href="javascript:void(0);"><i class="material-icons">build</i></a>
 		        	<ul id='dropdown1' data-beloworigin="true" class='dropdown-content'>
-					    dj
+					    
 					 </ul>
 				</li>
 
-		        <li>
+		        <li ng-show="x === true">
 		        	<a class="dropdown-button tooltipped" data-position="left" data-tooltip="{{lang.menu.toolbar.derecho.bitacora}}" data-activates='dropdown2' href="javascript:void(0);"><i class="material-icons">fingerprint</i></a>
 		        	<ul id='dropdown2' data-beloworigin="true" class='dropdown-content'>
 					    
 					 </ul>
 				</li>
 
-		        <li>
+		        <li ng-show="x === true">
 		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.menu.toolbar.derecho.control_usuario}}" data-activates='dropdown3' href="javascript:void(0);"><i class="material-icons">group</i></a>
 		        	<ul id='dropdown3' data-beloworigin="true" class='dropdown-content'>
 				
 					 </ul>
 				</li>
 
-		        <li>
+		        <li ng-show="x === true">
 		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.menu.toolbar.derecho.respaldo}}" data-activates='dropdown4' href="javascript:void(0);"><i class="material-icons">backup</i></a>
 		        	<ul id='dropdown4' data-beloworigin="true" class='dropdown-content'>
 					   
