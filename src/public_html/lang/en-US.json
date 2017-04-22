@@ -1,0 +1,43 @@
+{
+	"barra" : 
+	{
+		"botones" : 
+		{
+			"idioma": "Language"
+		}
+	},
+
+	"menu": 
+	{
+		"toolbar" :
+		{
+			"izquierdo" :
+			{
+				"regresar" : "Go Back",
+				"inicio" : "Home"
+			},
+			"derecho" :
+			{
+				"ajustes" : "Settings",
+				"bitacora" : "Log",
+				"control_usuario" : "User Control",
+				"respaldo" : "Backup"
+			}
+		}
+	},
+	"objetos":
+	{
+		"usuario" : "User",
+		"abogado" : "Lawyer"
+	},
+	"maestros": {
+		"persona":{
+			"cedula": "ID",
+			"nombres" : "Name",
+			"apellidos": "Lastname",
+			"email": "Email",
+			"telefono": "Phone Number",
+			"fecha_de_nacimiento": "Birthdate"
+		}
+	}
+}

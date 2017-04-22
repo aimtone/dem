@@ -1,0 +1,167 @@
+<!-- 	<script type="text/javascript" src="assets/js/plugins/pickers/pickadate/picker.js"></script>
+<script type="text/javascript" src="assets/js/plugins/pickers/pickadate/picker.date.js"></script>
+<script type="text/javascript" src="assets/js/plugins/pickers/pickadate/picker.time.js"></script>
+
+<script type="text/javascript" src="assets/js/pages/picker_date.js"></script> -->
+<!-- Main charts -->
+
+	<script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/forms/styling/switchery.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/forms/styling/switch.min.js"></script>
+<script type="text/javascript" src="assets/js/pages/form_checkboxes_radios.js"></script>
+				<div class="row">
+					<div class="col-lg-12">
+
+
+						<!-- Traffic sources -->
+						<div class="panel panel-flat">
+							
+
+							<div class="container-fluid">
+								<div class="row">
+									<div class="panel-body">
+
+										<div class="row">
+											
+											<div class="col-lg-6">
+
+												<div class="form-element">
+													<input type="text" name="titulo" required="required" placeholder="Evento sin titulo" ng-model="evento.titulo" class="form-control"/>
+												</div>
+												<br>
+
+													<div class="form-element">
+														<input type="checkbox" name="habilitarFecha"> Definir fecha y hora
+													</div>
+
+												<div class="form-element">
+													<div class="row">
+														<div class="col-lg-6">
+																<input type="datetime-local"  name="fechaInicio" step="1" min="{{meta.fechaActual}}" ng-model="evento.fechaInicio" class="form-control">
+														</div>
+
+														<div class="col-lg-6">
+																<input type="datetime-local"  name="fechaFin" step="1" min="{{meta.fechaActual}}" ng-model="evento.fechaFin" class="form-control">
+														</div>
+
+														
+													</div>
+
+
+													<div class="form-zone">
+														<div class="title">
+															<h1>Informacion del evento</h1>
+														</div>
+
+														<div class="content">
+
+
+															<div class="form-element">
+																<label for="lugar">Lugar del Evento</label>
+																<select name="lugar" id="lugar" class="form-control">
+																	<option value="1">Sala 1</option>
+																	<option value="2">Sala 2</option>
+																</select>
+																
+															</div>
+
+															<div class="form-element">
+																
+																<textarea name="descripcion" id="descripcion" cols="30" rows="4" placeholder="Breve descripcion del evento" class="form-control"></textarea>
+															</div>
+
+
+														</div>
+													</div>
+
+
+													<div class="form-element">
+														<div class="notificaciones">
+
+
+															<div class="row">
+																<div class="col-lg-12">
+																	<h4>Notificaciones</h4>
+																</div>
+															</div>
+
+															<div class="row">
+																<div class="col-lg-4">
+																	<div class="checkbox checkbox-switchery switchery-sm">
+																		<label>
+																			<input type="checkbox" class="switchery" checked="checked">
+																			Enviar notificaciones por SMS
+																		</label>
+																	</div>
+																								
+																</div>
+
+																<div class="col-lg-4">
+																	<div class="checkbox checkbox-switchery switchery-sm">
+																		<label>
+																			<input type="checkbox" class="switchery" checked="checked">
+																			Enviar notificaciones por Correo
+																		</label>
+																	</div>
+																								
+																</div>
+
+																<div class="col-lg-4">
+																	<div class="checkbox checkbox-switchery switchery-sm">
+																		<label>
+																			<input type="checkbox" class="switchery" checked="checked">
+																			Enviar notificaciones por Sistema
+																		</label>
+																	</div>
+																								
+																</div>
+															</div>
+															<br>
+
+															<blockquote>
+																Las notificaciones antes establecidas seran enviada a todos los involucrados en este evento
+															</blockquote>
+
+
+														</div>
+														
+													</div>
+														
+
+														
+
+														
+
+														
+													
+												</div>
+
+
+		
+
+											</div>
+
+											<div class="col-lg-6">
+												
+
+
+											</div>
+
+										</div>
+
+
+									</div>
+								</div>
+
+
+									</div>
+									
+
+									
+
+								</div>
+							</div>
+
+							<div class="position-relative" id="traffic-sources"></div>
+						</div>
+						<!-- /traffic sources -->

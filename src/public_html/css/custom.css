@@ -1,0 +1,347 @@
+/* CODIGO PERSONALIZADO PARA LA PAGINA EN GENERAL - INICIO */
+* {
+	font-weight: 300;
+}
+
+.autocomplete {
+  position: absolute;
+  margin-top:-19px;
+  width: 97%;
+  display: none;
+  z-index: 9999;
+  height: 150px;
+  max-height: 150px;
+  overflow: auto;
+  border:none;
+}
+.autocomplete li {
+  font-size: 12px !important;
+   border:none !important;
+   padding: 5px !important;
+}
+.autocomplete li:hover {
+  background: #0d47a1 !important;
+  color:#ffffff !important;
+
+}
+
+
+
+body > .inner {
+  display: none;
+}
+
+body.pg-loaded > .inner {
+  display: block;
+}
+
+
+nav {
+	border:none;
+	box-shadow:none;
+} 
+#mobile-demo {
+  overflow: hidden;
+}
+span#dashboard-titulo {
+	font-size:2em;
+	padding-left:20px;
+}
+
+.toolbar, .toolbar li a {
+	height: 64px;
+}
+.toolbar.toolbar-left {
+	border-right: 1px solid white;
+	padding-right:20px;
+}
+.toolbar.toolbar-left li a {
+	height: 64px;
+	border-top:5px solid transparent;
+	border-bottom:5px solid transparent;
+	transition:all ease-in-out 0.3s;
+	-webkit-transition:all ease-in-out 0.3s;
+}
+.toolbar.toolbar-left  li a:hover {
+	background: transparent;
+	border-top:5px solid white;
+	border-bottom:5px solid white;
+	transition:all ease-in-out 0.3s;
+	-webkit-transition:all ease-in-out 0.3s;
+}
+#mobile-demo ul li a {
+	font-size: 1.1em;
+	text-transform: capitalize;
+  color:white;
+}
+.contenedor {
+  margin-top:20px;
+  width: 90%;
+  border-radius: 5px 5px 5px 5px;
+}
+
+/* CODIGO PERSONALIZADO PARA LA PAGINA EN GENERAL - INICIO */
+
+/* CODIGO PERSONALIZADO PARA EL SEARCH DEL DATATABLE - INICIO */
+
+input[type=search]{
+  border:none !important;
+  border-bottom:2px solid #2196F3 !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  border-radius:0px 0px 0px 0px !important;
+  -webkit-border-radius:0px 0px 0px 0px !important;
+  trasition: background ease-in-out .3s !important;
+  -webkit-trasition: background ease-in-out .3s !important;
+}
+
+input[type=search]:focus{
+  trasition: background ease-in-out .3s !important;
+  -webkit-trasition: background ease-in-out .3s !important;
+  border-bottom:2px solid #0D47A1 !important;
+}
+/* CODIGO PERSONALIZADO PARA EL SEARCH DEL DATATABLE - FIN */
+
+/* CODIGO PERSONALIZADO PARA EL SCROLLBAR - INICIO */
+
+::-webkit-scrollbar {
+    width: 5px;
+    background: #0D47A1;
+}
+ 
+::-webkit-scrollbar-track {
+
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.2);
+}
+/* CODIGO PERSONALIZADO PARA EL SCROLLBAR - INICIO */
+
+/* CODIGO PERSONALIZADO PARA PACE (PRELOADER) - INICIO */
+
+.pace {
+  -webkit-pointer-events: none;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.pace-inactive {
+  display: none;
+}
+
+.pace .pace-progress {
+  background: #29d;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  right: 100%;
+  width: 100%;
+  height: 2px;
+}
+
+.pace .pace-progress-inner {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  height: 100%;
+  box-shadow: 0 0 10px #29d, 0 0 5px #29d;
+  opacity: 1.0;
+  -webkit-transform: rotate(3deg) translate(0px, -4px);
+  -moz-transform: rotate(3deg) translate(0px, -4px);
+  -ms-transform: rotate(3deg) translate(0px, -4px);
+  -o-transform: rotate(3deg) translate(0px, -4px);
+  transform: rotate(3deg) translate(0px, -4px);
+}
+
+.pace .pace-activity {
+  display: block;
+  position: fixed;
+  z-index: 2000;
+  top: 15px;
+  right: 15px;
+  width: 14px;
+  height: 14px;
+  border: solid 2px transparent;
+  border-top-color: #29d;
+  border-left-color: #29d;
+  border-radius: 10px;
+  -webkit-animation: pace-spinner 400ms linear infinite;
+  -moz-animation: pace-spinner 400ms linear infinite;
+  -ms-animation: pace-spinner 400ms linear infinite;
+  -o-animation: pace-spinner 400ms linear infinite;
+  animation: pace-spinner 400ms linear infinite;
+}
+
+@-webkit-keyframes pace-spinner {
+  0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@-moz-keyframes pace-spinner {
+  0% { -moz-transform: rotate(0deg); transform: rotate(0deg); }
+  100% { -moz-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@-o-keyframes pace-spinner {
+  0% { -o-transform: rotate(0deg); transform: rotate(0deg); }
+  100% { -o-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@-ms-keyframes pace-spinner {
+  0% { -ms-transform: rotate(0deg); transform: rotate(0deg); }
+  100% { -ms-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@keyframes pace-spinner {
+  0% { transform: rotate(0deg); transform: rotate(0deg); }
+  100% { transform: rotate(360deg); transform: rotate(360deg); }
+}
+/* CODIGO PERSONALIZADO PARA PACE (PRELOADER) - FIN */
+
+/* CODIGO PERSONALIZADO PARA LOS BOTONES EN EL DATATABLE - INICIO */
+a.dt-button.toolbar {
+  background: #2196F3;
+  height: auto;
+  width: 35px;
+  font-weight: bold;
+  color:white;
+  border: 1px solid transparent;
+  border-radius: 0px;
+  font-size: 1em;
+  -webkit-border-radius: 0px;
+  margin-left: -6px;
+  transition:all linear 0.2s;
+  -webkit-transition:all  linear 0.2s;
+}
+a.dt-button.toolbar:last-child {
+  width: 45px;
+}
+a.dt-button.toolbar:hover,
+a.dt-button.toolbar:active {
+  background: #0D47A1 !important;
+  border: 1px solid transparent !important;
+  width: 150px;
+  transition:all linear 0.2s;
+  -webkit-transition:all  linear 0.2s;
+}
+a.dt-button.toolbar:focus {
+  background: #2196F3 !important;
+}
+
+
+a.dt-button.toolbar.check_all:hover::after {
+  content: " Marcar todo";
+}
+a.dt-button.toolbar.uncheck_all:hover::after {
+  content: " Desmarcar todo";
+}
+a.dt-button.toolbar.copy:hover::after {
+  content: " Copiar";
+}
+a.dt-button.toolbar.excel:hover::after {
+  content: " Exportar a Excel";
+}
+a.dt-button.toolbar.csv:hover::after {
+  content: " Exportar a CSV";
+}
+a.dt-button.toolbar.pdf:hover::after {
+  content: " Exportar a PDF";
+}
+
+tr.selected {
+}
+
+tr th {
+    border-radius: 0px 0px 0px 0px !important;
+
+}
+
+input[type=color] {
+  background: white;
+  border:none;
+  width: 100%;
+  height: 40px;
+  outline: 0px;
+}
+
+
+tr.selected td{
+  background: #0D47A1 !important;
+  color:white !important;
+  border-radius: 0px 0px 0px 0px !important;
+  font-weight: 500;
+}
+
+
+.dataTable {
+
+}
+
+.dataTables_paginate a {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0px 0px 0px 0px !important;
+
+
+}
+
+.dataTables_paginate a:hover,
+.dataTables_paginate a:active,
+.dataTables_paginate a:focus {
+  border-bottom: 2px solid #0D47A1 !important;
+  color: white !important;
+
+
+}
+
+.dataTables_info {
+  color:#0D47A1 !important;
+  font-weight: 200 !important;
+  font-size: 1.1em !important;
+}
+
+.dataTables_empty{
+  color:#0D47A1 !important;
+  font-weight: 200 !important;
+  font-size: 0.8em !important;
+}
+/* CODIGO PERSONALIZADO PARA LOS BOTONES EN EL DATATABLE - FIN */
+
+.toasts {
+  background: #0D47A1;
+  color:white;
+  font-weight: 600;
+  border-radius:0px;
+  -webkit-border-radius:0px;
+}
+
+#example tbody {
+  text-transform: uppercase;
+}
+#example th {
+  text-transform: capitalize !important;
+}
+
+/* SOLO PARA MOSTRAR EN TELEFONO*/
+@media (max-width: 480px) { 
+  .modal {
+    width: 100% !important;
+    height: 100% !important;
+    min-height:100%;
+    position: fixed !important;
+    top:0px !important;
+    border-radius:0px;
+    -webkit-border-radius:0px;
+
+
+  }
+
+  .modal-fixed-footer {
+    min-height:100%;
+  }
+
+  a.dt-button.toolbar {
+    display: none;
+  }
+}
+

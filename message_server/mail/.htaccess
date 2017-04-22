@@ -1,0 +1,16 @@
+# Se establece la ruta como el archivo principal o pagina principal
+DirectoryIndex public_html/index.html
+
+RewriteEngine On
+
+RewriteRule ^api$ controller.php
+RewriteRule ^api/$ controller.php
+
+# Acortar URL
+RewriteRule ^([a-zA-Z]+)/([a-zA-Z0-9-.]+)$ public_html/$1/$2
+RewriteRule ^([a-zA-Z]+)/([a-zA-Z]+)/([a-zA-Z0-9-.]+)$ public_html/$1/$2/$3
+
+# Expresiones regulares
+## Alfanumericos | ([a-zA-Z0-9]+)
+## Numericos     | ([0-9]+)
+## Caracteres    | ([a-zA-Z]+)

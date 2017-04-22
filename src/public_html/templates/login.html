@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="row">
+        <div class="col m6">
+            <h2>Bienvenido</h2>
+            <p><b>{{app_name}}</b> permite la gestion de audiencias del el circuito judicial de San Felipe, Yaracuy.</p>
+            <p>Por favor, para ingresar al sistema, introduzca su cedula de identidad y clave, en caso de no tener una cuenta, solicitala aca</p>
+            <button class="btn btn-large blue waves-effect waves-light" type="button" name="action">Solicitar cuenta
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+        <div class="col m6">
+            <h2 class="center-align">Ingresar</h2>
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="cedula" type="text" class="validate" ng-model="datos.cedula" required>
+                            <label for="cedula">Cedula de Identidad</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="clave" type="password" class="validate" ng-model="datos.clave" required>
+                            <label for="clave">Clave</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <p>
+                                <input type="checkbox" id="remember">
+                                <label for="remember">Recordar sesion</label>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="row">
+                        <div class="col m12">
+                            <p class="right-align">
+                                <button class="btn blue darken-4 waves-effect waves-light" type="button" id="login" name="login">Adelante</button>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

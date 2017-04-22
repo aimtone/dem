@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="dem" ng-controller="main">
+<head>
+
+
+	<meta charset="UTF-8">
+	<title>Documento HTML</title>
+	<!-- Material Icons -->
+	<link rel="stylesheet" href="assets/css/icon.css">
+	<link rel="stylesheet" href="assets/css/font-awesome.css">
+	<!--<link href="https://fonts.googleapis.com/css?family=Faster+One" rel="stylesheet">-->
+
+	<!-- Materialize -->
+	<link rel="stylesheet" href="assets/css/materialize.css" media="screen,projection">
+	<!-- jQuery dataTable -->
+	<link rel="stylesheet" href="assets/css/jquery.dataTables.min.css" media="screen,projection">
+
+	<link rel="stylesheet" href="assets/css/jquery-ui.css">
+	<link rel="stylesheet" href="assets/css/angucomplete-alt.css">
+
+
+
+	<link rel="stylesheet" href="assets/css/perfect-scrollbar.css"> 
+	<!-- Sweet Alerts -->
+	<link rel="stylesheet" href="assets/css/sweetalert.css"> 
+
+	<link rel="stylesheet" href="assets/css/colReorder.dataTables.min.css"> 
+	<link rel="stylesheet" href="assets/css/responsive.dataTables.min.css">
+	<link rel="stylesheet" href="assets/css/keyTable.dataTables.min.css">
+	<link rel="stylesheet" href="assets/css/autoFill.dataTables.min.css">
+	<link rel="stylesheet" href="assets/css/select.dataTables.min.css">
+	<link rel="stylesheet" href="assets/css/buttons.dataTables.min.css">
+
+	<!-- Custom -->
+	<link rel="stylesheet" href="assets/css/custom.css" media="screen,projection">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="theme-color" content="#0D47A1">
+
+</head>
+<body >
+
+	<!-- Nabvar Primaria -->
+	<nav class="blue darken-4">
+	    <div class="navbar-wrapper" id="nav-primario">
+	    <a href="#!/" class="brand-logo center" onclick="cargarScripts();" style="font-family:'Faster One';">DEM</a>
+
+	     <a id="sidenav-left"  href="#" data-activates="mobile-demo" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
+
+
+			<ul class="right">
+		       <li class="hide-on-med-and-down">
+		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.barra.botones.idioma}}" data-activates='dropdown-lang' href="javascript:void(0);">
+		        		<i class="material-icons">language</i>
+		        	</a>
+		        	<ul id='dropdown-lang' data-beloworigin="true" class='dropdown-content'>
+					    <li><a ng-click="setLang('es-VE');setDatatableLang('es-VE');" href=""><img src="assets/images/venezuela.png" alt=""></a></li>
+
+					    <li><a ng-click="setLang('en-US');setDatatableLang('en-US');" href=""><img src="assets/images/united_states_of_america_usa.png" alt=""></a></a></li>
+
+					    <li><a ng-click="setLang('pt-BR');setDatatableLang('pt-BR');" href=""><img src="assets/images/brazil.png" alt=""></a></a></li>
+					</ul>
+				</li>
+
+		        <li ng-show="x === true">
+		        	<a id="sidenav-right" data-activates="left-side" class="waves-effect waves-light  right show-on-large"><i class="material-icons left">perm_identity</i> Anthony</a>
+		        </li>
+		    </ul>
+
+	
+	    <div class="side-nav blue darken-4" id="mobile-demo">
+	     	<div class="center">
+	     		 <h3 style="font-family:'Faster One';">DEM</h3>
+	     	</div>
+			
+			<ul>
+				<li class="no-padding blue darken-3">
+			        <ul class="collapsible collapsible-accordion">
+			          <li>
+			            <a class="collapsible-header">Tablas Principales<i class="material-icons right">arrow_drop_down</i></a>
+			            <div class="collapsible-body blue darken-2">
+			              <ul>
+			                <li><a href="">Configuracion</a></li>
+			              </ul>
+			            </div>
+			          </li>
+			        </ul>
+		    	</li>
+				<li ng-show="x === true"><a href="#!/sala">Sala</a></li>
+				<li ng-show="x === true"><a href="#!/tribunal">Tribunal</a></li>
+				<li ng-show="x === true"><a href="#!/tipo_de_tribunal">Tipo de Tribunal</a></li>
+				<li ng-show="x === true"><a href="#!/defensor">Defensor</a></li>
+				<li ng-show="x === true"><a href="#!/juez">Juez</a></li>
+			    <li ng-show="x === true"><a href="#!/alguacil">Alguacil</a></li>
+	            <li ng-show="x === true"><a href="#!/secretaria">Secretaria</a></li>
+			    <li ng-show="x === true"><a href="#!/victima">Victima</a></li>
+			    <li ng-show="x === true"><a href="#!/imputado">Imputado</a></li>
+			    <li ng-show="x === true"><a href="#!/testigo">Testigo</a></li>
+			    <li ng-show="x === true"><a href="#!/fiscal">Fiscal</a></li>
+				
+		    	<!-- <li class="no-padding blue darken-3">
+			        <ul class="collapsible collapsible-accordion">
+			          <li>
+			            <a class="collapsible-header">Persona<i class="material-icons">arrow_drop_down</i></a>
+			            <div class="collapsible-body blue darken-2">
+			              <ul>
+
+			                
+			                
+			                
+			          		<li class="no-padding blue darken-3">
+						        <ul class="collapsible collapsible-accordion">
+						          <li>
+						            <a class="collapsible-header">Testigo<i class="material-icons">arrow_drop_down</i></a>
+						            <div class="collapsible-body blue darken-2">
+						              <ul>
+						                <li><a href="">Tipo de Testigo</a></li>
+						              </ul>
+						            </div>
+						          </li>
+						        </ul>
+					    	</li>
+			          		<li>
+								<ul>
+									<li class="no-padding blue darken-3">
+							        <ul class="collapsible collapsible-accordion">
+							          <li>
+							            <a class="collapsible-header">Fiscal<i class="material-icons">arrow_drop_down</i></a>
+							            <div class="collapsible-body blue darken-2">
+							              <ul>
+							                <li><a href="#!">Principal</a></li>
+							                <li><a href="#!">Suplente</a></li>
+							               
+							              </ul>
+							            </div>
+							          </li>
+							        </ul>
+						    	</li>
+								</ul>
+			                </li>
+			              </ul>
+			            </div>
+			          </li>
+			        </ul>
+		    	</li> -->
+		    
+		    </ul>
+		</div>
+
+
+	    <div class="side-nav blue lighten-1" id="left-side">
+			<ul>
+				<li>
+					<div class="userView">
+				      <!-- <div class="background">
+				        <img src="assets/images/office.jpg">
+				      </div> -->
+				      <a href="#!user"><img class="circle" src="assets/images/placeholder.jpg"></a>
+				      <a href="#!name"><span class="white-text name">Anthony Medina</span></a>
+				      <a href="#!email"><span class="white-text email">anthonyjmedinaf@gmail.com</span></a>
+							<button class="btn blue darken-4 waves-effect waves-light" type="button" ng-click="logout()" id="logout" name="logout">Cerrar Sesion</button>
+                      
+				    </div>
+				</li>
+
+				
+			</ul>
+	    </div>
+	</nav>
+	<!-- /Nabvar Primaria -->
+
+
+	<!-- Navbar Secundaria -->
+	<nav class="blue darken-5">
+	    <div class="navbar-wrapper" id="nav-secundario">
+			<ul ng-show="x === true" class="left toolbar toolbar-left hide-on-med-and-down">
+		        <li>
+		        	<a class="dropdown-button tooltipped" data-position="right"  data-tooltip="{{lang.menu.toolbar.izquierdo.regresar}}"  href="javascript:void(0);"><i class="material-icons">arrow_back</i></a>
+		        </li>
+		        <li>
+		        	<a class="dropdown-button tooltipped" data-position="right" data-tooltip="{{lang.menu.toolbar.izquierdo.inicio}}" href="#!/"><i class="material-icons">home</i></a>
+				</li>
+	    	</ul>
+
+			<span ng-show="x === true" id="dashboard-titulo">{{objeto}}</span>
+
+	    	<ul class="right toolbar toolbar-right hide-on-med-and-down">
+
+		        <li ng-show="x === true">
+		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.menu.toolbar.derecho.ajustes}}" data-activates='dropdown1' href="javascript:void(0);"><i class="material-icons">build</i></a>
+		        	<ul id='dropdown1' data-beloworigin="true" class='dropdown-content'>
+					    
+					 </ul>
+				</li>
+
+		        <li ng-show="x === true">
+		        	<a class="dropdown-button tooltipped" data-position="left" data-tooltip="{{lang.menu.toolbar.derecho.bitacora}}" data-activates='dropdown2' href="javascript:void(0);"><i class="material-icons">fingerprint</i></a>
+		        	<ul id='dropdown2' data-beloworigin="true" class='dropdown-content'>
+					    
+					 </ul>
+				</li>
+
+		        <li ng-show="x === true">
+		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.menu.toolbar.derecho.control_usuario}}" data-activates='dropdown3' href="javascript:void(0);"><i class="material-icons">group</i></a>
+		        	<ul id='dropdown3' data-beloworigin="true" class='dropdown-content'>
+				
+					 </ul>
+				</li>
+
+		        <li ng-show="x === true">
+		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.menu.toolbar.derecho.respaldo}}" data-activates='dropdown4' href="javascript:void(0);"><i class="material-icons">backup</i></a>
+		        	<ul id='dropdown4' data-beloworigin="true" class='dropdown-content'>
+					   
+					 </ul>
+				</li>
+	    	</ul>
+	    </div>
+	</nav>
+	<!-- /Navbar Secundaria -->
+	
+	<!-- Contenedor Principal -->
+	<div class="container contenedor ">
+		
+
+		<div ng-view></div>
+	</div>
+	<!-- /Contenedor Principal -->
+	
+<!-- ------------------------------------------------------------------------------------- -->
+
+	<!-- JavaScript -->
+		<!-- jQuery -->
+		<script src="assets/js/jquery-3.1.1.min.js"></script>
+		<script src="assets/js/jquery.maskedinput.js"></script>
+		
+		<script src="assets/js/jquery-ui.js"></script>
+		<script src="assets/js/datepicker-es.js"></script>
+
+	    <script src="assets/js/jquery.dataTables.min.js"></script>
+	    <script src="assets/js/dataTables.colReorder.js"></script>
+	    <script src="assets/js/dataTables.responsive.min.js"></script>
+	    <script src="assets/js/dataTables.keyTable.min.js"></script>
+	    <script src="assets/js/dataTables.autoFill.min.js"></script>
+	    <script src="assets/js/dataTables.select.min.js"></script>
+	    <script src="assets/js/dataTables.buttons.min.js"></script>
+	    <script src="assets/js/jszip.min.js"></script>
+		<script src="assets/js/pdfmake.min.js"></script>
+		<script src="assets/js/vfs_fonts.js"></script>
+		<script src="assets/js/buttons.html5.min.js"></script>
+
+	    
+		<!-- Materialize -->
+		<script src="assets/js/materialize.js"></script>
+
+		<!-- AngularJS -->
+			<!-- Core -->
+				<script src="assets/js/angular.min.js"></script>
+				<script src="assets/js/angular-datatables.js"></script>
+				<script src="assets/js/angular-route.js"></script>
+				<script src="assets/js/angular-storage.min.js"></script>
+				<script src="assets/js/angucomplete-alt.js"></script>
+
+
+			<!-- /Core -->
+			<!-- App Global -->
+				<script src="assets/js/app.js?ver=1.0"></script>	
+			<!-- /App Global -->
+			<!-- Routes -->
+				<script src="assets/js/routes.js?ver=1.0"></script>	
+			<!-- /Routes -->
+			<!-- Controllers -->
+				<script src="assets/js/controllers/home.js?ver=1.0"></script>
+				<script src="assets/js/controllers/login.js?ver=1.0"></script>	
+				<script src="assets/js/controllers/defensor.js?ver=1.0"></script>	
+				<script src="assets/js/controllers/secretaria.js?ver=1.0"></script>	
+				<script src="assets/js/controllers/alguacil.js?ver=1.0"></script>
+				<script src="assets/js/controllers/imputado.js?ver=1.0"></script>	
+				<script src="assets/js/controllers/juez.js?ver=1.0"></script>	
+				<script src="assets/js/controllers/victima.js?ver=1.0"></script>	
+				<script src="assets/js/controllers/testigo.js?ver=1.0"></script>	
+				<script src="assets/js/controllers/fiscal.js?ver=1.0"></script>	
+				<script src="assets/js/controllers/sala.js?ver=1.0"></script>
+				<script src="assets/js/controllers/tribunal.js?ver=1.0"></script>	
+				<script src="assets/js/controllers/tipo_de_tribunal.js?ver=1.0"></script>	
+
+			<!-- /Controllers -->
+		<!-- /AngularJS -->
+
+		<!-- PaceJS -->
+		<script src="assets/js/pace.min.js"></script>
+		<!-- Perfect Scrollbar -->
+		<script type="text/javascript" src="assets/js/perfect-scrollbar.min.js"></script>
+		<!-- Sweet Alerts -->
+		<script type="text/javascript" src="assets/js/sweetalert.min.js"></script>
+
+
+		<script>
+			$( document ).ready(function(){
+				// Cargar la barra lateral (solo Movil)
+	        	cargarScripts();
+	        	$('#mobile-demo').perfectScrollbar();
+	        	
+			});
+
+			var cargarScripts = function() {
+
+
+				  $('#sidenav-left').sideNav({
+				      menuWidth: 300, // Default is 300
+				      edge: 'left', // Choose the horizontal origin
+				      closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+				      draggable: true // Choose whether you can drag to open on touch screens
+				    }
+				  );
+
+				  $('#sidenav-right').sideNav({
+				      menuWidth: 300, // Default is 300
+				      edge: 'right', // Choose the horizontal origin
+				      closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+				      draggable: true // Choose whether you can drag to open on touch screens
+				    }
+				  );
+
+
+	        	setTimeout(function() {
+	        		$('select').material_select();
+	        		$('.dropdown-button').dropdown({
+				      inDuration: 300,
+				      outDuration: 225,
+				      constrainWidth: false, // Does not change width of dropdown to that of the activator
+				      hover: false, // Activate on hover
+				      gutter: 0, // Spacing from edge
+				      belowOrigin: true, // Displays dropdown below the button
+				      alignment: 'right', // Displays dropdown with edge aligned to the left of button
+				      stopPropagation: true // Stops event propagation
+				    }
+				  );
+	      
+	        	},100);
+			}
+		</script>
+	<!-- /JavaScript -->
+
+
+    
+   
+
+<!-- ------------------------------------------------------------------------------------- -->
+
+</body>
+</html>
+
+

@@ -1,0 +1,43 @@
+{
+
+	"barra" : 
+	{
+		"botones" : 
+		{
+			"idioma": "Língua"
+		}
+	},
+	"menu": 
+	{
+		"toolbar" :
+		{
+			"izquierdo" :
+			{
+				"regresar" : "Voltar",
+				"inicio" : "Iniciação"
+			},
+			"derecho" :
+			{
+				"ajustes" : "Configurações",
+				"bitacora" : "Registro",
+				"control_usuario" : "Controle do usuário",
+				"respaldo" : "Cópia de segurança"
+			}
+		}
+	},
+	"objetos":
+	{
+		"usuario" : "Usuário",
+		"abogado" : "Advogado"
+	},
+	"maestros": {
+		"persona":{
+			"cedula": "ID",
+			"nombres" : "Nomes",
+			"apellidos": "Sobrenomes",
+			"email": "Email",
+			"telefono": "Telefone",
+			"fecha_de_nacimiento": "Data de nascimento"
+		}
+	}
+}
