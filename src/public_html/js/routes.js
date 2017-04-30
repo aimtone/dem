@@ -9,6 +9,10 @@
 		                templateUrl : 'assets/templates/login.html?ver=1.0',
 		                controller  : 'login'
 		            })
+					.when('/programador', {
+		                templateUrl : 'assets/templates/programador.html?ver=1.0',
+		                controller  : 'programador'
+		            })
 		            .when('/defensor', {
 		                templateUrl : 'assets/templates/defensor.html?ver=1.0',
 		                controller  : 'defensor'

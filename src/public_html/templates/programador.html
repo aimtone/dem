@@ -1,0 +1,85 @@
+<style>
+
+
+		
+	#wrap {
+		width: 100%;
+		margin: 0 auto;
+	}
+		
+	#external-events {
+        position:absolute;
+		float: left;
+		width: 10%;
+        
+        left:0px;
+        height:500px;
+        min-height: 500px;
+        max-height: 500px;
+		padding: 0 10px;
+	    text-align: left;
+    }
+		
+	#external-events h4 {
+		font-size: 16px;
+		margin-top: 0;
+		padding-top: 1em;
+	}
+		
+	#external-events .fc-event {
+		margin: 2px 0;
+		cursor: pointer;
+	}
+		
+	#external-events p {
+		margin: 1.5em 0;
+		font-size: 11px;
+		color: #666;
+	}
+		
+	#external-events p input {
+		margin: 0;
+		vertical-align: middle;
+	}
+
+	#calendar {
+        position:absolute;
+		float: right;
+		width: 90%;
+        right:2px;
+	}
+    #calendar h2 {
+        font-size: 1.3em;
+    }
+    
+
+    
+
+</style>
+
+	<div id='wrap'>
+
+		<div id='external-events'>
+			<h4>Audiencias</h4>
+            <div class='fc-event'>My Event 1</div>
+			<div class='fc-event'>My Event 2</div>
+			<div class='fc-event'>My Event 3</div>
+			<div class='fc-event'>My Event 4</div>
+			<div class='fc-event'>My Event 5</div>
+            <div class='fc-event'>My Event 1</div>
+			<div class='fc-event'>My Event 2</div>
+			<div class='fc-event'>My Event 3</div>
+
+			
+
+			<p>
+				<input type='checkbox' id='drop-remove' />
+				<label for='drop-remove'>Remover</label>
+			</p>
+		</div>
+
+		<div id='calendar'></div>
+
+		<div style='clear:both'></div>
+
+	</div>

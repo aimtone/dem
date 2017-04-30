@@ -363,6 +363,27 @@
 					}
 				};
 
+				$rootScope.validateSession = function() {
+					if (typeof $localStorage.token !== 'undefined') {
+						if($localStorage.token!='') {
+							if (typeof $localStorage.token !== 'undefined') {
+								if($localStorage.token!='') {
+									$rootScope.get($rootScope.sprintf('api/v1/login/%s',$localStorage.token)).then(function(response) {
+										console.log(response);
+										if(response!=null) {
+											$location.url('/');
+											return;
+										}
+									});
+
+								}
+
+							}
+						}
+
+					} 
+				}
+
 			    // -----------------------------------------------------------------
 				// FUNCIONES PRINCIPALES | FIN
 				// -----------------------------------------------------------------

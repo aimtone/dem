@@ -4,7 +4,7 @@
 
 
 	<meta charset="UTF-8">
-	<title>Documento HTML</title>
+	<title>Direccion Ejecutiva de la Magistratura</title>
 	<!-- Material Icons -->
 	<link rel="stylesheet" href="assets/css/icon.css">
 	<link rel="stylesheet" href="assets/css/font-awesome.css">
@@ -30,6 +30,10 @@
 	<link rel="stylesheet" href="assets/css/autoFill.dataTables.min.css">
 	<link rel="stylesheet" href="assets/css/select.dataTables.min.css">
 	<link rel="stylesheet" href="assets/css/buttons.dataTables.min.css">
+
+	<link href='assets/css/fullcalendar.min.css' rel='stylesheet' />
+	<link href='assets/css/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+	<link href='assets/css/scheduler.min.css' rel='stylesheet' />
 
 	<!-- Custom -->
 	<link rel="stylesheet" href="assets/css/custom.css" media="screen,projection">
@@ -63,7 +67,7 @@
 				</li>
 
 		        <li ng-show="x === true">
-		        	<a id="sidenav-right" data-activates="left-side" class="waves-effect waves-light  right show-on-large"><i class="material-icons left">perm_identity</i> Anthony</a>
+		        	<a id="sidenav-right" data-activates="left-side" class="waves-effect waves-light  right show-on-large"><i class="material-icons left">perm_identity</i> Usuario</a>
 		        </li>
 		    </ul>
 
@@ -175,10 +179,10 @@
 	    <div class="navbar-wrapper" id="nav-secundario">
 			<ul ng-show="x === true" class="left toolbar toolbar-left hide-on-med-and-down">
 		        <li>
-		        	<a class="dropdown-button tooltipped" data-position="right"  data-tooltip="{{lang.menu.toolbar.izquierdo.regresar}}"  href="javascript:void(0);"><i class="material-icons">arrow_back</i></a>
+		        	<a class="dropdown-button tooltipped" data-position="right"  data-tooltip="{{lang.menu.toolbar.izquierdo.regresar}}" onclick="history.back(-1);"><i class="material-icons">arrow_back</i></a>
 		        </li>
 		        <li>
-		        	<a class="dropdown-button tooltipped" data-position="right" data-tooltip="{{lang.menu.toolbar.izquierdo.inicio}}" href="#!/"><i class="material-icons">home</i></a>
+		        	<a class="dropdown-button tooltipped" data-position="right" data-tooltip="{{lang.menu.toolbar.izquierdo.inicio}}" href="#!/programador"><i class="material-icons">home</i></a>
 				</li>
 	    	</ul>
 
@@ -229,12 +233,19 @@
 <!-- ------------------------------------------------------------------------------------- -->
 
 	<!-- JavaScript -->
+		<script src='https://fullcalendar.io/js/fullcalendar-scheduler-1.6.2/lib/moment.min.js'></script>
 		<!-- jQuery -->
 		<script src="assets/js/jquery-3.1.1.min.js"></script>
 		<script src="assets/js/jquery.maskedinput.js"></script>
 		
 		<script src="assets/js/jquery-ui.js"></script>
 		<script src="assets/js/datepicker-es.js"></script>
+
+		
+
+		<script src='assets/js/fullcalendar.min.js'></script>
+		<script src='assets/js/scheduler.min.js'></script>
+		<script src='assets/js/locale/es.js'></script>
 
 	    <script src="assets/js/jquery.dataTables.min.js"></script>
 	    <script src="assets/js/dataTables.colReorder.js"></script>
@@ -271,6 +282,7 @@
 			<!-- Controllers -->
 				<script src="assets/js/controllers/home.js?ver=1.0"></script>
 				<script src="assets/js/controllers/login.js?ver=1.0"></script>	
+				<script src="assets/js/controllers/programador.js?ver=1.0"></script>	
 				<script src="assets/js/controllers/defensor.js?ver=1.0"></script>	
 				<script src="assets/js/controllers/secretaria.js?ver=1.0"></script>	
 				<script src="assets/js/controllers/alguacil.js?ver=1.0"></script>
@@ -299,6 +311,7 @@
 				// Cargar la barra lateral (solo Movil)
 	        	cargarScripts();
 	        	$('#mobile-demo').perfectScrollbar();
+						$('.events').perfectScrollbar();
 	        	
 			});
 
