@@ -3,7 +3,7 @@
 			$rootScope.objeto = "Programador de Actos";
 
             angular.element(document).ready(function() {
-                
+                adaptarCalendarioaPantalla();
 
                 var filter_sala = {
                     campos : "id, descripcion AS title, color AS eventColor"
@@ -15,11 +15,42 @@
                         $('#calendar').fullCalendar($scope.config);
                     });
 
+                    setInterval(function() {
+                        console.log('render');
+                        $('#calendar').fullCalendar( 'rerenderEvents' );
+                        $('#calendar').fullCalendar( 'refetchEvents' );
+                    },60000);
+
                 
 
 
 
             });
+
+            $( window ).resize(function() {
+                adaptarCalendarioaPantalla();
+            });
+
+            var adaptarCalendarioaPantalla = function() {
+                var ancho_calendar = document.body.clientWidth * 0.90;
+                var ancho_panel = screen.width * 0.09;
+                
+
+                $('#calendar').css({
+                    width: ancho_calendar + 'px',
+                    minWidth:  ancho_calendar + 'px',
+                    maxWidth:  ancho_calendar + 'px',
+                    marginLeft: ancho_panel + 'px',
+                    right: '5px'
+                });
+
+                $('#external-events').css({
+                    width: ancho_panel + 'px',
+                    minWidth:  ancho_panel + 'px',
+                    maxWidth:  ancho_panel + 'px'
+                });
+                
+            };
 
             /* initialize the external events
                 -----------------------------------------------------------------*/
@@ -44,12 +75,13 @@
 
             $scope.config = {
                         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+                        theme: true,
                         locale: 'es',
                         now: new Date(),
                         weekends: true,
                         weekNumbers: true,
                         weekNumbersWithinDays: true,
-                        timezone: 'UTC',
+                        timezone: 'America/Caracas',
                         businessHours: {
                             // days of week. an array of zero-based day of week integers (0=Sunday)
                             dow: [ 0, 1, 2, 3, 4, 5, 6 ], // Monday - Thursday
@@ -64,10 +96,18 @@
                         droppable: true, // this allows things to be dropped onto the calendar
                         aspectRatio: 1.8,
                         scrollTime: '00:00', // undo default 6am scrollTime
+                        customButtons: {
+                            btnNuevoActo: {
+                                text: 'Nuevo acto',
+                                click: function() {
+                                    alert('Ir a la pagina cargar acto');
+                                }
+                            }
+                        },
                         header: {
-                            left: 'today prev,next',
+                            left: 'btnNuevoActo,today prev,next',
                             center: 'title',
-                            right: 'agendaDay,agendaWeek,month,listDay'
+                            right: 'agendaDay,agendaWeek,month,listWeek'
 
 
                         },
@@ -104,7 +144,24 @@
                         },
                         resourceLabelText: 'Salas disponibles',
                         resources : [],
-                        events: [],
+                        events: function(start, end, timezone, callback) {
+                            $.ajax({
+                                url: 'api/acto_sala',
+                                dataType: 'json',
+                                data: {
+                                    // our hypothetical feed requires UNIX timestamps
+                                    start: start.unix(),
+                                    end: end.unix()
+                                },
+                                beforeSend: function(request) {
+                                    request.setRequestHeader("Authorization", $localStorage.token);
+                                },
+                                success: function(doc) {
+                                    
+                                    callback(doc.data);
+                                }
+                            });
+                        },
                         drop: function(date, jsEvent, ui, resourceId) {
                         console.log('drop', date.format(), resourceId);
 

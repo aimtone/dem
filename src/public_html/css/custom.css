@@ -308,7 +308,7 @@ tr.selected td{
 /* CODIGO PERSONALIZADO PARA LOS BOTONES EN EL DATATABLE - FIN */
 
 .toasts {
-  background: #0D47A1;
+  background: #14385f;
   color:white;
   font-weight: 600;
   border-radius:0px;
@@ -320,6 +320,10 @@ tr.selected td{
 }
 #example th {
   text-transform: capitalize !important;
+}
+
+.brand-logo {
+  margin-top: 3px;
 }
 
 /* SOLO PARA MOSTRAR EN TELEFONO*/

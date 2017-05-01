@@ -21,7 +21,8 @@
 				"ajustes" : "Settings",
 				"bitacora" : "Log",
 				"control_usuario" : "User Control",
-				"respaldo" : "Backup"
+				"respaldo" : "Backup",
+				"programador": "Scheduler"
 			}
 		}
 	},
