@@ -42,7 +42,7 @@
 	<meta name="theme-color" content="#0D47A1">
 
 </head>
-<body >
+<body>
 
 	<!-- Nabvar Primaria -->
 	<nav style="background:#14385f !important;" class="blue darken-4">
@@ -175,7 +175,7 @@
 
 
 	<!-- Navbar Secundaria -->
-	<nav class="blue darken-5">
+	<nav class="blue darken-5 sticky">
 	    <div class="navbar-wrapper" id="nav-secundario">
 			<ul ng-show="x === true" class="left toolbar toolbar-left hide-on-med-and-down">
 		        <li>
@@ -230,10 +230,10 @@
 	<!-- /Navbar Secundaria -->
 	
 	<!-- Contenedor Principal -->
-	<div class="container contenedor ">
+	<div  class="container contenedor ">
 		
 
-		<div ng-view></div>
+		<div  id="main" class="elemento_animado transicion--fadein" ng-view></div>
 	</div>
 	<!-- /Contenedor Principal -->
 	
@@ -312,6 +312,11 @@
 		<!-- Sweet Alerts -->
 		<script type="text/javascript" src="assets/js/sweetalert.min.js"></script>
 
+		
+		<script src="assets/js/jquery.smoothState.js"></script>
+		<script src="assets/js/functions.js"></script>
+
+
 
 		<script>
 			$( document ).ready(function(){
@@ -319,10 +324,20 @@
 	        	cargarScripts();
 	        	$('#mobile-demo').perfectScrollbar();
 						$('.events').perfectScrollbar();
-	        	
+	        	$('#main').smoothState();
+						 $('.sticky').pushpin({
+							top: 30,
+							bottom: 1500,
+							offset: 0
+						});
 			});
 
+
+
+
 			var cargarScripts = function() {
+
+				
 
 
 				  $('#sidenav-left').sideNav({

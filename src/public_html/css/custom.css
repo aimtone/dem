@@ -118,6 +118,12 @@ input[type=search]:focus{
 }
 /* CODIGO PERSONALIZADO PARA EL SCROLLBAR - INICIO */
 
+
+.sticky{
+  z-index: 3;
+}
+
+
 /* CODIGO PERSONALIZADO PARA PACE (PRELOADER) - INICIO */
 
 .pace {
@@ -305,6 +311,31 @@ tr.selected td{
   font-weight: 200 !important;
   font-size: 0.8em !important;
 }
+
+
+.elemento_animado {
+animation-duration: 0.25s;
+transition-timing-function: ease-in;
+animation-fill-mode: both;
+}
+.transicion--fadein {
+animation-name: fadeIn;
+}
+.is-loading {
+  background: red;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateX(100px);
+        transform: translateX(100px);
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 /* CODIGO PERSONALIZADO PARA LOS BOTONES EN EL DATATABLE - FIN */
 
 .toasts {

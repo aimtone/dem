@@ -5,21 +5,20 @@
             angular.element(document).ready(function() {
                 adaptarCalendarioaPantalla();
 
-                var filter_sala = {
-                    campos : "id, descripcion AS title, color AS eventColor"
-                };
+                
 
-                    $rootScope.get('api/sala?filter=' + JSON.stringify(filter_sala)).then(function(response) {
-                        $scope.config.resources = response;
-                        console.log($scope.config);
                         $('#calendar').fullCalendar($scope.config);
-                    });
-
+                 
                     setInterval(function() {
-                        console.log('render');
                         $('#calendar').fullCalendar( 'rerenderEvents' );
                         $('#calendar').fullCalendar( 'refetchEvents' );
+                        //$('#calendar').fullCalendar( 'refetchResources' );
                     },60000);
+
+                    setInterval(function() {
+                     
+                        $('#calendar').fullCalendar( 'refetchResources' );
+                    },300000);
 
                 
 
@@ -71,7 +70,10 @@
                     });
 
                 });
-
+            
+            var filter_sala = {
+                    campos : "id, descripcion AS title, color AS eventColor"
+                };
 
             $scope.config = {
                         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
@@ -142,8 +144,21 @@
                                 end: nowDate.clone().add(900, 'months')
                             };
                         },
+                        refetchResourcesOnNavigate: true,
                         resourceLabelText: 'Salas disponibles',
-                        resources : [],
+                        resources: function(callback, start, end, timezone) {
+                            $.ajax({
+                                url: 'api/sala?filter=' + JSON.stringify(filter_sala),
+                                dataType: 'json',
+                                beforeSend: function(request) {
+                                    request.setRequestHeader("Authorization", $localStorage.token);
+                                },
+                                success: function(doc) {
+                                    console.log(doc);
+                                    callback(doc.data);
+                                }
+                            });
+                        },
                         events: function(start, end, timezone, callback) {
                             $.ajax({
                                 url: 'api/acto_sala',
