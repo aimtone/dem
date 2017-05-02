@@ -28,7 +28,7 @@ app.controller('sala', function($rootScope,$scope,$http,$q,$localStorage) {
 				$scope.sala = {
 					id: null,
 					descripcion : $scope.datos.descripcion.toUpperCase(),
-					color : $scope.datos.color.toUpperCase(),
+					color : $scope.datos.color,
 				};
 
 
