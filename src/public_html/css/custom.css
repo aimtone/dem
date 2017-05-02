@@ -316,7 +316,6 @@ tr.selected td{
 .elemento_animado {
 animation-duration: 0.25s;
 transition-timing-function: ease-in;
-animation-fill-mode: both;
 }
 .transicion--fadein {
 animation-name: fadeIn;

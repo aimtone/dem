@@ -350,7 +350,10 @@
 								console.log(response);
 								if(response==null) {
 									$location.url('/login');
+									$rootScope.x = false;
 									return;
+								} else {
+									$rootScope.x = true;
 								}
 							});
 						} else {
