@@ -11,16 +11,16 @@
 
                         $('#calendar').fullCalendar($scope.config);
                  
-                    setInterval(function() {
-                        $('#calendar').fullCalendar( 'rerenderEvents' );
-                        $('#calendar').fullCalendar( 'refetchEvents' );
+                    //setInterval(function() {
+                      //  $('#calendar').fullCalendar( 'rerenderEvents' );
+                       // $('#calendar').fullCalendar( 'refetchEvents' );
                         //$('#calendar').fullCalendar( 'refetchResources' );
-                    },60000);
+                    //},60000);
 
-                    setInterval(function() {
+                    //setInterval(function() {
                      
-                        $('#calendar').fullCalendar( 'refetchResources' );
-                    },300000);
+                      //  $('#calendar').fullCalendar( 'refetchResources' );
+                    //},300000);
 
 
                     if (typeof $routeParams.fecha !== 'undefined') {
@@ -150,6 +150,7 @@
                         noEventsMessage: "No hay eventos para mostrar",
                         nowIndicator: true,
                         defaultView: 'agendaDay',
+                        allDaySlot: false,
                         validRange: function(nowDate) {
                             return {
                                 start: nowDate,
