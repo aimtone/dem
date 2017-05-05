@@ -13,6 +13,10 @@
 		                templateUrl : 'assets/templates/programador.html?ver=1.0',
 		                controller  : 'programador'
 		            })
+					.when('/programador/:fecha', {
+		                templateUrl : 'assets/templates/programador.html?ver=1.0',
+		                controller  : 'programador'
+		            })
 		            .when('/defensor', {
 		                templateUrl : 'assets/templates/defensor.html?ver=1.0',
 		                controller  : 'defensor'
@@ -52,6 +56,10 @@
 		            .when('/tribunal', {
 		                templateUrl : 'assets/templates/tribunal.html?ver=1.0',
 		                controller  : 'tribunal'
+		            })
+					.when('/acto', {
+		                templateUrl : 'assets/templates/acto.html?ver=1.0',
+		                controller  : 'acto'
 		            })
 		            .when('/tipo_de_tribunal', {
 		                templateUrl : 'assets/templates/tipo_de_tribunal.html?ver=1.0',

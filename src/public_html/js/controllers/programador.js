@@ -1,8 +1,10 @@
-		app.controller('programador', function($rootScope,$scope,$http,$localStorage,$location) {
+		app.controller('programador', function($rootScope,$scope,$http,$localStorage,$location,$window,$routeParams) {
 			$rootScope.validateToken();
 			$rootScope.objeto = "Programador de Actos";
 
             angular.element(document).ready(function() {
+                
+
                 adaptarCalendarioaPantalla();
 
                 
@@ -20,6 +22,16 @@
                         $('#calendar').fullCalendar( 'refetchResources' );
                     },300000);
 
+
+                    if (typeof $routeParams.fecha !== 'undefined') {
+						if($routeParams.fecha!='') {
+                            var fecha = $.fullCalendar.moment($routeParams.fecha);
+                            $('#calendar').fullCalendar( 'gotoDate', fecha );
+                        }
+                    }
+
+                
+                
                 
 
 
@@ -83,7 +95,7 @@
                         weekends: true,
                         weekNumbers: true,
                         weekNumbersWithinDays: true,
-                        timezone: 'America/Caracas',
+                        timezone: 'local',
                         businessHours: {
                             // days of week. an array of zero-based day of week integers (0=Sunday)
                             dow: [ 0, 1, 2, 3, 4, 5, 6 ], // Monday - Thursday
@@ -187,10 +199,74 @@
                         }
                         },
                         eventReceive: function(event) { // called when a proper external event is dropped
-                        console.log('eventReceive', event);
+                            console.log('eventReceive', event);
+                            
+                            var fecha_inicio = new Date(event._start._d);
+                            var fecha_fin = new Date(event._start._d);
+                            fecha_fin.setHours(fecha_inicio.getHours()+2);
+
+                            var data = {
+                                inicio: $rootScope.formatDate(fecha_inicio,"yyyy-MM-ddThh:mm:ss"),
+                                fin: $rootScope.formatDate(fecha_fin,"yyyy-MM-ddThh:mm:ss"),
+                                titulo: event.title,
+                                descripcion: event.title,
+                                id_sala: event.resourceId,
+                            };
+                            $rootScope.post('api/acto', data).then(function() {
+                                $('#calendar').fullCalendar( 'removeEvents', event._id );
+                                $('#calendar').fullCalendar( 'refetchEvents' );
+                            });
+                        
                         },
                         eventDrop: function(event) { // called when an event (already on the calendar) is moved
-                        console.log('eventDrop', event);
+                            console.log('eventDrop', event);
+                            
+                            var data = {
+                                id: event._id,
+                                inicio: $rootScope.formatDate(event._start._d,"yyyy-MM-ddThh:mm:ss"),
+                                fin: $rootScope.formatDate(event._end._d,"yyyy-MM-ddThh:mm:ss"),
+                                titulo: event.title,
+                                descripcion: event.title,
+                                id_sala: event.resourceId,
+                            };
+
+
+                            $rootScope.put('api/acto/' + event._id, data).then(function(response) {
+                                console.log(response);
+                                $('#calendar').fullCalendar( 'rerenderEvents' );
+                            });
+                        },
+                        eventResize: function(event) {
+                            var data = {
+                                id: event._id,
+                                inicio: $rootScope.formatDate(event._start._d,"yyyy-MM-ddThh:mm:ss"),
+                                fin: $rootScope.formatDate(event._end._d,"yyyy-MM-ddThh:mm:ss"),
+                                titulo: event.title,
+                                descripcion: event.title,
+                                id_sala: event.resourceId,
+                            };
+
+                            $rootScope.put('api/acto/' + event._id, data).then(function(response) {
+                                console.log(response);
+                                $('#calendar').fullCalendar( 'rerenderEvents' );
+                            });
+
+                        },
+                        select: function( start, end, jsEvent, view, resource) {
+                  
+
+                            var data = {
+                                id: event._id,
+                                inicio: $rootScope.formatDate(start._d,"yyyy-MM-ddThh:mm:ss"),
+                                fin: $rootScope.formatDate(end._d,"yyyy-MM-ddThh:mm:ss"),
+                                titulo: "",
+                                descripcion: "",
+                                id_sala: resource.id
+                            };
+
+                            $localStorage.evento = data;
+                            $window.location.href= "#!/acto";
+                           
                         }
                 };
 			
