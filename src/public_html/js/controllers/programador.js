@@ -109,7 +109,7 @@
                         editable: true, // enable draggable events
                         droppable: true, // this allows things to be dropped onto the calendar
                         aspectRatio: 1.8,
-                        scrollTime: '00:00', // undo default 6am scrollTime
+                        scrollTime: '08:00', // undo default 6am scrollTime
                         customButtons: {
                             btnNuevoActo: {
                                 text: 'Nuevo acto',
@@ -151,10 +151,10 @@
                         nowIndicator: true,
                         defaultView: 'agendaDay',
                         allDaySlot: false,
-                        validRange: function(nowDate) {
+                        
+                        validRange: function() {
                             return {
-                                start: nowDate,
-                                end: nowDate.clone().add(900, 'months')
+                                start: $rootScope.formatDate(new Date(), "yyyy-MM-dd")                            
                             };
                         },
                         refetchResourcesOnNavigate: true,

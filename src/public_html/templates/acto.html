@@ -8,11 +8,24 @@
                     <label for="titulo">Titulo</label>
                 </div>
 
+                <div class="row">
+                    <div class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                        <i class="material-icons prefix">textsms</i>
+                        <input type="text" id="autocomplete-input" class="autocomplete">
+                        <label for="autocomplete-input">Autocomplete</label>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+        
+
                 <div class="input-field col s6">
-                     <input  id="inicio"  type="datetime-local" step="1" ng-model="data.inicio" ng-value="data.inicio">  
+                     <input  id="inicio" readonly type="datetime-local" step="1" ng-model="data.inicio" ng-value="data.inicio">  
                 </div>
                 <div class="input-field col s6">
-                     <input  id="fin" type="datetime-local" step="1" ng-model="data.fin" ng-value="data.fin">  
+                     <input  id="fin" readonly type="datetime-local" step="1" ng-model="data.fin" ng-value="data.fin">  
                 </div>
 
             
