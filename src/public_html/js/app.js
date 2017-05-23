@@ -1,4 +1,4 @@
-		var app = angular.module('dem',['ngRoute','ngStorage','datatables','angucomplete-alt']);
+		var app = angular.module('dem',['ngRoute','ngStorage','datatables','angucomplete-alt','tabs']);
 
 		
 

@@ -109,7 +109,7 @@
                         editable: true, // enable draggable events
                         droppable: true, // this allows things to be dropped onto the calendar
                         aspectRatio: 1.8,
-                        scrollTime: '08:00', // undo default 6am scrollTime
+                        //scrollTime: '08:00', // undo default 6am scrollTime
                         customButtons: {
                             btnNuevoActo: {
                                 text: 'Nuevo acto',
@@ -141,7 +141,6 @@
                         selectable: true,
                         selectHelper: true,
                         unselectAuto: true,
-                        unselectCancel: 'hola',
                         eventOverlap: false,
                         minTime: "08:00:00",
                         maxTime: "18:00:00",

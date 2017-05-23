@@ -65,6 +65,10 @@
 		                templateUrl : 'assets/templates/tipo_de_tribunal.html?ver=1.0',
 		                controller  : 'tipo_de_tribunal'
 		            })
+					.when('/ajustes', {
+		                templateUrl : 'assets/templates/ajustes.html?ver=1.0',
+		                controller  : 'ajustes'
+		            })
 					.when('/404', {
 		                templateUrl : 'assets/error/404.html?ver=1.0',
 		                controller  : ''

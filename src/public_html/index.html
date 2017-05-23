@@ -19,6 +19,9 @@
 	<link rel="stylesheet" href="assets/css/jquery-ui.css">
 	<link rel="stylesheet" href="assets/css/angucomplete-alt.css">
 
+<link rel="stylesheet" href="assets/css/animate.min.css" />
+    <link rel="stylesheet" href="assets/css/angular.css" />
+
 
 
 	<link rel="stylesheet" href="assets/css/perfect-scrollbar.css"> 
@@ -192,14 +195,14 @@
 	    	<ul class="right toolbar toolbar-right hide-on-med-and-down">
 
 					<li ng-show="x === true">
-		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.menu.toolbar.derecho.programador}}" data-activates='dropdown1' href="#!/programador"><i class="material-icons">schedule</i></a>
+		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.menu.toolbar.derecho.programador}}" data-activates='dropdown1' onclick="location.href='#!/programador'" ><i class="material-icons">schedule</i></a>
 		        	<ul id='dropdown1' data-beloworigin="true" class='dropdown-content'>
 					    
 					 </ul>
 				</li>
 
 		        <li ng-show="x === true">
-		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.menu.toolbar.derecho.ajustes}}" data-activates='dropdown1' href="javascript:void(0);"><i class="material-icons">build</i></a>
+		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.menu.toolbar.derecho.ajustes}}" data-activates='dropdown1' onclick="location.href='#!/ajustes'"><i class="material-icons">build</i></a>
 		        	<ul id='dropdown1' data-beloworigin="true" class='dropdown-content'>
 					    
 					 </ul>
@@ -278,6 +281,7 @@
 				<script src="assets/js/angular-route.js"></script>
 				<script src="assets/js/angular-storage.min.js"></script>
 				<script src="assets/js/angucomplete-alt.js"></script>
+				<script src="assets/js/modules/tabs.js"></script>
 
 
 			<!-- /Core -->
@@ -303,6 +307,8 @@
 				<script src="assets/js/controllers/tribunal.js?ver=1.0"></script>	
 				<script src="assets/js/controllers/acto.js?ver=1.0"></script>	
 				<script src="assets/js/controllers/tipo_de_tribunal.js?ver=1.0"></script>	
+
+				<script src="assets/js/controllers/ajustes.js?ver=1.0"></script>	
 
 			<!-- /Controllers -->
 		<!-- /AngularJS -->
