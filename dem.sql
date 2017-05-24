@@ -3,14 +3,18 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 17-04-2017 a las 13:50:29
--- Versión del servidor: 5.5.53-0ubuntu0.14.04.1
--- Versión de PHP: 5.5.9-1ubuntu4.20
+-- Tiempo de generación: 23-05-2017 a las 22:54:26
+-- Versión del servidor: 5.5.54-0ubuntu0.14.04.1
+-- Versión de PHP: 5.5.9-1ubuntu4.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Base de datos: `dem`
@@ -42,15 +46,140 @@ DELIMITER ;
 
 CREATE TABLE IF NOT EXISTS `acto` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `inicio` datetime DEFAULT NULL,
-  `fin` datetime DEFAULT NULL,
+  `inicio` text,
+  `fin` text,
   `titulo` varchar(5000) NOT NULL,
   `descripcion` varchar(200) NOT NULL,
-  `id_sala` int(11) DEFAULT NULL,
-  `id_usuario` int(11) DEFAULT NULL,
+  `id_sala` int(11) NOT NULL DEFAULT '0',
+  `id_tribunal` int(11) NOT NULL DEFAULT '0',
+  `id_usuario` int(11) NOT NULL DEFAULT '0',
   `fecha_de_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+
+--
+-- Volcado de datos para la tabla `acto`
+--
+
+INSERT INTO `acto` (`id`, `inicio`, `fin`, `titulo`, `descripcion`, `id_sala`, `id_tribunal`, `id_usuario`, `fecha_de_registro`) VALUES
+(1, '2017-05-24T12:00:00', '2017-05-24T17:30:00', 'hla', 'hla', 2, 0, 1, '2017-05-23 20:52:26'),
+(2, '2017-05-24T09:00:00', '2017-05-24T18:00:00', 'My Event 2', 'My Event 2', 3, 0, 1, '2017-05-23 20:53:12'),
+(3, '2017-05-24T09:30:00', '2017-05-24T11:30:00', 'My Event 4', 'My Event 4', 6, 0, 1, '2017-05-23 20:39:55'),
+(4, '2017-05-24T08:30:00', '2017-05-24T09:30:00', 'nuevo', 'nuevo', 2, 0, 1, '2017-05-24 02:25:30'),
+(5, '2017-05-24T12:30:00', '2017-05-24T16:30:00', 'giola', 'hajaja', 6, 0, 1, '2017-05-23 20:50:02'),
+(6, '2017-05-24T14:30:00', '2017-05-24T18:00:00', 'haia', 'haia', 4, 0, 1, '2017-05-24 02:25:25'),
+(7, '2017-05-24T09:00:00', '2017-05-24T14:00:00', 'hola', 'haha', 4, 0, 1, '2017-05-24 02:24:58'),
+(8, '2017-05-23T08:30:00', '2017-05-23T10:30:00', 'My Event 1', 'My Event 1', 2, 0, 1, '2017-05-24 02:25:38'),
+(9, '2017-05-23T10:00:00', '2017-05-23T12:00:00', 'My Event 1', 'My Event 1', 3, 0, 1, '2017-05-24 02:25:41'),
+(10, '2017-05-23T10:30:00', '2017-05-23T12:30:00', 'My Event 4', 'My Event 4', 4, 0, 1, '2017-05-24 02:25:43'),
+(11, '2017-05-23T10:00:00', '2017-05-23T12:00:00', 'My Event 5', 'My Event 5', 6, 0, 1, '2017-05-24 02:25:48');
+
+--
+-- Disparadores `acto`
+--
+DROP TRIGGER IF EXISTS `eliminar_acto`;
+DELIMITER //
+CREATE TRIGGER `eliminar_acto` BEFORE DELETE ON `acto`
+ FOR EACH ROW BEGIN
+           INSERT INTO bitacora(
+               operacion, 
+               tabla, 
+               usuario, 
+               registro_anterior, 
+               registro_nuevo
+           ) VALUES(
+               
+               "ELIMINAR", 
+               "ACTO", 
+               OLD.id_usuario, 
+               CONCAT(
+                   '{',
+                      'id : ', OLD.id, ',',
+                      'inicio : "', OLD.inicio, '",',
+                      'fin : "', OLD.fin, '",',
+                      'titulo : "', OLD.titulo, '",',
+                      'descripcion : "', OLD.descripcion, '",',
+                      'id_sala : ', OLD.id_sala, ',',
+                      'id_tribunal : ', OLD.id_tribunal, '',
+                   '}'
+               ), 
+               NULL
+           );
+       END
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `insertar_acto`;
+DELIMITER //
+CREATE TRIGGER `insertar_acto` AFTER INSERT ON `acto`
+ FOR EACH ROW BEGIN
+           INSERT INTO bitacora(
+               operacion, 
+               tabla, 
+               usuario, 
+               registro_anterior, 
+               registro_nuevo
+           ) VALUES(
+               
+               "INSERTAR", 
+               "ACTO", 
+               NEW.id_usuario, 
+               NULL, 
+               CONCAT(
+                   '{',
+                      'id : ', NEW.id, ',',
+                      'inicio : "', NEW.inicio, '",',
+                      'fin : "', NEW.fin, '",',
+                      'titulo : "', NEW.titulo, '",',
+                      'descripcion : "', NEW.descripcion, '",',
+                      'id_sala : ', NEW.id_sala, ',',
+                      'id_tribunal : ', NEW.id_tribunal, '',
+                   '}'
+               )
+           );
+       END
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `modificar_acto`;
+DELIMITER //
+CREATE TRIGGER `modificar_acto` AFTER UPDATE ON `acto`
+ FOR EACH ROW BEGIN
+           INSERT INTO bitacora(
+               operacion, 
+               tabla, 
+               usuario, 
+               registro_anterior, 
+               registro_nuevo
+           ) VALUES(
+               
+               "MODIFICAR", 
+               "ACTO", 
+               NEW.id_usuario, 
+               CONCAT(
+                   '{',
+                      'id : ', OLD.id, ',',
+                      'inicio : "', OLD.inicio, '",',
+                      'fin : "', OLD.fin, '",',
+                      'titulo : "', OLD.titulo, '",',
+                      'descripcion : "', OLD.descripcion, '",',
+                      'id_sala : ', OLD.id_sala, ',',
+                      'id_tribunal : ', OLD.id_tribunal, '',
+                   '}'
+               ), 
+               CONCAT(
+                   '{',
+                      'id : ', NEW.id, ',',
+                      'inicio : "', NEW.inicio, '",',
+                      'fin : "', NEW.fin, '",',
+                      'titulo : "', NEW.titulo, '",',
+                      'descripcion : "', NEW.descripcion, '",',
+                      'id_sala : ', NEW.id_sala, ',',
+                      'id_tribunal : ', NEW.id_tribunal, '',
+                   '}'
+               )
+           );
+       END
+//
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -60,8 +189,8 @@ CREATE TABLE IF NOT EXISTS `acto` (
 CREATE TABLE IF NOT EXISTS `acto_sala` (
 `id` int(11)
 ,`resourceId` int(11)
-,`start` datetime
-,`end` datetime
+,`start` text
+,`end` text
 ,`title` varchar(5000)
 );
 -- --------------------------------------------------------
@@ -75,14 +204,52 @@ CREATE TABLE IF NOT EXISTS `alguacil` (
   `cedula` varchar(20) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `cedula` (`cedula`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Volcado de datos para la tabla `alguacil`
 --
 
 INSERT INTO `alguacil` (`id`, `cedula`) VALUES
+(3, 'V-123453773'),
 (2, 'V-22839339');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `bitacora`
+--
+
+CREATE TABLE IF NOT EXISTS `bitacora` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario` int(11) NOT NULL,
+  `operacion` varchar(10) DEFAULT NULL,
+  `fecha` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `tabla` varchar(40) NOT NULL,
+  `registro_anterior` longtext,
+  `registro_nuevo` longtext,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+
+--
+-- Volcado de datos para la tabla `bitacora`
+--
+
+INSERT INTO `bitacora` (`id`, `usuario`, `operacion`, `fecha`, `tabla`, `registro_anterior`, `registro_nuevo`) VALUES
+(1, 1, 'MODIFICAR', '2017-05-23 20:52:26', 'ACTO', '{id : 1,inicio : "2017-05-24T08:30:00",fin : "2017-05-24T14:00:00",titulo : "hla",descripcion : "haha",id_sala : 2,id_tribunal : 0}', '{id : 1,inicio : "2017-05-24T12:00:00",fin : "2017-05-24T17:30:00",titulo : "hla",descripcion : "hla",id_sala : 2,id_tribunal : 0}'),
+(2, 1, 'INSERTAR', '2017-05-23 20:52:39', 'ACTO', NULL, '{id : 6,inicio : "2017-05-24T08:30:00",fin : "2017-05-24T12:00:00",titulo : "haia",descripcion : "ddhjd",id_sala : 2,id_tribunal : 0}'),
+(3, 1, 'MODIFICAR', '2017-05-23 20:52:56', 'ACTO', '{id : 2,inicio : "2017-05-24T09:00:00",fin : "2017-05-24T15:30:00",titulo : "My Event 2",descripcion : "My Event 2",id_sala : 4,id_tribunal : 0}', '{id : 2,inicio : "2017-05-24T09:00:00",fin : "2017-05-24T18:00:00",titulo : "My Event 2",descripcion : "My Event 2",id_sala : 4,id_tribunal : 0}'),
+(4, 1, 'MODIFICAR', '2017-05-23 20:53:06', 'ACTO', '{id : 4,inicio : "2017-05-24T11:30:00",fin : "2017-05-24T19:00:00",titulo : "nuevo",descripcion : "nuevo",id_sala : 3,id_tribunal : 0}', '{id : 4,inicio : "2017-05-24T08:00:00",fin : "2017-05-24T15:30:00",titulo : "nuevo",descripcion : "nuevo",id_sala : 3,id_tribunal : 0}'),
+(5, 1, 'MODIFICAR', '2017-05-23 20:53:08', 'ACTO', '{id : 4,inicio : "2017-05-24T08:00:00",fin : "2017-05-24T15:30:00",titulo : "nuevo",descripcion : "nuevo",id_sala : 3,id_tribunal : 0}', '{id : 4,inicio : "2017-05-24T08:00:00",fin : "2017-05-24T09:00:00",titulo : "nuevo",descripcion : "nuevo",id_sala : 3,id_tribunal : 0}'),
+(6, 1, 'MODIFICAR', '2017-05-23 20:53:10', 'ACTO', '{id : 2,inicio : "2017-05-24T09:00:00",fin : "2017-05-24T18:00:00",titulo : "My Event 2",descripcion : "My Event 2",id_sala : 4,id_tribunal : 0}', '{id : 2,inicio : "2017-05-24T09:30:00",fin : "2017-05-24T18:30:00",titulo : "My Event 2",descripcion : "My Event 2",id_sala : 3,id_tribunal : 0}'),
+(7, 1, 'MODIFICAR', '2017-05-23 20:53:12', 'ACTO', '{id : 2,inicio : "2017-05-24T09:30:00",fin : "2017-05-24T18:30:00",titulo : "My Event 2",descripcion : "My Event 2",id_sala : 3,id_tribunal : 0}', '{id : 2,inicio : "2017-05-24T09:00:00",fin : "2017-05-24T18:00:00",titulo : "My Event 2",descripcion : "My Event 2",id_sala : 3,id_tribunal : 0}'),
+(8, 1, 'INSERTAR', '2017-05-24 02:24:58', 'ACTO', NULL, '{id : 7,inicio : "2017-05-24T09:00:00",fin : "2017-05-24T14:00:00",titulo : "hola",descripcion : "haha",id_sala : 4,id_tribunal : 0}'),
+(9, 1, 'MODIFICAR', '2017-05-24 02:25:25', 'ACTO', '{id : 6,inicio : "2017-05-24T08:30:00",fin : "2017-05-24T12:00:00",titulo : "haia",descripcion : "ddhjd",id_sala : 2,id_tribunal : 0}', '{id : 6,inicio : "2017-05-24T14:30:00",fin : "2017-05-24T18:00:00",titulo : "haia",descripcion : "haia",id_sala : 4,id_tribunal : 0}'),
+(10, 1, 'MODIFICAR', '2017-05-24 02:25:30', 'ACTO', '{id : 4,inicio : "2017-05-24T08:00:00",fin : "2017-05-24T09:00:00",titulo : "nuevo",descripcion : "nuevo",id_sala : 3,id_tribunal : 0}', '{id : 4,inicio : "2017-05-24T08:30:00",fin : "2017-05-24T09:30:00",titulo : "nuevo",descripcion : "nuevo",id_sala : 2,id_tribunal : 0}'),
+(11, 1, 'INSERTAR', '2017-05-24 02:25:38', 'ACTO', NULL, '{id : 8,inicio : "2017-05-23T08:30:00",fin : "2017-05-23T10:30:00",titulo : "My Event 1",descripcion : "My Event 1",id_sala : 2,id_tribunal : 0}'),
+(12, 1, 'INSERTAR', '2017-05-24 02:25:41', 'ACTO', NULL, '{id : 9,inicio : "2017-05-23T10:00:00",fin : "2017-05-23T12:00:00",titulo : "My Event 1",descripcion : "My Event 1",id_sala : 3,id_tribunal : 0}'),
+(13, 1, 'INSERTAR', '2017-05-24 02:25:43', 'ACTO', NULL, '{id : 10,inicio : "2017-05-23T10:30:00",fin : "2017-05-23T12:30:00",titulo : "My Event 4",descripcion : "My Event 4",id_sala : 4,id_tribunal : 0}'),
+(14, 1, 'INSERTAR', '2017-05-24 02:25:48', 'ACTO', NULL, '{id : 11,inicio : "2017-05-23T10:00:00",fin : "2017-05-23T12:00:00",titulo : "My Event 5",descripcion : "My Event 5",id_sala : 6,id_tribunal : 0}');
 
 -- --------------------------------------------------------
 
@@ -119,6 +286,7 @@ CREATE TABLE IF NOT EXISTS `fiscal` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cedula` text NOT NULL,
   `numero` int(11) NOT NULL,
+  `id_tribunal` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
@@ -126,8 +294,8 @@ CREATE TABLE IF NOT EXISTS `fiscal` (
 -- Volcado de datos para la tabla `fiscal`
 --
 
-INSERT INTO `fiscal` (`id`, `cedula`, `numero`) VALUES
-(2, 'V-9288338', 25);
+INSERT INTO `fiscal` (`id`, `cedula`, `numero`, `id_tribunal`) VALUES
+(2, 'V-9288338', 25, 6);
 
 -- --------------------------------------------------------
 
@@ -162,7 +330,7 @@ CREATE TABLE IF NOT EXISTS `juez` (
   `cedula` varchar(20) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `cedula` (`cedula`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Volcado de datos para la tabla `juez`
@@ -207,7 +375,7 @@ CREATE TABLE IF NOT EXISTS `persona` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `cedula` (`cedula`,`email`,`telefono`),
   UNIQUE KEY `cedula_2` (`cedula`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
 
 --
 -- Volcado de datos para la tabla `persona`
@@ -234,7 +402,8 @@ INSERT INTO `persona` (`id`, `cedula`, `nombres`, `apellidos`, `email`, `telefon
 (33, 'V-28388339', 'MILAGROS', 'MENDOZA', 'MILAGROSMENDOZA@GMAIL.COM', '+58 424 363 83 78', '12/12/1992', 6, NULL, '2017-04-17 17:44:57'),
 (34, 'V-20192933', 'SEBASTIAN', 'PEREZ', 'SEBASTIAN@GMAIL.COM', '+58 426 373 83 83', '12/12/1999', 4, NULL, '2017-04-17 17:45:47'),
 (35, 'V-23776782', 'MANUEL', 'MIJARES', 'MANUELMIJARES@GMAIL.COM', '+58 892 489 28 42', '20/10/1992', 7, NULL, '2017-04-17 17:46:35'),
-(36, 'V-9288338', 'BAUDILIO JOSE', 'SUAREZ', 'BAUDLIOSUAREZ@GMAIL.COM', '+58 426 738 38 38', '10/10/1982', 3, NULL, '2017-04-17 17:47:49');
+(36, 'V-9288338', 'BAUDILIO JOSE', 'SUAREZ', 'BAUDLIOSUAREZ@GMAIL.COM', '+58 426 738 38 38', '10/10/1982', 3, NULL, '2017-04-17 17:47:49'),
+(37, 'V-12345377', 'JUAN', 'PEREZ', 'JUAN@GMAIL.COM', '+58 783 782 30 00', '05/04/1992', 3, NULL, '2017-04-27 15:00:33');
 
 -- --------------------------------------------------------
 
@@ -255,27 +424,114 @@ CREATE TABLE IF NOT EXISTS `persona_tipo_persona` (
 CREATE TABLE IF NOT EXISTS `sala` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(100) NOT NULL,
-  `color` varchar(7) NOT NULL,
+  `color` varchar(20) NOT NULL,
   `id_usuario` int(11) DEFAULT NULL,
   `fecha_de_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `descripcion` (`descripcion`),
   UNIQUE KEY `color` (`color`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Volcado de datos para la tabla `sala`
 --
 
 INSERT INTO `sala` (`id`, `descripcion`, `color`, `id_usuario`, `fecha_de_registro`) VALUES
-(1, 'SALA 1', '#1E1652', NULL, '2017-04-14 23:57:12'),
-(2, 'SALA 2', '#ED00C8', NULL, '2017-04-14 19:37:59'),
-(3, 'SALA 3', '#FF1212', NULL, '2017-04-05 19:25:55'),
-(4, 'SALA 4', '#8A147F', NULL, '2017-04-05 19:26:17'),
-(5, 'SALA 5', '#118C0C', NULL, '2017-04-05 19:26:38'),
-(7, 'SALA 6', '#FF9300', NULL, '2017-04-05 19:27:06'),
-(8, 'SALA 7', '#520E0E', NULL, '2017-04-05 19:29:23'),
-(13, 'SALA 8', '#C90000', NULL, '2017-04-14 23:57:32');
+(2, 'SALA 1', '#f7f022', 1, '2017-05-23 20:20:33'),
+(3, 'SALA 2', '#3100ff', 1, '2017-05-23 20:20:45'),
+(4, 'SALA 3', '#fb1919', 1, '2017-05-23 20:20:57'),
+(6, 'SALA 4', '#2d9c0e', 1, '2017-05-23 20:24:53');
+
+--
+-- Disparadores `sala`
+--
+DROP TRIGGER IF EXISTS `eliminar`;
+DELIMITER //
+CREATE TRIGGER `eliminar` AFTER DELETE ON `sala`
+ FOR EACH ROW BEGIN
+           INSERT INTO bitacora(
+               operacion, 
+               tabla, 
+               usuario, 
+               registro_anterior, 
+               registro_nuevo
+           ) VALUES(
+               
+               "ELIMINAR", 
+               "SALA", 
+               OLD.id_usuario, 
+               CONCAT(
+                   '{',
+                   		'id : ', OLD.id, ',',
+                   		'descripcion : "', OLD.descripcion, '",',
+                   		'color : "', OLD.color, '"',
+                   '}'
+               ), 
+               NULL
+           );
+       END
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `insertar`;
+DELIMITER //
+CREATE TRIGGER `insertar` AFTER INSERT ON `sala`
+ FOR EACH ROW BEGIN
+           INSERT INTO bitacora(
+               operacion, 
+               tabla, 
+               usuario, 
+               registro_anterior, 
+               registro_nuevo
+           ) VALUES(
+               
+               "INSERTAR", 
+               "SALA", 
+               NEW.id_usuario, 
+               NULL, 
+               CONCAT(
+                   '{',
+                   		'id : ', NEW.id, ',',
+                   		'descripcion : "', NEW.descripcion, '",',
+                   		'color : "', NEW.color, '"',
+                   '}'
+               )
+           );
+       END
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `modificar`;
+DELIMITER //
+CREATE TRIGGER `modificar` AFTER UPDATE ON `sala`
+ FOR EACH ROW BEGIN
+           INSERT INTO bitacora(
+               operacion, 
+               tabla, 
+               usuario, 
+               registro_anterior, 
+               registro_nuevo
+           ) VALUES(
+               
+               "MODIFICAR", 
+               "SALA", 
+               NEW.id_usuario, 
+               CONCAT(
+                   '{',
+                   		'id : ', OLD.id, ',',
+                   		'descripcion : "', OLD.descripcion, '",',
+                   		'color : "', OLD.color, '"',
+                   '}'
+               ), 
+               CONCAT(
+                   '{',
+                   		'id : ', NEW.id, ',',
+                   		'descripcion : "', NEW.descripcion, '",',
+                   		'color : "', NEW.color, '"',
+                   '}'
+               )
+           );
+       END
+//
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -321,6 +577,7 @@ CREATE TABLE IF NOT EXISTS `suplente` (
 CREATE TABLE IF NOT EXISTS `testigo` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cedula` varchar(20) NOT NULL,
+  `id_tipo_de_testigo` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `cedula` (`cedula`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
@@ -329,8 +586,8 @@ CREATE TABLE IF NOT EXISTS `testigo` (
 -- Volcado de datos para la tabla `testigo`
 --
 
-INSERT INTO `testigo` (`id`, `cedula`) VALUES
-(2, 'V-23776782');
+INSERT INTO `testigo` (`id`, `cedula`, `id_tipo_de_testigo`) VALUES
+(2, 'V-23776782', 1);
 
 -- --------------------------------------------------------
 
@@ -344,7 +601,14 @@ CREATE TABLE IF NOT EXISTS `tipo_de_testigo` (
   `fecha_de_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `id_usuario` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `tipo_de_testigo`
+--
+
+INSERT INTO `tipo_de_testigo` (`id`, `descripcion`, `fecha_de_registro`, `id_usuario`) VALUES
+(1, 'TESTIGO PRESENCIAL', '2017-05-17 14:54:29', 1);
 
 -- --------------------------------------------------------
 
@@ -447,7 +711,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `cedula`, `clave`, `id_nivel`, `id_usuario`, `fecha_de_registro`) VALUES
-(1, 'V-21301059', '21301059', 1, 1, '2017-04-14 21:00:30');
+(1, 'V-21301059', 'ae45ad6d9902c5483018e334239613881a77b5dd', 1, 1, '2017-05-23 16:20:21');
 
 -- --------------------------------------------------------
 
