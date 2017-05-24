@@ -4,6 +4,7 @@
 
 		app.controller('main', function($rootScope,$scope,$http,$q,$localStorage,$location) {
 			
+			
 
 			$rootScope.app_name = "NOMBRE-DE-SISTEMA";
 			$rootScope.token = "";
@@ -68,7 +69,7 @@
 				});
         	}
 
-        	$rootScope.confirm = function(title, text, type, confirmFunction, cancelFunction) {
+        	$rootScope.confirm = function(title, text, type, confirmFunction, cancelFunction, closeOnConfirm = false) {
 	        	swal({   
 					title: title,   
 					text: text,   
@@ -77,7 +78,7 @@
 					confirmButtonColor: "#0D47A1",   
 					confirmButtonText: "Confirmar",   
 					cancelButtonText: "Cancelar",   
-					closeOnConfirm: false,   
+					closeOnConfirm: closeOnConfirm,   
 					closeOnCancel: true 
 				}, function(isConfirm) { 
 					if (isConfirm) {
@@ -90,8 +91,8 @@
 				});
         	}
 
-        	$rootScope.toast = function(message) {
-        		Materialize.toast(message, 2000, "toasts");
+        	$rootScope.toast = function(message, time = 2000) {
+        		Materialize.toast(message, time, "toasts");
         	}
 
         	// FUNCIONES PARA EL AUTOCOMPLETADO DE PERSONA - INICIO
@@ -440,6 +441,7 @@
 									return;
 								} else {
 									$rootScope.x = true;
+									$rootScope.id_usuario = response["0"].id_usuario
 								}
 							});
 						} else {
@@ -506,6 +508,58 @@
 				// ----------------------------------------------------------------- 
 				// VALIDACIONES | FIN
 				// -----------------------------------------------------------------
+
+				var contador = 0;
+				var inactividad = false;
+
+				$(document).ready(function() {
+					setInterval(function() {
+						if($rootScope.x === true) {
+
+							console.log(contador);
+							if(contador==180) {
+								inactividad = true;
+								$rootScope.confirm("Hemos detectado inactividad", "La sesion culminará en 60 segundos por seguridad, si deseas continuar, haz click en confirmar", "info", 
+								function() {
+									contador = 0;
+								}, 
+								function() {
+									$rootScope.x = false;
+									$localStorage.token = undefined;
+									window.location.href="#!/login";
+								}, true);
+										
+							}
+
+
+							if(contador==240) {
+								$rootScope.x = false;
+								$localStorage.token = undefined;
+								window.location.href="#!/login";
+								$rootScope.alert("Hemos detectado inactividad", "Tu sesión ha sido finalizada por inactividad", "error");
+									
+							}
+							contador = contador + 60;
+
+						}
+				}, 60000);
+						
+			});
+			
+
+				$( "body" ).mousemove(function( event ) {
+					if(inactividad != true) {
+						contador = 0;
+					}
+					
+				});
+				$( "body" ).click(function( event ) {
+					contador = 0;
+				});
+
+				$( "body" ).keypress(function( event ) {
+					contador = 0;
+				});
 
         	
 			

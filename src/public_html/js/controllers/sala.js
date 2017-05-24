@@ -7,7 +7,7 @@ app.controller('sala', function($rootScope,$scope,$http,$q,$localStorage) {
 	// -----------------------------------------------------------------
 	// SE EJECUTA DE MANERA AUTOMATICA AL TERMINAR LA CARGA DE LA PAGINA
 	// -----------------------------------------------------------------
-	angular.element(document).ready(function() {
+	angular.element(document).ready(function() {		
 
 		// Mascaras de los campos
 		$("#fecha_de_nacimiento").mask("99/99/9999",{placeholder:"DD/MM/AAAA"});
@@ -29,12 +29,13 @@ app.controller('sala', function($rootScope,$scope,$http,$q,$localStorage) {
 					id: null,
 					descripcion : $scope.datos.descripcion.toUpperCase(),
 					color : $scope.datos.color,
+					id_usuario: $rootScope.id_usuario
 				};
 
 
 				// Si la accion del boton es registrar
 				if($rootScope.button == "registrar") {
-					
+					console.log($scope.sala);
 					
 					$rootScope.post('api/' + $scope.obj_padre, $scope.sala).then(function(response) {
 

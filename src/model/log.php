@@ -9,10 +9,8 @@
 
 
 		function log_in($cedula, $clave) {
-
+			$clave = sha1($clave);
 			return $this->get_query(sprintf("SELECT * FROM usuario WHERE cedula = '%s' AND clave = '%s'", $cedula, $clave));
-
-
 		}
 
 		function validateToken($token) {

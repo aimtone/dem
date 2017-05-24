@@ -211,6 +211,7 @@
                                 titulo: event.title,
                                 descripcion: event.title,
                                 id_sala: event.resourceId,
+                                id_usuario : $rootScope.id_usuario
                             };
                             $rootScope.post('api/acto', data).then(function() {
                                 $('#calendar').fullCalendar( 'removeEvents', event._id );
@@ -228,6 +229,7 @@
                                 titulo: event.title,
                                 descripcion: event.title,
                                 id_sala: event.resourceId,
+                                id_usuario : $rootScope.id_usuario
                             };
 
 
@@ -244,6 +246,7 @@
                                 titulo: event.title,
                                 descripcion: event.title,
                                 id_sala: event.resourceId,
+                                id_usuario : $rootScope.id_usuario
                             };
 
                             $rootScope.put('api/acto/' + event._id, data).then(function(response) {
@@ -261,7 +264,8 @@
                                 fin: $rootScope.formatDate(end._d,"yyyy-MM-ddThh:mm:ss"),
                                 titulo: "",
                                 descripcion: "",
-                                id_sala: resource.id
+                                id_sala: resource.id,
+                                id_usuario : $rootScope.id_usuario
                             };
 
                             $localStorage.evento = data;

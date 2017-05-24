@@ -15,7 +15,7 @@
     }
 
     function validateToken($username,$password) {
-      $query = $this->get_query(sprintf("SELECT * FROM usuario WHERE cedula = '%s' AND clave = '%s'", $username, $password));
+      $query = $this->get_query(sprintf("SELECT * FROM usuario WHERE cedula = '%s' AND clave = '%s'", $username, sha1($password)));
 
       $query = array_filter($query);
      

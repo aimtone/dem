@@ -14,7 +14,7 @@
 
 			$rootScope.token = {
 				cedula: $scope.datos.cedula,
-				clave : $scope.datos.clave
+				clave : $rootScope.Base64.encode(md5($scope.datos.clave))
 			};
 
 			$rootScope.token = JSON.stringify($rootScope.token);
@@ -23,19 +23,10 @@
 			$http.get($rootScope.sprintf('api/v1/login/%s',$rootScope.token)).then(function(response) {
 				if(response.status == 200) {
 					$rootScope.x = true;
-					var data = response.data.data[0];
-					
-					$rootScope.token = {
-						cedula: data.cedula,
-						clave : data.clave
-					};
-
-					$rootScope.token = JSON.stringify($rootScope.token);
-					$rootScope.token = $rootScope.Base64.encode($rootScope.token);
+					$rootScope.id_usuario = response.data.data[0].id_usuario;
 					$localStorage.token = $rootScope.token;
 
 					$rootScope.toast(response.statusText);
-					console.log(data);
 					
 					$location.url('/');
 				}

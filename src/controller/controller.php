@@ -21,7 +21,7 @@
 		$credenciales = json_decode($credenciales, true);
 
 		$cedula = $credenciales['cedula'];
-		$clave = $credenciales['clave'];
+		$clave = base64_decode($credenciales['clave']);
 		
 		$data = $obj->validateToken($cedula,$clave);
 		
