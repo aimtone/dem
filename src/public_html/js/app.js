@@ -69,6 +69,41 @@
 				});
         	}
 
+			$rootScope.prompt = function(title,text,placeholder, okButton, cancelButton) {
+				swal({   
+					title: title,   
+					text: text,   
+					type: "input",   
+					confirmButtonColor: "#0D47A1",   
+					confirmButtonText: "Confirmar",   
+					cancelButtonText: "Cancelar",
+					showCancelButton: true,   
+					closeOnConfirm: false,   
+					inputPlaceholder: placeholder 
+				}, function(inputValue) {   
+					if (inputValue === false)  {
+						cancelButton(this);
+						return false;
+					}
+						  
+					if (inputValue === "") {     
+						swal.showInputError("Campo Vacio");     
+						return false;
+					}      
+					okButton(inputValue);
+					
+				});
+			};
+
+			$rootScope.timerAlert = function(title, text, timer, showConfirmButton = false) {
+				swal({   
+					title: title,   
+					text: text,   
+					timer: timer,   
+					showConfirmButton: showConfirmButton 
+				});
+			}
+
         	$rootScope.confirm = function(title, text, type, confirmFunction, cancelFunction, closeOnConfirm = false) {
 	        	swal({   
 					title: title,   
@@ -515,19 +550,54 @@
 				$(document).ready(function() {
 					setInterval(function() {
 						if($rootScope.x === true) {
-
-							console.log(contador);
 							if(contador==180) {
 								inactividad = true;
-								$rootScope.confirm("Hemos detectado inactividad", "La sesion culminará en 60 segundos por seguridad, si deseas continuar, haz click en confirmar", "info", 
-								function() {
-									contador = 0;
-								}, 
-								function() {
+								$rootScope.x = false;
+								$localStorage.token = undefined;
+								$rootScope.prompt("Hemos detectado inactividad","Tu sesion finalizara en 60 segundos. Si deseas continuar la sesion, ingresa tu clave","",
+								function(response) {
+									// al presionar ok
+									$rootScope.token = {
+										cedula: $rootScope.cedula,
+										clave : $rootScope.Base64.encode(md5(response))
+									};
+
+									$rootScope.token = JSON.stringify($rootScope.token);
+									$rootScope.token = $rootScope.Base64.encode($rootScope.token);
+
+									$http.get($rootScope.sprintf('api/v1/login/%s',$rootScope.token)).then(function(response) {										
+										if(response.status === 200) {
+											contador = 0;
+											$rootScope.x = true;
+											$localStorage.token = $rootScope.token;
+											$rootScope.timerAlert("Verificado","Has verificado tu sesion",1000);
+										}
+
+										if(response.status === 201) {
+											$rootScope.x = false;
+											$localStorage.token = undefined;
+											window.location.href="#!/login";
+											$rootScope.alert("Hemos detectado inactividad", "La clave introducida no coincide, tu sesion se ha cerrado por tu seguridad", "error");
+
+										}
+
+										
+
+										
+									}, function(response) {
+										if(response.status == 404) {
+											$rootScope.toast(response.statusText);
+										}
+										if(response.status == 500) {
+											$rootScope.toast(response.statusText);
+										}
+									});
+								}, function() {
+									// al presionar cancelar
 									$rootScope.x = false;
 									$localStorage.token = undefined;
 									window.location.href="#!/login";
-								}, true);
+								});
 										
 							}
 
@@ -558,7 +628,9 @@
 				});
 
 				$( "body" ).keypress(function( event ) {
-					contador = 0;
+					if(inactividad != true) {
+						contador = 0;
+					}
 				});
 
         	

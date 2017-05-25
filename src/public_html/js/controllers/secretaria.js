@@ -33,13 +33,15 @@ app.controller('secretaria', function($rootScope,$scope,$http,$q,$localStorage) 
 					email : $scope.datos.email.toUpperCase(),
 					telefono : $scope.datos.telefono,
 					fecha_de_nacimiento : $scope.datos.fecha_de_nacimiento,
-					id_tipo_persona: 2
+					id_tipo_persona: $rootScope.id_usuario
 				};
 
 				$scope.obj = {
-					id: null,
 					cedula : $scope.datos.cedula.toUpperCase()
 				};
+
+				console.log(JSON.stringify($scope.persona));
+				console.log(JSON.stringify($scope.obj));
 
 				// Si la accion del boton es registrar
 				if($rootScope.button == "registrar") {

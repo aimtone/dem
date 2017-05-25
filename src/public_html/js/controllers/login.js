@@ -23,6 +23,7 @@
 			$http.get($rootScope.sprintf('api/v1/login/%s',$rootScope.token)).then(function(response) {
 				if(response.status == 200) {
 					$rootScope.x = true;
+					$rootScope.cedula = response.data.data[0].cedula;
 					$rootScope.id_usuario = response.data.data[0].id_usuario;
 					$localStorage.token = $rootScope.token;
 

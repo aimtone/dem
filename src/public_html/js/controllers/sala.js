@@ -35,7 +35,7 @@ app.controller('sala', function($rootScope,$scope,$http,$q,$localStorage) {
 
 				// Si la accion del boton es registrar
 				if($rootScope.button == "registrar") {
-					console.log($scope.sala);
+					console.log(JSON.stringify($scope.sala));
 					
 					$rootScope.post('api/' + $scope.obj_padre, $scope.sala).then(function(response) {
 
