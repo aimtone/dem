@@ -552,8 +552,7 @@
 						if($rootScope.x === true) {
 							if(contador==180) {
 								inactividad = true;
-								$rootScope.x = false;
-								$localStorage.token = undefined;
+								
 								$rootScope.prompt("Hemos detectado inactividad","Tu sesion finalizara en 60 segundos. Si deseas continuar la sesion, ingresa tu clave","",
 								function(response) {
 									// al presionar ok
@@ -568,8 +567,7 @@
 									$http.get($rootScope.sprintf('api/v1/login/%s',$rootScope.token)).then(function(response) {										
 										if(response.status === 200) {
 											contador = 0;
-											$rootScope.x = true;
-											$localStorage.token = $rootScope.token;
+											
 											$rootScope.timerAlert("Verificado","Has verificado tu sesion",1000);
 										}
 
