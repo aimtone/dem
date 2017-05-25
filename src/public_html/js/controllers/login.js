@@ -16,23 +16,23 @@
 		function DrawCaptcha()
 		{
 			var claves;
-			claves=Array("A","B","C","D","E","F","G","H","I"," J","K","L","M","N","O","P","Q","R","S","T","U","V" ,"W","X","Y","Z","0","1","2","3","4","5","6","7"," 8","9","0");
+			claves=Array("A","B","C","D","E","F","G","H","I"," J","K","L","M","N","O","P","Q","R","S","T","U","V" ,"W","X","Y","Z","0","1","2","3","4","5","6","7"," 8","9","0"," ");
 			
-			var a = claves[Math.floor(Math.random() * claves.length)] + '';
-			var b = claves[Math.floor(Math.random() * claves.length)] + '';       
-			var c = claves[Math.floor(Math.random() * claves.length)] + '';  
-			var d = claves[Math.floor(Math.random() * claves.length)] + '';  
-			var e = claves[Math.floor(Math.random() * claves.length)] + '';  
-			var f = claves[Math.floor(Math.random() * claves.length)] + '';  
-			var g = claves[Math.floor(Math.random() * claves.length)] + '';  
-			var code = a + ' ' + b + ' ' + ' ' + c + ' ' + d + ' ' + e + ' '+ f + ' ' + g;
+			var a = claves[Math.floor(Math.random() * claves.length)];
+			var b = claves[Math.floor(Math.random() * claves.length)];       
+			var c = claves[Math.floor(Math.random() * claves.length)];  
+			var d = claves[Math.floor(Math.random() * claves.length)];  
+			var e = claves[Math.floor(Math.random() * claves.length)];  
+			var f = claves[Math.floor(Math.random() * claves.length)];  
+			var g = claves[Math.floor(Math.random() * claves.length)];  
+			var code = a +  b + c + d  + e + f +  g;
 			document.getElementById("txtCaptcha").value = code
 		}
 
 		// Validate the Entered input aganist the generated security code function   
 		function ValidCaptcha(){
-			var str1 = removeSpaces(document.getElementById('txtCaptcha').value);
-			var str2 = removeSpaces(document.getElementById('txtInput').value);
+			var str1 = document.getElementById('txtCaptcha').value;
+			var str2 = document.getElementById('txtInput').value;
 			if (str1 == str2) { 
 				return true; 
 			} else {       
