@@ -179,7 +179,7 @@
 
 
 	<!-- Navbar Secundaria -->
-	<nav class="blue darken-5 sticky">
+	<nav ng-show="x === true" class="blue darken-5 sticky">
 	    <div class="navbar-wrapper" id="nav-secundario">
 			<ul ng-show="x === true" class="left toolbar toolbar-left hide-on-med-and-down">
 		        <li>
@@ -329,6 +329,10 @@
 
 
 		<script>
+
+			
+
+		
 			$( document ).ready(function(){
 				// Cargar la barra lateral (solo Movil)
 	        	cargarScripts();
