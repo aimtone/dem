@@ -687,20 +687,20 @@ a.fc-more:hover {
 
 .fc-toolbar .fc-state-hover,
 .fc-toolbar .ui-state-hover {
-    z-index: 2
+    z-index: 0
 }
 
 .fc-toolbar .fc-state-down {
-    z-index: 3
+    z-index: 0
 }
 
 .fc-toolbar .fc-state-active,
 .fc-toolbar .ui-state-active {
-    z-index: 4
+    z-index: 0
 }
 
 .fc-toolbar button:focus {
-    z-index: 5
+    z-index: 0
 }
 
 .fc-view-container *,

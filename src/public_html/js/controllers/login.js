@@ -24,7 +24,8 @@
 			var d = claves[Math.floor(Math.random() * claves.length)];  
 			var e = claves[Math.floor(Math.random() * claves.length)];  
 			var f = claves[Math.floor(Math.random() * claves.length)];  
-			var g = claves[Math.floor(Math.random() * claves.length)];  
+			var g = claves[Math.floor(Math.random() * claves.length)]; 
+			 
 			var code = a +  b + c + d  + e + f +  g;
 			document.getElementById("txtCaptcha").value = code
 		}
