@@ -39,5 +39,19 @@
 			"telefono": "Telefone",
 			"fecha_de_nacimiento": "Data de nascimento"
 		}
+	},
+	"login" : {
+		"bienvenido" : "Bemvindo",
+		"mensaje" : "mensaje",
+		"boton_solicitud" : "Solicitar cuenta",
+		"ingresar" : "Iniciar Sesion",
+		"formulario" : {
+			"usuario" : "Cedula de Identidad",
+			"clave" : "Clave",
+			"mensaje_captcha" : "Escribe lo que ves en la imagen",
+			"recordar_sesion" : "Recordar sesion",
+			"boton" : "Acceder"
+		}
+
 	}
 }

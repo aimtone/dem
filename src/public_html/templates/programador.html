@@ -55,11 +55,43 @@
     
 
 </style>
+		<div class="event-tooltip">
+				<div class="meta">
+					<h2>{{event_card_data.titulo}}</h2>
+					<p>{{event_card_data.descripcion}}</p>
+				</div>
+				<div class="tiempo">
+					<div class="fecha">
+						<label>Fecha</label>
+						<p>{{event_card_data.fecha}}</p>
+					</div>
+					<div class="Inicio">
+						<label>Hora de Inicio</label>
+						<p>{{event_card_data.inicio}}</p>
+					</div>
+					<div class="fin">
+						<label>Hora de Fin</label>
+						<p>{{event_card_data.fin}}</p>
+					</div>
+				</div>
+
+				<div class="btn-group">
+					<a href="{{LinkMasDetalles}}">Mas detalles</a>
+					<button>Reprogramar</button>
+					<button>Eliminar</button>
+				</div>
+		</div>
+
 
 	<div id='wrap' class="">
+		
 
 		<div class="hide-on-med-and-down" id='external-events'>
-			<h4>Audiencias</h4>
+			
+			<h4>
+
+				
+			</h4>
             <div class='fc-event'>My Event 1</div>
 			<div class='fc-event'>My Event 2</div>
 			<div class='fc-event'>My Event 3</div>
@@ -68,6 +100,7 @@
             <div class='fc-event'>My Event 1</div>
 			<div class='fc-event'>My Event 2</div>
 			<div class='fc-event'>My Event 3</div>
+			
 
 			
 
@@ -82,3 +115,5 @@
 		<div style='clear:both'></div>
 
 	</div>
+
+	

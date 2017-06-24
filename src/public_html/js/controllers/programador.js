@@ -125,19 +125,6 @@
 
 
                         },
-                        navLinks: true,
-                        dayClick: function(date, jsEvent, view) {
-
-                            console.log('Clicked on: ' + date.format());
-
-                            console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-
-                            console.log('Current view: ' + view.name);
-
-                            // change the day's background color just for fun
-                            //$(this).css('background-color', 'red');
-
-                        },
                         selectable: true,
                         selectHelper: true,
                         unselectAuto: true,
@@ -216,6 +203,109 @@
                             $rootScope.post('api/acto', data).then(function() {
                                 $('#calendar').fullCalendar( 'removeEvents', event._id );
                                 $('#calendar').fullCalendar( 'refetchEvents' );
+                            });
+                        
+                        }, 
+                        eventClick: function(event,jsEvent) { 
+
+                            $rootScope.get('api/acto/'+event.id).then(function(response) {
+                                var paramFecha = $rootScope.formatDate(response[0].inicio,"yyyy-MM-dd")
+                                $rootScope.LinkMasDetalles = "#!programador/" + paramFecha + "/" + response[0].id;
+                                
+                                $rootScope.event_card_data = response[0];
+
+                                if($rootScope.formatDate($rootScope.event_card_data.inicio,"dd/MM/yyyy")==$rootScope.formatDate(new Date(),"dd/MM/yyyy")) {
+                                    $rootScope.event_card_data.fecha = "Hoy";
+                                } else {
+                                    $rootScope.event_card_data.fecha = $rootScope.formatDate($rootScope.event_card_data.inicio,"dd/MM/yyyy");
+                                }
+
+                                $rootScope.event_card_data.titulo = $rootScope.event_card_data.titulo.substr(0,30);
+                                $rootScope.event_card_data.descripcion = $rootScope.event_card_data.descripcion.substr(0,90);
+
+                                $rootScope.event_card_data.inicio = $rootScope.formatDate($rootScope.event_card_data.inicio,"hh:mm");
+                                $rootScope.event_card_data.fin = $rootScope.formatDate($rootScope.event_card_data.fin,"hh:mm");
+
+                                
+
+                                
+                                
+                                var display = $('.event-tooltip').css("display");
+
+                                
+                                $('.event-tooltip').fadeIn("fast");
+
+                                if(typeof $localStorage.eventClick != "undefined") {
+
+                                    if($localStorage.eventClick!=event.id) {
+                                        $('.event-tooltip').css({
+                                            display:"block",
+                                            top: jsEvent.pageY + "px",
+                                            left: jsEvent.pageX + "px"
+                                        });
+                                    } else {
+
+                                        if(display!="none") {
+                                            $('.event-tooltip').css({
+                                                display:"none",
+                                                top: jsEvent.pageY + "px",
+                                                left: jsEvent.pageX + "px"
+                                            });
+                                        } else {
+                                            $('.event-tooltip').css({
+                                                display:"block",
+                                                top: jsEvent.pageY + "px",
+                                                left: jsEvent.pageX + "px"
+                                            });
+                                        }
+                                        
+                                        
+                                        
+                                    }
+                                    
+                                } else {
+                                    $('.event-tooltip').css({
+                                            display:"block",
+                                            top: jsEvent.pageY + "px",
+                                            left: jsEvent.pageX + "px"
+                                        });
+                                }
+                                $localStorage.eventClick = event.id;
+
+                           
+                                    var right = $('.event-tooltip').css("right");
+                                    right = right.substr(0,1);
+                                    var bottom = $('.event-tooltip').css("bottom");
+                                    bottom = bottom.substr(0,1);
+
+                                    if(right==="-" && bottom==="-") {
+                                        $('.event-tooltip').css({
+                                            top: (jsEvent.pageY - 140) + "px",
+                                            left: (jsEvent.pageX - 400) + "px"
+                                        });
+                                        
+                                        return;
+                                    }
+
+                                    if(right==="-") {
+                                        $('.event-tooltip').css({
+                                            top: jsEvent.pageY + "px",
+                                            left: (jsEvent.pageX - 400) + "px"
+                                        });
+                                        return;
+                                    }
+
+                                    if(bottom==="-") {
+                                        $('.event-tooltip').css({
+                                            top: (jsEvent.pageY - 140)  + "px",
+                                            left: jsEvent.pageX + "px"
+                                        });
+                                        return;
+                                    }
+       
+                                
+                               
+
                             });
                         
                         },

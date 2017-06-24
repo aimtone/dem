@@ -40,5 +40,19 @@
 			"telefono": "Phone Number",
 			"fecha_de_nacimiento": "Birthdate"
 		}
+	},
+	"login" : {
+		"bienvenido" : "Wecolme",
+		"mensaje" : "allows to you ",
+		"boton_solicitud" : "Ask an account",
+		"ingresar" : "Sign In",
+		"formulario" : {
+			"usuario" : "ID Card Number",
+			"clave" : "Password",
+			"mensaje_captcha" : "Write what you see in the image above",
+			"recordar_sesion" : "Remember me",
+			"boton" : "Let's go"
+		}
+
 	}
 }

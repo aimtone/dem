@@ -42,12 +42,6 @@
 			
 		}
 
-		// Remove the spaces from the entered and generated code
-		function removeSpaces(string)
-		{
-			return string.split(' ').join('');
-		}
-
 	
 
 		$('#login').on('click',function() {

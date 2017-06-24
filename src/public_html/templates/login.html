@@ -1,33 +1,33 @@
 <div class="container">
     <div class="row">
         <div class="col m6 l6 hide-on-med-and-down">
-            <h2>Bienvenido</h2>
-            <p><b>{{app_name}}</b> permite la gestion de audiencias del el circuito judicial de San Felipe, Yaracuy.</p>
-            <p>Por favor, para ingresar al sistema, introduzca su cedula de identidad y clave, en caso de no tener una cuenta, solicitala aca</p>
-            <button class="btn btn-large blue waves-effect waves-light" type="button" name="action">Solicitar cuenta
+            <h2>{{lang.login.bienvenido}}</h2>
+            <p><b>{{app_name}}</b> {{lang.login.mensaje}}</p>
+           
+            <button class="btn btn-large blue waves-effect waves-light" type="button" name="action">{{lang.login.boton_solicitud}}
                 <i class="material-icons right">send</i>
             </button>
         </div>
         <div class="col m6 l6">
-            <h2 class="center-align">Ingresar</h2>
+            <h2 class="center-align">{{lang.login.ingresar}}</h2>
             <div class="row">
                 <form class="col s12" autocomplete="off">
                     <div class="row">
                         <div class="input-field col s12">
                             <input id="cedula" type="text" class="validate" ng-model="datos.cedula" required>
-                            <label for="cedula">Cedula de Identidad</label>
+                            <label for="cedula">{{lang.login.formulario.usuario}}</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
                             <input id="clave" type="password" class="validate" ng-model="datos.clave" required>
-                            <label for="clave">Clave</label>
+                            <label for="clave">{{lang.login.formulario.clave}}</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col s9">
                             <input type="text" readonly id="txtCaptcha"/>
-                            <input type="text" id="txtInput" placeholder="Escribe lo que ves en la imagen"/>
+                            <input type="text"  ng-keyup="aMayusculas($event);" id="txtInput" name="txtInput" placeholder="{{lang.login.formulario.mensaje_captcha}}"/>
                         </div>
                         <div class="col s2">
                             <button class="btn orange darken-4 waves-effect waves-light" type="button" id="btnrefresh"><i class="material-icons">refresh</i></button>
@@ -38,7 +38,7 @@
                         <div class="col s12">
                             <p>
                                 <input type="checkbox" id="remember">
-                                <label for="remember">Recordar sesion</label>
+                                <label for="remember">{{lang.login.formulario.recordar_sesion}}</label>
                             </p>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                     <div class="row">
                         <div class="col m12">
                             <p class="right-align">
-                                <button class="btn blue darken-4 waves-effect waves-light" type="button" id="login" name="login">Adelante</button>
+                                <button class="btn blue darken-4 waves-effect waves-light" type="button" id="login" name="login">{{lang.login.formulario.boton}}</button>
                             </p>
                         </div>
                     </div>

@@ -15,6 +15,32 @@
         	angular.element(document).ready(function() {
         		// Establecer y cargar el lenguaje seleccionado para la pagina
         		$rootScope.setLang($localStorage.locale);
+
+				setTimeout(function() {
+								var loaderDiv = document.getElementById("loader-wrapper");
+
+								// When the transition ends remove loader's div from display
+								// so that we can access the map with gestures or clicks
+								loaderDiv.addEventListener("transitionend",function(){
+										loaderDiv.style.display = "none";
+								}, true);
+
+								// Kick off the CSS transition
+								loaderDiv.style.opacity = 0.0;
+
+								cargarScripts();
+								$('#mobile-demo').perfectScrollbar();
+								$('.events').perfectScrollbar();
+								$('#main').smoothState();
+								$('.sticky').pushpin({
+									top: 30,
+									bottom: 1500,
+									offset: 0
+								});
+								
+						}, 1000);
+				
+				
 				
 				
 
@@ -24,6 +50,8 @@
         	// FUNCIONES QUE SE EJECUTAN AL CARGAR LA PAGINA (FIN)
         	// ----------------------------------------------------------------------- //
         	// FUNCIONES DE CONFIGURACION (INICIO)
+
+
 
 			$rootScope.config = {
 				// Funcion para establacer el lenguage de la pagina
@@ -390,6 +418,46 @@
 				}
 			}
 
+
+				var cargarScripts = function() {
+
+					
+
+
+					$('#sidenav-left').sideNav({
+						menuWidth: 300, // Default is 300
+						edge: 'left', // Choose the horizontal origin
+						closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+						draggable: true // Choose whether you can drag to open on touch screens
+						}
+					);
+
+					$('#sidenav-right').sideNav({
+						menuWidth: 300, // Default is 300
+						edge: 'right', // Choose the horizontal origin
+						closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+						draggable: true // Choose whether you can drag to open on touch screens
+						}
+					);
+
+
+					setTimeout(function() {
+						$('select').material_select();
+						$('.dropdown-button').dropdown({
+						inDuration: 300,
+						outDuration: 225,
+						constrainWidth: false, // Does not change width of dropdown to that of the activator
+						hover: false, // Activate on hover
+						gutter: 0, // Spacing from edge
+						belowOrigin: true, // Displays dropdown below the button
+						alignment: 'right', // Displays dropdown with edge aligned to the left of button
+						stopPropagation: true // Stops event propagation
+						}
+					);
+			
+					},100);
+				}
+
         	// SCRIPT DE EJECUCION PRINCIPAL (FIN)
         	// ----------------------------------------------------------------------- //
 
@@ -536,6 +604,7 @@
 						$rootScope.x = false;
 						$rootScope.token = {};
 						$localStorage.token = "";
+						$localStorage.eventClick = undefined;
 						$location.url('/login');
 					});
 
@@ -553,7 +622,6 @@
 						if($rootScope.x === true) {
 							if(contador==180) {
 								inactividad = true;
-								$rootScope.x = false;
 								$localStorage.token = undefined;
 								$rootScope.prompt("Hemos detectado inactividad","Tu sesion finalizara en 60 segundos. Si deseas continuar la sesion, ingresa tu clave","",
 								function(response) {

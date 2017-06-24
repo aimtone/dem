@@ -31,61 +31,51 @@
             height: 100px;
             margin: -50px 0 0 -50px;
             border-radius: 50%;
-            border: 3px solid transparent;
+            border: 3px solid #eee;
             border-top-color: #14385f;
 
-            -webkit-animation: spin 2s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
-            animation: spin 2s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+            -webkit-animation: spin 2s linear infinite; 
+            animation: spin 2s linear infinite; 
         }
 
         #loader:before {
             content: "";
             position: absolute;
-            top: 5px;
-            left: 5px;
-            right: 5px;
-            bottom: 5px;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
             border-radius: 50%;
-            border: 3px solid transparent;
+            border: 5px solid #eee;
             border-top-color: #14385f;
 
-            -webkit-animation: spin 3s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
-            animation: spin 3s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+            -webkit-animation: spin 3s linear infinite; 
+            animation: spin 3s linear infinite; 
         }
 
         #loader:after {
             content: "";
             position: absolute;
-            top: 15px;
-            left: 15px;
-            right: 15px;
-            bottom: 15px;
+            top: 1px;
+            left: 1px;
+            right:1px;
+            bottom: 1px;
             border-radius: 50%;
-            border: 3px solid transparent;
+            border: 8px solid #eee;
             border-top-color: #14385f;
 
             -webkit-animation: spin 1.5s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
             animation: spin 1.5s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
         }
 
-        @-webkit-keyframes spin {
-            0%   {
-                -webkit-transform: rotate(0deg);  /* Chrome, Opera 15+, Safari 3.1+ */
-                -ms-transform: rotate(0deg);  /* IE 9 */
-                transform: rotate(0deg);  /* Firefox 16+, IE 10+, Opera */
-            }
-            100% {
-                -webkit-transform: rotate(360deg);  /* Chrome, Opera 15+, Safari 3.1+ */
-                -ms-transform: rotate(360deg);  /* IE 9 */
-                transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera */
-            }
-        }
+     
         @keyframes spin {
             0%   {
                 -webkit-transform: rotate(0deg);  /* Chrome, Opera 15+, Safari 3.1+ */
                 -ms-transform: rotate(0deg);  /* IE 9 */
                 transform: rotate(0deg);  /* Firefox 16+, IE 10+, Opera */
             }
+            
             100% {
                 -webkit-transform: rotate(360deg);  /* Chrome, Opera 15+, Safari 3.1+ */
                 -ms-transform: rotate(360deg);  /* IE 9 */
@@ -371,7 +361,6 @@ transition-timing-function: ease-in;
 animation-name: fadeIn;
 }
 .is-loading {
-  background: red;
 }
 
 @keyframes fadeIn {
@@ -385,6 +374,74 @@ animation-name: fadeIn;
     }
 }
 
+
+.event-tooltip {
+    display: none;
+    background:white;
+    border:1px solid #14385f;
+    position:absolute;
+    z-index:100;
+    top:8px;
+    left:8px;
+    width:400px;
+    height:auto;
+    box-shadow: 1px 1px 1px rgba(0,0,0,.3), -1px -1px 1px rgba(0,0,0,.3);
+}
+
+.event-tooltip .meta {
+    width: 100%;
+    padding:2px 2px 2px 7px;
+    margin-top:-20px;
+    word-wrap: break-word;
+
+}
+.event-tooltip .meta h2 {
+    font-size:1.3em;
+    border-bottom: 1px dotted #eee;   
+    padding-bottom:3px; 
+}
+.event-tooltip .meta p {
+    margin-top:-12px;
+    font-size:0.9em;
+}
+
+.event-tooltip .tiempo {
+    background:#eee;
+    text-align: center;
+    border-top:2px solid #ddd;
+}
+.event-tooltip .tiempo div {
+    display: inline-block;
+    width: 32%;
+}
+.event-tooltip .tiempo div p{
+    font-size: 0.9em;
+    margin-top:-5px;
+    margin-bottom:-5px;
+}
+
+.event-tooltip .btn-group {
+    background:#14385f;
+    text-align: center;
+}
+.event-tooltip .btn-group button {
+    display:inline-block;
+    color:white;
+    border:none;
+    padding-top: 2px;
+    padding-bottom:2px;
+    width:32%;
+    background:inherit;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-left:1px solid white;
+}
+.event-tooltip .btn-group button:first-child {
+    border-left:none;
+}
+.event-tooltip .btn-group button:hover {
+    color:#007fff;
+}
 
 /*CODIGO PARA LAS TABS - INICIO  */
 .nav {
