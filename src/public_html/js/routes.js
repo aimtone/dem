@@ -66,6 +66,14 @@
 		                templateUrl : 'assets/templates/acto.html?ver=1.0',
 		                controller  : 'acto'
 		            })
+					.when('/respaldo', {
+		                templateUrl : 'assets/templates/respaldo.html?ver=1.0',
+		                controller  : 'respaldo'
+		            })
+					.when('/bitacora', {
+		                templateUrl : 'assets/templates/bitacora.html?ver=1.0',
+		                controller  : 'bitacora'
+		            })
 		            .when('/tipo_de_tribunal', {
 		                templateUrl : 'assets/templates/tipo_de_tribunal.html?ver=1.0',
 		                controller  : 'tipo_de_tribunal'

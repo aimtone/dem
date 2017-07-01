@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" ng-app="dem" >
+<html lang="es" ng-app="dem" oncontextmenu="return false;">
 <head>
 
 
@@ -43,6 +43,9 @@
 	<link href='assets/css/fullcalendar.print.min.css' rel='stylesheet' media='print' />
 	<link href='assets/css/scheduler.min.css' rel='stylesheet' />
 
+	<link href='assets/css/jquery.contextMenu.css' rel='stylesheet' />
+	<link href='assets/css/prism.css' rel='stylesheet' />
+
 	<!-- Custom -->
 	<link rel="stylesheet" href="assets/css/custom.css" media="screen,projection">
 
@@ -50,9 +53,10 @@
 
 </head>
 <body ng-controller="main">
-<div id="loader-wrapper">
-    <div id="loader"></div>
-</div>
+<div id="loader-wrapper" class="main-wrap">
+<div class="loader">
+<div class="child-common"></div>
+</div></div>
 	<!-- Nabvar Primaria -->
 	<nav id="nav_principal" style="background:#14385f !important;" class=" blue darken-4">
 	    <div class="navbar-wrapper" id="nav-primario">
@@ -214,7 +218,7 @@
 				</li>
 
 		        <li ng-show="x === true">
-		        	<a class="dropdown-button tooltipped" data-position="left" data-tooltip="{{lang.menu.toolbar.derecho.bitacora}}" data-activates='dropdown2' href="javascript:void(0);"><i class="material-icons">fingerprint</i></a>
+		        	<a class="dropdown-button tooltipped" data-position="left" data-tooltip="{{lang.menu.toolbar.derecho.bitacora}}" data-activates='dropdown2' onclick="location.href='#!/bitacora'"><i class="material-icons">fingerprint</i></a>
 		        	<ul id='dropdown2' data-beloworigin="true" class='dropdown-content'>
 					    
 					 </ul>
@@ -228,7 +232,7 @@
 				</li>
 
 		        <li ng-show="x === true">
-		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.menu.toolbar.derecho.respaldo}}" data-activates='dropdown4' href="javascript:void(0);"><i class="material-icons">backup</i></a>
+		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.menu.toolbar.derecho.respaldo}}" data-activates='dropdown4' onclick="location.href='#!/respaldo'"><i class="material-icons">backup</i></a>
 		        	<ul id='dropdown4' data-beloworigin="true" class='dropdown-content'>
 					   
 					 </ul>
@@ -260,6 +264,9 @@
 		
 		<script src="assets/js/jquery-ui.js"></script>
 		<script src="assets/js/datepicker-es.js"></script>
+		<script src="assets/js/jquery.ui.position.min.js"></script>
+		<script src="assets/js/jquery.contextMenu.js"></script>
+		<script src="assets/js/prism.js"></script>
 
 		
 
@@ -303,6 +310,9 @@
 			<!-- /Routes -->
 			<!-- Controllers -->
 				<script src="assets/js/controllers/home.js?ver=1.0"></script>
+				<script src="assets/js/controllers/respaldo.js?ver=1.0"></script>
+				<script src="assets/js/controllers/bitacora.js?ver=1.0"></script>
+
 				<script src="assets/js/controllers/login.js?ver=1.0"></script>	
 				<script src="assets/js/controllers/programador.js?ver=1.0"></script>	
 				<script src="assets/js/controllers/defensor.js?ver=1.0"></script>	

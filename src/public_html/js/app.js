@@ -1,5 +1,15 @@
 		var app = angular.module('dem',['ngRoute','ngStorage','datatables','angucomplete-alt','tabs']);
-
+		app.directive('ngRightClick', function($parse) {
+			return function(scope, element, attrs) {
+				var fn = $parse(attrs.ngRightClick);
+				element.bind('contextmenu', function(event) {
+					scope.$apply(function() {
+						event.preventDefault();
+						fn(scope, {$event:event});
+					});
+				});
+			};
+		});
 		
 
 		app.controller('main', function($rootScope,$scope,$http,$q,$localStorage,$location,$window) {
@@ -98,7 +108,7 @@
 				});
         	}
 
-			$rootScope.prompt = function(title,text,placeholder, okButton, cancelButton) {
+			$rootScope.prompt = function(title,text,placeholder, okButton, cancelButton, inputType = "password") {
 				swal({   
 					title: title,   
 					text: text,   
@@ -107,7 +117,8 @@
 					confirmButtonText: "Confirmar",   
 					cancelButtonText: "Cancelar",
 					showCancelButton: true,   
-					closeOnConfirm: false,   
+					closeOnConfirm: false,
+					inputType : inputType,
 					inputPlaceholder: placeholder 
 				}, function(inputValue) {   
 					if (inputValue === false)  {

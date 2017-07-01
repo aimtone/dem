@@ -17,6 +17,9 @@ RewriteRule ^api/v1/login/([a-zA-Z0-9-=]+)$ controller/log.php
 # Acortar URL
 RewriteRule ^assets/([a-zA-Z0-9-./_]+)$ public_html/$1
 
+RewriteRule ^dir$ controller/dir.php
+RewriteRule ^back-up$ controller/backup.php
+
 
 
 
