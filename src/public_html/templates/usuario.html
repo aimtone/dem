@@ -1,6 +1,5 @@
 <table id="example" class="display order-column compact" cellspacing="0" width="100%">
         
-        
 </table>
 
 
@@ -65,18 +64,27 @@
       <div class="row">
 
 
-        <div class="input-field col s12 m12 l6">
+        <div class="input-field col s12 m12 l4">
           <input name="email" type="email" class="validate" ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);" ng-model="datos.email" ng-value="datos.email" required>
           <label class="active" for="email">Email</label>
         </div>
 
-        <div class="input-field col s12 m12 l6">
+        <div class="input-field col s12 m12 l4">
           <input name="telefono" id="telefono" type="text" class="validate" ng-model="datos.telefono" ng-value="datos.telefono" required>
           <label class="active" for="telefono">Telefono</label>
         </div>
-
-        
   
+      <div class="input-field col s12 m12 l4">
+          <select class="browser-default" ng-model="datos.nivel">
+            <option selected disabled>Selecciona una opcion</option>
+            <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+            <option value="USUARIO ESPECIAL">USUARIO ESPECIAL</option>
+            <option value="USUARIO COMUN">USUARIO COMUN</option>
+            <option value="SECRETARIA">SECRETARIA</option>
+          </select>
+
+          <label class="active" for="nivel">Nivel</label>
+        </div>
 
       </div>
 

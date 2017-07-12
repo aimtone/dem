@@ -18,6 +18,7 @@
 		// Esta funcion sera llamada al momento de usar el metodo DELETE
 
 		function scheduler() {
+			
 			return $this->set_query(sprintf("
 				CREATE EVENT 
 					%s

@@ -55,19 +55,42 @@
 					clave : $rootScope.Base64.encode(md5($scope.datos.clave))
 				};
 
+				console.log($rootScope.Base64.encode(md5($scope.datos.clave)));
+
 				$rootScope.token = JSON.stringify($rootScope.token);
 				$rootScope.token = $rootScope.Base64.encode($rootScope.token);
 
 				$http.get($rootScope.sprintf('api/v1/login/%s',$rootScope.token)).then(function(response) {
 					if(response.status == 200) {
+
+
 						$rootScope.x = true;
 						$rootScope.cedula = response.data.data[0].cedula;
+						$rootScope.nivel = response.data.data[0].nivel;
 						$rootScope.id_usuario = response.data.data[0].id_usuario;
 						$localStorage.token = $rootScope.token;
 
 						$rootScope.toast(response.statusText);
 						
 						$location.url('/');
+
+						var filter = JSON.stringify({
+							donde : "where cedula = '" + $rootScope.cedula + "'"
+						});
+
+						$rootScope.get('api/persona?filter='+filter).then(function(response) {
+							
+							$rootScope.usuario_en_linea = {
+								cedula : response["0"].cedula,
+								nombres : response["0"].nombres,
+								apellidos : response["0"].apellidos,
+								email: response["0"].email,
+								fecha_de_nacimiento : response["0"].fecha_de_nacimiento,
+								telefono: response["0"].telefono,
+								nivel: $rootScope.nivel 
+							};
+
+						});
 					}
 					if(response.status == 201) {
 						$localStorage.token = "";

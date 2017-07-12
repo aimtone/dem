@@ -70,6 +70,8 @@
 		// Esta funcion sera llamada al momento de usar el metodo POST
 		function post() {
 
+			
+
 			return $this->set_query(sprintf("
 				INSERT INTO 
 					%s
@@ -85,6 +87,7 @@
 
 		// Esta funcion sera llamada al momento de usar el metodo PUT
 		function put() {
+		
 			return $this->set_query(sprintf("
 				UPDATE 
 					%s 

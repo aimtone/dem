@@ -56,6 +56,9 @@
 
 </style>
 		<div class="event-tooltip">
+				<div class="triangulo-equilatero-bottom">
+					
+				</div>
 				<div class="meta">
 					<h2>{{event_card_data.titulo}}</h2>
 					<p>{{event_card_data.descripcion}}</p>
@@ -67,18 +70,18 @@
 					</div>
 					<div class="Inicio">
 						<label>Hora de Inicio</label>
-						<p>{{event_card_data.inicio}}</p>
+						<p>{{event_card_data.start}}</p>
 					</div>
 					<div class="fin">
 						<label>Hora de Fin</label>
-						<p>{{event_card_data.fin}}</p>
+						<p>{{event_card_data.end}}</p>
 					</div>
 				</div>
 
 				<div class="btn-group">
 					<a href="{{LinkMasDetalles}}">Mas detalles</a>
-					<button>Reprogramar</button>
-					<button>Eliminar</button>
+					<a ng-click="aEspera()">A espera</a>
+					<a ng-click="eliminarActo()">Eliminar</a>
 				</div>
 		</div>
 
@@ -89,23 +92,20 @@
 		<div class="hide-on-med-and-down" id='external-events'>
 			
 			<h4>
-
+				Actos en Espera
 				
 			</h4>
-            <div class='fc-event'>My Event 1</div>
-			<div class='fc-event'>My Event 2</div>
-			<div class='fc-event'>My Event 3</div>
-			<div class='fc-event'>My Event 4</div>
-			<div class='fc-event'>My Event 5</div>
-            <div class='fc-event'>My Event 1</div>
-			<div class='fc-event'>My Event 2</div>
-			<div class='fc-event'>My Event 3</div>
+            <div class="actos">
+				<div ng-repeat="x in JSONEspera" id="{{x.id}}" class="fc-event">{{x.title}}</div>
+
+			</div>
+			
 			
 
 			
 
 			<p>
-				<input  disabled type='checkbox' id='drop-remove' />
+				<input checked  disabled type='checkbox' id='drop-remove' />
 				<label for='drop-remove'>Remover</label>
 			</p>
 		</div>

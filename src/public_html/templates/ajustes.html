@@ -16,46 +16,369 @@
         </ul>
         <div class="tab-content" style="overflow: hidden">
             <div ng-tab-body="animated fadeInRightBig" class="tab-pane">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea nihil numquam cumque vero quisquam id facilis a fuga laborum perferendis, minus, ad, tempora deleniti iste consequatur eveniet eaque, repudiandae enim.</p>
+                <h5>Respaldo y Restauracion de datos</h5>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam totam, nihil, accusantium voluptatum quo fugiat atque hic similique obcaecati harum nisi neque rem aliquid quos tempora, officiis nam nostrum beatae!</p>
+                <p>Por favor, proporcione las credenciales correctas de los sobre la base de datos que desea respaldar, si no conoce esta informacion, por favor, consulte con el personal encargado en el area de informatica en su empresa</p>
+
+                <table class="highlight">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td><b>Nombre de la base de datos de MySQL a respaldar</b></td>
+                            <td>
+                                <input id="basedatos" type="text" ng-model="data_generales.basedatos" class="validate">
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Nombre de usuario de MySQL</b></td>
+                            <td>
+                                <input id="usuario" type="text" ng-model="data_generales.usuario" class="validate">
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Contrasena de MySQL</b></td>
+                            <td>
+                             <input id="clave" type="password" ng-model="data_generales.clave"  class="validate">
+                            </td>
+                        </tr>
+
+                
+                    </tbody>
+                </table>
             </div>
 
             <div ng-tab-body="animated fadeInRightBig" class="tab-pane">
             
+            
 
-                <li>Mostrar numero de la semanas</li>
-                <li>Establecer los dias como enlaces</li>
-                <li>Timezone</li>
-                <li>Permitir arrastrar audiencias dentro del programador</li>
-                <li>Permitir arrastrar audiencias desde la seccion de audiencias pendientes</li>
-                <li>Permitir seleccionar un rango de horas dentro del programador</li>
-                <li>Permitir la superpocision de audiencias</li>
-                <li>Indicar momento actual en el programador</li>
-                <li>Intervalo de tiempo entre horas</li>
-                <li>Vista por defecto: </li>
-                <li>Horario de Trabajo: 
-                    <ul>
-                        <li>Dias de trabajo</li>
-                        <li>Hora de entrada</li>
-                        <li>Hora de Salida</li>
-                        <li>Hora minima a mostrar en calendario</li>
-                        <li>Hora maxima a mostrar en calendario</li>
+                <table class="highlight">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
                         
-                    </ul>
-                </li>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <td><b>Mostrar fines de semana</b></td>
+                        <td>
+                            <input type="checkbox" id="weekends" ng-model="data_programador.weekends" />
+                            <label for="weekends">Marcar para mostrar</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Mostrar numero de semana en curso</b></td>
+                        <td>
+                            <input type="checkbox" id="weekNumbers" ng-model="data_programador.weekNumbers" ng-value="data_programador.weekNumbers" />
+                            <label for="weekNumbers">Marcar para mostrar</label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>Establecer los dias como enlaces</b></td>
+                        <td>
+                            <input type="checkbox" id="weekNumbersWithinDays" ng-model="data_programador.weekNumbersWithinDays" />
+                            <label for="weekNumbersWithinDays">Marcar para establecer</label>
+                        </td>
+                    </tr>
+
+                 
+
+                    <tr>
+                        <td><b>Permitir arrastrar los actos dentro del programador</b></td>
+                        <td>
+                            <input type="checkbox" id="droppable" ng-model="data_programador.droppable" />
+                            <label for="droppable">Marcar para permitir</label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>Permitir seleccionar un rango de horas para crear un acto</b></td>
+                        <td>
+                            <input type="checkbox" id="selectable" ng-model="data_programador.selectable" />
+                            <label for="selectable">Marcar para permitir</label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>Permitir la superpocision de los actos</b></td>
+                        <td>
+                            <input type="checkbox" id="eventOverlap" ng-model="data_programador.eventOverlap" />
+                            <label for="eventOverlap">Marcar para permitir</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Indicar el momento actual con una linea roja</b></td>
+                        <td>
+                            <input type="checkbox" id="nowIndicator" ng-model="data_programador.nowIndicator" />
+                            <label for="nowIndicator">Marcar para indicar</label>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td><b>Intervalo de tiempo entre horas</b></td>
+                        <td>
+                             <input id="slotDuration" type="text" ng-model="data_programador.slotDuration" class="validate">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>Mensaje al mostrar cuando no hayan actos disponibles</b></td>
+                        <td>
+                             <input id="noEventsMessage" type="text" ng-model="data_programador.noEventsMessage" class="validate">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>Vista por defecto</b></td>
+                        <td>
+                             <select class="browser-default" ng-model="data_programador.defaultView" ng-value="data_programador.defaultView">
+                                <option value="" disabled selected>Escoje una opcion</option>
+                                <option value="agendaDay">Dia</option>
+                                <option value="agendaWeek">Semana</option>
+                                <option value="month">Mes</option>
+                                <option value="listWeek">Agenda</option>
+                                
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>Dias no laborales</b></td>
+                        <td>
+                             <select multiple="multiple" class="browser-default" ng-model="data_programador.hiddenDays" ng-value="data_programador.hiddenDays">
+                                <option value="" selected>Escoje las opciones</option>
+                                <option value="1">Lunes</option>
+                                <option value="2">Martes</option>
+                                <option value="3">Miercoles</option>
+                                <option value="4">Jueves</option>
+                                <option value="5">Viernes</option>
+                                <option value="6">Sabado</option>
+                                <option value="0">Domingo</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>Horario de entrada</b></td>
+                        <td>
+                             <input id="start" type="text" ng-model="data_programador.start" class="validate">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>Horario de Salida</b></td>
+                        <td>
+                             <input id="end" type="text" ng-model="data_programador.end" class="validate">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>Hora minima a mostrar en el programador</b></td>
+                        <td>
+                             <input id="minTime" type="text" ng-model="data_programador.minTime" class="validate">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>Hora maxima a mostrar en el programador</b></td>
+                        <td>
+                             <input id="maxTime" type="text" ng-model="data_programador.maxTime" class="validate">
+                        </td>
+                    </tr>
+                    
+
+                    </tbody>
+                </table>
+
+                
+
+                
+               
             </div>
 
             <div ng-tab-body="animated fadeInRightBig" class="tab-pane">
-                <p>tab3</p>
+                
+            
+
+                <table class="highlight">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <td><b>Permitir la navegacion con el teclado</b></td>
+                        <td>
+                            <input type="checkbox" id="_keys" ng-model="data_datatable._keys" />
+                            <label for="_keys">Marcar para permitir</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Mostrar informacion sobre cantidad de registros</b></td>
+                        <td>
+                            <input type="checkbox" id="info" ng-model="data_datatable.info" ng-value="data_programador.weekNumbers" />
+                            <label for="info">Marcar para mostrar</label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>Guardar estado de la tabla al recargar</b></td>
+                        <td>
+                            <input type="checkbox" id="stateSave" ng-model="data_datatable.stateSave" />
+                            <label for="stateSave">Marcar para establecer</label>
+                        </td>
+                    </tr>
+
+                 
+
+                    <tr>
+                        <td><b>Ajustar alto de la tabla</b></td>
+                        <td>
+                            <input type="checkbox" id="scrollCollapse" ng-model="data_datatable.scrollCollapse" />
+                            <label for="scrollCollapse">Marcar para permitir</label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>Hacer la tabla adaptable a cualquier resolucion</b></td>
+                        <td>
+                            <input type="checkbox" id="responsive" ng-model="data_datatable.responsive" />
+                            <label for="responsive">Marcar para permitir</label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>Mostrar la paginacion de los registros</b></td>
+                        <td>
+                            <input type="checkbox" id="paging" ng-model="data_datatable.paging" />
+                            <label for="paging">Marcar para permitir</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Permitir la reordenacion de columnas</b></td>
+                        <td>
+                            <input type="checkbox" id="colReorder" ng-model="data_datatable.colReorder" />
+                            <label for="colReorder">Marcar para indicar</label>
+                        </td>
+                    </tr>
+                    
+
+                    </tbody>
+                </table>
+               
             </div>
 
             <div ng-tab-body="animated fadeInRightBig" class="tab-pane">
-                <p>tab4</p>
+                <h5>Mensajes de Texto</h5>
+
+                <p>Por favor, rellene los siguiente campos con las direcciones correctas, si la direccion introducida presentara un error, la salida de los mensajes de textos no se realizara correctamente</p>
+
+                <table class="highlight">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td><b>Direccion de API de servidor de mensajes de texto instantaneo</b></td>
+                            <td>
+                                <input id="servSMSinst" type="text" ng-model="data_notificaciones.servSMSinst" ng-value="data_notificaciones.servSMSinst" class="validate">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Direccion de API de servidor de mensajes de texto programados</b></td>
+                            <td>
+                                <input id="servSMSprog" type="text" ng-model="data_notificaciones.servSMSprog" ng-value="data_notificaciones.servSMSprog" class="validate">
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h5>Correo Electronico</h5>
+
+                <p>Por favor, rellene los campos con una direccion de correo electronico valida para generar la salida de mensajes d correo electronico, solicite ayuda con el equipo informatico de su empresa si no conoce la direccion del servidor SMTP o el puerto de salida</p>
+
+                <table class="highlight">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td><b>Direccion de API de servidor de correo electronico</b></td>
+                            <td>
+                                <input id="servEmail" type="text" ng-model="data_notificaciones.servEmail" class="validate">
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Direccion de Correo Electronico</b></td>
+                            <td>
+                                <input id="email" type="email" ng-model="data_notificaciones.email" class="validate">
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Contrasena</b></td>
+                            <td>
+                             <input id="clave" type="password" ng-model="data_notificaciones.clave" ng-value="data_notificaciones.clave" class="validate">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Servidor SMTP</b></td>
+                            <td>
+                             <input id="servSMTP" type="text" ng-model="data_notificaciones.servSMTP" class="validate">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Puerto</b></td>
+                            <td>
+                             <input id="puerto" type="number" ng-model="data_notificaciones.puerto" ng-value="data_notificaciones.puerto" class="validate">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             
 
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col s12">
+               <a id="post" class="waves-effect waves-light btn-large blue right">Guardar cambios</a>
+        </div>
+  </div>
 

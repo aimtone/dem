@@ -3,13 +3,16 @@
 			$rootScope.objeto = "Respaldo y Restauracion";
 
 			angular.element(document).ready(function() {
+				$rootScope.get('api/config_generales').then(function(response) {
+					$rootScope.atributos = {
+						usuario : response["0"].usuario,
+						clave : response["0"].clave,
+						basedatos: response["0"].basedatos
 
-				$rootScope.atributos = {
-					usuario : "root",
-					clave : "root",
-					basedatos: "dem"
+					};
+				});
 
-				};
+				
 
 				$rootScope.volverARaiz();
 

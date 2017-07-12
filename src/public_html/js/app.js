@@ -1,4 +1,7 @@
 		var app = angular.module('dem',['ngRoute','ngStorage','datatables','angucomplete-alt','tabs']);
+		
+
+
 		app.directive('ngRightClick', function($parse) {
 			return function(scope, element, attrs) {
 				var fn = $parse(attrs.ngRightClick);
@@ -10,21 +13,201 @@
 				});
 			};
 		});
+
+		app.directive('ngEnter', function() {
+        return function(scope, element, attrs) {
+            element.bind("keydown keypress", function(event) {
+                if(event.which === 13) {
+                        scope.$apply(function(){
+                                scope.$eval(attrs.ngEnter);
+                        });
+                        
+                        event.preventDefault();
+                }
+            });
+        };
+		});
 		
 
 		app.controller('main', function($rootScope,$scope,$http,$q,$localStorage,$location,$window) {
+			$rootScope.Base64 = {
+				_keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+				encode: function(e) {
+					var t = "";
+					var n, r, i, s, o, u, a;
+					var f = 0;
+					e = $rootScope.Base64._utf8_encode(e);
+					while (f < e.length) {
+						n = e.charCodeAt(f++);
+						r = e.charCodeAt(f++);
+						i = e.charCodeAt(f++);
+						s = n >> 2;
+						o = (n & 3) << 4 | r >> 4;
+						u = (r & 15) << 2 | i >> 6;
+						a = i & 63;
+						if (isNaN(r)) {
+							u = a = 64
+						} else if (isNaN(i)) {
+							a = 64
+						}
+						t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr.charAt(a)
+					}
+					return t
+				},
+				decode: function(e) {
+					var t = "";
+					var n, r, i;
+					var s, o, u, a;
+					var f = 0;
+					e = e.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+					while (f < e.length) {
+						s = this._keyStr.indexOf(e.charAt(f++));
+						o = this._keyStr.indexOf(e.charAt(f++));
+						u = this._keyStr.indexOf(e.charAt(f++));
+						a = this._keyStr.indexOf(e.charAt(f++));
+						n = s << 2 | o >> 4;
+						r = (o & 15) << 4 | u >> 2;
+						i = (u & 3) << 6 | a;
+						t = t + String.fromCharCode(n);
+						if (u != 64) {
+							t = t + String.fromCharCode(r)
+						}
+						if (a != 64) {
+							t = t + String.fromCharCode(i)
+						}
+					}
+					t = $rootScope.Base64._utf8_decode(t);
+					return t
+				},
+				_utf8_encode: function(e) {
+					e = e.replace(/\r\n/g, "\n");
+					var t = "";
+					for (var n = 0; n < e.length; n++) {
+						var r = e.charCodeAt(n);
+						if (r < 128) {
+							t += String.fromCharCode(r)
+						} else if (r > 127 && r < 2048) {
+							t += String.fromCharCode(r >> 6 | 192);
+							t += String.fromCharCode(r & 63 | 128)
+						} else {
+							t += String.fromCharCode(r >> 12 | 224);
+							t += String.fromCharCode(r >> 6 & 63 | 128);
+							t += String.fromCharCode(r & 63 | 128)
+						}
+					}
+					return t
+				},
+				_utf8_decode: function(e) {
+					var t = "";
+					var n = 0;
+					var r = c1 = c2 = 0;
+					while (n < e.length) {
+						r = e.charCodeAt(n);
+						if (r < 128) {
+							t += String.fromCharCode(r);
+							n++
+						} else if (r > 191 && r < 224) {
+							c2 = e.charCodeAt(n + 1);
+							t += String.fromCharCode((r & 31) << 6 | c2 & 63);
+							n += 2
+						} else {
+							c2 = e.charCodeAt(n + 1);
+							c3 = e.charCodeAt(n + 2);
+							t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
+							n += 3
+						}
+					}
+					return t
+				}
+			}
+			console.log('entra en main');
+			if($localStorage.token!="") {
+				var JSON_cedula = JSON.parse($rootScope.Base64.decode($localStorage.token));
 
-			
-			
+				var filter = JSON.stringify({
+					donde : "where cedula = '" + JSON_cedula.cedula + "'"
+				});
+				
 
+				$http.get('api/usuario?filter='+filter,{        
+						  headers: {
+						  	'Content-Type': 'application/x-www-form-urlencoded',
+						  	'Authorization': $localStorage.token
+						  }
+						}).then(function(response) {
+							if(response.data.data["0"].nivel=="ADMINISTRADOR") {
+								$rootScope.current_user = 1;
+							}
+
+							if(response.data.data["0"].nivel=="USUARIO ESPECIAL") {
+								$rootScope.current_user = 2;
+							}
+
+							if(response.data.data["0"].nivel=="USUARIO COMUN") {
+								$rootScope.current_user = 3;
+							}
+
+							if(response.data.data["0"].nivel=="SECRETARIA") {
+								$rootScope.current_user = 4;
+							}
+
+				});
+
+
+			} else {
+				$rootScope.current_user = 1;
+			}
+			
+						
 			$rootScope.app_name = "NOMBRE-DE-SISTEMA";
 			$rootScope.token = "";
 
 			$rootScope.x = false;
         	// FUNCIONES QUE SE EJECUTAN AL CARGAR LA PAGINA (INICIO)
         	angular.element(document).ready(function() {
+
+
         		// Establecer y cargar el lenguaje seleccionado para la pagina
         		$rootScope.setLang($localStorage.locale);
+
+        		var fecha_hoy = moment().format("YYYY-MM-DD");
+        		var filtro = JSON.stringify({
+        			donde: "where inicio LIKE '"+fecha_hoy+"%' AND estatus = 'ASIGNADO'"
+        		});
+
+        		$rootScope.get('api/acto?filter='+filtro).then(function(response) {
+        			var hora_actual = moment().format("HH:mm:ss");
+        			$.each(response, function(index,value) {
+        				var hora_fin_evento = moment(value.fin).format("HH:mm:ss");
+        				if(hora_fin_evento <= hora_actual) {
+        					var data = {
+        						id: null,
+        						estatus : "FINALIZADO"
+        					};
+        					$rootScope.put('api/acto/'+value.id, data).then(function(response) {
+	        					console.log(response);
+	        				});
+        					
+        				} else {
+        					var data = {
+        						id: null,
+        						estatus : "ASIGNADO"
+        					};
+
+        					$rootScope.put('api/acto/'+value.id, data).then(function(response) {
+	        					console.log(response);
+	        				});
+        				}
+
+        				
+
+        			});
+        		});
+
+        		
+
+
+				
 
 				setTimeout(function() {
 								var loaderDiv = document.getElementById("loader-wrapper");
@@ -47,7 +230,8 @@
 									bottom: 1500,
 									offset: 0
 								});
-								
+
+
 						}, 1000);
 				
 				
@@ -338,97 +522,147 @@
 				});
 			}
 
-        	 $rootScope.Base64 = {
-				_keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
-				encode: function(e) {
-					var t = "";
-					var n, r, i, s, o, u, a;
-					var f = 0;
-					e = $rootScope.Base64._utf8_encode(e);
-					while (f < e.length) {
-						n = e.charCodeAt(f++);
-						r = e.charCodeAt(f++);
-						i = e.charCodeAt(f++);
-						s = n >> 2;
-						o = (n & 3) << 4 | r >> 4;
-						u = (r & 15) << 2 | i >> 6;
-						a = i & 63;
-						if (isNaN(r)) {
-							u = a = 64
-						} else if (isNaN(i)) {
-							a = 64
-						}
-						t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr.charAt(a)
-					}
-					return t
-				},
-				decode: function(e) {
-					var t = "";
-					var n, r, i;
-					var s, o, u, a;
-					var f = 0;
-					e = e.replace(/[^A-Za-z0-9\+\/\=]/g, "");
-					while (f < e.length) {
-						s = this._keyStr.indexOf(e.charAt(f++));
-						o = this._keyStr.indexOf(e.charAt(f++));
-						u = this._keyStr.indexOf(e.charAt(f++));
-						a = this._keyStr.indexOf(e.charAt(f++));
-						n = s << 2 | o >> 4;
-						r = (o & 15) << 4 | u >> 2;
-						i = (u & 3) << 6 | a;
-						t = t + String.fromCharCode(n);
-						if (u != 64) {
-							t = t + String.fromCharCode(r)
-						}
-						if (a != 64) {
-							t = t + String.fromCharCode(i)
-						}
-					}
-					t = $rootScope.Base64._utf8_decode(t);
-					return t
-				},
-				_utf8_encode: function(e) {
-					e = e.replace(/\r\n/g, "\n");
-					var t = "";
-					for (var n = 0; n < e.length; n++) {
-						var r = e.charCodeAt(n);
-						if (r < 128) {
-							t += String.fromCharCode(r)
-						} else if (r > 127 && r < 2048) {
-							t += String.fromCharCode(r >> 6 | 192);
-							t += String.fromCharCode(r & 63 | 128)
-						} else {
-							t += String.fromCharCode(r >> 12 | 224);
-							t += String.fromCharCode(r >> 6 & 63 | 128);
-							t += String.fromCharCode(r & 63 | 128)
-						}
-					}
-					return t
-				},
-				_utf8_decode: function(e) {
-					var t = "";
-					var n = 0;
-					var r = c1 = c2 = 0;
-					while (n < e.length) {
-						r = e.charCodeAt(n);
-						if (r < 128) {
-							t += String.fromCharCode(r);
-							n++
-						} else if (r > 191 && r < 224) {
-							c2 = e.charCodeAt(n + 1);
-							t += String.fromCharCode((r & 31) << 6 | c2 & 63);
-							n += 2
-						} else {
-							c2 = e.charCodeAt(n + 1);
-							c3 = e.charCodeAt(n + 2);
-							t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
-							n += 3
-						}
-					}
-					return t
-				}
-			}
+			$rootScope.sha1 = function(str) {
+				  //  discuss at: http://locutus.io/php/sha1/
+				  // original by: Webtoolkit.info (http://www.webtoolkit.info/)
+				  // improved by: Michael White (http://getsprink.com)
+				  // improved by: Kevin van Zonneveld (http://kvz.io)
+				  //    input by: Brett Zamir (http://brett-zamir.me)
+				  //      note 1: Keep in mind that in accordance with PHP, the whole string is buffered and then
+				  //      note 1: hashed. If available, we'd recommend using Node's native crypto modules directly
+				  //      note 1: in a steaming fashion for faster and more efficient hashing
+				  //   example 1: sha1('Kevin van Zonneveld')
+				  //   returns 1: '54916d2e62f65b3afa6e192e6a601cdbe5cb5897'
+				  var hash
+				  try {
+				    var crypto = require('crypto')
+				    var sha1sum = crypto.createHash('sha1')
+				    sha1sum.update(str)
+				    hash = sha1sum.digest('hex')
+				  } catch (e) {
+				    hash = undefined
+				  }
+				  if (hash !== undefined) {
+				    return hash
+				  }
+				  var _rotLeft = function (n, s) {
+				    var t4 = (n << s) | (n >>> (32 - s))
+				    return t4
+				  }
+				  var _cvtHex = function (val) {
+				    var str = ''
+				    var i
+				    var v
+				    for (i = 7; i >= 0; i--) {
+				      v = (val >>> (i * 4)) & 0x0f
+				      str += v.toString(16)
+				    }
+				    return str
+				  }
+				  var blockstart
+				  var i, j
+				  var W = new Array(80)
+				  var H0 = 0x67452301
+				  var H1 = 0xEFCDAB89
+				  var H2 = 0x98BADCFE
+				  var H3 = 0x10325476
+				  var H4 = 0xC3D2E1F0
+				  var A, B, C, D, E
+				  var temp
+				  // utf8_encode
+				  str = unescape(encodeURIComponent(str))
+				  var strLen = str.length
+				  var wordArray = []
+				  for (i = 0; i < strLen - 3; i += 4) {
+				    j = str.charCodeAt(i) << 24 |
+				      str.charCodeAt(i + 1) << 16 |
+				      str.charCodeAt(i + 2) << 8 |
+				      str.charCodeAt(i + 3)
+				    wordArray.push(j)
+				  }
+				  switch (strLen % 4) {
+				    case 0:
+				      i = 0x080000000
+				      break
+				    case 1:
+				      i = str.charCodeAt(strLen - 1) << 24 | 0x0800000
+				      break
+				    case 2:
+				      i = str.charCodeAt(strLen - 2) << 24 | str.charCodeAt(strLen - 1) << 16 | 0x08000
+				      break
+				    case 3:
+				      i = str.charCodeAt(strLen - 3) << 24 |
+				        str.charCodeAt(strLen - 2) << 16 |
+				        str.charCodeAt(strLen - 1) <<
+				      8 | 0x80
+				      break
+				  }
+				  wordArray.push(i)
+				  while ((wordArray.length % 16) !== 14) {
+				    wordArray.push(0)
+				  }
+				  wordArray.push(strLen >>> 29)
+				  wordArray.push((strLen << 3) & 0x0ffffffff)
+				  for (blockstart = 0; blockstart < wordArray.length; blockstart += 16) {
+				    for (i = 0; i < 16; i++) {
+				      W[i] = wordArray[blockstart + i]
+				    }
+				    for (i = 16; i <= 79; i++) {
+				      W[i] = _rotLeft(W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16], 1)
+				    }
+				    A = H0
+				    B = H1
+				    C = H2
+				    D = H3
+				    E = H4
+				    for (i = 0; i <= 19; i++) {
+				      temp = (_rotLeft(A, 5) + ((B & C) | (~B & D)) + E + W[i] + 0x5A827999) & 0x0ffffffff
+				      E = D
+				      D = C
+				      C = _rotLeft(B, 30)
+				      B = A
+				      A = temp
+				    }
+				    for (i = 20; i <= 39; i++) {
+				      temp = (_rotLeft(A, 5) + (B ^ C ^ D) + E + W[i] + 0x6ED9EBA1) & 0x0ffffffff
+				      E = D
+				      D = C
+				      C = _rotLeft(B, 30)
+				      B = A
+				      A = temp
+				    }
+				    for (i = 40; i <= 59; i++) {
+				      temp = (_rotLeft(A, 5) + ((B & C) | (B & D) | (C & D)) + E + W[i] + 0x8F1BBCDC) & 0x0ffffffff
+				      E = D
+				      D = C
+				      C = _rotLeft(B, 30)
+				      B = A
+				      A = temp
+				    }
+				    for (i = 60; i <= 79; i++) {
+				      temp = (_rotLeft(A, 5) + (B ^ C ^ D) + E + W[i] + 0xCA62C1D6) & 0x0ffffffff
+				      E = D
+				      D = C
+				      C = _rotLeft(B, 30)
+				      B = A
+				      A = temp
+				    }
+				    H0 = (H0 + A) & 0x0ffffffff
+				    H1 = (H1 + B) & 0x0ffffffff
+				    H2 = (H2 + C) & 0x0ffffffff
+				    H3 = (H3 + D) & 0x0ffffffff
+				    H4 = (H4 + E) & 0x0ffffffff
+				  }
+				  temp = _cvtHex(H0) + _cvtHex(H1) + _cvtHex(H2) + _cvtHex(H3) + _cvtHex(H4)
+				  return temp.toLowerCase()
+				};
 
+        	 
+
+				
+				
+
+				
 
 				var cargarScripts = function() {
 
@@ -549,14 +783,73 @@
 					if (typeof $localStorage.token !== 'undefined') {
 						if($localStorage.token!='') {
 							$rootScope.get($rootScope.sprintf('api/v1/login/%s',$localStorage.token)).then(function(response) {
-								console.log(response);
+								//console.log(response);
 								if(response==null) {
 									$location.url('/login');
 									$rootScope.x = false;
 									return;
 								} else {
+									if($localStorage.token!="") {
+										var JSON_cedula = JSON.parse($rootScope.Base64.decode($localStorage.token));
+
+										var filter = JSON.stringify({
+											donde : "where cedula = '" + JSON_cedula.cedula + "'"
+										});
+										
+
+										$http.get('api/usuario?filter='+filter,{        
+												  headers: {
+												  	'Content-Type': 'application/x-www-form-urlencoded',
+												  	'Authorization': $localStorage.token
+												  }
+												}).then(function(response) {
+													if(response.data.data["0"].nivel=="ADMINISTRADOR") {
+														$rootScope.current_user = 1;
+													}
+
+													if(response.data.data["0"].nivel=="USUARIO ESPECIAL") {
+														$rootScope.current_user = 2;
+													}
+
+													if(response.data.data["0"].nivel=="USUARIO COMUN") {
+														$rootScope.current_user = 3;
+													}
+
+													if(response.data.data["0"].nivel=="SECRETARIA") {
+														$rootScope.current_user = 4;
+													}
+
+										});
+
+
+									} else {
+										$rootScope.current_user = 1;
+									}
+			
 									$rootScope.x = true;
 									$rootScope.id_usuario = response["0"].id_usuario
+									$rootScope.nivel = response["0"].nivel;
+									$rootScope.cedula = response["0"].cedula;
+
+									var filter = JSON.stringify({
+										donde : "where cedula = '" + $rootScope.cedula + "'"
+									});
+
+									$rootScope.get('api/persona?filter='+filter).then(function(response) {
+										
+										$rootScope.usuario_en_linea = {
+											cedula : response["0"].cedula,
+											nombres : response["0"].nombres,
+											apellidos : response["0"].apellidos,
+											email: response["0"].email,
+											fecha_de_nacimiento : response["0"].fecha_de_nacimiento,
+											telefono: response["0"].telefono,
+											nivel: $rootScope.nivel 
+										};
+										
+										
+
+									});
 								}
 							});
 						} else {
@@ -575,7 +868,7 @@
 							if (typeof $localStorage.token !== 'undefined') {
 								if($localStorage.token!='') {
 									$rootScope.get($rootScope.sprintf('api/v1/login/%s',$localStorage.token)).then(function(response) {
-										console.log(response);
+										//console.log(response);
 										if(response!=null) {
 											$location.url('/');
 											return;
@@ -611,12 +904,16 @@
 
 				};
 
+
+
 					$('#logout').on('click', function() {
 						$rootScope.x = false;
 						$rootScope.token = {};
 						$localStorage.token = "";
+						$rootScope.usuario_en_linea = undefined;
 						$localStorage.eventClick = undefined;
 						$location.url('/login');
+
 					});
 
 		
@@ -624,13 +921,14 @@
 				// ----------------------------------------------------------------- 
 				// VALIDACIONES | FIN
 				// -----------------------------------------------------------------
-
+				/*
 				var contador = 0;
 				var inactividad = false;
-
+				
 				$(document).ready(function() {
 					setInterval(function() {
 						if($rootScope.x === true) {
+							console.log(contador);
 							if(contador==180) {
 								inactividad = true;
 								$localStorage.token = undefined;
@@ -642,6 +940,7 @@
 										clave : $rootScope.Base64.encode(md5(response))
 									};
 
+									console.log($rootScope.token);
 									$rootScope.token = JSON.stringify($rootScope.token);
 									$rootScope.token = $rootScope.Base64.encode($rootScope.token);
 
@@ -711,7 +1010,7 @@
 					if(inactividad != true) {
 						contador = 0;
 					}
-				});
+				});*/
 
         	
 			

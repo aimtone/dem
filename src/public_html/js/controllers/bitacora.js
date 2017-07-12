@@ -76,16 +76,25 @@
                            
                             { "data": "fecha" },
                             { "data": "operacion" },
+                            { "data": "tabla" },
                             { "data": "null", render: function ( data, type, row ) {
                                 var jsonString = row.registro_anterior;
-                                var jsonPretty = JSON.stringify(JSON.parse(jsonString),null,2);  
-                                return "<pre class='minus'>"+jsonPretty+"</pre>";
+                                if(jsonString==null) {
+                                    return "";
+                                } else {
+                                    return "<div class='minus'>"+jsonString+"</div>";
+                                }
+                                
                             } },
                             { "data": "null", render: function ( data, type, row ) {
                                 var jsonString = row.registro_nuevo;
-                                var jsonPretty = JSON.stringify(JSON.parse(jsonString),null,2);  
-                                return "<pre class='minus'>"+jsonPretty+"</pre>";
-                            } }
+                                if(jsonString==null) {
+                                    return "";
+                                } else {
+                                    return "<div class='minus'>"+jsonString+"</div>";
+                                }
+                            } },
+                            { "data" : "usuario"}
                         ]
                 } );
             

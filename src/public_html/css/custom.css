@@ -42,7 +42,9 @@
     height:60px;
 	
 }
-
+.evento-finalizado {
+  background: red;
+}
 #imgCont .icono p {
     font-weight: 500;
     margin-top:0px;
@@ -52,7 +54,10 @@
     text-align:center;
 	
 }
-
+.content-message {
+    height:400px;
+    overflow:hidden;
+}
 tfoot input {
         width: 100%;
         padding: 3px;
@@ -82,7 +87,7 @@ position: fixed;
 z-index: 1000;
 top:0;
 left:0;
-background-color: #2b4661;
+background-color: #14385f;
 color: #fff;
 width:100%;
 height: 100%;
@@ -268,7 +273,7 @@ input[type=search]:focus{
 
 ::-webkit-scrollbar {
     width: 5px;
-    background: #0D47A1;
+    background: #14385f;
 }
  
 ::-webkit-scrollbar-track {
@@ -276,13 +281,13 @@ input[type=search]:focus{
 }
  
 ::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,.2);
+  background: #14385f;
 }
 /* CODIGO PERSONALIZADO PARA EL SCROLLBAR - INICIO */
 
 
 .sticky{
-  z-index: 1;
+  z-index: 2;
 }
 
 
@@ -440,6 +445,21 @@ animation-name: fadeIn;
         opacity: 1;
     }
 }
+select[multiple=multiple] {
+    height:140px;
+
+}
+.triangulo-equilatero-bottom {
+    position:absolute;
+    top:-20px;
+     width: 0;
+     height: 0;
+     border-right: 10px solid transparent;
+     border-top: 10px solid transparent;
+     border-left: 10px solid transparent;
+     border-bottom: 10px solid #000000;
+
+}
 
 
 .event-tooltip {
@@ -451,7 +471,7 @@ animation-name: fadeIn;
     top:8px;
     left:8px;
     width:400px;
-    height:auto;
+    height:147px;
     box-shadow: 1px 1px 1px rgba(0,0,0,.3), -1px -1px 1px rgba(0,0,0,.3);
 }
 
@@ -491,7 +511,7 @@ animation-name: fadeIn;
     background:#14385f;
     text-align: center;
 }
-.event-tooltip .btn-group button {
+.event-tooltip .btn-group button, .event-tooltip .btn-group a {
     display:inline-block;
     color:white;
     border:none;
@@ -503,10 +523,10 @@ animation-name: fadeIn;
     font-weight: 500;
     border-left:1px solid white;
 }
-.event-tooltip .btn-group button:first-child {
+.event-tooltip .btn-group button:first-child, .event-tooltip .btn-group a:first-child {
     border-left:none;
 }
-.event-tooltip .btn-group button:hover {
+.event-tooltip .btn-group button:hover, .event-tooltip .btn-group a:hover {
     color:#007fff;
 }
 

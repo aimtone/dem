@@ -5749,7 +5749,8 @@ input[type=number][readonly="readonly"],
 input[type=search]:disabled,
 input[type=search][readonly="readonly"],
 textarea.materialize-textarea:disabled,
-textarea.materialize-textarea[readonly="readonly"] {
+textarea.materialize-textarea[readonly="readonly"],
+select.browser-default:disabled {
   color: rgba(0, 0, 0, 0.26);
   border-bottom: 1px dotted rgba(0, 0, 0, 0.26);
 }
@@ -6551,8 +6552,24 @@ select {
 
 select.browser-default {
   display: block;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #14385f;
+  border-radius: 0;
+  outline: none;
+  height: 3rem;
+  width: 100%;
+  font-size: 1rem;
+  margin: 0 0 20px 0;
+  padding: 0;
+  box-shadow: none;
+  box-sizing: content-box;
+  transition: all 0.3s;
 }
-
+select.browser-default:focus {
+  border-bottom: 1px solid #14385f;
+  box-shadow: 0 1px 0 0 #14385f;
+}
 select {
   background-color: rgba(255, 255, 255, 0.9);
   width: 100%;
@@ -7173,27 +7190,27 @@ input[type=range]:focus::-ms-fill-upper {
   width: 100%;
   height: 100%;
   opacity: 0;
-  border-color: #26a69a;
+  border-color: rgb(20, 56, 95);
 }
 
 .spinner-blue,
 .spinner-blue-only {
-  border-color: #4285f4;
+  border-color: rgb(20, 56, 95);
 }
 
 .spinner-red,
 .spinner-red-only {
-  border-color: #db4437;
+  border-color: rgb(20, 56, 95);
 }
 
 .spinner-yellow,
 .spinner-yellow-only {
-  border-color: #f4b400;
+  border-color: rgb(20, 56, 95);
 }
 
 .spinner-green,
 .spinner-green-only {
-  border-color: #0f9d58;
+  border-color: rgb(20, 56, 95);
 }
 
 /**

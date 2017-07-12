@@ -1,17 +1,19 @@
 <div class="row">
+
+    
     <div class="col s12 m7 l7">
         <div class="row card-panel">
             <form class="col s12">
-           
             <div class="row">
+
                 <div class="input-field col s5">
-                    <input  id="titulo" type="text" class="validate" ng-model="data.titulo" ng-value="data.titulo" >
+                    <input ng-enter="buscarCaso();" id="numero" type="number" class="validate" ng-model="data.numero_caso" ng-value="data.numero_caso" >
                     <label for="titulo">Numero de Caso</label>
                 </div>
 
-                 <div class="col s7">
-                    <div class="chip right">
-                        SALA 19
+                 <div ng-show="origenProgramador == true" class="col s7">
+                    <div  class="chip right chip_sala">
+                        {{sala}}
                     </div>
                 </div>
 
@@ -19,35 +21,39 @@
 
 
             </div>
+
+            <div ng-show="tipoDePersonasAgregadas.length != 0" class="row col s12 chip">
+                {{descripcion_caso}}
+            </div>
+
+            <div class="row">   
+                <div class="input-field col s12">
+                    <select disabled ng-model="selTipoTribunal"  class="browser-default" ng-change="mostrarTribunal();mostrarActividad();" ng-options="x.id as x.descripcion for x in JSONtipoTribunal">
+                        <option value="" disabled selected>Seleccionar Tipo de Tribunal</option>
+                    </select>
+                </div>
+            </div>
             <div class="row">
                 <div class="input-field col s4">
-                    <select>
-                    <option value="" disabled selected>Choose your option</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
-                    </select>
-                    <label>Tribunal</label>
+                    <select disabled id="tribunal" ng-model="data.id_tribunal" class="browser-default" ng-options="y.id as y.numero for y in JSONTribunal">
+                        <option value="" disabled selected>Seleccionar Tribunal</option>
+                    </select> 
                 </div>
 
 
                 <div class="input-field col s8">
-                    <select>
-                    <option value="" disabled selected>Choose your option</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
+                    <select disabled id="actividad" ng-model="data.id_actividad" class="browser-default" ng-options="z.id as z.actividad for z in JSONActividad">
+                        <option value="" disabled selected>Seleccionar Actividad</option>
                     </select>
-                    <label>Actividad</label>
                 </div>
 
                
         
 
-                <div class="input-field col s6">
+                <div ng-show="origenProgramador == true" class="input-field col s6">
                      <input  id="inicio" readonly type="datetime-local" step="1" ng-model="data.inicio" ng-value="data.inicio">  
                 </div>
-                <div class="input-field col s6">
+                <div ng-show="origenProgramador == true" class="input-field col s6">
                      <input  id="fin" readonly type="datetime-local" step="1" ng-model="data.fin" ng-value="data.fin">  
                 </div>
 
@@ -55,16 +61,16 @@
 
 
                 <div class="input-field col s12">
-                    <textarea  id="descripcion" class="materialize-textarea" ng-model="data.descripcion" ng-value="data.descripcion"></textarea>
+                    <textarea ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);" disabled  id="descripcion" name="descripcion" class="materialize-textarea" ng-model="data.descripcion" ng-value="data.descripcion"></textarea>
                     <label for="descripcion">Descripcion</label>
                 </div>
         
                 
 
             </div>
-            <div class="row">
+            <div ng-show="existeParam === false" class="row">
                 <div class="col s12">
-                    <a id="post" class="waves-effect waves-light btn-large blue right"><i class="material-icons right">cloud</i>Listo</a>
+                    <a id="post" class="waves-effect waves-light btn-large blue right">Listo</a>
                 </div>
             </div>
             </form>
@@ -73,27 +79,17 @@
     <div class="col s12 m4 l4">
        <div class="row">
          <div class="col s11 offset-s1">
-             <span class="flow-text">Agregar personas</span>
+             <span class="flow-text">Personas involucradas</span>
+             <p ng-show="tipoDePersonasAgregadas.length == 0">Por favor, ingrese un numero de caso para visualizar personas involucradas</p>
          </div>
 
        </div>
 
-       <div class="row">
-           <div class="input-field col s4 offset-s1">
-                    <select>
-                    <option value="" disabled selected>Choose your option</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
-                    </select>
-                    <label>Tipo de Persona</label>
-                </div>
-
-
-                <div class="input-field col s7">
-                   <input value="" id="first_name2" type="text" class="validate">
-                    <label class="active" for="first_name2">Cedula</label>
-                </div>
-       </div>
+       <div class="row col s11 offset-s1">
+            <div ng-repeat="x in tipoDePersonasAgregadas" class="chip" alt="{{x.cedula}}" title="{{x.cedula}}">
+                <img src="assets/images/icon-user.png" alt="Contact Person">
+                {{x.nombres}}
+                <span>{{x.tipo}}</span>
+            </div>
     </div>
 </div>

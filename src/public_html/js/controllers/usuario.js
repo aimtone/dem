@@ -1,12 +1,9 @@
-app.controller('juez', function($rootScope,$scope,$http,$q,$localStorage, $location) {
-	
+app.controller('usuario', function($rootScope,$scope,$http,$q,$localStorage) {
 	$rootScope.validateToken();
-
-
-	$rootScope.objeto = "Juez";
+	$rootScope.objeto = "Gestion de Usuario";
 	// Variables predefinidas
 	$scope.obj_padre = 'persona'; // Siempre terminar URL Con Simbolo "/"
-	$scope.obj_hijo = 'juez'; // Siempre terminar URL Con Simbolo "/"
+	$scope.obj_hijo = 'usuario'; // Siempre terminar URL Con Simbolo "/"
 	// Document Ready Function | Inicio
 	// -----------------------------------------------------------------
 	// SE EJECUTA DE MANERA AUTOMATICA AL TERMINAR LA CARGA DE LA PAGINA
@@ -60,7 +57,7 @@ app.controller('juez', function($rootScope,$scope,$http,$q,$localStorage, $locat
 
 		setTimeout(function() {
 			$('#preload').fadeOut("fast");
-			$('#example').html("<thead><tr><th>Cedula</th><th>Nombres</th><th>Apellidos</th><th>Email</th><th>Telefono</th><th>Fecha de Nacimiento</th></tr></thead>");
+			$('#example').html("<thead><tr><th>Cedula</th><th>Nombres</th><th>Apellidos</th><th>Email</th><th>Telefono</th><th>Fecha de Nacimiento</th><th>Nivel</th></tr></thead>");
 			// Configuracion de la Datatable
 			$scope.config();
 			// Configuracion de los eventos de la Datatable
@@ -73,8 +70,6 @@ app.controller('juez', function($rootScope,$scope,$http,$q,$localStorage, $locat
 		$( "#fecha_de_nacimiento" ).datepicker($.datepicker.regional["es"]);
 		$("#telefono").mask("+58 999 999 99 99",{placeholder:"+58 000 000 00 00"});
 		//$("#cedula").mask("l-99999999");
-
-
 
 
 
@@ -93,12 +88,13 @@ app.controller('juez', function($rootScope,$scope,$http,$q,$localStorage, $locat
 					email : $scope.datos.email.toUpperCase(),
 					telefono : $scope.datos.telefono,
 					fecha_de_nacimiento : $scope.datos.fecha_de_nacimiento,
-					id_tipo_persona: 5
+					id_tipo_persona: 4
 				};
 
 				$scope.obj = {
 					id: null,
-					cedula : $scope.datos.cedula.toUpperCase()
+					cedula : $scope.datos.cedula.toUpperCase(),
+					nivel : $scope.datos.nivel.toUpperCase()
 				};
 
 				// Si la accion del boton es registrar
@@ -108,12 +104,43 @@ app.controller('juez', function($rootScope,$scope,$http,$q,$localStorage, $locat
 					$rootScope.post('api/' + $scope.obj_padre, $scope.persona).then(function(response) {
 						if(response!=null) {
 							var id = response[0].id;
-							
+							$rootScope.clave_autogenerada = generarClaveRandom();
+							$scope.obj.clave = $rootScope.sha1(md5($rootScope.clave_autogenerada));
+							console.log($rootScope.clave_autogenerada);
 							$rootScope.post('api/' + $scope.obj_hijo, $scope.obj).then(function(response) {
 								if(response!=null) {
 									$scope.table.ajax.reload();
 									$rootScope.alert("Exito", "Se ha completado el proceso de manera exitosa", "success");
 									$scope.datos = {};
+
+									$rootScope.get('api/config_notificaciones').then(function(response) {
+											$scope.mensaje = {
+												number: $scope.persona.telefono,
+												text: "Has sido registrado como usuario en el sistema del gestion de actos del circuito judicial de San Felipe con el nombre de usuario "+$scope.persona.cedula+" y la clave "+$rootScope.clave_autogenerada
+											};
+
+
+											$rootScope.post(response["0"].servSMSinst, $scope.mensaje).then(function(response) {
+												console.log(response);
+											});
+
+											$scope.mail = {
+												nombre : $scope.persona.nombres + " " + $scope.persona.apellidos,
+												asunto: "Nuevo registro en el sistema de gestion de actos del Circuito Judicial de San Felipe",
+												correo: $scope.persona.email,
+												mensaje: "Has sido registrado como usuario en el sistema del gestion de actos del circuito judicial de San Felipe con el nombre de usuario <b>"+$scope.persona.cedula+"</b> y la clave <b>"+$rootScope.clave_autogenerada+"</b>"
+
+											};
+
+											var config = {
+												 params: $scope.mail,
+												 headers : {'Accept' : 'application/json'}
+											};
+									    	
+									    	$http.get(response["0"].servEmail, config).then(function (response) {
+											       
+											});
+									});
 									
 								} else {
 									$rootScope.alert("Error", "No se ha registrado los datos, por favor, verifique e intente de nuevo", "warning");
@@ -325,7 +352,8 @@ app.controller('juez', function($rootScope,$scope,$http,$q,$localStorage, $locat
 				    { "data": "apellidos" },
 				    { "data": "email" },
 				    { "data": "telefono" },
-				    { "data": "fecha_de_nacimiento" }
+				    { "data": "fecha_de_nacimiento" },
+				    { "data": "nivel" }
 				]
 	};
 
@@ -366,6 +394,16 @@ app.controller('juez', function($rootScope,$scope,$http,$q,$localStorage, $locat
 	// -----------------------------------------------------------------
 	// FUNCIONES DE LA DATATABLE | FIN
 	// -----------------------------------------------------------------
+
+	function generarClaveRandom() {
+	  var text = "";
+	  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+	  for (var i = 0; i < 8; i++)
+	    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+	  return text;
+	}
 
 	// -----------------------------------------------------------------
 	// FUNCIONES DE LA VENTANA MODAL | INICIO
@@ -437,6 +475,7 @@ app.controller('juez', function($rootScope,$scope,$http,$q,$localStorage, $locat
 			if($scope.datos.fecha_de_nacimiento==undefined) { $rootScope.toast("Campo 'fecha de nacimiento' vacio");  return;}
 			if($scope.datos.email==undefined) {  $rootScope.toast("Campo 'email' vacio");  return;}
 			if($scope.datos.telefono==undefined) {  $rootScope.toast("Campo 'telefono' vacio");  return;}
+			if($scope.datos.nivel==undefined) {  $rootScope.toast("Selecciona un nivel");  return;}
 
 			$(div).modal('close');
 		}

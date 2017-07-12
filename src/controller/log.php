@@ -21,16 +21,19 @@
 			}
 
 			$token = end($array);
+
 			
 			$JWT = json_decode(base64_decode($token), true);
+
 			$clave_decode = base64_decode($JWT['clave']);
+
 
 			$data = array_filter($obj->log_in($JWT['cedula'],$clave_decode));
 			
 			if(count($data) == 1) {
 				print_json(200, "Bienvenido",$data);
 			} else {
-		     	print_json(201,"No existe",null);
+		     	print_json(201,"Nombre de usuario o clave no coinciden",null);
 		    }
         break;
         case 'POST':

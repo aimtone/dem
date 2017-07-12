@@ -188,6 +188,7 @@
 				// Decodifica el cuerpo de la solicitud y lo guarda en un array de PHP
 				$array = json_decode($bodyRequest, true);
 
+
 				// Renderiza la informacion obtenida que luego sera guardada en la Base de datos
 				$obj->data = renderizeData(array_keys($array), array_values($array));
 

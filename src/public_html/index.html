@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="es" ng-app="dem" oncontextmenu="return false;">
+<html lang="es" ng-app="dem" oncontextmenu="">
 <head>
 
 
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+	<META HTTP-EQUIV="Expires" CONTENT="-1">	
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<link rel="icon" type="image/png" href="assets/images/ico/icono.png" />
 	<title>Direccion Ejecutiva de la Magistratura</title>
@@ -54,15 +56,17 @@
 </head>
 <body ng-controller="main">
 <div id="loader-wrapper" class="main-wrap">
-<div class="loader">
-<div class="child-common"></div>
-</div></div>
+	<div class="loader">
+		<div class="child-common"></div>
+	</div>
+</div>
+
 	<!-- Nabvar Primaria -->
-	<nav id="nav_principal" style="background:#14385f !important;" class=" blue darken-4">
+	<nav id="nav_principal" style="background:#14385f !important;" class="blue darken-4">
 	    <div class="navbar-wrapper" id="nav-primario">
 	    <a href="#!/" class="brand-logo center" onclick="cargarScripts();" style="font-family:'Faster One';"><img width="26%" src="assets/images/tsj_logo_2.png" alt=""></a>
 
-	     <a id="sidenav-left" ng-show="x === true" href="#" data-activates="mobile-demo" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
+	     <a id="sidenav-left" ng-show="x === true && usuario_en_linea.nivel === 'ADMINISTRADOR' || usuario_en_linea.nivel === 'USUARIO ESPECIAL'" href="#" data-activates="mobile-demo" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
 
 
 			<ul class="right">
@@ -79,30 +83,33 @@
 					</ul>
 				</li>
 
-		        <li ng-show="x === true">
-		        	<a id="sidenav-right" data-activates="left-side" class="waves-effect waves-light  right show-on-large"><i class="material-icons left">perm_identity</i> Usuario</a>
-		        </li>
+				<li ng-show="x === true" class="hide-on-med-and-down">
+		        	
+		        		<i class="material-icons left">perm_identity</i> {{usuario_en_linea.nombres}} {{usuario_en_linea.apellidos}}
+		        	
+		        
+				</li>
+
+				<li ng-show="x === true" class="hide-on-med-and-down">
+		        	<a ng-click="logout()" id="logout" name="logout" class="waves-effect waves-light btn blue lighten-2">
+		        		Salir
+		        	</a>
+		        
+				</li>
+
+				
+
+		      
 		    </ul>
 
 	
 	    <div style="background:#14385f !important;" class="side-nav blue darken-4" id="mobile-demo">
 	     	<div class="center">
-	     		 <h3 style="font-family:'Faster One';">DEM</h3>
+	     		 <h3 style="font-family:'Faster One';"><img width="50%" src="assets/images/tsj_logo_2.png" alt=""></h3>
 	     	</div>
 			
 			<ul>
-				<li class="no-padding blue darken-3">
-			        <ul class="collapsible collapsible-accordion">
-			          <li>
-			            <a class="collapsible-header">Tablas Principales<i class="material-icons right">arrow_drop_down</i></a>
-			            <div class="collapsible-body blue darken-2">
-			              <ul>
-			                <li><a href="">Configuracion</a></li>
-			              </ul>
-			            </div>
-			          </li>
-			        </ul>
-		    	</li>
+			
 				<li ng-show="x === true"><a href="#!/sala">Sala</a></li>
 				<li ng-show="x === true"><a href="#!/tribunal">Tribunal</a></li>
 				<li ng-show="x === true"><a href="#!/tipo_de_tribunal">Tipo de Tribunal</a></li>
@@ -165,24 +172,6 @@
 		</div>
 
 
-	    <div  class="side-nav blue lighten-1" id="left-side">
-			<ul>
-				<li>
-					<div class="userView">
-				      <!-- <div class="background">
-				        <img src="assets/images/office.jpg">
-				      </div> -->
-				      <a href="#!user"><img class="circle" src="assets/images/placeholder.jpg"></a>
-				      <a href="#!name"><span class="white-text name">Anthony Medina</span></a>
-				      <a href="#!email"><span class="white-text email">anthonyjmedinaf@gmail.com</span></a>
-							<button class="btn blue darken-4 waves-effect waves-light" type="button" ng-click="logout()" id="logout" name="logout">Cerrar Sesion</button>
-                      
-				    </div>
-				</li>
-
-				
-			</ul>
-	    </div>
 	</nav>
 	<!-- /Nabvar Primaria -->
 
@@ -210,28 +199,28 @@
 					 </ul>
 				</li>
 
-		        <li ng-show="x === true">
+		        <li ng-show="x === true && usuario_en_linea.nivel === 'ADMINISTRADOR'">
 		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.menu.toolbar.derecho.ajustes}}" data-activates='dropdown1' onclick="location.href='#!/ajustes'"><i class="material-icons">build</i></a>
 		        	<ul id='dropdown1' data-beloworigin="true" class='dropdown-content'>
 					    
 					 </ul>
 				</li>
 
-		        <li ng-show="x === true">
+		        <li ng-show="x === true && usuario_en_linea.nivel === 'ADMINISTRADOR'">
 		        	<a class="dropdown-button tooltipped" data-position="left" data-tooltip="{{lang.menu.toolbar.derecho.bitacora}}" data-activates='dropdown2' onclick="location.href='#!/bitacora'"><i class="material-icons">fingerprint</i></a>
 		        	<ul id='dropdown2' data-beloworigin="true" class='dropdown-content'>
 					    
 					 </ul>
 				</li>
 
-		        <li ng-show="x === true">
-		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.menu.toolbar.derecho.control_usuario}}" data-activates='dropdown3' href="javascript:void(0);"><i class="material-icons">group</i></a>
+		        <li ng-show="x === true && usuario_en_linea.nivel === 'ADMINISTRADOR'">
+		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.menu.toolbar.derecho.control_usuario}}" data-activates='dropdown3' onclick="location.href='#!/usuario'"><i class="material-icons">group</i></a>
 		        	<ul id='dropdown3' data-beloworigin="true" class='dropdown-content'>
 				
 					 </ul>
 				</li>
 
-		        <li ng-show="x === true">
+		        <li ng-show="x === true && usuario_en_linea.nivel === 'ADMINISTRADOR'">
 		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.menu.toolbar.derecho.respaldo}}" data-activates='dropdown4' onclick="location.href='#!/respaldo'"><i class="material-icons">backup</i></a>
 		        	<ul id='dropdown4' data-beloworigin="true" class='dropdown-content'>
 					   
@@ -312,16 +301,18 @@
 				<script src="assets/js/controllers/home.js?ver=1.0"></script>
 				<script src="assets/js/controllers/respaldo.js?ver=1.0"></script>
 				<script src="assets/js/controllers/bitacora.js?ver=1.0"></script>
-
+				<script src="assets/js/controllers/mensajes.js?ver=1.0"></script>
 				<script src="assets/js/controllers/login.js?ver=1.0"></script>	
 				<script src="assets/js/controllers/programador.js?ver=1.0"></script>	
 				<script src="assets/js/controllers/defensor.js?ver=1.0"></script>	
+				<script src="assets/js/controllers/caso.js?ver=1.0"></script>	
 				<script src="assets/js/controllers/secretaria.js?ver=1.0"></script>	
 				<script src="assets/js/controllers/alguacil.js?ver=1.0"></script>
 				<script src="assets/js/controllers/imputado.js?ver=1.0"></script>	
 				<script src="assets/js/controllers/juez.js?ver=1.0"></script>	
 				<script src="assets/js/controllers/victima.js?ver=1.0"></script>	
-				<script src="assets/js/controllers/testigo.js?ver=1.0"></script>	
+				<script src="assets/js/controllers/testigo.js?ver=1.0"></script>
+				<script src="assets/js/controllers/usuario.js?ver=1.0"></script>	
 				<script src="assets/js/controllers/fiscal.js?ver=1.0"></script>	
 				<script src="assets/js/controllers/sala.js?ver=1.0"></script>
 				<script src="assets/js/controllers/tribunal.js?ver=1.0"></script>	

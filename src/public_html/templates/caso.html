@@ -1,0 +1,78 @@
+<div class="row">
+
+    
+    <div class="col s12 m7 l7">
+        <div class="row card-panel ">
+            <form class="col s12">
+            <div class="row">
+                <div class="input-field col s5">
+                    <input  id="titulo" type="number" class="validate" ng-model="datos.numero" ng-value="datos.numero" >
+                    <label for="titulo">Numero de Caso</label>
+                </div>
+
+                 
+
+           
+
+
+            </div>
+
+          
+            <div class="row">
+               
+            
+
+
+                <div class="input-field col s12">
+                    <textarea ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);"  id="descripcion" name="descripcion" class="materialize-textarea" ng-model="datos.descripcion" ng-value="datos.descripcion"></textarea>
+                    <label for="descripcion">Descripcion</label>
+                </div>
+        
+                
+
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <a id="post" class="waves-effect waves-light btn-large blue right">Listo</a>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    <div class="col s12 m4 l4">
+       <div class="row">
+         <div class="col s11 offset-s1">
+             <span class="flow-text">Agregar personas</span>
+         </div>
+
+       </div>
+
+       <div class="row">
+           <div class="input-field col s4 offset-s1">
+                    <select id="selTipoPersona" ng-model="selTipoPersona" class="browser-default" ng-change="" ng-options="x.id as x.descripcion for x in JSONTipoPersona">
+                        <option value="" disabled selected>Seleccionar</option>
+                    </select>
+                </div>
+
+
+                <div class="input-field col s7">
+                   <input value="" ng-model="persona.cedula" id="cedula" ng-enter="buscarPersona();" type="text" class="validate">
+                    <label class="active" for="first_name2">Cedula</label>
+                </div>
+       </div>
+
+       <div class="row col s11 offset-s1">
+            <div ng-repeat="x in tipoDePersonasAgregadas" class="chip" alt="{{x.cedula}}" title="{{x.cedula}}">
+                <img src="assets/images/icon-user.png" alt="Contact Person">
+                {{x.nombres}}
+                <i id="{{x.posicion}}" ng-click="sacarElemento($event);" class="close material-icons">close</i>
+                <span>{{x.tipo}}</span>
+            </div>
+
+
+
+            
+                    
+       </div>
+    </div>
+</div>

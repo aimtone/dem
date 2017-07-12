@@ -1,0 +1,145 @@
+<div class="row">
+    <div class="col s12 m4 l4 message-box">
+         <div ng-tabs class="tabbable tab-fixed">
+        <ul class="nav nav-tabs">
+            <li ng-tab-head="active">
+                <a href="#" ng-click="$event.preventDefault()">SMS Saliente</a>
+            </li>
+            <li ng-tab-head>
+                <a href="#" ng-click="$event.preventDefault()">Correos Salientes</a>
+            </li>
+ 
+
+        </ul>
+        <input type="text" ng-model="search" placeholder="Buscar">
+        <div class="tab-content content-message">
+            
+            <div ng-tab-body="animated" class="tab-pane">
+                        <ul class="collection message-box">
+                            <li ng-repeat="x in mensajes | filter : search" class="collection-item avatar">
+                                <img src="assets/images/icon-user.png" alt="" class="circle">
+                                <span class="title">{{x.number}}</span>
+                                <p>{{x.insertdate}}<br>
+                                    {{x.text}}
+                                </p>
+                                <a href="#!" class="secondary-content"><i class="material-icons">message</i></a>
+                            </li>
+
+
+                                        
+                                        
+                        </ul>
+
+                        
+                  
+            </div>
+
+            <div ng-tab-body="animated" class="tab-pane">
+                 <ul class="collection message-box">
+                            <li class="collection-item avatar">
+                                <img src="assets/images/icon-user.png" alt="" class="circle">
+                                <span class="title">Juan Morillo</span>
+                                <p>Defensor<br>
+                                    Manana tienes cita en el circuito
+                                </p>
+                                <a href="#!" class="secondary-content"><i class="material-icons">mail</i></a>
+                            </li>
+
+                            <li class="collection-item avatar">
+                                <img src="assets/images/icon-user.png" alt="" class="circle">
+                                <span class="title">Juan Morillo</span>
+                                <p>Defensor<br>
+                                    Manana tienes cita en el circuito
+                                </p>
+                                <a href="#!" class="secondary-content"><i class="material-icons">mail</i></a>
+                            </li>
+
+                            <li class="collection-item avatar">
+                                <img src="assets/images/icon-user.png" alt="" class="circle">
+                                <span class="title">Juan Morillo</span>
+                                <p>Defensor<br>
+                                    Manana tienes cita en el circuito
+                                </p>
+                                <a href="#!" class="secondary-content"><i class="material-icons">mail</i></a>
+                            </li>
+
+                            <li class="collection-item avatar">
+                                <img src="assets/images/icon-user.png" alt="" class="circle">
+                                <span class="title">Juan Morillo</span>
+                                <p>Defensor<br>
+                                    Manana tienes cita en el circuito
+                                </p>
+                                <a href="#!" class="secondary-content"><i class="material-icons">mail</i></a>
+                            </li>
+
+                            <li class="collection-item avatar">
+                                <img src="assets/images/icon-user.png" alt="" class="circle">
+                                <span class="title">Juan Morillo</span>
+                                <p>Defensor<br>
+                                    Manana tienes cita en el circuito
+                                </p>
+                                <a href="#!" class="secondary-content"><i class="material-icons">mail</i></a>
+                            </li>
+
+                            <li class="collection-item avatar">
+                                <img src="assets/images/icon-user.png" alt="" class="circle">
+                                <span class="title">Juan Morillo</span>
+                                <p>Defensor<br>
+                                    Manana tienes cita en el circuito
+                                </p>
+                                <a href="#!" class="secondary-content"><i class="material-icons">mail</i></a>
+                            </li>
+
+                            <li class="collection-item avatar">
+                                <img src="assets/images/icon-user.png" alt="" class="circle">
+                                <span class="title">Juan Morillo</span>
+                                <p>Defensor<br>
+                                    Manana tienes cita en el circuito
+                                </p>
+                                <a href="#!" class="secondary-content"><i class="material-icons">mail</i></a>
+                            </li>
+
+                            <li class="collection-item avatar">
+                                <img src="assets/images/icon-user.png" alt="" class="circle">
+                                <span class="title">Juan Morillo</span>
+                                <p>Defensor<br>
+                                    Manana tienes cita en el circuito
+                                </p>
+                                <a href="#!" class="secondary-content"><i class="material-icons">mail</i></a>
+                            </li>
+
+                            <li class="collection-item avatar">
+                                <img src="assets/images/icon-user.png" alt="" class="circle">
+                                <span class="title">Juan Morillo</span>
+                                <p>Defensor<br>
+                                    Manana tienes cita en el circuito
+                                </p>
+                                <a href="#!" class="secondary-content"><i class="material-icons">mail</i></a>
+                            </li>
+
+
+                                        
+                                        
+                        </ul>
+            
+            </div>
+
+            
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    </div>
+
+    <div class="col s12 m6 l6">
+        Enviar nuevo sms
+    </div>
+</div>   
+   
+   
+  

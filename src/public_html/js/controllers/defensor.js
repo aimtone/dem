@@ -9,6 +9,61 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 	// SE EJECUTA DE MANERA AUTOMATICA AL TERMINAR LA CARGA DE LA PAGINA
 	// -----------------------------------------------------------------
 	angular.element(document).ready(function() {
+		$rootScope.get('api/config_datatables').then(function(response) {
+			console.log(response);
+			if(response["0"]._keys=="1") {
+                $scope.tConfig.keys = true;
+            } else {
+                $scope.tConfig.keys = false;
+            }
+
+            if(response["0"].colReorder=="1") {
+                $scope.tConfig.colReorder = true;
+            } else {
+                $scope.tConfig.colReorder = false;
+            }
+            if(response["0"].info=="1") {
+                $scope.tConfig.info = true;
+            } else {
+                $scope.tConfig.info = false;
+            }
+
+            if(response["0"].stateSave=="1") {
+                $scope.tConfig.stateSave = true;
+            } else {
+                $scope.tConfig.stateSave = false;
+            }
+
+            if(response["0"].scrollCollapse=="1") {
+                $scope.tConfig.scrollCollapse = true;
+            } else {
+                $scope.tConfig.scrollCollapse = false;
+            }
+
+            if(response["0"].paging=="1") {
+                $scope.tConfig.paging = true;
+            } else {
+                $scope.tConfig.paging = false;
+            }
+
+            if(response["0"].responsive=="1") {
+                $scope.tConfig.responsive = true;
+            } else {
+                $scope.tConfig.responsive = false;
+            }
+		});
+
+		$("#example").html("<center id='preload'><div class='preloader-wrapper small active'><div class='spinner-layer spinner-green-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div><p>Cargando...</p></center>");
+
+		setTimeout(function() {
+			$('#preload').fadeOut("fast");
+			$('#example').html("<thead><tr><th>Cedula</th><th>Nombres</th><th>Apellidos</th><th>Email</th><th>Telefono</th><th>Fecha de Nacimiento</th><th>Tipo</th><th>Impres</th></tr></thead>");
+			// Configuracion de la Datatable
+			$scope.config();
+			// Configuracion de los eventos de la Datatable
+			$scope.tEvents();
+
+        }, 1000);
 
 		// Mascaras de los campos
 		$("#fecha_de_nacimiento").mask("99/99/9999",{placeholder:"DD/MM/AAAA"});
@@ -119,10 +174,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 		});
 		// $rootScope.modal() | Fin
 
-		// Configuracion de la Datatable
-		$scope.tConfig();
-		// Configuracion de los eventos de la Datatable
-		$scope.tEvents();
+	
 	});	
 	// Document Ready Function | Fin
 
@@ -203,13 +255,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 	// -----------------------------------------------------------------
 	// FUNCIONES DE LA DATATABLE | INICIO
 	// -----------------------------------------------------------------
-
-	$scope.tConfig = function() {
-		$scope.dataFilter = {
-			donde : "where id_tipo_persona = 2"
-		}
-
-		$scope.table = $('#example').DataTable( {
+	$scope.tConfig = {
 			language: {
 			    "url": "public_html/lang/datatables/" + $localStorage.locale + ".json"
 			},
@@ -286,7 +332,14 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 				    { "data": "tipo" },
 				    { "data": "impres" }
 				]
-		} );
+	};
+
+	$scope.config = function() {
+		$scope.dataFilter = {
+			donde : "where id_tipo_persona = 2"
+		}
+
+		$scope.table = $('#example').DataTable($scope.tConfig);
 
 
 		new $.fn.dataTable.ColReorder( $scope.table, {
@@ -300,6 +353,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 		
 	}
 
+	
 	setInterval( function () {
 	    $scope.table.ajax.reload();
 	}, 60000 );
