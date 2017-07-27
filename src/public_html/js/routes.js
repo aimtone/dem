@@ -118,6 +118,20 @@
 							authorized: [1,2,3]
 						}
 		            })
+					.when('/actos', {
+		                templateUrl : 'assets/templates/actos.html?ver=1.0',
+		                controller  : 'actos',
+		                data: {
+							authorized: [1,2,3]
+						}
+		            })
+					.when('/casos', {
+		                templateUrl : 'assets/templates/casos.html?ver=1.0',
+		                controller  : 'casos',
+		                data: {
+							authorized: [1,2,3]
+						}
+		            })
 					.when('/respaldo', {
 		                templateUrl : 'assets/templates/respaldo.html?ver=1.0',
 		                controller  : 'respaldo',
@@ -182,6 +196,8 @@
 				{
 					setTimeout(function() {
 							console.log("entra en run");
+
+
 					        if (next.data !== undefined) 
 					        {
 					        	console.log($rootScope.current_user);
@@ -195,6 +211,26 @@
 									
 								}
 					        }
+
+					        if($rootScope.nuevo_respaldo == false) {
+					        	$rootScope.get('api/config_generales').then(function(response) {
+									$rootScope.atributos = {
+										usuario : response["0"].usuario,
+										clave : response["0"].clave,
+										basedatos: response["0"].basedatos
+
+									};
+
+
+									$rootScope.get('back-up?accion=Respaldo&usuario='+$rootScope.atributos.usuario+'&clave='+$rootScope.atributos.clave+'&nombre=backup&basedatos='+$rootScope.atributos.basedatos).then(function(response) {
+										console.log("Respaldo automatico creado");
+										$rootScope.nuevo_respaldo = true;
+
+									});
+								});
+					        }
+
+					        
 
 					}, 100);
 					

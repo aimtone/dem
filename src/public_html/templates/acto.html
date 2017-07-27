@@ -1,6 +1,5 @@
 <div class="row">
 
-    
     <div class="col s12 m7 l7">
         <div class="row card-panel">
             <form class="col s12">
@@ -8,7 +7,7 @@
 
                 <div class="input-field col s5">
                     <input ng-enter="buscarCaso();" id="numero" type="number" class="validate" ng-model="data.numero_caso" ng-value="data.numero_caso" >
-                    <label for="titulo">Numero de Caso</label>
+                    <label for="titulo">Número de Causa</label>
                 </div>
 
                  <div ng-show="origenProgramador == true" class="col s7">
@@ -62,7 +61,7 @@
 
                 <div class="input-field col s12">
                     <textarea ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);" disabled  id="descripcion" name="descripcion" class="materialize-textarea" ng-model="data.descripcion" ng-value="data.descripcion"></textarea>
-                    <label for="descripcion">Descripcion</label>
+                    <label for="descripcion">Descripción</label>
                 </div>
         
                 
@@ -80,7 +79,7 @@
        <div class="row">
          <div class="col s11 offset-s1">
              <span class="flow-text">Personas involucradas</span>
-             <p ng-show="tipoDePersonasAgregadas.length == 0">Por favor, ingrese un numero de caso para visualizar personas involucradas</p>
+             <p ng-show="tipoDePersonasAgregadas.length == 0">Por favor, ingrese un número de caso para visualizar personas involucradas</p>
          </div>
 
        </div>
@@ -90,6 +89,7 @@
                 <img src="assets/images/icon-user.png" alt="Contact Person">
                 {{x.nombres}}
                 <span>{{x.tipo}}</span>
+                <i class="close material-icons">close</i>
             </div>
     </div>
 </div>

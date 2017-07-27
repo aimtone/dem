@@ -9,8 +9,8 @@
       <i class="large material-icons">mode_edit</i>
     </a>
     <ul>
-      <li class="waves-effect waves-light" ><a href="" ng-click="openModal('#modal1','registrar')"><i class="material-icons">add_circle</i></a></li>
-      <li class="waves-effect waves-light"><a href="" ng-click="openModal('#modal1','modificar')"><i class="material-icons">create</i></a></li>
+      <li class="waves-effect waves-light" ><a ng-click="vistaCaso('registrar');"><i class="material-icons">add_circle</i></a></li>
+      <li class="waves-effect waves-light"><a ng-click="vistaCaso('modificar');"><i class="material-icons">create</i></a></li>
       <li class="waves-effect waves-light"><a ng-click="rowDelete()" href=""><i class="material-icons">delete</i></a></li>
       <li class="waves-effect waves-light"><a href=""><i class="material-icons">file_download</i></a></li>
     </ul>
@@ -33,21 +33,15 @@
       </div>
 
       <div class="row">
-        <div class="input-field col s12 m12 l6">
-          <input  name="numero" type="text" class="validate" ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);" ng-model="datos.numero" ng-value="datos.numero" required>
-          <label class="active" for="numero">Número</label>
+        <div class="input-field col s10 m10 l11">
+          <input  name="descripcion" type="text" class="validate" ng-keypress="aMayusculas($event);" ng-blur="aMayusculas($event);" ng-model="datos.descripcion" ng-value="datos.descripcion" required>
+          <label class="active" for="descripcion">Descripción</label>
         </div>
 
-        <div class="input-field col s12 m12 l6">
-          <select class="browser-default" ng-model="datos.id_tipo_tribunal">
-            <option selected disabled>Selecciona una opción</option>
-            <option ng-repeat="item in tipo_de_tribunal track by item.id" value="{{item.id}}">{{item.descripcion}}</option>
-          </select>
+        <div class="input-field col s2 m2 l1">
+          <input name="color" type="color" class="validate" ng-model="datos.color" ng-value="datos.color" required>
 
-         
         </div>
-
-    
       </div>
 
     

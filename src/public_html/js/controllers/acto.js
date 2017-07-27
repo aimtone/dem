@@ -8,7 +8,7 @@
 
             $('#post').on('click', function() {
                 if($scope.data==undefined) { $rootScope.toast("Rellene los campos"); return; }
-                if($scope.data.numero_caso==undefined) { $rootScope.toast("Ingresa un numero de caso"); return; }
+                if($scope.data.numero_caso==undefined) { $rootScope.toast("Ingresa un número de caso"); return; }
                 if($scope.selTipoTribunal==undefined) { $rootScope.toast("Selecciona un tipo de Tribunal"); return; }
                 if($scope.data.id_tribunal==undefined) { $rootScope.toast("Selecciona un tribunal"); return; }
                 if($scope.data.id_actividad==undefined) { $rootScope.toast("Selecciona una actividad"); return; }
@@ -25,23 +25,33 @@
                     $scope.data.estatus = "ESPERA";
                 }
 
+                $scope.data.id_usuario =  $rootScope.id_usuario;
+
+                console.log(JSON.stringify($scope.data));
                 $rootScope.post('api/acto',$scope.data).then(function(response) {
                     var date = $rootScope.formatDate($scope.data.inicio, "yyyy-MM-dd");
                     var fecha2 = $rootScope.formatDate($scope.data.inicio, "dd/MM/yyyy");
                     var m = moment($scope.data.inicio);
                     var hora = m.format("h:mm a");
+                    var id_acto = response["0"].id;
 
                     
 
                     for(var i = 0; i < $rootScope.tipoDePersonasAgregadas.length;i++) {
                         var JSONmensaje = {
                             number: $rootScope.tipoDePersonasAgregadas[i].telefono,
-                            text : "[Mensaje automatico de Circuito Judicial de San Felipe para "+$rootScope.tipoDePersonasAgregadas[i].nombres+"] Recordatorio de audiencia programada para el dia "+fecha2+" a las "+hora+" donde funges como " + $rootScope.tipoDePersonasAgregadas[i].tipo
+                            text : "[Mensaje automático de Circuito Judicial de San Felipe para "+$rootScope.tipoDePersonasAgregadas[i].nombres+"] Recordatorio de audiencia numero " + id_acto + " programada para el día "+fecha2+" a las "+hora+" donde funges como " + $rootScope.tipoDePersonasAgregadas[i].tipo
 
                         };
 
                         $rootScope.get('api/config_notificaciones').then(function(response) {
                             $rootScope.data_notificaciones = response["0"];
+
+                            console.log($rootScope.data_notificaciones);
+
+                            console.log($rootScope.data_notificaciones.servSMSprog + "/"+date+"/1 DAY");
+
+                            console.log(JSON.stringify(JSONmensaje));
 
                             $rootScope.post($rootScope.data_notificaciones.servSMSprog + "/"+date+"/1 DAY", JSONmensaje).then(function(response) {
                                 console.log(response);
@@ -88,7 +98,7 @@
                         $scope.selTribunal = {};
                         $rootScope.tipoDePersonasAgregadas = [];
                         $rootScope.descripcion_caso = "";
-                    $rootScope.toast("Ingrese un numero de caso"); 
+                    $rootScope.toast("Ingrese un número de caso"); 
                     return; 
                 }
 
@@ -183,7 +193,7 @@
                         $('input').prop("disabled", true);
                         $('#post').prop("disabled", true);
                         $('#numero').prop("disabled", false);
-                        $rootScope.toast("No existe ningun caso con el numero ingresado");
+                        $rootScope.toast("No existe ningún caso con el número ingresado");
                         $scope.selActividad = {};
                         $scope.selTipoTribunal = {};
                         $scope.selTribunal = {};

@@ -5,7 +5,7 @@
 	$hoy = getdate();
 
 	if(!isset($_GET['accion']) || empty($_GET['accion'])) {
-		print_json(200, "No se ha definido ninguna accion ('Respaldo' para respaldar, 'Restauracion' para restaurar)", null);
+		print_json(200, "No se ha definido ninguna acción ('Respaldo' para respaldar, 'Restauración' para restaurar)", null);
 		exit();
 	} else {
 		$accion = $_GET['accion'];
@@ -133,7 +133,7 @@
 				if(file_exists($ruta)) {
 					$salida = shell_exec(sprintf("mysql --user=%s --password=%s %s < %s",$usuario,$clave,$basedatos,$ruta));
 					
-					$arr['mensaje'] = "El archivo se ha restaurado de manera exitosa";
+					$arr['mensaje'] = "El archivo se ha restaurado de manera éxitosa";
 					print_json(200, "OK", $arr['mensaje']);
 
 				} else {
@@ -145,7 +145,7 @@
 			break;
 		
 		default:
-			print_json(200, "Accion indefinida", null);
+			print_json(200, "Acción indefinida", null);
 			break;
 	}
 

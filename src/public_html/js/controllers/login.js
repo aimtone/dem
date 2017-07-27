@@ -46,7 +46,7 @@
 
 		$('#login').on('click',function() {
 			if($scope.datos==undefined) { $rootScope.toast("Rellene los campos"); return; }
-			if($scope.datos.cedula==undefined) {  $rootScope.toast("Campo 'cedula' vacio"); return; }
+			if($scope.datos.cedula==undefined) {  $rootScope.toast("Campo 'cédula' vacio"); return; }
 			if($scope.datos.clave==undefined) { $rootScope.toast("Campo 'clave' vacio");  return;}
 
 			if(ValidCaptcha()==true) {
@@ -108,7 +108,7 @@
 					}
 				});
 			} else {
-				$rootScope.toast("El codigo introducido no coincide con el de la imagen");
+				$rootScope.toast("El código introducido no coincide con el de la imagen");
 			}
 		});
 

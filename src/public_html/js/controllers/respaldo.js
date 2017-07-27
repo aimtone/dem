@@ -117,6 +117,7 @@
 
 			};
 
+
 			$rootScope.volverARaiz = function() {
 				$rootScope.rutaActual = 'dir?directorio=../backup';
 				$rootScope.cargarRuta($rootScope.rutaActual);

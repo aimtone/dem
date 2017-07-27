@@ -3,6 +3,10 @@
 			$rootScope.objeto = "Bitacora";
 
             $(document).ready(function() {
+
+                $rootScope.get('api/bitacora').then(function(response) {
+                    console.log(response);
+                });
                 // Setup - add a text input to each footer cell
                 $('#example tfoot th').each( function () {
                     var title = $(this).text();
@@ -10,7 +14,13 @@
                 } );
             
                 // DataTable
+                var filter = JSON.stringify({
+                    ordenarPor : "ORDER BY id DESC"
+                });
                 $scope.table = $('#example').DataTable( {
+                    language: {
+                        "url": "public_html/lang/datatables/" + $localStorage.locale + ".json"
+                    },
                    processing: false,
                     ordering: true,
                     keys: false,
@@ -64,7 +74,7 @@
 
                     ],
                     ajax: {
-                        url: 'api/bitacora',
+                        url: 'api/vista_bitacora?filter='+filter,
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
                             'Authorization' : $localStorage.token
@@ -77,23 +87,8 @@
                             { "data": "fecha" },
                             { "data": "operacion" },
                             { "data": "tabla" },
-                            { "data": "null", render: function ( data, type, row ) {
-                                var jsonString = row.registro_anterior;
-                                if(jsonString==null) {
-                                    return "";
-                                } else {
-                                    return "<div class='minus'>"+jsonString+"</div>";
-                                }
-                                
-                            } },
-                            { "data": "null", render: function ( data, type, row ) {
-                                var jsonString = row.registro_nuevo;
-                                if(jsonString==null) {
-                                    return "";
-                                } else {
-                                    return "<div class='minus'>"+jsonString+"</div>";
-                                }
-                            } },
+                            { "data": "accion" },
+                            
                             { "data" : "usuario"}
                         ]
                 } );

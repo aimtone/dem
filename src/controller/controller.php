@@ -293,7 +293,12 @@
 				}
 
 			} else {
-				print_json(405, "Method Not Allowed", null);
+				if(isset($_GET["data"])) {
+					$data = $obj->delete($_GET["data"]);
+				} else {
+					print_json(405, "Method Not Allowed", null);
+				}
+				
 			}
 			break;
 		

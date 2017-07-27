@@ -30,6 +30,7 @@
 		
 
 		app.controller('main', function($rootScope,$scope,$http,$q,$localStorage,$location,$window) {
+			$rootScope.nuevo_respaldo = false;
 			$rootScope.Base64 = {
 				_keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
 				encode: function(e) {
@@ -120,43 +121,52 @@
 					return t
 				}
 			}
-			console.log('entra en main');
-			if($localStorage.token!="") {
-				var JSON_cedula = JSON.parse($rootScope.Base64.decode($localStorage.token));
 
-				var filter = JSON.stringify({
-					donde : "where cedula = '" + JSON_cedula.cedula + "'"
-				});
-				
+			console.log($localStorage.token);
 
-				$http.get('api/usuario?filter='+filter,{        
-						  headers: {
-						  	'Content-Type': 'application/x-www-form-urlencoded',
-						  	'Authorization': $localStorage.token
-						  }
-						}).then(function(response) {
-							if(response.data.data["0"].nivel=="ADMINISTRADOR") {
-								$rootScope.current_user = 1;
-							}
+			if(typeof $localStorage.token != "undefined") {
+				if($localStorage.token!="") {
+					var JSON_cedula = JSON.parse($rootScope.Base64.decode($localStorage.token));
 
-							if(response.data.data["0"].nivel=="USUARIO ESPECIAL") {
-								$rootScope.current_user = 2;
-							}
+					var filter = JSON.stringify({
+						donde : "where cedula = '" + JSON_cedula.cedula + "'"
+					});
+					
 
-							if(response.data.data["0"].nivel=="USUARIO COMUN") {
-								$rootScope.current_user = 3;
-							}
+					$http.get('api/usuario?filter='+filter,{        
+							  headers: {
+							  	'Content-Type': 'application/x-www-form-urlencoded',
+							  	'Authorization': $localStorage.token
+							  }
+							}).then(function(response) {
+								if(response.data.data["0"].nivel=="ADMINISTRADOR") {
+									$rootScope.current_user = 1;
+								}
 
-							if(response.data.data["0"].nivel=="SECRETARIA") {
-								$rootScope.current_user = 4;
-							}
+								if(response.data.data["0"].nivel=="USUARIO ESPECIAL") {
+									$rootScope.current_user = 2;
+								}
 
-				});
+								if(response.data.data["0"].nivel=="USUARIO COMUN") {
+									$rootScope.current_user = 3;
+								}
 
+								if(response.data.data["0"].nivel=="SECRETARIA") {
+									$rootScope.current_user = 4;
+								}
+
+					});
+
+
+				} else {
+					$rootScope.current_user = 1;
+				}
 
 			} else {
 				$rootScope.current_user = 1;
 			}
+
+			
 			
 						
 			$rootScope.app_name = "NOMBRE-DE-SISTEMA";
@@ -165,6 +175,8 @@
 			$rootScope.x = false;
         	// FUNCIONES QUE SE EJECUTAN AL CARGAR LA PAGINA (INICIO)
         	angular.element(document).ready(function() {
+
+
 
 
         		// Establecer y cargar el lenguaje seleccionado para la pagina
@@ -176,6 +188,7 @@
         		});
 
         		$rootScope.get('api/acto?filter='+filtro).then(function(response) {
+        			console.log(response);
         			var hora_actual = moment().format("HH:mm:ss");
         			$.each(response, function(index,value) {
         				var hora_fin_evento = moment(value.fin).format("HH:mm:ss");
@@ -230,6 +243,12 @@
 									bottom: 1500,
 									offset: 0
 								});
+
+
+								
+
+
+
 
 
 						}, 1000);
@@ -827,7 +846,9 @@
 									}
 			
 									$rootScope.x = true;
-									$rootScope.id_usuario = response["0"].id_usuario
+									console.log(response);
+									$rootScope.id_usuario = response["0"].id;
+									console.log(response["0"].id);
 									$rootScope.nivel = response["0"].nivel;
 									$rootScope.cedula = response["0"].cedula;
 
@@ -921,7 +942,7 @@
 				// ----------------------------------------------------------------- 
 				// VALIDACIONES | FIN
 				// -----------------------------------------------------------------
-				/*
+				
 				var contador = 0;
 				var inactividad = false;
 				
@@ -1010,7 +1031,7 @@
 					if(inactividad != true) {
 						contador = 0;
 					}
-				});*/
+				});
 
         	
 			

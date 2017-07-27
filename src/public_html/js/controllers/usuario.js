@@ -1,6 +1,6 @@
 app.controller('usuario', function($rootScope,$scope,$http,$q,$localStorage) {
 	$rootScope.validateToken();
-	$rootScope.objeto = "Gestion de Usuario";
+	$rootScope.objeto = "Gestión de Usuario";
 	// Variables predefinidas
 	$scope.obj_padre = 'persona'; // Siempre terminar URL Con Simbolo "/"
 	$scope.obj_hijo = 'usuario'; // Siempre terminar URL Con Simbolo "/"
@@ -57,7 +57,7 @@ app.controller('usuario', function($rootScope,$scope,$http,$q,$localStorage) {
 
 		setTimeout(function() {
 			$('#preload').fadeOut("fast");
-			$('#example').html("<thead><tr><th>Cedula</th><th>Nombres</th><th>Apellidos</th><th>Email</th><th>Telefono</th><th>Fecha de Nacimiento</th><th>Nivel</th></tr></thead>");
+			$('#example').html("<thead><tr><th>Cédula</th><th>Nombres</th><th>Apellidos</th><th>Email</th><th>Teléfono</th><th>Fecha de Nacimiento</th><th>Nivel</th></tr></thead>");
 			// Configuracion de la Datatable
 			$scope.config();
 			// Configuracion de los eventos de la Datatable
@@ -88,7 +88,8 @@ app.controller('usuario', function($rootScope,$scope,$http,$q,$localStorage) {
 					email : $scope.datos.email.toUpperCase(),
 					telefono : $scope.datos.telefono,
 					fecha_de_nacimiento : $scope.datos.fecha_de_nacimiento,
-					id_tipo_persona: 4
+					id_tipo_persona: 9,
+					id_usuario : $rootScope.id_usuario
 				};
 
 				$scope.obj = {
@@ -110,7 +111,7 @@ app.controller('usuario', function($rootScope,$scope,$http,$q,$localStorage) {
 							$rootScope.post('api/' + $scope.obj_hijo, $scope.obj).then(function(response) {
 								if(response!=null) {
 									$scope.table.ajax.reload();
-									$rootScope.alert("Exito", "Se ha completado el proceso de manera exitosa", "success");
+									$rootScope.alert("Éxito", "Se ha completado el proceso de manera éxitosa", "success");
 									$scope.datos = {};
 
 									$rootScope.get('api/config_notificaciones').then(function(response) {
@@ -170,7 +171,7 @@ app.controller('usuario', function($rootScope,$scope,$http,$q,$localStorage) {
 						$rootScope.get('api/' + $scope.obj_hijo + '?filter=' + JSON.stringify(filter)).then(function(response) {
 							$rootScope.put('api/' + $scope.obj_hijo +'/' + response[0].id, $scope.obj).then(function(response) {
 								$scope.table.ajax.reload();
-								$rootScope.alert("Exito", "Se ha completado el proceso de manera exitosa", "success");
+								$rootScope.alert("Éxito", "Se ha completado el proceso de manera éxitosa", "success");
 								$scope.datos = {};
 							}, function(response) {
 								$rootScope.alert("Error", "Ha ocurrido un error interno del sistema", "warning");
@@ -203,7 +204,7 @@ app.controller('usuario', function($rootScope,$scope,$http,$q,$localStorage) {
 
 
 	$scope.rowDelete = function() {
-		$rootScope.confirm("¿Estás seguro?", "Se procedera a eliminar los registros seleccionados", "warning", function() {
+		$rootScope.confirm("¿Estás seguro?", "Se procederá a eliminar los registros seleccionados", "warning", function() {
 
 			var cantidad = $scope.table.rows('.selected').data().length;
 			var i = null;
@@ -221,10 +222,10 @@ app.controller('usuario', function($rootScope,$scope,$http,$q,$localStorage) {
 							
 
 							if(cantidad == 1 ) {
-								$rootScope.alert("Exito", "Se ha eliminado " + contador + " de " + cantidad + " registro", "success");
+								$rootScope.alert("Éxito", "Se ha eliminado " + contador + " de " + cantidad + " registro", "success");
 
 							} else {
-								$rootScope.alert("Exito", "Se ha eliminado " + contador + " de " + cantidad + " registros", "success");
+								$rootScope.alert("Éxito", "Se ha eliminado " + contador + " de " + cantidad + " registros", "success");
 
 							}
 
@@ -469,12 +470,12 @@ app.controller('usuario', function($rootScope,$scope,$http,$q,$localStorage) {
 	$scope.closeModal = function(div,button) {
 		if(button=='ok') {
 			if($scope.datos==undefined) { $rootScope.toast("Rellene los campos"); return; }
-			if($scope.datos.cedula==undefined) {  $rootScope.toast("Campo 'cedula' vacio"); return; }
+			if($scope.datos.cedula==undefined) {  $rootScope.toast("Campo 'cédula' vacio"); return; }
 			if($scope.datos.nombres==undefined) { $rootScope.toast("Campo 'nombres' vacio");  return;}
 			if($scope.datos.apellidos==undefined) { $rootScope.toast("Campo 'apellidos' vacio");  return;}
 			if($scope.datos.fecha_de_nacimiento==undefined) { $rootScope.toast("Campo 'fecha de nacimiento' vacio");  return;}
 			if($scope.datos.email==undefined) {  $rootScope.toast("Campo 'email' vacio");  return;}
-			if($scope.datos.telefono==undefined) {  $rootScope.toast("Campo 'telefono' vacio");  return;}
+			if($scope.datos.telefono==undefined) {  $rootScope.toast("Campo 'teléfono' vacio");  return;}
 			if($scope.datos.nivel==undefined) {  $rootScope.toast("Selecciona un nivel");  return;}
 
 			$(div).modal('close');

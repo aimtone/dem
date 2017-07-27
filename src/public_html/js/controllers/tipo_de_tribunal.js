@@ -95,7 +95,7 @@ app.controller('tipo_de_tribunal', function($rootScope,$scope,$http,$q,$localSto
 						if(response!=null) {
 							$scope.table.ajax.reload();
 							$scope.datos = {};
-							$rootScope.alert("Exito", "Se ha completado el proceso de manera exitosa", "success");
+							$rootScope.alert("Éxito", "Se ha completado el proceso de manera éxitosa", "success");
 							
 						} else {
 							$rootScope.alert("Error", "No se ha registrado los datos, por favor, verifique e intente de nuevo", "warning");
@@ -114,7 +114,7 @@ app.controller('tipo_de_tribunal', function($rootScope,$scope,$http,$q,$localSto
 						if(response!=null) {
 							$scope.table.ajax.reload();
 							$scope.datos = {};
-							$rootScope.alert("Exito", "Se ha completado el proceso de manera exitosa", "success");
+							$rootScope.alert("Éxito", "Se ha completado el proceso de manera éxitosa", "success");
 							
 						} else {
 							$rootScope.alert("Error", "No se ha modificado los datos, por favor, verifique e intente de nuevo", "warning");
@@ -140,7 +140,7 @@ app.controller('tipo_de_tribunal', function($rootScope,$scope,$http,$q,$localSto
 
 
 	$scope.rowDelete = function() {
-		$rootScope.confirm("¿Estás seguro?", "Se procedera a eliminar los registros seleccionados", "warning", function() {
+		$rootScope.confirm("¿Estás seguro?", "Se procederá a eliminar los registros seleccionados", "warning", function() {
 
 			var cantidad = $scope.table.rows('.selected').data().length;
 			var i = null;
@@ -152,10 +152,10 @@ app.controller('tipo_de_tribunal', function($rootScope,$scope,$http,$q,$localSto
 					
 		
 							if(cantidad == 1 ) {
-								$rootScope.alert("Exito", "Se ha eliminado " + contador + " de " + cantidad + " registro", "success");
+								$rootScope.alert("Éxito", "Se ha eliminado " + contador + " de " + cantidad + " registro", "success");
 
 							} else {
-								$rootScope.alert("Exito", "Se ha eliminado " + contador + " de " + cantidad + " registros", "success");
+								$rootScope.alert("Éxito", "Se ha eliminado " + contador + " de " + cantidad + " registros", "success");
 
 							}
 
@@ -381,7 +381,7 @@ app.controller('tipo_de_tribunal', function($rootScope,$scope,$http,$q,$localSto
 	$scope.closeModal = function(div,button) {
 		if(button=='ok') {
 			 if($scope.datos==undefined) { $rootScope.toast("Rellene los campos"); return; }
-			 if($scope.datos.descripcion==undefined) {  $rootScope.toast("Campo 'descripcion' vacio"); return; }
+			 if($scope.datos.descripcion==undefined) {  $rootScope.toast("Campo 'descripción' vacio"); return; }
 			
 
 			$(div).modal('close');

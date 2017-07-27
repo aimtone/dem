@@ -262,14 +262,27 @@
                             btnNuevoCaso: {
                                 text: 'Nuevo caso',
                                 click: function() {
+                                    $rootScope.accion_caso=="registrar";
                                     $window.location.href= "#!/caso";
+                                }
+                            },
+                            btnCasos: {
+                                text: 'Casos',
+                                click: function() {
+                                    $window.location.href= "#!/casos";
+                                }
+                            },
+                            btnActos: {
+                                text: 'Actos',
+                                click: function() {
+                                    $window.location.href= "#!/actos";
                                 }
                             }
                         },
                         header: {
                             left: 'btnNuevoCaso,btnNuevoActo,today prev,next',
                             center: 'title',
-                            right: 'agendaDay,agendaWeek,month,listWeek'
+                            right: 'btnCasos,btnActos,agendaDay,agendaWeek,month,listWeek'
 
 
                         },
@@ -595,7 +608,7 @@
 
                             if($rootScope.formatDate(event._start._d,"yyyy-MM-dd")==$rootScope.formatDate(new Date(),"yyyy-MM-dd")) {
                                 $('#calendar').fullCalendar( 'refetchEvents' );
-                                $rootScope.toast("No se permite esta accion en la fecha corriente");
+                                $rootScope.toast("No se permite esta acción en la fecha corriente");
                                 var data = {};
                                 
                             } else {
@@ -648,7 +661,7 @@
                     if($rootScope.event_card_data.fecha == "Hoy") {
                         $rootScope.toast("El acto no puede ser enviado a espera");
                     } else {
-                        $rootScope.confirm("Esta seguro?","Esta seguro que desea poner el evento en espera y liberar este espacio?", "info", function() {
+                        $rootScope.confirm("¿Estás seguro?","Se procederá a poner el evento en espera y liberar este espacio", "info", function() {
                             var data = {
                                         id : null,
                                         inicio: "0000-00-00T00:00:00",
@@ -664,7 +677,7 @@
                                         cargarActoEspera();
                                         $('#calendar').fullCalendar( 'removeEvents', event._id );
                                         $('#calendar').fullCalendar( 'refetchEvents' );
-                                        $rootScope.alert("Exito", "El acto ha sido movido a espera", "success");
+                                        $rootScope.alert("Éxito", "El acto ha sido movido a espera", "success");
                                     });
                         });
 
@@ -677,7 +690,7 @@
                     if($rootScope.event_card_data.fecha == "Hoy") {
                         $rootScope.toast("El acto no puede ser eliminado");
                     } else {
-                        $rootScope.confirm("Esta seguro?","Esta seguro que desea eliminar el acto?", "info", function() {
+                        $rootScope.confirm("¿Estás seguro?","Se procederá a eliminar este acto", "info", function() {
 
                                     $rootScope.delete('api/acto/' + $rootScope.event_card_data.id).then(function(response) {
                                         //console.log(response);
@@ -685,7 +698,7 @@
                                         cargarActoEspera();
                                         $('#calendar').fullCalendar( 'removeEvents', event._id );
                                         $('#calendar').fullCalendar( 'refetchEvents' );
-                                        $rootScope.alert("Exito", "El acto ha sido eliminado", "success");
+                                        $rootScope.alert("Éxito", "El acto ha sido eliminado", "success");
                                     });
                         });
                     }

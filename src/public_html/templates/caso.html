@@ -6,8 +6,8 @@
             <form class="col s12">
             <div class="row">
                 <div class="input-field col s5">
-                    <input  id="titulo" type="number" class="validate" ng-model="datos.numero" ng-value="datos.numero" >
-                    <label for="titulo">Numero de Caso</label>
+                    <input  id="titulo" type="number" ng-enter="buscarCaso();" class="validate" ng-model="datos.numero" ng-value="datos.numero" >
+                    <label for="titulo">Número de Caso</label>
                 </div>
 
                  
@@ -25,7 +25,7 @@
 
                 <div class="input-field col s12">
                     <textarea ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);"  id="descripcion" name="descripcion" class="materialize-textarea" ng-model="datos.descripcion" ng-value="datos.descripcion"></textarea>
-                    <label for="descripcion">Descripcion</label>
+                    <label for="descripcion">Descripción</label>
                 </div>
         
                 
@@ -57,7 +57,7 @@
 
                 <div class="input-field col s7">
                    <input value="" ng-model="persona.cedula" id="cedula" ng-enter="buscarPersona();" type="text" class="validate">
-                    <label class="active" for="first_name2">Cedula</label>
+                    <label class="active" for="first_name2">Cédula</label>
                 </div>
        </div>
 

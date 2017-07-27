@@ -104,17 +104,31 @@
 		}
 
 		// Esta funcion sera llamada al momento de usar el metodo DELETE
-		function delete() {
-			return $this->set_query(sprintf("
-				DELETE FROM 
-					%s 
-				WHERE 
-					Id = %d", 
+		function delete($data="") {
+			if($data=="") {
+				return $this->set_query(sprintf("
+					DELETE FROM 
+						%s 
+					WHERE 
+						Id = %d", 
 
-					$this->entity,
-					$this->Id
-				)
-			);
+						$this->entity,
+						$this->Id
+					)
+				);
+			} else {
+				return $this->set_query(sprintf("
+					DELETE FROM 
+						%s 
+					WHERE 
+						%s", 
+
+						$this->entity,
+						$data
+					)
+				);
+			}
+			
 
 		}
 	}
