@@ -190,7 +190,7 @@
 		    });
 
 
-		app.run(function($rootScope, $location,$window)
+		app.run(function($rootScope, $location,$window,$websocket)
 			{
 				$rootScope.$on('$routeChangeStart', function (event, next) 
 				{
@@ -204,10 +204,13 @@
 					            if(next.data.authorized.indexOf($rootScope.current_user) !== -1)
 								{
 									//alert("bienvenido");
+									$rootScope.conexion = true;
 								}
 								else
 								{
+									$rootScope.conexion = false;
 									$window.location.href = '#!/';
+
 									
 								}
 					        }
@@ -235,4 +238,81 @@
 					}, 100);
 					
 			    });
+
+				console.log("Conectando al web socket, por favor espere");;
+				setTimeout(function() {
+					if($rootScope.conexion==true) {
+						// INICIAR LA CONEXION CON EL WEBSOCKET
+
+						//console.log('Conectando...');
+						Server = new FancyWebSocket('ws://127.0.0.1:9300');
+
+						function send( text ) {
+							Server.send( 'message', text );
+						}
+
+						//Let the user know we're connected
+						Server.bind('open', function() {
+							console.log( "Conectado al websocket server." );
+							$('#mensajeconectado').html("<span style='color:#77F74C;font-size:15px;'>•</span>");
+						});
+
+						//OH NOES! Disconnection occurred.
+						Server.bind('close', function( data ) {
+							console.log( "Desconectado del websocket server." );
+							$('#mensajeconectado').html("<span style='color:red;font-size:15px;'>•</span>");
+						});
+
+						//Log any messages sent from server
+						Server.bind('message', function( payload ) {
+							ion.sound({
+					            sounds: [
+					                {name: "Tethys"}
+					            ],
+					            path: "assets/sounds/",
+					            preload: true,
+					            volume: 1.0
+					        });
+
+
+							ion.sound.play("Tethys");
+							var mensaje = JSON.parse(payload);
+
+							$rootScope.post('api/notificaciones',mensaje).then(function(response) {
+									$rootScope.notificacionBD = response;
+									$rootScope.cargarNotificaciones();
+									$rootScope.cargarBadget();
+							});
+
+							// Notification.requestPermission();
+
+							// var title = mensaje.title;
+							// var extra = {
+							// 	icon: mensaje.icon,
+							// 	body: mensaje.body
+							// };
+
+							// // Lanzamos la notificación
+							// var noti = new Notification(title, extra)
+							// noti.onclick = function() {
+							// // Al hacer click
+							// 	var id_noti = $rootScope.notificacionBD["0"].id;
+							// 	$rootScope.notificacionVista(id_noti);
+							// 	$window.location.href = '#!/' + mensaje.url;
+							// 	noti.close();
+							// }
+							// noti.onclose = function() {
+							// // Al cerrar
+							// 	console.log('notificación cerrada');
+							// }
+						});
+
+						Server.connect();
+					
+				        // TERMINAR LA CONEXION CON EL WEBSOCKET
+					}
+				}, 5000);
+
+
+				
 			});

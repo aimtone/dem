@@ -1,0 +1,9 @@
+[Desktop Entry]
+Comment=Activa el Socket Server
+Terminal=false
+Name=Servidor Socket
+Exec=php -q /var/www/html/dem/socket-server/server.php
+Type=Application
+Name[es_VE]=Servidor Socket (Linux)
+GenericName[es_VE]=Activa el Socket Server
+Icon=/usr/share/icons/Win7-icons/filesystems/gnome-fs-client.png

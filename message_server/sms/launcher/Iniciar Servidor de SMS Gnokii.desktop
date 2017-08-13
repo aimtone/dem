@@ -1,0 +1,7 @@
+[Desktop Entry]
+Comment=
+Terminal=true
+Name=Iniciar Servidor de SMS Gnokii
+Exec=sudo /usr/sbin/smsd -u root -p root -d smsgw -c localhost -m mysql -f ~/smsdaemon.log
+Type=Application
+Icon=/usr/share/icons/Win7-icons/devices/phone.png

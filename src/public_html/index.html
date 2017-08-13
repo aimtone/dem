@@ -64,13 +64,13 @@
 	<!-- Nabvar Primaria -->
 	<nav id="nav_principal" style="background:#14385f !important;" class="blue darken-4">
 	    <div class="navbar-wrapper" id="nav-primario">
-	    <a href="#!/" class="brand-logo center" onclick="cargarScripts();" style="font-family:'Faster One';"><img width="26%" src="assets/images/tsj_logo_2.png" alt=""></a>
+	    <a href="#!/" class="brand-logo center" style="font-family:'Faster One';"><img width="26%" src="assets/images/tsj_logo_2.png" alt=""></a>
 
 	     <a id="sidenav-left" ng-show="x === true && usuario_en_linea.nivel === 'ADMINISTRADOR' || usuario_en_linea.nivel === 'USUARIO ESPECIAL'" href="#" data-activates="mobile-demo" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
 
 
 			<ul class="right">
-		       <li class="hide-on-med-and-down">
+		       <!-- <li class="hide-on-med-and-down">
 		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.barra.botones.idioma}}" data-activates='dropdown-lang' href="javascript:void(0);">
 		        		<i class="material-icons">language</i>
 		        	</a>
@@ -80,15 +80,20 @@
 					    <li><a ng-click="setLang('en-US');setDatatableLang('en-US');" href=""><img src="assets/images/united_states_of_america_usa.png" alt=""></a></a></li>
 
 					    <li><a ng-click="setLang('pt-BR');setDatatableLang('pt-BR');" href=""><img src="assets/images/brazil.png" alt=""></a></a></li>
-					</ul>
-				</li>
 
-				<li ng-show="x === true" class="hide-on-med-and-down">
-		        	
-		        		<i class="material-icons left">perm_identity</i> {{usuario_en_linea.nombres}} {{usuario_en_linea.apellidos}}
-		        	
-		        
-				</li>
+					</ul>
+				</li> -->
+
+				<li ng-show="x === true">
+		        	<a ng-click="cargarNotificaciones();" id="sidenav-right" data-activates="left-side" class="waves-effect waves-light  right show-on-large">
+
+		        		<span id="mensajeconectado"><span style='color:red;'>•</span></span>
+		        		
+
+		        		{{usuario_en_linea.nombres}} {{usuario_en_linea.apellidos}} <span data-badge-caption="" class='new badge red'>{{badget}}</span></a>
+		        </li>
+
+			
 
 				<li ng-show="x === true" class="hide-on-med-and-down">
 		        	<a ng-click="logout()" id="logout" name="logout" class="waves-effect waves-light btn blue lighten-2">
@@ -170,7 +175,32 @@
 		    
 		    </ul>
 		</div>
+	
+		<div  class="side-nav blue lighten-1" id="left-side">
+					<span class="center">
+						<h5>
+							Notificaciones recientes
+						</h5>
+					</span>
+					<div style="border:none;color:white;" class="collection">
+						
+						<a ng-click="notificacionVista(n.id);" style="border:none;color:white;" href="#!/{{n.url}}" ng-repeat="n in notificacion" class="collection-item avatar blue">
+					      <img src="{{n.icon}}" alt="" class="circle">
 
+					      <b ng-show="n.status == 1" class="title">{{n.title}}</b>
+					      <span ng-show="n.status == 0" class="title">{{n.title}}</span>
+
+					      <p style="font-size:10px;">{{n.body}}</p>
+					    </a>
+
+					    <a href="#!/notificaciones" class="blue center">
+					      Ver todos
+					    </a>
+					    
+					  </div>
+
+
+	    </div>
 
 	</nav>
 	<!-- /Nabvar Primaria -->
@@ -286,8 +316,11 @@
 				<script src="assets/js/angular-datatables.js"></script>
 				<script src="assets/js/angular-route.js"></script>
 				<script src="assets/js/angular-storage.min.js"></script>
+				<script src="assets/js/angular-socket.js"></script>
+				<script src="assets/js/fancywebsocket.js"></script>
 				<script src="assets/js/angucomplete-alt.js"></script>
 				<script src="assets/js/modules/tabs.js"></script>
+
 
 
 			<!-- /Core -->
@@ -338,6 +371,8 @@
 		<script src="assets/js/functions.js"></script>
 		<script src="assets/js/md5.min.js"></script>
 		<script src="assets/js/sha1.min.js"></script>
+		<script src="assets/js/ion.sound.js"></script>
+		
 	<!-- /JavaScript -->
 
 

@@ -1,4 +1,4 @@
-		var app = angular.module('dem',['ngRoute','ngStorage','datatables','angucomplete-alt','tabs']);
+		var app = angular.module('dem',['ngRoute','ngStorage','datatables','angucomplete-alt','tabs','ngWebsocket']);
 		
 
 
@@ -30,6 +30,9 @@
 		
 
 		app.controller('main', function($rootScope,$scope,$http,$q,$localStorage,$location,$window) {
+
+			
+
 			$rootScope.nuevo_respaldo = false;
 			$rootScope.Base64 = {
 				_keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
@@ -942,11 +945,51 @@
 				// ----------------------------------------------------------------- 
 				// VALIDACIONES | FIN
 				// -----------------------------------------------------------------
-				
+				$rootScope.cargarNotificaciones = function() {
+					var filter = JSON.stringify({
+						ordenarPor: "order by id DESC LIMIT 5"
+					});
+					$rootScope.get('api/notificaciones?filter='+filter).then(function(response) {
+						$rootScope.notificacion = response;
+					});
+				};
+
+				$rootScope.notificacionVista = function(id) {
+					var data = {
+						id: id,
+						status: 0
+					};
+
+					$rootScope.put('api/notificaciones/'+id, data).then(function(response) {
+						console.log(response);
+						$rootScope.cargarNotificaciones();
+						$rootScope.cargarBadget();
+					});
+				};
+
+				$rootScope.cargarBadget = function() {
+					var filter = JSON.stringify({
+						donde: "where status = 1"
+					});
+					$rootScope.get('api/notificaciones?filter='+filter).then(function(response) {
+						if(typeof response != "undefined") {
+							$rootScope.badget = response.length;
+						} else {
+							$rootScope.badget = 0;
+						}
+						
+					});
+				};
+
 				var contador = 0;
 				var inactividad = false;
 				
 				$(document).ready(function() {
+					console.log("consultar notificaciones");
+					
+					$rootScope.cargarNotificaciones();
+					$rootScope.cargarBadget();
+
 					setInterval(function() {
 						if($rootScope.x === true) {
 							console.log(contador);
