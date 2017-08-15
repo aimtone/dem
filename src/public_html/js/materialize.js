@@ -4197,8 +4197,8 @@ $(document).ready(function(){
           // Add pin-bottom (when scrolled position is below bottom)
           if (scrolled > options.bottom && !$(this).hasClass('pin-bottom')) {
             removePinClasses($(this));
-            $(this).addClass('pin-bottom');
-            $(this).css('top', options.bottom - $original_offset);
+            $(this).addClass('pinned');
+            $(this).css('top', 0);
           }
         });
       }

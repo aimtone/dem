@@ -1,0 +1,69 @@
+
+
+<div class="row">
+
+    
+
+    <div class="col s4 message-box ">
+        <div class="row">
+            <div class="col s8">
+                <input type="text" ng-model="search" placeholder="Buscar">
+            </div>
+            <div class="col s4">
+                <i class="material-icons">arrow_back</i>
+            </div>
+        </div>
+        
+
+                        <ul class="collection message-box">
+                            <li ng-repeat="x in notificaciones | filter : search" class="collection-item avatar" ng-click="cargarMensaje(x.id);" id="{{x.id}}">
+                                <img src="assets/images/{{x.icon}}" alt="" class="circle">
+                                <span ng-show="x.status == 1" style="font-weight:bold;" class="title">
+                                    {{x.title}}
+                                </span>
+                                <span ng-show="x.status == 0" style="font-weight:normal;" class="title">
+                                    {{x.title}}
+                                </span>
+                                <span ng-show="x.status == 2" style="font-weight:normal;" class="title">
+                                    {{x.title}}
+                                </span>
+                            </li>
+
+
+                                        
+                                        
+                        </ul>
+
+                        
+                  
+    </div>
+
+    <div id="box-message" class="col s7  offset-s4">
+        
+        <div ng-show="existe_mensaje === false" class="col s12 m12">
+            <span class="header" id="dashboard-titulo">Por favor, seleccione una notificacion en la barra lateral izquierda</span>
+           
+        </div>
+
+        <div ng-show="existe_mensaje === true" class="col s12 m12">
+            <span class="header" id="dashboard-titulo">Asunto: {{data_not.asunto}}</span>
+            <div class="card horizontal">
+            
+            <div class="card-stacked">
+                <div class="card-content">
+                <p><i class="material-icons" style="font-size:10px;">language</i> {{data_not.fecha}}</p>
+                <br><p><b>Mensaje:<b></p>
+                <p>{{data_not.mensaje}}</p>
+                </div>
+                <div class="card-action">
+                <a href="#">Eliminar esta notificacion</a>
+                </div>
+            </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    
+</div>   

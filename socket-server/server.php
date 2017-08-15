@@ -36,8 +36,8 @@ function wsOnOpen($clientID)
 
 	//Send a join notice to everyone but the person who joined
 	//foreach ( $Server->wsClients as $id => $client )
-		//if ( $id != $clientID )
-			//$Server->wsSend($id, "Usuario $clientID se ha unido a la sala.");
+	//	if ( $id != $clientID )
+	//		$Server->wsSend($id, "Usuario $clientID se ha unido a la sala.");
 }
 
 // when a client closes or lost connection
@@ -49,7 +49,7 @@ function wsOnClose($clientID, $status) {
 
 	//Send a user left notice to everyone in the room
 	//foreach ( $Server->wsClients as $id => $client )
-		//$Server->wsSend($id, "Usuario $clientID ha abandonado la sala.");
+	//	$Server->wsSend($id, "Usuario $clientID ha abandonado la sala.");
 }
 
 // start the server
@@ -59,6 +59,6 @@ $Server->bind('open', 'wsOnOpen');
 $Server->bind('close', 'wsOnClose');
 // for other computers to connect, you will probably need to change this to your LAN IP or external IP,
 // alternatively use: gethostbyaddr(gethostbyname($_SERVER['SERVER_NAME']))
-$Server->wsStartServer('127.0.0.1', 9300);
+$Server->wsStartServer('192.168.1.10', 9300);
 
 ?>

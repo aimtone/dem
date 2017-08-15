@@ -32,8 +32,8 @@
 
 		// Validate the Entered input aganist the generated security code function   
 		function ValidCaptcha(){
-			var str1 = removeSpaces(document.getElementById('txtCaptcha').value);
-			var str2 = (document.getElementById('txtInput').value);
+			var str1 = document.getElementById('txtCaptcha').value;
+			var str2 = document.getElementById('txtInput').value;
 			if (str1 == str2) { 
 				return true; 
 			} else {       
@@ -41,11 +41,6 @@
 			}
 			
 		}
-
-		function removeSpaces(string)
-            {
-                return string.split(' ').join('');
-            }
 
 	
 
@@ -70,72 +65,12 @@
 
 
 						$rootScope.x = true;
-						
-						$rootScope.server.connect();
-						setTimeout(function() {
-							$rootScope.cargarNotificacionesCompletas();
-							$rootScope.cargarBadget();	
-						}, 5000);
-						
 						$rootScope.cedula = response.data.data[0].cedula;
 						$rootScope.nivel = response.data.data[0].nivel;
 						$rootScope.id_usuario = response.data.data[0].id_usuario;
 						$localStorage.token = $rootScope.token;
 
 						$rootScope.toast(response.statusText);
-						
-
-						var fecha_hoy = moment().format("YYYY-MM-DD");
-		        		var filtro = JSON.stringify({
-		        			donde: "where inicio LIKE '"+fecha_hoy+"%' AND estatus = 'ASIGNADO'"
-		        		});
-
-
-		        		$rootScope.get('api/acto?filter='+filtro).then(function(response) {
-		        			console.log(response);
-		        			var hora_actual = moment().format("HH:mm:ss");
-		        			$.each(response, function(index,value) {
-		        				var hora_fin_evento = moment(value.fin).format("HH:mm:ss");
-		        				if(hora_fin_evento <= hora_actual) {
-		        					var data = {
-		        						id: null,
-		        						estatus : "FINALIZADO"
-		        					};
-		        					$rootScope.put('api/acto/'+value.id, data).then(function(response) {
-			        					console.log(response);
-			        				});
-		        					
-		        				} else {
-		        					var data = {
-		        						id: null,
-		        						estatus : "ASIGNADO"
-		        					};
-
-		        					$rootScope.put('api/acto/'+value.id, data).then(function(response) {
-			        					console.log(response);
-			        				});
-		        				}
-
-		        				
-
-		        			});
-		        		});
-
-		        		$rootScope.get('api/config_generales').then(function(response) {
-									$rootScope.atributos = {
-										usuario : response["0"].usuario,
-										clave : response["0"].clave,
-										basedatos: response["0"].basedatos
-
-									};
-
-
-									$rootScope.get('back-up?accion=Respaldo&usuario='+$rootScope.atributos.usuario+'&clave='+$rootScope.atributos.clave+'&nombre=backup&basedatos='+$rootScope.atributos.basedatos).then(function(response) {
-										console.log("Respaldo automatico creado");
-										$rootScope.nuevo_respaldo = true;
-
-									});
-								});
 						
 						$location.url('/');
 
@@ -146,7 +81,6 @@
 						$rootScope.get('api/persona?filter='+filter).then(function(response) {
 							
 							$rootScope.usuario_en_linea = {
-								id: response["0"].id,
 								cedula : response["0"].cedula,
 								nombres : response["0"].nombres,
 								apellidos : response["0"].apellidos,
@@ -155,8 +89,6 @@
 								telefono: response["0"].telefono,
 								nivel: $rootScope.nivel 
 							};
-
-							
 
 						});
 					}

@@ -30,8 +30,7 @@
 		
 
 		app.controller('main', function($rootScope,$scope,$http,$q,$localStorage,$location,$window) {
-
-			
+			//"use strict";			
 
 			$rootScope.nuevo_respaldo = false;
 			$rootScope.Base64 = {
@@ -176,91 +175,7 @@
 			$rootScope.token = "";
 
 			$rootScope.x = false;
-        	// FUNCIONES QUE SE EJECUTAN AL CARGAR LA PAGINA (INICIO)
-        	angular.element(document).ready(function() {
-
-
-
-
-        		// Establecer y cargar el lenguaje seleccionado para la pagina
-        		$rootScope.setLang($localStorage.locale);
-
-        		var fecha_hoy = moment().format("YYYY-MM-DD");
-        		var filtro = JSON.stringify({
-        			donde: "where inicio LIKE '"+fecha_hoy+"%' AND estatus = 'ASIGNADO'"
-        		});
-
-        		$rootScope.get('api/acto?filter='+filtro).then(function(response) {
-        			console.log(response);
-        			var hora_actual = moment().format("HH:mm:ss");
-        			$.each(response, function(index,value) {
-        				var hora_fin_evento = moment(value.fin).format("HH:mm:ss");
-        				if(hora_fin_evento <= hora_actual) {
-        					var data = {
-        						id: null,
-        						estatus : "FINALIZADO"
-        					};
-        					$rootScope.put('api/acto/'+value.id, data).then(function(response) {
-	        					console.log(response);
-	        				});
-        					
-        				} else {
-        					var data = {
-        						id: null,
-        						estatus : "ASIGNADO"
-        					};
-
-        					$rootScope.put('api/acto/'+value.id, data).then(function(response) {
-	        					console.log(response);
-	        				});
-        				}
-
-        				
-
-        			});
-        		});
-
-        		
-
-
-				
-
-				setTimeout(function() {
-								var loaderDiv = document.getElementById("loader-wrapper");
-
-								// When the transition ends remove loader's div from display
-								// so that we can access the map with gestures or clicks
-								loaderDiv.addEventListener("transitionend",function(){
-										loaderDiv.style.display = "none";
-								}, true);
-
-								// Kick off the CSS transition
-								loaderDiv.style.opacity = 0.0;
-
-								cargarScripts();
-								$('#mobile-demo').perfectScrollbar();
-								$('.events').perfectScrollbar();
-								$('#main').smoothState();
-								$('.sticky').pushpin({
-									top: 30,
-									bottom: 1500,
-									offset: 0
-								});
-
-
-								
-
-
-
-
-
-						}, 1000);
-				
-				
-				
-				
-
-        	});
+  
 
         	 
         	// FUNCIONES QUE SE EJECUTAN AL CARGAR LA PAGINA (FIN)
@@ -314,6 +229,7 @@
 				});
         	}
 
+        	
 			$rootScope.prompt = function(title,text,placeholder, okButton, cancelButton, inputType = "password") {
 				swal({   
 					title: title,   
@@ -372,8 +288,13 @@
 				});
         	}
 
-        	$rootScope.toast = function(message, time = 2000) {
-        		Materialize.toast(message, time, "toasts");
+        	$rootScope.toast = function(message, time = 2000, clase = "toasts", onclick) {
+				if(onclick!=null) {
+					Materialize.toast(message, time, clase, onclick);
+				} else {
+					Materialize.toast(message, time, clase);
+				}
+        		
         	}
 
         	// FUNCIONES PARA EL AUTOCOMPLETADO DE PERSONA - INICIO
@@ -389,6 +310,19 @@
 		      return matches;
 		    };
 
+
+			$rootScope.cargarNot = function(id) {
+				console.log(id);
+				console.log($rootScope.objeto);
+				if($rootScope.objeto=="Notificaciones") {
+					
+					$rootScope.cargarMensaje(id);
+				} else {
+					$rootScope.id_not = id;
+					window.location.href="#!/notificaciones";
+				}
+				
+			};
 		   	
 
 
@@ -862,6 +796,7 @@
 									$rootScope.get('api/persona?filter='+filter).then(function(response) {
 										
 										$rootScope.usuario_en_linea = {
+											id : response["0"].id,
 											cedula : response["0"].cedula,
 											nombres : response["0"].nombres,
 											apellidos : response["0"].apellidos,
@@ -930,7 +865,9 @@
 
 
 
-					$('#logout').on('click', function() {
+					$rootScope.logout = function() {
+						
+						$rootScope.server.disconnect();
 						$rootScope.x = false;
 						$rootScope.token = {};
 						$localStorage.token = "";
@@ -938,21 +875,35 @@
 						$localStorage.eventClick = undefined;
 						$location.url('/login');
 
-					});
+					};
+
+					$rootScope.lockup = function() {
+						$('.lockscreen').fadeIn();
+
+					};
+
+					$rootScope.lockout = function() {
+						$('.lockscreen').fadeOut();
+					}
 
 		
 
 				// ----------------------------------------------------------------- 
 				// VALIDACIONES | FIN
 				// -----------------------------------------------------------------
-				$rootScope.cargarNotificaciones = function() {
-					var filter = JSON.stringify({
-						ordenarPor: "order by id DESC LIMIT 5"
-					});
-					$rootScope.get('api/notificaciones?filter='+filter).then(function(response) {
-						$rootScope.notificacion = response;
-					});
-				};
+				
+
+				$rootScope.cargarNotificacionesCompletas = function() {
+
+	                var filter = JSON.stringify({
+	                        donde: "WHERE (user = '"+$rootScope.usuario_en_linea.cedula+"' OR rol = '"+$rootScope.usuario_en_linea.nivel+"') OR (user = '' AND rol = '')",
+	                        ordenarPor: "ORDER BY id DESC"
+	                });
+	                $rootScope.get('api/notificaciones?filter='+filter).then(function(response) {
+	                    $rootScope.notificaciones = response;
+	                    console.log(response);
+	                });
+	            };
 
 				$rootScope.notificacionVista = function(id) {
 					var data = {
@@ -962,16 +913,21 @@
 
 					$rootScope.put('api/notificaciones/'+id, data).then(function(response) {
 						console.log(response);
-						$rootScope.cargarNotificaciones();
+						$rootScope.cargarNotificacionesCompletas();
 						$rootScope.cargarBadget();
 					});
+					$rootScope.cargarNot(id);
 				};
 
 				$rootScope.cargarBadget = function() {
+					console.log('ejecuta cargarNotificaciones');
+
 					var filter = JSON.stringify({
-						donde: "where status = 1"
+						donde: "WHERE status = 1 AND ((user = '"+$rootScope.usuario_en_linea.cedula+"' OR rol = '"+$rootScope.usuario_en_linea.nivel+"') OR (user = '' AND rol = ''))"					
 					});
+
 					$rootScope.get('api/notificaciones?filter='+filter).then(function(response) {
+						console.log(response);
 						if(typeof response != "undefined") {
 							$rootScope.badget = response.length;
 						} else {
@@ -981,81 +937,372 @@
 					});
 				};
 
+				function findIP(onNewIP) { //  onNewIp - your listener function for new IPs
+							  var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection; //compatibility for firefox and chrome
+							  var pc = new myPeerConnection({iceServers: []}),
+							    noop = function() {},
+							    localIPs = {},
+							    ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g,
+							    key;
+
+							  function ipIterate(ip) {
+							    if (!localIPs[ip]) onNewIP(ip);
+							    localIPs[ip] = true;
+							  }
+							  pc.createDataChannel(""); //create a bogus data channel
+							  pc.createOffer(function(sdp) {
+							    sdp.sdp.split('\n').forEach(function(line) {
+							      if (line.indexOf('candidate') < 0) return;
+							      line.match(ipRegex).forEach(ipIterate);
+							    });
+							    pc.setLocalDescription(sdp, noop, noop);
+							  }, noop); // create offer and set local description
+							  pc.onicecandidate = function(ice) { //listen for candidate events
+							    if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
+							    ice.candidate.candidate.match(ipRegex).forEach(ipIterate);
+							  };
+							}
+
+				function addIP(ip) {
+				  $rootScope.ip = ip;
+				  
+				}
+
 				var contador = 0;
 				var inactividad = false;
 				
 				$(document).ready(function() {
-					console.log("consultar notificaciones");
-					
-					$rootScope.cargarNotificaciones();
-					$rootScope.cargarBadget();
+				//	//window.onbeforeunload = function(e) {
+				//		return false;
+				//	};
+				findIP(addIP);
 
-					setInterval(function() {
-						if($rootScope.x === true) {
-							console.log(contador);
-							if(contador==180) {
-								inactividad = true;
-								$localStorage.token = undefined;
-								$rootScope.prompt("Hemos detectado inactividad","Tu sesion finalizara en 60 segundos. Si deseas continuar la sesion, ingresa tu clave","",
-								function(response) {
-									// al presionar ok
-									$rootScope.token = {
-										cedula: $rootScope.cedula,
-										clave : $rootScope.Base64.encode(md5(response))
-									};
+				// Verificar que el socket este conectado
+						// INICIAR LA CONEXION CON EL WEBSOCKET
 
-									console.log($rootScope.token);
-									$rootScope.token = JSON.stringify($rootScope.token);
-									$rootScope.token = $rootScope.Base64.encode($rootScope.token);
+						//console.log('Conectando...');
+						$rootScope.server = new FancyWebSocket('ws://192.168.1.10:9300');
 
-									$http.get($rootScope.sprintf('api/v1/login/%s',$rootScope.token)).then(function(response) {										
-										if(response.status === 200) {
-											contador = 0;
-											$rootScope.x = true;
-											$localStorage.token = $rootScope.token;
-											$rootScope.timerAlert("Verificado","Has verificado tu sesion",1000);
-										}
-
-										if(response.status === 201) {
-											$rootScope.x = false;
-											$localStorage.token = undefined;
-											window.location.href="#!/login";
-											$rootScope.alert("Hemos detectado inactividad", "La clave introducida no coincide, tu sesion se ha cerrado por tu seguridad", "error");
-
-										}
-
-										
-
-										
-									}, function(response) {
-										if(response.status == 404) {
-											$rootScope.toast(response.statusText);
-										}
-										if(response.status == 500) {
-											$rootScope.toast(response.statusText);
-										}
-									});
-								}, function() {
-									// al presionar cancelar
-									$rootScope.x = false;
-									$localStorage.token = undefined;
-									window.location.href="#!/login";
-								});
-										
-							}
-
-
-							if(contador==240) {
-								$rootScope.x = false;
-								$localStorage.token = undefined;
-								window.location.href="#!/login";
-								$rootScope.alert("Hemos detectado inactividad", "Tu sesión ha sido finalizada por inactividad", "error");
-									
-							}
-							contador = contador + 60;
-
+						function send( text ) {
+							$rootScope.server.send( 'message', text );
 						}
-				}, 60000);
+
+						//Let the user know we're connected
+						$rootScope.server.bind('open', function() {
+							console.log( "Conectado al websocket server." );
+							$rootScope.conectadoalsocket = true;
+							$('#mensajeconectado').html("<span style='color:#77F74C;font-size:15px;'>•</span>");
+						});
+
+						//OH NOES! Disconnection occurred.
+						$rootScope.server.bind('close', function( data ) {
+							console.log( "Desconectado del websocket server." );
+							$rootScope.conectadoalsocket = false;
+							$('#mensajeconectado').html("<span style='color:red;font-size:15px;'>•</span>");
+						});
+
+						//Log any messages sent from server
+						$rootScope.server.bind('message', function( payload ) {
+							
+
+							
+
+							var mensaje = JSON.parse(payload);
+							ion.sound({
+								sounds: [
+					                {name: "Tethys"}
+					            ],
+									path: "assets/sounds/",
+									preload: true,
+									volume: 1.0
+								});
+
+							
+								if($rootScope.ip==mensaje.ip) {
+									console.log("yo registro");
+
+
+
+										if(typeof mensaje.rol !== "undefined" && typeof mensaje.user === "undefined") {
+											mensaje.icon = "5.png"; 
+						
+											 $rootScope.post('api/notificaciones',mensaje).then(function(response) {
+												 	if(response["0"].rol==$rootScope.usuario_en_linea.nivel) {
+												 		ion.sound.play("Tethys");
+												 		if($rootScope.objeto!="Notificaciones") {
+															$rootScope.toast("<img width='20' height='20' src='assets/images/"+ response[0].icon +"'/>" + " <a onclick='angular.element(this).scope().cargarNot("+response[0].id+")' style='padding-left:5px;'>" + response[0].title + "<a>", 15000, "notificacion");
+														}
+														$rootScope.cargarNotificacionesCompletas();
+														$rootScope.cargarBadget();
+												 	}
+											 });
+										} 
+
+										if(typeof mensaje.user !== "undefined" && typeof mensaje.rol === "undefined") {
+											$rootScope.post('api/notificaciones',mensaje).then(function(response) {
+
+												 	if(response["0"].user==$rootScope.usuario_en_linea.cedula) {
+												 		ion.sound.play("Tethys");
+												 		if($rootScope.objeto!="Notificaciones") {
+															$rootScope.toast("<img width='20' height='20' src='assets/images/"+ response[0].icon +"'/>" + " <a onclick='angular.element(this).scope().cargarNot("+response[0].id+")' style='padding-left:5px;'>" + response[0].title + "<a>", 15000, "notificacion");
+														}
+														$rootScope.cargarNotificacionesCompletas();
+														$rootScope.cargarBadget();
+												 	}
+
+
+
+											 });
+										} 
+
+										if(typeof mensaje.user === "undefined" && typeof mensaje.rol === "undefined") {
+											mensaje.icon = "4.png";
+											mensaje.status = 2;
+
+											$rootScope.post('api/notificaciones',mensaje).then(function(response) {
+												 	ion.sound.play("Tethys");
+												 	if($rootScope.objeto!="Notificaciones") {
+															$rootScope.toast("<img width='20' height='20' src='assets/images/"+ response[0].icon +"'/>" + " <a onclick='angular.element(this).scope().cargarNot("+response[0].id+")' style='padding-left:5px;'>" + response[0].title + "<a>", 15000, "notificacion");
+													}
+													$rootScope.cargarNotificacionesCompletas();
+													$rootScope.cargarBadget();
+
+											 });
+										}
+							} else {
+								console.log("yo solo recibo");
+								setTimeout(function() {
+									$rootScope.cargarNotificacionesCompletas();
+									$rootScope.cargarBadget();
+									// MENSAJE DE DIFUSION
+									if((typeof mensaje.rol === "undefined") && (typeof mensaje.user === "undefined")) {
+										mensaje.icon = "4.png"; 
+											ion.sound.play("Tethys");
+											if($rootScope.objeto!="Notificaciones") {
+												$rootScope.toast("<img width='20' height='20' src='assets/images/"+ mensaje.icon +"'/>" + " <a onclick='angular.element(this).scope().cargarNot(1)' style='padding-left:5px;'>" + mensaje.title + "<a>", 15000, "notificacion");
+												}
+
+												
+
+									}
+
+									// MENSAJE DE GRUPO
+									if((typeof mensaje.rol !== "undefined") && (typeof mensaje.user === "undefined")) {
+										mensaje.icon = "5.png"; 
+										if(mensaje.rol==$rootScope.usuario_en_linea.nivel) {
+											ion.sound.play("Tethys");
+											if($rootScope.objeto!="Notificaciones") {
+												$rootScope.toast("<img width='20' height='20' src='assets/images/"+ mensaje.icon +"'/>" + " <a onclick='angular.element(this).scope().cargarNot(1)' style='padding-left:5px;'>" + mensaje.title + "<a>", 15000, "notificacion");
+												}
+												
+											
+										}
+
+									}
+
+									//MENSAJE PERSONAL
+									if((typeof mensaje.rol === "undefined") && (typeof mensaje.user !== "undefined")) {
+										mensaje.icon = "3.png";
+										if(mensaje.user==$rootScope.usuario_en_linea.cedula) {
+											ion.sound.play("Tethys");
+											if($rootScope.objeto!="Notificaciones") {
+												$rootScope.toast("<img width='20' height='20' src='assets/images/"+ mensaje.icon +"'/>" + " <a onclick='angular.element(this).scope().cargarNot(1)' style='padding-left:5px;'>" + mensaje.title + "<a>", 15000, "notificacion");
+												}
+												
+											
+										}
+
+									}
+								},5000);
+								
+
+								
+
+								
+
+
+							}
+
+							
+							
+
+
+						
+						});
+
+					
+
+						setTimeout(function() {
+							if($rootScope.x!==false) {
+
+								$rootScope.server.connect();
+								$rootScope.cargarBadget();
+								$rootScope.cargarNotificacionesCompletas();
+								
+							}
+
+						}, 5000);
+					
+				        // TERMINAR LA CONEXION CON EL WEBSOCKET
+					
+
+
+
+        		// Establecer y cargar el lenguaje seleccionado para la pagina
+        		$rootScope.setLang($localStorage.locale);
+
+        		if($rootScope.x!==false) {
+	        		var fecha_hoy = moment().format("YYYY-MM-DD");
+	        		var filtro = JSON.stringify({
+	        			donde: "where inicio LIKE '"+fecha_hoy+"%' AND estatus = 'ASIGNADO'"
+	        		});
+
+
+	        		$rootScope.get('api/acto?filter='+filtro).then(function(response) {
+	        			console.log(response);
+	        			var hora_actual = moment().format("HH:mm:ss");
+	        			$.each(response, function(index,value) {
+	        				var hora_fin_evento = moment(value.fin).format("HH:mm:ss");
+	        				if(hora_fin_evento <= hora_actual) {
+	        					var data = {
+	        						id: null,
+	        						estatus : "FINALIZADO"
+	        					};
+	        					$rootScope.put('api/acto/'+value.id, data).then(function(response) {
+		        					console.log(response);
+		        				});
+	        					
+	        				} else {
+	        					var data = {
+	        						id: null,
+	        						estatus : "ASIGNADO"
+	        					};
+
+	        					$rootScope.put('api/acto/'+value.id, data).then(function(response) {
+		        					console.log(response);
+		        				});
+	        				}
+
+	        				
+
+	        			});
+	        		});
+	        	}
+
+        		
+
+
+				
+
+				setTimeout(function() {
+								var loaderDiv = document.getElementById("loader-wrapper");
+
+								// When the transition ends remove loader's div from display
+								// so that we can access the map with gestures or clicks
+								loaderDiv.addEventListener("transitionend",function(){
+										loaderDiv.style.display = "none";
+								}, true);
+
+								// Kick off the CSS transition
+								loaderDiv.style.opacity = 0.0;
+
+								cargarScripts();
+								$('#mobile-demo').perfectScrollbar();
+								$('.events').perfectScrollbar();
+								$('#main').smoothState();
+								$('.sticky').pushpin({
+									top: 30,
+									bottom: 1500,
+									offset: 0
+								});
+
+
+								
+
+
+
+
+
+						}, 1000);
+				
+					
+					if($rootScope.x!==false) {
+						$rootScope.cargarNotificacionesCompletas();
+						$rootScope.cargarBadget();
+					}
+					
+
+					// setInterval(function() {
+
+						
+				// 		if($('.lockscreen').css("display")=="none") {
+				// 			if($rootScope.x === true) {
+				// 				console.log(contador);
+				// 				if(contador==180) {
+				// 					inactividad = true;
+				// 					$localStorage.token = undefined;
+				// 					$rootScope.prompt("Hemos detectado inactividad","Tu sesion finalizara en 60 segundos. Si deseas continuar la sesion, ingresa tu clave","",
+				// 					function(response) {
+				// 						// al presionar ok
+				// 						$rootScope.token = {
+				// 							cedula: $rootScope.cedula,
+				// 							clave : $rootScope.Base64.encode(md5(response))
+				// 						};
+
+				// 						console.log($rootScope.token);
+				// 						$rootScope.token = JSON.stringify($rootScope.token);
+				// 						$rootScope.token = $rootScope.Base64.encode($rootScope.token);
+
+				// 						$http.get($rootScope.sprintf('api/v1/login/%s',$rootScope.token)).then(function(response) {										
+				// 							if(response.status === 200) {
+				// 								contador = 0;
+				// 								$rootScope.x = true;
+				// 								$localStorage.token = $rootScope.token;
+				// 								$rootScope.timerAlert("Verificado","Has verificado tu sesion",1000);
+				// 							}
+
+				// 							if(response.status === 201) {
+				// 								$rootScope.x = false;
+				// 								$localStorage.token = undefined;
+				// 								window.location.href="#!/login";
+				// 								$rootScope.alert("Hemos detectado inactividad", "La clave introducida no coincide, tu sesion se ha cerrado por tu seguridad", "error");
+
+				// 							}
+
+											
+
+											
+				// 						}, function(response) {
+				// 							if(response.status == 404) {
+				// 								$rootScope.toast(response.statusText);
+				// 							}
+				// 							if(response.status == 500) {
+				// 								$rootScope.toast(response.statusText);
+				// 							}
+				// 						});
+				// 					}, function() {
+				// 						// al presionar cancelar
+				// 						$rootScope.x = false;
+				// 						$localStorage.token = undefined;
+				// 						window.location.href="#!/login";
+				// 					});
+											
+				// 				}
+
+
+				// 				if(contador==240) {
+				// 					$rootScope.x = false;
+				// 					$localStorage.token = undefined;
+				// 					window.location.href="#!/login";
+				// 					$rootScope.alert("Hemos detectado inactividad", "Tu sesión ha sido finalizada por inactividad", "error");
+										
+				// 				}
+				// 				contador = contador + 60;
+
+				// 			}
+				// 		} 
+						
+				// }, 60000);
 						
 			});
 			

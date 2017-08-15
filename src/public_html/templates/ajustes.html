@@ -287,6 +287,38 @@
             </div>
 
             <div ng-tab-body="animated fadeInRightBig" class="tab-pane">
+                <h5>Websockets</h5>
+
+                <p>Por favor, rellene los siguiente campos con las direcciones correctas, si la dirección introducida presentara un error, las notificaciones en el sistema no llegaran correctamente, en caso de no conocer esta información, consulte el personal de informática de la institución</p>
+
+                <table class="highlight">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td><b>Dirección del servidor de Websocket</b></td>
+                            <td>
+                                <input id="socket_address" type="text" ng-model="data_notificaciones.socket_address" ng-value="data_notificaciones.socket_address" class="validate">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Puerto TCP de conexión del socket</b></td>
+                            <td>
+                                <input id="socket_port" type="text" ng-model="data_notificaciones.socket_port" ng-value="data_notificaciones.socket_port" class="validate">
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
                 <h5>Mensajes de Texto</h5>
 
                 <p>Por favor, rellene los siguiente campos con las direcciones correctas, si la dirección introducida presentara un error, la salida de los mensajes de textos no se realizará correctamente</p>
