@@ -3,14 +3,17 @@
 			$rootScope.objeto = "Caso";
             $scope.datos = {};
 
+
             angular.element(document).ready(function() {
                // $("#cedula").mask("l-99999999");
                
                $('.tooltipped').tooltip({delay: 50});
                $rootScope.tipoDePersonasAgregadas = [];
+                var filter = JSON.stringify({
+                    donde : "where descripcion != 'USUARIO'"
+                });
 
-
-                $rootScope.get('api/tipo_persona').then(function(response) {
+                $rootScope.get('api/tipo_persona?filter='+filter).then(function(response) {
                     //console.log(response);
                     $rootScope.JSONTipoPersona = response;
                 }, function(response) {
@@ -32,7 +35,7 @@
                 if($scope.datos.descripcion==undefined) {  $rootScope.toast("Campo 'descripción' vacio"); return; }
 
                 var filtro = {
-                    donde : "where numero = " + $scope.datos.numero
+                    donde : "where numero = '" + $scope.datos.numero + "'"
                 };
 
                 var filter = JSON.stringify(filtro).toString();
@@ -76,11 +79,12 @@
                         return;
                     }   
 
-                    console.log($rootScope.accion_caso);
 
-                    if($rootScope.accion_caso=="registrar") {
+                    if($scope.existe_caso==false) {
                         $rootScope.post('api/caso', $scope.datos).then(function(response) {
+                            console.log(response);
                             if(response != null) {
+                                console.log("llega a diferent nul");
                                 if(response.length==1) {
                                     for(var i = 0; i < $rootScope.tipoDePersonasAgregadas.length; i++) {
 
@@ -114,7 +118,7 @@
 
                     }
 
-                    if($rootScope.accion_caso=="modificar") {
+                    if($scope.existe_caso==true) {
                         $rootScope.put('api/caso/'+$scope.datos.id, $scope.datos).then(function(response) {
                             if(response != null) {
 
@@ -203,7 +207,7 @@
 
                 $rootScope.tipoDePersonasAgregadas = [];
                 var filtro = {
-                    donde: "where numero = " + $scope.datos.numero
+                    donde: "where numero = '" + $scope.datos.numero + "'"
                 };
 
                 var filter = JSON.stringify(filtro).toString();
@@ -211,31 +215,36 @@
                 $rootScope.get('api/caso?filter=' + filter).then(function(response) {
 
                     if(typeof response != "undefined") {
+                        $("#post").attr("disabled", false);
+                        $("#post").html("Modificar");
+                        $("#post").css("display","block");
                         $scope.existe_caso = true;
                         $scope.datos = response["0"];
-                        var filtro = {
-                            donde: "where numero_caso = " + $scope.datos.numero
-                        };
 
-                        var filter = JSON.stringify(filtro).toString();
+                        var filter = JSON.stringify({
+                            donde: "where numero_caso = '" + $scope.datos.numero + "'"
+                        });
 
                         var tipoPersonas = ["imputado", "victima", "fiscal", "alguacil", "secretaria", "juez", "defensor", "testigo"];
 
                         for(var x = 0; x < tipoPersonas.length; x++) {
                             $rootScope.get("api/caso_"+tipoPersonas[x]+"?filter=" + filter).then(function(response) {
                                 if(typeof response != "undefined") {
+                                    console.log(response);
+                                    
+                                    
                                     
                                     for(var i = 0; i < response.length; i++) {
                                         //console.log(response[i].cedula);
 
                                         var filtro2 = {
-                                            donde : "where cedula = '"+response[i].cedula+"'"
+                                            donde : "where cedula = '"+response[i].cedula+"' AND id_tipo_persona = '" + response[i].id_tipo_persona + "'"
                                         };
 
 
                                         var filter2 = JSON.stringify(filtro2).toString();
-
-                                        $rootScope.get('api/persona?filter=' + filter2).then(function(response) {
+                                        
+                                        $rootScope.get('api/persona_tipo_persona?filter=' + filter2).then(function(response) {
 
 
 
@@ -278,6 +287,9 @@
 
                         }
                     } else {
+                        $("#post").attr("disabled", false);
+                        $("#post").html("Registrar");
+                        $("#post").css("display","block");
                         $scope.existe_caso = false;
                         $rootScope.tipoDePersonasAgregadas = [];
                         $scope.datos.descripcion = "";
@@ -309,7 +321,7 @@
                 var filter = JSON.stringify(filtro).toString();
 
 
-                $rootScope.get('api/persona?filter=' + filter).then(function(response) {
+                $rootScope.get('api/persona_tipo_persona?filter=' + filter).then(function(response) {
 
                     if(typeof response != "undefined") {
                         
@@ -340,7 +352,7 @@
                             $rootScope.tipoDePersonasAgregadas.push(JSONPersonas);
                             $scope.persona.cedula = "";
                         } else {
-                            $rootScope.toast(primer_nombre[0] + " " + primer_apellido[0] + " ya ha sido agregado como " + $scope.str_tipo_persona.toLowerCase());
+                            $rootScope.toast(primer_nombre[0] + " " + primer_apellido[0] + " ya ha sido agregado");
                         }
                         
 

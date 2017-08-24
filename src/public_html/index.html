@@ -57,10 +57,16 @@
 <body ng-controller="main">
 <div class="lockscreen">
 	<div  class="centrado-porcentual">
-		<img width="100" height="100" class="responsive-img circle" src="assets/images/placeholder.jpg">
+		<img width="100" height="100" class="responsive-img circle" src="assets/images/upload/{{usuario_en_linea.imagen}}">
 		<br>
 		<span id="dashboard-titulo">Anthony Medina</span>
-		<button ng-click="lockout()" id="close-lockscreen">Cerrar</button>
+		<p>{{mensaje_intentos}}</p>
+		<br>
+		<input name="clave" id="clave" type="password" class="input-lockscreen" ng-model="lockpass" ng-value="lockpass">
+			
+
+		<button class="btn waves-effect blue" ng-click="lockout()" id="close-lockscreen">Desbloquear</button>
+
 	</div>
 	
 </div>
@@ -96,7 +102,7 @@
 				<li ng-show="x === true">
 		        	<a ng-click="cargarNotificaciones();" id="sidenav-right" data-activates="left-side" class="waves-effect waves-light  right show-on-large">
 
-		        		<span id="mensajeconectado"><span style='color:red;'>•</span></span>
+		        		<span id="mensajeconectado" style='color:red;'>•</span>
 		        		
 
 		        		{{usuario_en_linea.nombres}} {{usuario_en_linea.apellidos}} <span data-badge-caption="" class='new badge red'>{{badget}}</span></a>
@@ -194,7 +200,7 @@
 				      <!-- <div class="background">
 				        <img src="assets/images/office.jpg">
 				      </div> -->
-				      <a href="#!user"><img class="circle" src="assets/images/placeholder.jpg"></a>
+				      <img class="circle" src="assets/images/upload/{{usuario_en_linea.imagen}}">
 				      <a href="#!name"><span class="white-text name">{{usuario_en_linea.nombres}} {{usuario_en_linea.apellidos}} </span></a>
 				      <a href="#!email"><span style="text-transform: lowercase;" class="white-text email">{{usuario_en_linea.email}}</span></a>
 
@@ -230,7 +236,7 @@
 					    
 					  </div>
 					  <div class="button-group">
-						<a href="javascript:void(0)" class="waves-effect">Cambiar clave</a> 
+						<a href="#!/perfil" class="waves-effect">Perfil</a> 
 						<a href="javascript:void(0)" ng-click="lockup()" class="waves-effect">Bloquear sesion</a> 
 						<a href="javascript:void(0)" ng-click="logout()" class="waves-effect">Cerrar Sesion</a>
 					  </div>
@@ -244,7 +250,7 @@
 
 
 	<!-- Navbar Secundaria -->
-	<nav ng-show="x === true" class="blue darken-5 sticky">
+	<nav id="nav-sec" ng-show="x === true" class="blue darken-5 sticky">
 	    <div class="navbar-wrapper" id="nav-secundario">
 			<ul ng-show="x === true" class="left toolbar toolbar-left hide-on-med-and-down">
 		        <li>
@@ -373,7 +379,8 @@
 				<script src="assets/js/controllers/bitacora.js?ver=1.0"></script>
 				<script src="assets/js/controllers/mensajes.js?ver=1.0"></script>
 				<script src="assets/js/controllers/login.js?ver=1.0"></script>	
-				<script src="assets/js/controllers/programador.js?ver=1.0"></script>	
+				<script src="assets/js/controllers/programador.js?ver=1.0"></script>
+				<script src="assets/js/controllers/perfil.js?ver=1.0"></script>	
 				<script src="assets/js/controllers/defensor.js?ver=1.0"></script>	
 				<script src="assets/js/controllers/casos.js?ver=1.0"></script>	
 				<script src="assets/js/controllers/actos.js?ver=1.0"></script>	

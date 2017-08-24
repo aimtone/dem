@@ -8,6 +8,13 @@
 							authorized: [1,2,3,4]
 						}
 		            })
+		            .when('/perfil', {
+		                templateUrl : 'assets/templates/perfil.html?ver=1.0',
+		                controller  : 'perfil',
+		                data: {
+							authorized: [1,2,3,4]
+						}
+		            })
 					.when('/login', {
 		                templateUrl : 'assets/templates/login.html?ver=1.0',
 		                controller  : 'login'
@@ -199,6 +206,7 @@
 
 		app.run(function($rootScope, $location,$window,$websocket)
 			{
+					
 				$rootScope.$on('$routeChangeStart', function (event, next) 
 				{
 					setTimeout(function() {

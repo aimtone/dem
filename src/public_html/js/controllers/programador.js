@@ -226,6 +226,11 @@
             var filter_acto_sala = {
                 donde: "where estatus = 'ASIGNADO' or estatus = 'FINALIZADO'"
             };
+            setTimeout(function() {
+                console.log(new Date());
+                console.log("fecha");
+            },5000);
+            
 
             $scope.config = {
                         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',

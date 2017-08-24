@@ -6,7 +6,7 @@
             <form class="col s12">
             <div class="row">
                 <div class="input-field col s5">
-                    <input  id="titulo" type="number" ng-enter="buscarCaso();" class="validate" ng-model="datos.numero" ng-value="datos.numero" >
+                    <input  id="titulo" type="text" ng-enter="buscarCaso();" class="validate" ng-model="datos.numero" ng-value="datos.numero" >
                     <label for="titulo">Número de Caso</label>
                 </div>
 
@@ -33,7 +33,7 @@
             </div>
             <div class="row">
                 <div class="col s12">
-                    <a id="post" class="waves-effect waves-light btn-large blue right">Listo</a>
+                    <a id="post" style="display:none;" disabled class="waves-effect waves-light btn-large blue right">Listo</a>
                 </div>
             </div>
             </form>
@@ -46,7 +46,7 @@
          </div>
 
        </div>
-
+        
        <div class="row">
            <div class="input-field col s4 offset-s1">
                     <select id="selTipoPersona" ng-model="selTipoPersona" class="browser-default" ng-change="" ng-options="x.id as x.descripcion for x in JSONTipoPersona">

@@ -1,9 +1,16 @@
 		app.controller('login', function($rootScope,$scope,$http,$localStorage,$location) {
 			$rootScope.validateSession();
+			$rootScope.objeto = "login";
 		
 		angular.element(document).ready(function() {
 			$("#cedula").mask("l-99999999");
 			DrawCaptcha();
+			$('body').css({
+				background: "#14385f",
+				transition: "all ease-out 0.1s"
+			});
+			
+					
 			
 		});
 
@@ -68,97 +75,116 @@
 				$http.get($rootScope.sprintf('api/v1/login/%s',$rootScope.token)).then(function(response) {
 					if(response.status == 200) {
 
-
-						$rootScope.x = true;
+						$('body').css({
+							background: "white",
+							transition: "all ease-in 0.1s"
+						});
+						$('.login-box').css({
+							border: "none",
+							boxShadow: "none",
+							background :"white"
+						});
+						$('.login-box').html("<center id='preload'><div class='preloader-wrapper small active'><div class='spinner-layer spinner-green-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div><p>Iniciando sesión...</p></center>");
 						
-						$rootScope.server.connect();
+
 						setTimeout(function() {
-							$rootScope.cargarNotificacionesCompletas();
-							$rootScope.cargarBadget();	
-						}, 5000);
+							$('.login-box').fadeOut('fast');
+							$rootScope.x = true;
 						
-						$rootScope.cedula = response.data.data[0].cedula;
-						$rootScope.nivel = response.data.data[0].nivel;
-						$rootScope.id_usuario = response.data.data[0].id_usuario;
-						$localStorage.token = $rootScope.token;
+							$rootScope.server.connect();
+							setTimeout(function() {
+								$rootScope.cargarNotificacionesCompletas();
+								$rootScope.cargarBadget();	
+							}, 5000);
+							
+							$rootScope.cedula = response.data.data[0].cedula;
+							$rootScope.nivel = response.data.data[0].nivel;
+							$rootScope.id_usuario = response.data.data[0].id_usuario;
+							$localStorage.token = $rootScope.token;
 
-						$rootScope.toast(response.statusText);
-						
+							$rootScope.toast(response.statusText);
+							
 
-						var fecha_hoy = moment().format("YYYY-MM-DD");
-		        		var filtro = JSON.stringify({
-		        			donde: "where inicio LIKE '"+fecha_hoy+"%' AND estatus = 'ASIGNADO'"
-		        		});
-
-
-		        		$rootScope.get('api/acto?filter='+filtro).then(function(response) {
-		        			console.log(response);
-		        			var hora_actual = moment().format("HH:mm:ss");
-		        			$.each(response, function(index,value) {
-		        				var hora_fin_evento = moment(value.fin).format("HH:mm:ss");
-		        				if(hora_fin_evento <= hora_actual) {
-		        					var data = {
-		        						id: null,
-		        						estatus : "FINALIZADO"
-		        					};
-		        					$rootScope.put('api/acto/'+value.id, data).then(function(response) {
-			        					console.log(response);
-			        				});
-		        					
-		        				} else {
-		        					var data = {
-		        						id: null,
-		        						estatus : "ASIGNADO"
-		        					};
-
-		        					$rootScope.put('api/acto/'+value.id, data).then(function(response) {
-			        					console.log(response);
-			        				});
-		        				}
-
-		        				
-
-		        			});
-		        		});
-
-		        		$rootScope.get('api/config_generales').then(function(response) {
-									$rootScope.atributos = {
-										usuario : response["0"].usuario,
-										clave : response["0"].clave,
-										basedatos: response["0"].basedatos
-
-									};
+							var fecha_hoy = moment().format("YYYY-MM-DD");
+			        		var filtro = JSON.stringify({
+			        			donde: "where inicio LIKE '"+fecha_hoy+"%' AND estatus = 'ASIGNADO'"
+			        		});
 
 
-									$rootScope.get('back-up?accion=Respaldo&usuario='+$rootScope.atributos.usuario+'&clave='+$rootScope.atributos.clave+'&nombre=backup&basedatos='+$rootScope.atributos.basedatos).then(function(response) {
-										console.log("Respaldo automatico creado");
-										$rootScope.nuevo_respaldo = true;
+			        		$rootScope.get('api/acto?filter='+filtro).then(function(response) {
+			        			console.log(response);
+			        			var hora_actual = moment().format("HH:mm:ss");
+			        			$.each(response, function(index,value) {
+			        				var hora_fin_evento = moment(value.fin).format("HH:mm:ss");
+			        				if(hora_fin_evento <= hora_actual) {
+			        					var data = {
+			        						id: null,
+			        						estatus : "FINALIZADO"
+			        					};
+			        					$rootScope.put('api/acto/'+value.id, data).then(function(response) {
+				        					console.log(response);
+				        				});
+			        					
+			        				} else {
+			        					var data = {
+			        						id: null,
+			        						estatus : "ASIGNADO"
+			        					};
 
+			        					$rootScope.put('api/acto/'+value.id, data).then(function(response) {
+				        					console.log(response);
+				        				});
+			        				}
+
+			        				
+
+			        			});
+			        		});
+
+			        		$rootScope.get('api/config_generales').then(function(response) {
+										$rootScope.atributos = {
+											usuario : response["0"].usuario,
+											clave : response["0"].clave,
+											basedatos: response["0"].basedatos
+
+										};
+
+
+										$rootScope.get('back-up?accion=Respaldo&usuario='+$rootScope.atributos.usuario+'&clave='+$rootScope.atributos.clave+'&nombre=backup&basedatos='+$rootScope.atributos.basedatos).then(function(response) {
+											console.log("Respaldo automatico creado");
+											$rootScope.nuevo_respaldo = true;
+
+										});
 									});
-								});
+
+
+							
+							$location.url('/');
+
+							var filter = JSON.stringify({
+								donde : "where cedula = '" + $rootScope.cedula + "'"
+							});
+
+							$rootScope.get('api/persona?filter='+filter).then(function(response) {
+								
+								$rootScope.usuario_en_linea = {
+									id: response["0"].id,
+									cedula : response["0"].cedula,
+									nombres : response["0"].nombres,
+									apellidos : response["0"].apellidos,
+									email: response["0"].email,
+									fecha_de_nacimiento : response["0"].fecha_de_nacimiento,
+									telefono: response["0"].telefono,
+									nivel: $rootScope.nivel 
+								};
+
+								
+
+							});
+						},1000);
+
+
 						
-						$location.url('/');
-
-						var filter = JSON.stringify({
-							donde : "where cedula = '" + $rootScope.cedula + "'"
-						});
-
-						$rootScope.get('api/persona?filter='+filter).then(function(response) {
-							
-							$rootScope.usuario_en_linea = {
-								id: response["0"].id,
-								cedula : response["0"].cedula,
-								nombres : response["0"].nombres,
-								apellidos : response["0"].apellidos,
-								email: response["0"].email,
-								fecha_de_nacimiento : response["0"].fecha_de_nacimiento,
-								telefono: response["0"].telefono,
-								nivel: $rootScope.nivel 
-							};
-
-							
-
-						});
 					}
 					if(response.status == 201) {
 						$localStorage.token = "";

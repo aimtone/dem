@@ -88,7 +88,6 @@ app.controller('usuario', function($rootScope,$scope,$http,$q,$localStorage) {
 					email : $scope.datos.email.toUpperCase(),
 					telefono : $scope.datos.telefono,
 					fecha_de_nacimiento : $scope.datos.fecha_de_nacimiento,
-					id_tipo_persona: 9,
 					id_usuario : $rootScope.id_usuario
 				};
 
@@ -101,46 +100,51 @@ app.controller('usuario', function($rootScope,$scope,$http,$q,$localStorage) {
 				// Si la accion del boton es registrar
 				if($rootScope.button == "registrar") {
 					
-					
+					$rootScope.clave_autogenerada = generarClaveRandom();
+					$scope.obj.clave = $rootScope.sha1(md5($rootScope.clave_autogenerada));
+
 					$rootScope.post('api/' + $scope.obj_padre, $scope.persona).then(function(response) {
 						if(response!=null) {
 							var id = response[0].id;
-							$rootScope.clave_autogenerada = generarClaveRandom();
-							$scope.obj.clave = $rootScope.sha1(md5($rootScope.clave_autogenerada));
-							console.log($rootScope.clave_autogenerada);
+							
 							$rootScope.post('api/' + $scope.obj_hijo, $scope.obj).then(function(response) {
 								if(response!=null) {
-									$scope.table.ajax.reload();
-									$rootScope.alert("Éxito", "Se ha completado el proceso de manera éxitosa", "success");
-									$scope.datos = {};
+									//REGISTRAR EL TIPO DE PERSONA
+									$rootScope.post('api/persona_tipo', { cedula: $scope.persona.cedula, tipo_persona : 9}).then(function(response) {
 
-									$rootScope.get('api/config_notificaciones').then(function(response) {
-											$scope.mensaje = {
-												number: $scope.persona.telefono,
-												text: "Has sido registrado como usuario en el sistema del gestion de actos del circuito judicial de San Felipe con el nombre de usuario "+$scope.persona.cedula+" y la clave "+$rootScope.clave_autogenerada
-											};
+											$scope.table.ajax.reload();
+											$rootScope.alert("Éxito", "Se ha completado el proceso de manera éxitosa", "success");
+											$scope.datos = {};
+
+											$rootScope.get('api/config_notificaciones').then(function(response) {
+												$scope.mensaje = {
+													number: $scope.persona.telefono,
+													text: "Has sido registrado como usuario en el sistema del gestion de actos del circuito judicial de San Felipe con el nombre de usuario "+$scope.persona.cedula+" y la clave "+$rootScope.clave_autogenerada
+												};
 
 
-											$rootScope.post(response["0"].servSMSinst, $scope.mensaje).then(function(response) {
-												console.log(response);
-											});
+												$rootScope.post(response["0"].servSMSinst, $scope.mensaje).then(function(response) {
+													console.log(response);
+												});
 
-											$scope.mail = {
-												nombre : $scope.persona.nombres + " " + $scope.persona.apellidos,
-												asunto: "Nuevo registro en el sistema de gestion de actos del Circuito Judicial de San Felipe",
-												correo: $scope.persona.email,
-												mensaje: "Has sido registrado como usuario en el sistema del gestion de actos del circuito judicial de San Felipe con el nombre de usuario <b>"+$scope.persona.cedula+"</b> y la clave <b>"+$rootScope.clave_autogenerada+"</b>"
+												$scope.mail = {
+													nombre : $scope.persona.nombres + " " + $scope.persona.apellidos,
+													asunto: "Nuevo registro en el sistema de gestion de actos del Circuito Judicial de San Felipe",
+													correo: $scope.persona.email,
+													mensaje: "Has sido registrado como usuario en el sistema del gestion de actos del circuito judicial de San Felipe con el nombre de usuario <b>"+$scope.persona.cedula+"</b> y la clave <b>"+$rootScope.clave_autogenerada+"</b>"
 
-											};
+												};
 
-											var config = {
-												 params: $scope.mail,
-												 headers : {'Accept' : 'application/json'}
-											};
-									    	
-									    	$http.get(response["0"].servEmail, config).then(function (response) {
-											       
-											});
+												var config = {
+													 params: $scope.mail,
+													 headers : {'Accept' : 'application/json'}
+												};
+										    	
+										    	$http.get(response["0"].servEmail, config).then(function (response) {
+												       
+												});
+										});
+
 									});
 									
 								} else {
@@ -151,7 +155,59 @@ app.controller('usuario', function($rootScope,$scope,$http,$q,$localStorage) {
 								$rootScope.alert("Error", "Ha ocurrido un error interno del sistema", "warning");
 							});
 						} else {
-							$rootScope.alert("Error", "No se ha registrado los datos, por favor, verifique e intente de nuevo", "warning");
+							var filter = {
+								donde : "where cedula = '" + $scope.persona.cedula + "'" 
+							};
+
+							$rootScope.get('api/' + $scope.obj_padre + '?filter='+filter).then(function(response) {
+								if(response!=null) {
+									$rootScope.post('api/' + $scope.obj_hijo, $scope.obj).then(function(response) { 
+										if(response!=null) {
+											$rootScope.post('api/persona_tipo', { cedula: $scope.persona.cedula, tipo_persona : 9}).then(function(response) {
+													$scope.table.ajax.reload();
+													$rootScope.alert("Éxito", "Se ha completado el proceso de manera éxitosa", "success");
+													$scope.datos = {};
+
+													$rootScope.get('api/config_notificaciones').then(function(response) {
+														$scope.mensaje = {
+															number: $scope.persona.telefono,
+															text: "Has sido registrado como usuario en el sistema del gestion de actos del circuito judicial de San Felipe con el nombre de usuario "+$scope.persona.cedula+" y la clave "+$rootScope.clave_autogenerada
+														};
+
+
+														$rootScope.post(response["0"].servSMSinst, $scope.mensaje).then(function(response) {
+															console.log(response);
+														});
+
+														$scope.mail = {
+															nombre : $scope.persona.nombres + " " + $scope.persona.apellidos,
+															asunto: "Nuevo registro en el sistema de gestion de actos del Circuito Judicial de San Felipe",
+															correo: $scope.persona.email,
+															mensaje: "Has sido registrado como usuario en el sistema del gestion de actos del circuito judicial de San Felipe con el nombre de usuario <b>"+$scope.persona.cedula+"</b> y la clave <b>"+$rootScope.clave_autogenerada+"</b>"
+
+														};
+
+														var config = {
+															 params: $scope.mail,
+															 headers : {'Accept' : 'application/json'}
+														};
+												    	
+												    	$http.get(response["0"].servEmail, config).then(function (response) {
+														       
+														});
+												});
+
+											});
+										} else {
+											$rootScope.alert("Error", "No se ha registrado los datos, por favor, verifique e intente de nuevo", "warning");
+										}
+
+									});
+									
+								} else {
+									$rootScope.alert("Error", "Ha ocurrido un error", "warning");
+								}
+							});
 						}
 					}, function(response) {
 						$rootScope.alert("Error", "Ha ocurrido un error interno del sistema", "warning");
@@ -210,38 +266,44 @@ app.controller('usuario', function($rootScope,$scope,$http,$q,$localStorage) {
 			var i = null;
 			var contador = 0;
 			for (i = 0; i < cantidad; i++) {
-				$rootScope.delete('api/' + $scope.obj_padre + '/' + $scope.table.rows('.selected').data()[i].id).then(function(response) {
-					var filter = {
-						donde : "where cedula = '" + response[0].cedula + "'" 
-					};
+				var cedula = $scope.table.rows('.selected').data()[i].cedula;
+				var filter = JSON.stringify({
+					donde : "WHERE cedula = '" + cedula + "'"
+				});
 
-					
-					$rootScope.get('api/' + $scope.obj_hijo + '?filter=' + JSON.stringify(filter)).then(function(response) {
-						$rootScope.delete('api/' + $scope.obj_hijo + '/' + response[0].id).then(function(response) {
+				$rootScope.get('api/'+$scope.obj_hijo+'?filter='+filter).then(function(response) {
+					var id = response["0"].id;
+					$rootScope.delete('api/'+$scope.obj_hijo+'/'+id).then(function(response) {
+						if(response!=null) {
+							var filter_2 = JSON.stringify({
+								donde : "WHERE cedula = '" + response["0"].cedula + "'"
+							});
 
-							
+							$rootScope.get('api/persona_tipo?filter='+filter_2).then(function(response) {
+								var id_2 = response["0"].id;
+								$rootScope.delete('api/persona_tipo/'+id_2).then(function(response) {
+									if(cantidad == 1 ) {
+										$rootScope.alert("Éxito", "Se ha eliminado " + contador + " de " + cantidad + " registro", "success");
 
-							if(cantidad == 1 ) {
-								$rootScope.alert("Éxito", "Se ha eliminado " + contador + " de " + cantidad + " registro", "success");
+									} else {
+										$rootScope.alert("Éxito", "Se ha eliminado " + contador + " de " + cantidad + " registros", "success");
 
-							} else {
-								$rootScope.alert("Éxito", "Se ha eliminado " + contador + " de " + cantidad + " registros", "success");
+									}
 
-							}
+									$scope.table.ajax.reload(); 
 
-							$scope.table.ajax.reload();
-						
+								});
 
-						}, function(response) {
-							$rootScope.alert("Error", "Ha ocurrido un error interno del sistema", "warning");
-						});
-					}, function(response) {
-						$rootScope.alert("Error", "Ha ocurrido un error interno del sistema", "warning");
+							});
+						} else {
+							$rootScope.alert("Error", "Ocurrió un error interno el el sistema", "error");
+						}
 					});
+
 				});
 				contador++;
 			};
-				
+
 				
 		}, function() { 
 			// codigo del boton cancelar

@@ -1,44 +1,42 @@
-<div class="container">
+
+<div class="login container">
     <div class="row">
-        <div class="col m6 l6 hide-on-med-and-down">
-            <h2>{{lang.login.bienvenido}}</h2>
-            <p><b>{{app_name}}</b> {{lang.login.mensaje}}</p>
-           
-           
-        </div>
-        <div class="col m6 l6">
-            <h2 class="center-align">{{lang.login.ingresar}}</h2>
+        
+        <div class="col s12 m6 card login-box offset-m3 container">
+            <h3 class="center-align">Iniciar sesión</h3>
             <div class="row">
                 <form class="col s12" autocomplete="off">
                     <div class="row">
-                        <div class="input-field col s12">
+                        <div class="input-field col s10 offset-s1">
                             <input id="cedula" type="text" class="validate" ng-model="datos.cedula" required>
                             <label for="cedula">{{lang.login.formulario.usuario}}</label>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s12">
+                        <div class="input-field col s10 offset-s1">
                             <input id="clave" type="password" class="validate" ng-model="datos.clave" required>
                             <label for="clave">{{lang.login.formulario.clave}}</label>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col s9">
-                            <input type="text" readonly id="txtCaptcha"/>
-                            <input type="text"  ng-keyup="aMayusculas($event);" id="txtInput" name="txtInput" placeholder="{{lang.login.formulario.mensaje_captcha}}"/>
+                    <div class="row col s10">
+                        <div class="row">
+                            <div class="col s9 offset-s1">
+                                <input type="text" readonly id="txtCaptcha"/>
+                                <input type="text"  ng-keyup="aMayusculas($event);" id="txtInput" name="txtInput" placeholder="{{lang.login.formulario.mensaje_captcha}}"/>
+                            </div>
+                            <div class="col s2">
+                                <button class="btn blue waves-effect waves-light" type="button" id="btnrefresh"><i class="material-icons">refresh</i></button>
+                                 
+                            </div>
+
                         </div>
-                        <div class="col s2">
-                            <button class="btn orange darken-4 waves-effect waves-light" type="button" id="btnrefresh"><i class="material-icons">refresh</i></button>
-                            
-                        </div>
+                        
                     </div>
                   
                     <div class="divider"></div>
                     <div class="row">
-                        <div class="col m12">
-                            <p class="right-align">
-                                <button class="btn blue darken-4 waves-effect waves-light" type="button" id="login" name="login">{{lang.login.formulario.boton}}</button>
-                            </p>
+                        <div class="col s12">
+                                <button class="btn blue darken-4 waves-effect waves-light right" type="button" id="login" name="login">{{lang.login.formulario.boton}}</button>
                         </div>
                     </div>
                 </form>

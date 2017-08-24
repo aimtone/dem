@@ -104,7 +104,7 @@
 
                 $rootScope.tipoDePersonasAgregadas = [];
                 var filtro = {
-                    donde: "where numero = " + $scope.data.numero_caso
+                    donde: "where numero = '" + $scope.data.numero_caso + "'"
                 };
 
                 var filter = JSON.stringify(filtro).toString();
@@ -123,7 +123,7 @@
 
 
                         var filtro = {
-                            donde: "where numero_caso = " + $scope.data.numero_caso
+                            donde: "where numero_caso = '" + $scope.data.numero_caso + "'"
                         };
 
                         var filter = JSON.stringify(filtro).toString();
@@ -137,12 +137,13 @@
                                         //console.log(response[i].cedula);
 
                                         var filtro2 = {
-                                            donde : "where cedula = '"+response[i].cedula+"'"
+                                            donde : "where cedula = '"+response[i].cedula+"' AND id_tipo_persona = '" + response[i].id_tipo_persona + "'"
                                         };
+
 
                                         var filter2 = JSON.stringify(filtro2).toString();
 
-                                        $rootScope.get('api/persona?filter=' + filter2).then(function(response) {
+                                        $rootScope.get('api/persona_tipo_persona?filter=' + filter2).then(function(response) {
 
 
 

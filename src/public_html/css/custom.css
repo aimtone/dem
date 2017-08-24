@@ -8,6 +8,33 @@
     -ms-user-select:none;
     cursor:default;
 }
+.mybadge {
+  background: red;
+  padding:5px 5px 5px 5px;
+  border-radius:10px 10px 10px 10px;
+  font-size: 10px;
+
+}
+
+
+.login-box {
+    background:rgba(255,255,255,.8);
+    color:#14385f !important;
+    border-radius: 0px 0px 0px 0px !important;
+}
+.login-box h3 {
+    font-weight: 300;
+    color:#14385f;
+}
+.login-box input::-webkit-input-placeholder {
+  color: #14385f;
+}
+.login-box input:-moz-placeholder {
+  color: #14385f; 
+}
+.login-box input:-ms-input-placeholder { 
+  color: #14385f; 
+}
 #imgCont {
 	background:#eeeeee;
 	width:auto;
@@ -175,6 +202,7 @@ transform: perspective(160px) rotateX(-180deg) rotateY(-180deg);
   background-image:url('../images/captcha.JPG'); 
   text-align:center; 
   border:none;
+  color:#14385f;
   font-weight:bold; 
   font-size:2em; 
   font-family:'Barrio';
@@ -451,19 +479,22 @@ select[multiple=multiple] {
 }
 .button-group {
     text-align: center;
+
+
 }
 .button-group a { 
     display: inline-block;
     color:white;
     width:32%;
-    background:rgba(0,0,0,.4);
-    border: 1px solid rgba(0,0,0,.4);
     text-align: center;
     margin:0;
-    font-size: 10px;
-    text-transform: uppercase;
     padding:0;
     word-wrap: break-word;
+    border-radius: 2px;
+    height: 36px;
+  line-height: 36px;
+  background: rgba(255,255,255,.2);
+
 
 }
 .button-group a:first-child { 
@@ -823,6 +854,12 @@ select[multiple=multiple] {
     width:100%;
     height:100%;
     z-index:2000;
+}
+.input-lockscreen {
+  color:white !important;
+  border-bottom: 1px solid white !important;
+  font-weight: 700;
+  text-align: center;
 }
 
 #example tbody {

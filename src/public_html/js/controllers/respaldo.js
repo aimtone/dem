@@ -72,6 +72,7 @@
 
 
 				$rootScope.get(rutaNueva).then(function(response) {
+					
 					$rootScope.directorio = response;
 					$rootScope.rutaActual = rutaNueva;
 				}, function(response) {

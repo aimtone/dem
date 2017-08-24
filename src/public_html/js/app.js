@@ -30,7 +30,9 @@
 		
 
 		app.controller('main', function($rootScope,$scope,$http,$q,$localStorage,$location,$window) {
-			//"use strict";			
+			//"use strict";	
+
+			
 
 			$rootScope.nuevo_respaldo = false;
 			$rootScope.Base64 = {
@@ -103,7 +105,7 @@
 				_utf8_decode: function(e) {
 					var t = "";
 					var n = 0;
-					var r = c1 = c2 = 0;
+					var r = 0, c1 = 0, c2 = 0;
 					while (n < e.length) {
 						r = e.charCodeAt(n);
 						if (r < 128) {
@@ -122,7 +124,7 @@
 					}
 					return t
 				}
-			}
+			};
 
 			console.log($localStorage.token);
 
@@ -207,7 +209,7 @@
 			      endingTop: '10%'
 			    }
 			  );
-	        }
+	        };
 
         	$rootScope.setLang = function(idioma) {
         		$localStorage.locale = idioma;
@@ -216,7 +218,7 @@
 	           		$rootScope.lang = response.data;
 	        	});
 	        	
-        	}
+        	};
 
         	$rootScope.alert = function(title, text, type) {
         		swal({
@@ -227,10 +229,14 @@
 					confirmButtonText: "Aceptar",   
 					closeOnConfirm: true 
 				});
-        	}
+        	};
 
         	
-			$rootScope.prompt = function(title,text,placeholder, okButton, cancelButton, inputType = "password") {
+			$rootScope.prompt = function(title,text,placeholder, okButton, cancelButton, inputType) {
+				if(typeof inputType == "undefined") {
+					inputType = "password";
+				}
+
 				swal({   
 					title: title,   
 					text: text,   
@@ -257,7 +263,11 @@
 				});
 			};
 
-			$rootScope.timerAlert = function(title, text, timer, showConfirmButton = false) {
+			$rootScope.timerAlert = function(title, text, timer, showConfirmButton) {
+				if(typeof showConfirmButton == "undefined") {
+					showConfirmButton = false;
+				}
+
 				swal({   
 					title: title,   
 					text: text,   
@@ -266,7 +276,10 @@
 				});
 			}
 
-        	$rootScope.confirm = function(title, text, type, confirmFunction, cancelFunction, closeOnConfirm = false) {
+        	$rootScope.confirm = function(title, text, type, confirmFunction, cancelFunction, closeOnConfirm) {
+        		if(typeof closeOnConfirm == "undefined") {
+        			closeOnConfirm = false;
+        		}
 	        	swal({   
 					title: title,   
 					text: text,   
@@ -288,7 +301,13 @@
 				});
         	}
 
-        	$rootScope.toast = function(message, time = 2000, clase = "toasts", onclick) {
+        	$rootScope.toast = function(message, time , clase, onclick) {
+        		if(typeof clase == "undefined") {
+        			clase = "toasts";
+        		}
+        		if(typeof time == "undefined") {
+        			time = 2000;
+        		}
 				if(onclick!=null) {
 					Materialize.toast(message, time, clase, onclick);
 				} else {
@@ -330,17 +349,17 @@
 
 		    	if(cedula == undefined) {
 		    		var filtro = {
-			    		campos: "cedula, concat(nombre_completo,' (',descripcion, ')') AS descripcion"			    	};
+			    		campos: "cedula, concat(nombres, ' ', apellidos) AS descripcion"			    	};
 		    	} else {
 		    		var filtro = {
-			    		campos: "cedula, concat(nombre_completo,' (',descripcion, ')') AS descripcion",
+			    		campos: "cedula, concat(nombres, ' ', apellidos) AS descripcion",
 			    		donde: "where cedula like '" + cedula.cedula + "%'" 
 			    	};
 		    	}
 
 		    	var filter = JSON.stringify(filtro).toString();
 
-		    	$rootScope.get("api/persona_tipo_persona?filter=" + filter).then(function(response) {
+		    	$rootScope.get("api/persona?filter=" + filter).then(function(response) {
 		    		if(response!=undefined) {
 		    			$rootScope.personas = response;
 		    			$('.autocomplete').fadeIn('fast','linear');
@@ -736,6 +755,12 @@
 				};
 
 				$rootScope.validateToken = function() {
+					$('body').css({
+						background: "white"
+					});
+					
+
+					
 					if (typeof $localStorage.token !== 'undefined') {
 						if($localStorage.token!='') {
 							$rootScope.get($rootScope.sprintf('api/v1/login/%s',$localStorage.token)).then(function(response) {
@@ -787,7 +812,9 @@
 									$rootScope.id_usuario = response["0"].id;
 									console.log(response["0"].id);
 									$rootScope.nivel = response["0"].nivel;
+									$rootScope.clave = response["0"].clave;
 									$rootScope.cedula = response["0"].cedula;
+									$rootScope.imagen = response["0"].imagen;
 
 									var filter = JSON.stringify({
 										donde : "where cedula = '" + $rootScope.cedula + "'"
@@ -803,8 +830,12 @@
 											email: response["0"].email,
 											fecha_de_nacimiento : response["0"].fecha_de_nacimiento,
 											telefono: response["0"].telefono,
-											nivel: $rootScope.nivel 
+											nivel: $rootScope.nivel,
+											imagen: $rootScope.imagen
+											
+
 										};
+
 										
 										
 
@@ -881,9 +912,48 @@
 						$('.lockscreen').fadeIn();
 
 					};
+					$rootScope.contador_intentos = 0;
+					$rootScope.mensaje_intentos = "Intentos: " + $rootScope.contador_intentos;
+					$rootScope.lockout = function(clave) {
+						
+						$rootScope.token = {
+							cedula: $rootScope.cedula,
+							clave : $rootScope.Base64.encode(md5($scope.lockpass))
+						};
 
-					$rootScope.lockout = function() {
-						$('.lockscreen').fadeOut();
+						$rootScope.token = JSON.stringify($rootScope.token);
+						$rootScope.token = $rootScope.Base64.encode($rootScope.token);
+
+						$http.get($rootScope.sprintf('api/v1/login/%s',$rootScope.token)).then(function(response) {
+							if(response.status==200) {
+								$('.lockscreen').fadeOut();
+								$rootScope.contador_intentos = 0;
+								$rootScope.mensaje_intentos = "Intentos: " + $rootScope.contador_intentos;
+								$scope.lockpass = "";
+							} else {
+								
+
+								$rootScope.contador_intentos = $rootScope.contador_intentos + 1;
+
+								if($rootScope.contador_intentos>=3) {
+									$rootScope.logout();
+									$rootScope.contador_intentos = 0;
+									$rootScope.mensaje_intentos = "Intentos: " + $rootScope.contador_intentos;
+									$scope.lockpass = "";
+									$('.lockscreen').fadeOut();
+								} else {
+									$scope.lockpass = "";
+									$rootScope.toast("Clave érronea, despues de tres intentos se destruirá la sesión");
+									$rootScope.mensaje_intentos = "Intentos: " + $rootScope.contador_intentos;
+								}	
+								
+							}
+						});
+
+
+
+
+						
 					}
 
 		
@@ -972,6 +1042,7 @@
 				var inactividad = false;
 				
 				$(document).ready(function() {
+				
 				//	//window.onbeforeunload = function(e) {
 				//		return false;
 				//	};
@@ -981,7 +1052,7 @@
 						// INICIAR LA CONEXION CON EL WEBSOCKET
 
 						//console.log('Conectando...');
-						$rootScope.server = new FancyWebSocket('ws://192.168.1.10:9300');
+						$rootScope.server = new FancyWebSocket('ws://192.168.1.4:9300');
 
 						function send( text ) {
 							$rootScope.server.send( 'message', text );
@@ -991,14 +1062,18 @@
 						$rootScope.server.bind('open', function() {
 							console.log( "Conectado al websocket server." );
 							$rootScope.conectadoalsocket = true;
-							$('#mensajeconectado').html("<span style='color:#77F74C;font-size:15px;'>•</span>");
+							$('#mensajeconectado').css({
+								color: "#77F74C"
+							});
 						});
 
 						//OH NOES! Disconnection occurred.
 						$rootScope.server.bind('close', function( data ) {
 							console.log( "Desconectado del websocket server." );
 							$rootScope.conectadoalsocket = false;
-							$('#mensajeconectado').html("<span style='color:red;font-size:15px;'>•</span>");
+							$('#mensajeconectado').css({
+								color: "red"
+							});
 						});
 
 						//Log any messages sent from server
@@ -1017,6 +1092,9 @@
 									volume: 1.0
 								});
 
+							if(mensaje.tipo=="notificacion") {
+
+								
 							
 								if($rootScope.ip==mensaje.ip) {
 									console.log("yo registro");
@@ -1040,6 +1118,7 @@
 
 										if(typeof mensaje.user !== "undefined" && typeof mensaje.rol === "undefined") {
 											$rootScope.post('api/notificaciones',mensaje).then(function(response) {
+												console.log(response);
 
 												 	if(response["0"].user==$rootScope.usuario_en_linea.cedula) {
 												 		ion.sound.play("Tethys");
@@ -1052,6 +1131,8 @@
 
 
 
+											 }, function(response) {
+											 	console.log(response);
 											 });
 										} 
 
@@ -1122,6 +1203,9 @@
 
 
 							}
+						} else if(mensaje.tipo=="chat") {
+							console.log("es chat");
+						}
 
 							
 							
