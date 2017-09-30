@@ -10,7 +10,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 	// -----------------------------------------------------------------
 	angular.element(document).ready(function() {
 		$rootScope.get('api/config_datatables').then(function(response) {
-			console.log(response);
+			//console.log(response);
 			if(response["0"]._keys=="1") {
                 $scope.tConfig.keys = true;
             } else {
@@ -123,7 +123,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 								}
 								
 							}, function(response) {
-								console.log(response);
+								//console.log(response);
 								$rootScope.alert("Error", "Ha ocurrido un error interno del sistema", "warning");
 							});
 
@@ -209,6 +209,10 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 
 
 	$scope.rowDelete = function() {
+		if($scope.table.rows('.selected').data().length<=0) {
+                    $rootScope.alert("Error", "Debes seleccionar al menos un registro para eliminar", "warning");
+                    return;
+                } 
 		$rootScope.confirm("¿Estás seguro?", "Se procederá a eliminar los registros seleccionados", "warning", function() {
 
 			var cantidad = $scope.table.rows('.selected').data().length;
@@ -281,7 +285,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 			}
 	        
 	    }, function(response) {
-	       	console.log(response);
+	       	//console.log(response);
 	   	});
 
 		
@@ -461,7 +465,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 	        	$rootScope.get('api/vista_' + $scope.obj_hijo + '/' + $scope.clave_primaria).then(function(response) {
 	        		$scope.datos = response[0];
 	        	}, function(response) {
-	        		console.log(response);
+	        		//console.log(response);
 	        	});
 
 

@@ -67,7 +67,7 @@
 					clave : $rootScope.Base64.encode(md5($scope.datos.clave))
 				};
 
-				console.log($rootScope.Base64.encode(md5($scope.datos.clave)));
+				//console.log($rootScope.Base64.encode(md5($scope.datos.clave)));
 
 				$rootScope.token = JSON.stringify($rootScope.token);
 				$rootScope.token = $rootScope.Base64.encode($rootScope.token);
@@ -112,7 +112,7 @@
 
 
 			        		$rootScope.get('api/acto?filter='+filtro).then(function(response) {
-			        			console.log(response);
+			        			//console.log(response);
 			        			var hora_actual = moment().format("HH:mm:ss");
 			        			$.each(response, function(index,value) {
 			        				var hora_fin_evento = moment(value.fin).format("HH:mm:ss");
@@ -122,7 +122,7 @@
 			        						estatus : "FINALIZADO"
 			        					};
 			        					$rootScope.put('api/acto/'+value.id, data).then(function(response) {
-				        					console.log(response);
+				        					//console.log(response);
 				        				});
 			        					
 			        				} else {
@@ -132,7 +132,7 @@
 			        					};
 
 			        					$rootScope.put('api/acto/'+value.id, data).then(function(response) {
-				        					console.log(response);
+				        					//console.log(response);
 				        				});
 			        				}
 
@@ -151,7 +151,7 @@
 
 
 										$rootScope.get('back-up?accion=Respaldo&usuario='+$rootScope.atributos.usuario+'&clave='+$rootScope.atributos.clave+'&nombre=backup&basedatos='+$rootScope.atributos.basedatos).then(function(response) {
-											console.log("Respaldo automatico creado");
+											//console.log("Respaldo automatico creado");
 											$rootScope.nuevo_respaldo = true;
 
 										});

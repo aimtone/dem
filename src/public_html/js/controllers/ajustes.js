@@ -133,26 +133,26 @@
 				$scope.data_programador.hiddenDays = $scope.data_programador.hiddenDays.join(",");
 				//delete $scope.data_datatable.id;
 				$rootScope.put('api/config_programador/1', $scope.data_programador).then(function(response) {
-					console.log(response);
+					//console.log(response);
 				});
 
-				console.log($scope.data_datatable);
+				//console.log($scope.data_datatable);
 
 				$rootScope.put('api/config_datatables/1', $scope.data_datatable).then(function(response) {
 					
-					console.log(response);
+					//console.log(response);
 					
 				});
 
 				$rootScope.put('api/config_notificaciones/1', $scope.data_notificaciones).then(function(response) {
 					
-					console.log(response);
+					//console.log(response);
 					
 				});
 
 				$rootScope.put('api/config_generales/1', $scope.data_generales).then(function(response) {
 					
-					console.log(response);
+					//console.log(response);
 					
 				});
 

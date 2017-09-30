@@ -14,10 +14,10 @@
                 });
 
                 $rootScope.get('api/tipo_persona?filter='+filter).then(function(response) {
-                    //console.log(response);
+                    ////console.log(response);
                     $rootScope.JSONTipoPersona = response;
                 }, function(response) {
-                    console.log(response);
+                    //console.log(response);
                 });
 
                 
@@ -82,9 +82,9 @@
 
                     if($scope.existe_caso==false) {
                         $rootScope.post('api/caso', $scope.datos).then(function(response) {
-                            console.log(response);
+                            //console.log(response);
                             if(response != null) {
-                                console.log("llega a diferent nul");
+                                //console.log("llega a diferent nul");
                                 if(response.length==1) {
                                     for(var i = 0; i < $rootScope.tipoDePersonasAgregadas.length; i++) {
 
@@ -94,10 +94,10 @@
                                         };
 
                                         $rootScope.post('api/caso_' + $rootScope.tipoDePersonasAgregadas[i].tipo, agregarPersona).then(function(response) {
-                                            //console.log(response);
+                                            ////console.log(response);
                                             
                                         }, function(response) {
-                                            console.log(response);
+                                            //console.log(response);
                                         });
                                     }
 
@@ -146,10 +146,10 @@
                                         };
 
                                         $rootScope.post('api/caso_' + $rootScope.tipoDePersonasAgregadas[i].tipo, agregarPersona).then(function(response) {
-                                            //console.log(response);
+                                            ////console.log(response);
                                             
                                         }, function(response) {
-                                            console.log(response);
+                                            //console.log(response);
                                         });
                                     }
 
@@ -230,12 +230,12 @@
                         for(var x = 0; x < tipoPersonas.length; x++) {
                             $rootScope.get("api/caso_"+tipoPersonas[x]+"?filter=" + filter).then(function(response) {
                                 if(typeof response != "undefined") {
-                                    console.log(response);
+                                    //console.log(response);
                                     
                                     
                                     
                                     for(var i = 0; i < response.length; i++) {
-                                        //console.log(response[i].cedula);
+                                        ////console.log(response[i].cedula);
 
                                         var filtro2 = {
                                             donde : "where cedula = '"+response[i].cedula+"' AND id_tipo_persona = '" + response[i].id_tipo_persona + "'"
@@ -279,10 +279,10 @@
                                         });
                                     }
                                 } else {
-                                   // console.log("No hay imputados agregados");
+                                   // //console.log("No hay imputados agregados");
                                 }
                             }, function(response) {
-                                console.log(response);
+                                //console.log(response);
                             });
 
                         }
@@ -297,6 +297,8 @@
                     }
                 });
             }
+
+          
 
 
             
@@ -336,7 +338,7 @@
                             posicion: $rootScope.tipoDePersonasAgregadas.length
                         };
                         
-                        //console.log(JSONPersonas);
+                        ////console.log(JSONPersonas);
                         
                         $scope.agregar = true;
                         for(var i = 0; i < $rootScope.tipoDePersonasAgregadas.length; i++) {
@@ -356,7 +358,7 @@
                         }
                         
 
-                        //console.log($rootScope.tipoDePersonasAgregadas);
+                        ////console.log($rootScope.tipoDePersonasAgregadas);
                         
 
                         
@@ -365,7 +367,7 @@
                         $rootScope.toast("No existe un registro con la cédula de identidad ingresada para este tipo de persona");
                     }
                 }, function(response) {
-                    console.log(response);
+                    //console.log(response);
 
                 });
             };

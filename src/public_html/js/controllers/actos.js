@@ -193,7 +193,7 @@
                         $rootScope.get('api/' + $scope.obj_padre + '/' + $scope.clave_primaria).then(function(response) {
                             $scope.datos = response[0];
                         }, function(response) {
-                            console.log(response);
+                            //console.log(response);
                         });
 
 

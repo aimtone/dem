@@ -5,7 +5,7 @@
             $(document).ready(function() {
 
                 $rootScope.get('api/bitacora').then(function(response) {
-                    console.log(response);
+                    //console.log(response);
                 });
                 // Setup - add a text input to each footer cell
                 $('#example tfoot th').each( function () {

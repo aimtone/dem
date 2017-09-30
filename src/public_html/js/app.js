@@ -1,4 +1,4 @@
-		var app = angular.module('dem',['ngRoute','ngStorage','datatables','angucomplete-alt','tabs','ngWebsocket']);
+		var app = angular.module('dem',['ngRoute','ngStorage','datatables','angucomplete-alt','tabs','ngWebsocket','chart.js']);
 		
 
 
@@ -31,6 +31,7 @@
 
 		app.controller('main', function($rootScope,$scope,$http,$q,$localStorage,$location,$window) {
 			//"use strict";	
+			
 
 			
 
@@ -126,7 +127,7 @@
 				}
 			};
 
-			console.log($localStorage.token);
+			//console.log($localStorage.token);
 
 			if(typeof $localStorage.token != "undefined") {
 				if($localStorage.token!="") {
@@ -220,13 +221,22 @@
 	        	
         	};
 
-        	$rootScope.alert = function(title, text, type) {
+        	$rootScope.alert = function(title, text, type, confirmButtonText, cancelButtonText) {
+        		if(typeof confirmButtonText == 'undefined') {
+        			confirmButtonText = "Aceptar"
+        		}
+
+        		if(typeof cancelButtonText == 'undefined') {
+        			cancelButtonText = "Cancelar"
+        		}
+
         		swal({
 					title: title,
 					text: text,
 					type: type,  
 					confirmButtonColor: "#0D47A1",   
-					confirmButtonText: "Aceptar",   
+					confirmButtonText: confirmButtonText, 
+					cancelButtonText: cancelButtonText,  
 					closeOnConfirm: true 
 				});
         	};
@@ -276,9 +286,17 @@
 				});
 			}
 
-        	$rootScope.confirm = function(title, text, type, confirmFunction, cancelFunction, closeOnConfirm) {
+        	$rootScope.confirm = function(title, text, type, confirmFunction, cancelFunction, confirmButtonText, cancelButtonText, closeOnConfirm) {
         		if(typeof closeOnConfirm == "undefined") {
         			closeOnConfirm = false;
+        		}
+
+        		if(typeof confirmButtonText == 'undefined') {
+        			confirmButtonText = "Confirmar"
+        		}
+
+        		if(typeof cancelButtonText == 'undefined') {
+        			cancelButtonText = "Cancelar"
         		}
 	        	swal({   
 					title: title,   
@@ -286,8 +304,8 @@
 					type: type,   
 					showCancelButton: true,   
 					confirmButtonColor: "#0D47A1",   
-					confirmButtonText: "Confirmar",   
-					cancelButtonText: "Cancelar",   
+					confirmButtonText: confirmButtonText,   
+					cancelButtonText: cancelButtonText,   
 					closeOnConfirm: closeOnConfirm,   
 					closeOnCancel: true 
 				}, function(isConfirm) { 
@@ -331,8 +349,8 @@
 
 
 			$rootScope.cargarNot = function(id) {
-				console.log(id);
-				console.log($rootScope.objeto);
+				//console.log(id);
+				//console.log($rootScope.objeto);
 				if($rootScope.objeto=="Notificaciones") {
 					
 					$rootScope.cargarMensaje(id);
@@ -368,7 +386,7 @@
 		    		}
 		    		
 		    	}, function(response) {
-		    		console.log(response);
+		    		//console.log(response);
 		    	});
 		    	
 		    }
@@ -764,7 +782,7 @@
 					if (typeof $localStorage.token !== 'undefined') {
 						if($localStorage.token!='') {
 							$rootScope.get($rootScope.sprintf('api/v1/login/%s',$localStorage.token)).then(function(response) {
-								//console.log(response);
+								////console.log(response);
 								if(response==null) {
 									$location.url('/login');
 									$rootScope.x = false;
@@ -808,9 +826,9 @@
 									}
 			
 									$rootScope.x = true;
-									console.log(response);
+									//console.log(response);
 									$rootScope.id_usuario = response["0"].id;
-									console.log(response["0"].id);
+									//console.log(response["0"].id);
 									$rootScope.nivel = response["0"].nivel;
 									$rootScope.clave = response["0"].clave;
 									$rootScope.cedula = response["0"].cedula;
@@ -858,7 +876,7 @@
 							if (typeof $localStorage.token !== 'undefined') {
 								if($localStorage.token!='') {
 									$rootScope.get($rootScope.sprintf('api/v1/login/%s',$localStorage.token)).then(function(response) {
-										//console.log(response);
+										////console.log(response);
 										if(response!=null) {
 											$location.url('/');
 											return;
@@ -883,13 +901,25 @@
 				// -----------------------------------------------------------------
 
 				$rootScope.aMayusculas = function(e) {
-					var x = angular.element("input[name=" + e.currentTarget.name + "]").val();
+					var x = "";
+					if(e.currentTarget.tagName=="INPUT") {
+						x = angular.element("input[name=" + e.currentTarget.name + "]").val();
+					} else {
+						x = angular.element("textarea")["0"].value;
+					}
+					
 
 					var cadena = new String(x);
 					cadena = cadena.toUpperCase();
 					
-					angular.element("input[name=" + e.currentTarget.name + "]").val(cadena);
 					
+
+					if(e.currentTarget.tagName=="INPUT") {
+						angular.element("input[name=" + e.currentTarget.name + "]").val(cadena);
+					} else {
+						angular.element("textarea")["0"].value = cadena;
+					}
+
 
 
 				};
@@ -971,7 +1001,7 @@
 	                });
 	                $rootScope.get('api/notificaciones?filter='+filter).then(function(response) {
 	                    $rootScope.notificaciones = response;
-	                    console.log(response);
+	                    //console.log(response);
 	                });
 	            };
 
@@ -982,7 +1012,7 @@
 					};
 
 					$rootScope.put('api/notificaciones/'+id, data).then(function(response) {
-						console.log(response);
+						//console.log(response);
 						$rootScope.cargarNotificacionesCompletas();
 						$rootScope.cargarBadget();
 					});
@@ -990,14 +1020,14 @@
 				};
 
 				$rootScope.cargarBadget = function() {
-					console.log('ejecuta cargarNotificaciones');
+					//console.log('ejecuta cargarNotificaciones');
 
 					var filter = JSON.stringify({
 						donde: "WHERE status = 1 AND ((user = '"+$rootScope.usuario_en_linea.cedula+"' OR rol = '"+$rootScope.usuario_en_linea.nivel+"') OR (user = '' AND rol = ''))"					
 					});
 
 					$rootScope.get('api/notificaciones?filter='+filter).then(function(response) {
-						console.log(response);
+						//console.log(response);
 						if(typeof response != "undefined") {
 							$rootScope.badget = response.length;
 						} else {
@@ -1051,7 +1081,7 @@
 				// Verificar que el socket este conectado
 						// INICIAR LA CONEXION CON EL WEBSOCKET
 
-						//console.log('Conectando...');
+						////console.log('Conectando...');
 						$rootScope.server = new FancyWebSocket('ws://192.168.1.4:9300');
 
 						function send( text ) {
@@ -1060,7 +1090,7 @@
 
 						//Let the user know we're connected
 						$rootScope.server.bind('open', function() {
-							console.log( "Conectado al websocket server." );
+							//console.log( "Conectado al websocket server." );
 							$rootScope.conectadoalsocket = true;
 							$('#mensajeconectado').css({
 								color: "#77F74C"
@@ -1069,7 +1099,7 @@
 
 						//OH NOES! Disconnection occurred.
 						$rootScope.server.bind('close', function( data ) {
-							console.log( "Desconectado del websocket server." );
+							//console.log( "Desconectado del websocket server." );
 							$rootScope.conectadoalsocket = false;
 							$('#mensajeconectado').css({
 								color: "red"
@@ -1097,7 +1127,7 @@
 								
 							
 								if($rootScope.ip==mensaje.ip) {
-									console.log("yo registro");
+									//console.log("yo registro");
 
 
 
@@ -1118,7 +1148,7 @@
 
 										if(typeof mensaje.user !== "undefined" && typeof mensaje.rol === "undefined") {
 											$rootScope.post('api/notificaciones',mensaje).then(function(response) {
-												console.log(response);
+												//console.log(response);
 
 												 	if(response["0"].user==$rootScope.usuario_en_linea.cedula) {
 												 		ion.sound.play("Tethys");
@@ -1132,7 +1162,7 @@
 
 
 											 }, function(response) {
-											 	console.log(response);
+											 	//console.log(response);
 											 });
 										} 
 
@@ -1151,7 +1181,7 @@
 											 });
 										}
 							} else {
-								console.log("yo solo recibo");
+								//console.log("yo solo recibo");
 								setTimeout(function() {
 									$rootScope.cargarNotificacionesCompletas();
 									$rootScope.cargarBadget();
@@ -1204,7 +1234,7 @@
 
 							}
 						} else if(mensaje.tipo=="chat") {
-							console.log("es chat");
+							//console.log("es chat");
 						}
 
 							
@@ -1243,7 +1273,7 @@
 
 
 	        		$rootScope.get('api/acto?filter='+filtro).then(function(response) {
-	        			console.log(response);
+	        			//console.log(response);
 	        			var hora_actual = moment().format("HH:mm:ss");
 	        			$.each(response, function(index,value) {
 	        				var hora_fin_evento = moment(value.fin).format("HH:mm:ss");
@@ -1253,7 +1283,7 @@
 	        						estatus : "FINALIZADO"
 	        					};
 	        					$rootScope.put('api/acto/'+value.id, data).then(function(response) {
-		        					console.log(response);
+		        					//console.log(response);
 		        				});
 	        					
 	        				} else {
@@ -1263,7 +1293,7 @@
 	        					};
 
 	        					$rootScope.put('api/acto/'+value.id, data).then(function(response) {
-		        					console.log(response);
+		        					//console.log(response);
 		        				});
 	        				}
 
@@ -1321,7 +1351,7 @@
 						
 				// 		if($('.lockscreen').css("display")=="none") {
 				// 			if($rootScope.x === true) {
-				// 				console.log(contador);
+				// 				//console.log(contador);
 				// 				if(contador==180) {
 				// 					inactividad = true;
 				// 					$localStorage.token = undefined;
@@ -1333,7 +1363,7 @@
 				// 							clave : $rootScope.Base64.encode(md5(response))
 				// 						};
 
-				// 						console.log($rootScope.token);
+				// 						//console.log($rootScope.token);
 				// 						$rootScope.token = JSON.stringify($rootScope.token);
 				// 						$rootScope.token = $rootScope.Base64.encode($rootScope.token);
 

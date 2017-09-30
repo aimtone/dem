@@ -15,7 +15,7 @@
                 
                 if($scope.data.descripcion==undefined || $scope.data.descripcion == "") { $rootScope.toast("Campo 'Descripcion' vacio");  return;}
 
-                //console.log(JSON.stringify($scope.data));
+                ////console.log(JSON.stringify($scope.data));
 
                 if($rootScope.origenProgramador == true) {
                     $scope.data.estatus = "ASIGNADO";
@@ -27,7 +27,7 @@
 
                 $scope.data.id_usuario =  $rootScope.id_usuario;
 
-                console.log(JSON.stringify($scope.data));
+                //console.log(JSON.stringify($scope.data));
                 $rootScope.post('api/acto',$scope.data).then(function(response) {
                     var date = $rootScope.formatDate($scope.data.inicio, "yyyy-MM-dd");
                     var fecha2 = $rootScope.formatDate($scope.data.inicio, "dd/MM/yyyy");
@@ -47,14 +47,14 @@
                         $rootScope.get('api/config_notificaciones').then(function(response) {
                             $rootScope.data_notificaciones = response["0"];
 
-                            console.log($rootScope.data_notificaciones);
+                            //console.log($rootScope.data_notificaciones);
 
-                            console.log($rootScope.data_notificaciones.servSMSprog + "/"+date+"/1 DAY");
+                            //console.log($rootScope.data_notificaciones.servSMSprog + "/"+date+"/1 DAY");
 
-                            console.log(JSON.stringify(JSONmensaje));
+                            //console.log(JSON.stringify(JSONmensaje));
 
                             $rootScope.post($rootScope.data_notificaciones.servSMSprog + "/"+date+"/1 DAY", JSONmensaje).then(function(response) {
-                                console.log(response);
+                                //console.log(response);
 
                             });
                             
@@ -72,7 +72,7 @@
                     localStorage.removeItem("ngStorage-evento");
                     $scope.data = {};
 
-                    console.log($rootScope.origenProgramador);
+                    //console.log($rootScope.origenProgramador);
                     if($rootScope.origenProgramador==true) {
                         $window.location.href = '#!/programador/' + date;
                     } else {
@@ -134,7 +134,7 @@
                             $rootScope.get("api/caso_"+tipoPersonas[x]+"?filter=" + filter).then(function(response) {
                                 if(typeof response != "undefined") {
                                     for(var i = 0; i < response.length; i++) {
-                                        //console.log(response[i].cedula);
+                                        ////console.log(response[i].cedula);
 
                                         var filtro2 = {
                                             donde : "where cedula = '"+response[i].cedula+"' AND id_tipo_persona = '" + response[i].id_tipo_persona + "'"
@@ -178,10 +178,10 @@
                                         });
                                     }
                                 } else {
-                                   // console.log("No hay imputados agregados");
+                                   // //console.log("No hay imputados agregados");
                                 }
                             }, function(response) {
-                                console.log(response);
+                                //console.log(response);
                             });
 
                         }
@@ -205,7 +205,7 @@
                     
                 }, function(response) {
                     $rootScope.descripcion_caso = "";
-                    console.log(response);
+                    //console.log(response);
                 });
             }
 
@@ -216,21 +216,21 @@
 					  	'Authorization': $localStorage.token
 					  }
 					}).then(function(data) {
-                       // console.log(data);
+                       // //console.log(data);
                         var array = data == null ? [] : (data.data.data instanceof Array ? data.data.data : [data.data.data]);
                         $scope.JSONtipoTribunal  = array;
                         $scope.selTipoTribunal   = $scope.JSONtipoTribunal;
 
-                        //console.log($scope.selTipoTribunal);
+                        ////console.log($scope.selTipoTribunal);
                     }, function(response) {
-                        console.log('Error: ' + response);
+                        //console.log('Error: ' + response);
                     });
 
                        
             }
 
             function obtenerTribunal($http,$scope,idCategoria){
-                //console.log(idCategoria);
+                ////console.log(idCategoria);
                 var filtro = {
                     donde : "where id_tipo_tribunal = " + idCategoria
                 };
@@ -249,14 +249,14 @@
                         $('#tribunal').prop('disabled', false);
 
                     }, function(response) {
-                        console.log('Error: ' + response);
+                        //console.log('Error: ' + response);
                         $('#tribunal').prop('disabled', false);
                     });   
             }
 
 
             function obtenerActividad($http,$scope,idCategoria){
-               // console.log(idCategoria);
+               // //console.log(idCategoria);
                 var filtro = {
                     donde : "where id_tipo_tribunal = " + idCategoria
                 };
@@ -276,7 +276,7 @@
                         $('#actividad').prop('disabled', false);
 
                     }, function(response) {
-                        console.log('Error: ' + response);
+                        //console.log('Error: ' + response);
                         $('#actividad').prop('disabled', true);
                     });   
             }
@@ -295,7 +295,7 @@
                  $rootScope.get('api/tipo_persona').then(function(response) {
                     $rootScope.JSONTipoPersona = response;
                 }, function(response) {
-                        console.log(response);
+                        //console.log(response);
                 });
 
                 

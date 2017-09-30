@@ -182,13 +182,57 @@
                         $rootScope.get('api/' + $scope.obj_padre + '/' + $scope.clave_primaria).then(function(response) {
                             $scope.datos = response[0];
                         }, function(response) {
-                            console.log(response);
+                            //console.log(response);
                         });
 
 
                     }
                 }
             }
+
+            $scope.rowDelete = function() {
+                if($scope.table.rows('.selected').data().length<=0) {
+                    $rootScope.alert("Error", "Debes seleccionar al menos un registro para eliminar", "warning");
+                    return;
+                } 
+
+                $rootScope.confirm("¿Estás seguro?", "Se procederá a eliminar los casos seleccionados y todos los procesos que esten vinculados con el mismo", "warning", function() {
+
+                    var cantidad = $scope.table.rows('.selected').data().length;
+                    var i = null;
+                    var contador = 0;
+                    for (i = 0; i < cantidad; i++) {
+
+                        var id = $scope.table.rows('.selected').data()[i].id;
+                        $rootScope.delete('api/'+$scope.obj_padre+"/"+id).then(function(response) {
+                            if(response!=null) {
+                                if(cantidad == 1 ) {
+                                        $rootScope.alert("Éxito", "Se ha eliminado " + contador + " de " + cantidad + " registro", "success");
+
+                                    } else {
+                                        $rootScope.alert("Éxito", "Se ha eliminado " + contador + " de " + cantidad + " registros", "success");
+
+                                    }
+
+                                    $scope.table.ajax.reload();
+
+                            }
+                        });
+
+                        
+
+                        contador++;
+                    };
+
+                        
+                }, function() { 
+                    // codigo del boton cancelar
+
+                });
+
+                
+
+            };
             
             $scope.closeModal = function(div,button) {
                 if(button=='ok') {

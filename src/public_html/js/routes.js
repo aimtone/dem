@@ -15,6 +15,7 @@
 							authorized: [1,2,3,4]
 						}
 		            })
+		          
 					.when('/login', {
 		                templateUrl : 'assets/templates/login.html?ver=1.0',
 		                controller  : 'login'
@@ -188,15 +189,8 @@
 							authorized: [1]
 						}
 		            })
-					.when('/404', {
-		                templateUrl : 'assets/error/404.html?ver=1.0',
-		                controller  : '',
-		                data: {
-							authorized: [1,2,3,4]
-						}
-		            })
 		            .otherwise({
-			            redirectTo: '/404'
+			            redirectTo: '/'
 			        });
 
 
@@ -210,16 +204,54 @@
 				$rootScope.$on('$routeChangeStart', function (event, next) 
 				{
 					setTimeout(function() {
-							console.log("entra en run");
+							//console.log("entra en run");
 
 
 					        if (next.data !== undefined) 
 					        {
-					        	console.log($rootScope.current_user);
+					        	//console.log($rootScope.current_user);
 					            if(next.data.authorized.indexOf($rootScope.current_user) !== -1)
 								{
 									//alert("bienvenido");
 									$rootScope.conexion = true;
+									// CAMBIAR LOS ESTATUS DE LOS ACTOS A FINALIZADO
+								    if($rootScope.x!==false) {
+						        		var fecha_hoy = moment().format("YYYY-MM-DD");
+						        		var filtro = JSON.stringify({
+						        			donde: "where inicio LIKE '"+fecha_hoy+"%' AND estatus = 'ASIGNADO'"
+						        		});
+
+
+						        		$rootScope.get('api/acto?filter='+filtro).then(function(response) {
+						        			//console.log(response);
+						        			var hora_actual = moment().format("HH:mm:ss");
+						        			$.each(response, function(index,value) {
+						        				var hora_fin_evento = moment(value.fin).format("HH:mm:ss");
+						        				if(hora_fin_evento <= hora_actual) {
+						        					var data = {
+						        						id: null,
+						        						estatus : "FINALIZADO"
+						        					};
+						        					$rootScope.put('api/acto/'+value.id, data).then(function(response) {
+							        					//console.log(response);
+							        				});
+						        					
+						        				} else {
+						        					var data = {
+						        						id: null,
+						        						estatus : "ASIGNADO"
+						        					};
+
+						        					$rootScope.put('api/acto/'+value.id, data).then(function(response) {
+							        					//console.log(response);
+							        				});
+						        				}
+
+						        				
+
+						        			});
+						        		});
+						        	}
 									
 
 								}
@@ -243,7 +275,7 @@
 
 
 									$rootScope.get('back-up?accion=Respaldo&usuario='+$rootScope.atributos.usuario+'&clave='+$rootScope.atributos.clave+'&nombre=backup&basedatos='+$rootScope.atributos.basedatos).then(function(response) {
-										console.log("Respaldo automatico creado");
+										//console.log("Respaldo automatico creado");
 										$rootScope.nuevo_respaldo = true;
 
 									});
@@ -255,6 +287,8 @@
 					}, 100);
 					
 			    });
+
+
 				
 					
 				

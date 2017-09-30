@@ -2,6 +2,57 @@
 			$rootScope.validateToken();
 			$rootScope.objeto = "Programador de Actos";
 
+            var appWindow = angular.element($window);
+            appWindow.bind('resize', function() {
+                var arr = location.hash.split("/");
+                if(arr[1]=="programador") {
+                    if(innerWidth<=1154) {
+                        $('.mensaje_de_error').html('Tu ordenador no cuenta con la resolución necesaria para mostrar el programador, por favor, visualizar el programador desde un ordenador con una resolución mayor o igual a 1155 pixeles');
+                        $('.mensaje_de_error').css({
+                            display:"block"
+                        });
+                        $('#wrap').css({
+                            display: "none"
+                        });
+
+                    } else {
+                        $('.mensaje_de_error').html('');
+                        $('.mensaje_de_error').css({
+                            display:"none"
+                        });
+                        $('#wrap').css({
+                            display: "block"
+                        });
+                        $('#calendar').fullCalendar($scope.config);
+                        setTimeout(function() {
+                        $('#external-events .actos .fc-event').each(function() {
+
+                            // store data so the calendar knows to render an event upon drop
+                            $(this).data('event', {
+                                title: $.trim($(this).text()), // use the element's text as the event title
+                                stick: true // maintain when user navigates (see docs on the renderEvent method)
+                            });
+
+                            // make the event draggable using jQuery UI
+                            $(this).draggable({
+                                zIndex: 999,
+                                revert: true,      // will cause the event to go back to its
+                                revertDuration: 0  //  original position after the drag
+                            });
+
+                        });
+                        
+                        
+                    }, 1000);
+
+
+
+                    }
+
+                }
+                
+            });
+
              
 
             angular.element(document).ready(function() {
@@ -70,7 +121,7 @@
 
                         var dias_no_laborables = response["0"].hiddenDays.split(",");
 
-                        //console.log(dias_no_laborables);
+                        ////console.log(dias_no_laborables);
                         var array_nuevo = [];
                         $.each(dias_no_laborables, function(index, value) {
                             if(typeof value == "string") {
@@ -94,9 +145,32 @@
 
 
                 setTimeout(function() {
-                    //console.log($scope.config);
+                    ////console.log($scope.config);
                     $('#preload').fadeOut("fast");
-                    $('#calendar').fullCalendar($scope.config);
+                    var arr = location.hash.split("/");
+                        if(arr[1]=="programador") {
+                            if(innerWidth<=1154) {
+                                $('.mensaje_de_error').html('Tu ordenador no cuenta con la resolución necesaria para mostrar el programador, por favor, visualizar el programador desde un ordenador con una resolución mayor o igual a 1155 pixeles');
+                                $('.mensaje_de_error').css({
+                                    display:"block"
+                                });
+                                $('#wrap').css({
+                                    display: "none"
+                                });
+
+                            } else {
+                                $('.mensaje_de_error').html('');
+                                $('.mensaje_de_error').css({
+                                    display:"none"
+                                });
+                                $('#wrap').css({
+                                    display: "block"
+                                });
+                                $('#calendar').fullCalendar($scope.config);
+
+                            }
+
+                        }
 
                     setTimeout(function() {
                         $( ".FINALIZADO" ).each(function() {
@@ -185,7 +259,7 @@
 
                 $rootScope.get('api/acto_sala?filter=' + filter_acto_sala_espera).then(function(response) {
                     $rootScope.JSONEspera = response;
-                    //console.log($rootScope.JSONEspera);
+                    ////console.log($rootScope.JSONEspera);
                 });
 
 
@@ -227,11 +301,10 @@
                 donde: "where estatus = 'ASIGNADO' or estatus = 'FINALIZADO'"
             };
             setTimeout(function() {
-                console.log(new Date());
-                console.log("fecha");
+                //console.log($scope.config.now);
+                //console.log("fecha");
             },5000);
             
-
             $scope.config = {
                         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
                         theme: true,
@@ -346,6 +419,8 @@
                                     request.setRequestHeader("Authorization", $localStorage.token);
                                 },
                                 success: function(doc) {
+                                  
+                                    
                                     
                                     callback(doc.data);
                                     setTimeout(function() {
@@ -369,215 +444,231 @@
                             }
                         },
                         eventReceive: function(event, jsEvent) { // called when a proper external event is dropped
+                            if($(".fc-view")["0"].classList[1]=="fc-agendaDay-view") {
+                                var fecha_inicio = new Date(event._start._d);
+                                var fecha_fin = new Date(event._start._d);
+                                fecha_fin.setHours(fecha_inicio.getHours()+2);
 
-                            
-                            var fecha_inicio = new Date(event._start._d);
-                            var fecha_fin = new Date(event._start._d);
-                            fecha_fin.setHours(fecha_inicio.getHours()+2);
-
-                            if($rootScope.formatDate(fecha_inicio,"yyyy-MM-dd")==$rootScope.formatDate(new Date(),"yyyy-MM-dd")) {
-                                $('#calendar').fullCalendar( 'removeEvents', event._id );
-                                $rootScope.toast("Por favor, elija una fecha distinta a la de hoy");
-                                cargarActoEspera();
-                                var data = {};
-                            } else {
-                                
-                                var data = {
-                                    id : null,
-                                    inicio: $rootScope.formatDate(fecha_inicio,"yyyy-MM-ddThh:mm:ss"),
-                                    fin: $rootScope.formatDate(fecha_fin,"yyyy-MM-ddThh:mm:ss"),
-                                    id_sala: event.resourceId,
-                                    descripcion: event.title,
-                                    estatus: "ASIGNADO"
-                                };
-
-
-                                $rootScope.put('api/acto/' + $rootScope.id_evento_arrastrado, data).then(function(response) {
-                                    //console.log(response);
+                                if($rootScope.formatDate(fecha_inicio,"yyyy-MM-dd")==$rootScope.formatDate(new Date(),"yyyy-MM-dd")) {
                                     $('#calendar').fullCalendar( 'removeEvents', event._id );
-                                    $('#calendar').fullCalendar( 'refetchEvents' );
-                                });
-
-                                
-
-                            }
-
-                            
-                            
-                            
-
-                            
-                        
-                        }, 
-                        eventClick: function(event,jsEvent) { 
-                            
-                            $rootScope.get('api/acto_sala/'+event.id).then(function(response) {
-                                //console.log(response);
-                                var paramFecha = $rootScope.formatDate(response[0].start,"yyyy-MM-dd")
-                                $rootScope.LinkMasDetalles = "#!programador/" + paramFecha + "/" + response[0].id;
-                                
-                                $rootScope.event_card_data = response[0];
-
-                                if($rootScope.formatDate($rootScope.event_card_data.start,"dd/MM/yyyy")==$rootScope.formatDate(new Date(),"dd/MM/yyyy")) {
-                                    $rootScope.event_card_data.fecha = "Hoy";
+                                    $rootScope.toast("Por favor, elija una fecha distinta a la de hoy");
+                                    cargarActoEspera();
+                                    var data = {};
+                                    $(".FINALIZADO").css({
+                                        background: "repeating-linear-gradient( 45deg, rgba(255,255,255,1) 20px, rgba(255,255,255,1) 40px, #DF6C4F 40px, #DF6C4F 60px )",
+                                        border: "none"
+                                    });
                                 } else {
-                                    $rootScope.event_card_data.fecha = $rootScope.formatDate($rootScope.event_card_data.start,"dd/MM/yyyy");
+                                    
+                                    var data = {
+                                        id : null,
+                                        inicio: $rootScope.formatDate(fecha_inicio,"yyyy-MM-ddThh:mm:ss"),
+                                        fin: $rootScope.formatDate(fecha_fin,"yyyy-MM-ddThh:mm:ss"),
+                                        id_sala: event.resourceId,
+                                        descripcion: event.title,
+                                        estatus: "ASIGNADO"
+                                    };
+
+
+                                    $rootScope.put('api/acto/' + $rootScope.id_evento_arrastrado, data).then(function(response) {
+                                        ////console.log(response);
+                                        $('#calendar').fullCalendar( 'removeEvents', event._id );
+                                        $('#calendar').fullCalendar( 'refetchEvents' );
+                                    });
+
+                                    
+
                                 }
 
-                                $rootScope.event_card_data.titulo = $rootScope.event_card_data.title.substr(0,30);
-                                $rootScope.event_card_data.descripcion = $rootScope.event_card_data.descripcion.substr(0,90);
+                            } else {
+                                $('#calendar').fullCalendar( 'removeEvents', event._id );
+                                    $rootScope.toast("No puedes asignar eventos en esta vista");
+                                    cargarActoEspera();
+                                    var data = {};
 
-                         
-                                $rootScope.event_card_data.start = moment($rootScope.event_card_data.start).format("h:mm a");
-                                $rootScope.event_card_data.end = moment($rootScope.event_card_data.end).format("h:mm a");
+                                    $(".FINALIZADO").css({
+                                        background: "repeating-linear-gradient( 45deg, rgba(255,255,255,1) 20px, rgba(255,255,255,1) 40px, #DF6C4F 40px, #DF6C4F 60px )",
+                                        border: "none"
+                                    });
 
-                                
 
-                                
-                                
-                                var display = $('.event-tooltip').css("display");
+                            }
+                        
+                        }, 
+                        eventClick: function(event,jsEvent) {
 
-                                
-                                $('.event-tooltip').fadeIn("fast");
+                            if($(".fc-view")["0"].classList[1]=="fc-agendaDay-view") {
+                                 $rootScope.get('api/acto_sala/'+event.id).then(function(response) {
+                                ////console.log(response);
+                                    var paramFecha = $rootScope.formatDate(response[0].start,"yyyy-MM-dd")
+                                    $rootScope.LinkMasDetalles = "#!programador/" + paramFecha + "/" + response[0].id;
+                                    
+                                    $rootScope.event_card_data = response[0];
 
-                                if(typeof $localStorage.eventClick != "undefined") {
-
-                                    if($localStorage.eventClick!=event.id) {
-                                        $('.event-tooltip').css({
-                                            display:"block",
-                                            top: (jsEvent.pageY + 10) + "px",
-                                            left: (jsEvent.pageX - 5) + "px"
-                                        });
-
-                                        $('.triangulo-equilatero-bottom').css({
-                                            left:"0px",
-                                            top: "-20px",
-                                            borderTop: "10px solid transparent",
-                                            borderBottom: "10px solid black",
-                                            borderLeft: "10px solid transparent",
-                                            borderRight: "10px solid transparent"
-                                        });
+                                    if($rootScope.formatDate($rootScope.event_card_data.start,"dd/MM/yyyy")==$rootScope.formatDate(new Date(),"dd/MM/yyyy")) {
+                                        $rootScope.event_card_data.fecha = "Hoy";
                                     } else {
+                                        $rootScope.event_card_data.fecha = $rootScope.formatDate($rootScope.event_card_data.start,"dd/MM/yyyy");
+                                    }
 
-                                        if(display!="none") {
-                                            $('.event-tooltip').css({
-                                                display:"none",
-                                                top: (jsEvent.pageY + 10) + "px",
-                                                left: (jsEvent.pageX - 5) + "px"
-                                            });
-                                            $('.triangulo-equilatero-bottom').css({
-                                            left:"0px",
-                                            top: "-20px",
-                                            borderTop: "10px solid transparent",
-                                            borderBottom: "10px solid black",
-                                            borderLeft: "10px solid transparent",
-                                            borderRight: "10px solid transparent"
-                                        });
-                                        } else {
+                                    $rootScope.event_card_data.titulo = $rootScope.event_card_data.title.substr(0,30);
+                                    $rootScope.event_card_data.descripcion = $rootScope.event_card_data.descripcion.substr(0,90);
+
+                             
+                                    $rootScope.event_card_data.start = moment($rootScope.event_card_data.start).format("h:mm a");
+                                    $rootScope.event_card_data.end = moment($rootScope.event_card_data.end).format("h:mm a");
+
+                                    
+
+                                    
+                                    
+                                    var display = $('.event-tooltip').css("display");
+
+                                    
+                                    $('.event-tooltip').fadeIn("fast");
+
+                                    if(typeof $localStorage.eventClick != "undefined") {
+
+                                        if($localStorage.eventClick!=event.id) {
                                             $('.event-tooltip').css({
                                                 display:"block",
                                                 top: (jsEvent.pageY + 10) + "px",
                                                 left: (jsEvent.pageX - 5) + "px"
                                             });
+
                                             $('.triangulo-equilatero-bottom').css({
-                                            left:"0px",
-                                            top: "-20px",
-                                            borderTop: "10px solid transparent",
-                                            borderBottom: "10px solid black",
-                                            borderLeft: "10px solid transparent",
-                                            borderRight: "10px solid transparent"
-                                        });
+                                                left:"0px",
+                                                top: "-20px",
+                                                borderTop: "10px solid transparent",
+                                                borderBottom: "10px solid black",
+                                                borderLeft: "10px solid transparent",
+                                                borderRight: "10px solid transparent"
+                                            });
+                                        } else {
+
+                                            if(display!="none") {
+                                                $('.event-tooltip').css({
+                                                    display:"none",
+                                                    top: (jsEvent.pageY + 10) + "px",
+                                                    left: (jsEvent.pageX - 5) + "px"
+                                                });
+                                                $('.triangulo-equilatero-bottom').css({
+                                                left:"0px",
+                                                top: "-20px",
+                                                borderTop: "10px solid transparent",
+                                                borderBottom: "10px solid black",
+                                                borderLeft: "10px solid transparent",
+                                                borderRight: "10px solid transparent"
+                                            });
+                                            } else {
+                                                $('.event-tooltip').css({
+                                                    display:"block",
+                                                    top: (jsEvent.pageY + 10) + "px",
+                                                    left: (jsEvent.pageX - 5) + "px"
+                                                });
+                                                $('.triangulo-equilatero-bottom').css({
+                                                left:"0px",
+                                                top: "-20px",
+                                                borderTop: "10px solid transparent",
+                                                borderBottom: "10px solid black",
+                                                borderLeft: "10px solid transparent",
+                                                borderRight: "10px solid transparent"
+                                            });
+                                            }
+                                            
+                                            
+                                            
                                         }
                                         
-                                        
-                                        
-                                    }
-                                    
-                                } else {
-                                    $('.event-tooltip').css({
-                                            display:"block",
-                                            top: (jsEvent.pageY + 10) + "px",
-                                            left: (jsEvent.pageX - 5) + "px"
-                                        });
-                                        $('.triangulo-equilatero-bottom').css({
-                                            left:"0px",
-                                            top: "-20px",
-                                            borderTop: "10px solid transparent",
-                                            borderBottom: "10px solid black",
-                                            borderLeft: "10px solid transparent",
-                                            borderRight: "10px solid transparent"
-                                        });
-                                }
-                                $localStorage.eventClick = event.id;
-
-                           
-                                    var right = $('.event-tooltip').css("right");
-                                    right = right.substr(0,1);
-                                    var bottom = $('.event-tooltip').css("bottom");
-                                    bottom = bottom.substr(0,1);
-
-                                    if(right==="-" && bottom==="-") {
+                                    } else {
                                         $('.event-tooltip').css({
-                                            top: (jsEvent.pageY - 155) + "px",
-                                            left: (jsEvent.pageX - 395) + "px"
-                                        });
-
-                                        $('.triangulo-equilatero-bottom').css({
-                                            left:"380px",
-                                            top: "146px",
-                                            borderTop: "10px solid black",
-                                            borderBottom: "10px solid transparent",
-                                            borderLeft: "10px solid transparent",
-                                            borderRight: "10px solid transparent"
-                                        });
-                                       
-                                        
-                                        return;
+                                                display:"block",
+                                                top: (jsEvent.pageY + 10) + "px",
+                                                left: (jsEvent.pageX - 5) + "px"
+                                            });
+                                            $('.triangulo-equilatero-bottom').css({
+                                                left:"0px",
+                                                top: "-20px",
+                                                borderTop: "10px solid transparent",
+                                                borderBottom: "10px solid black",
+                                                borderLeft: "10px solid transparent",
+                                                borderRight: "10px solid transparent"
+                                            });
                                     }
+                                    $localStorage.eventClick = event.id;
 
-                                    if(right==="-") {
-                                        $('.event-tooltip').css({
-                                            top: (jsEvent.pageY + 10) + "px",
-                                            left: (jsEvent.pageX - 395) + "px"
-                                        });
-
-                                        $('.triangulo-equilatero-bottom').css({
-                                            left:"380px",
-                                            top: "-20px",
-                                            borderTop: "10px solid transparent",
-                                            borderBottom: "10px solid black",
-                                            borderLeft: "10px solid transparent",
-                                            borderRight: "10px solid transparent"
-                                        });
-
-                                    
-                                        return;
-                                    }
-
-                                    if(bottom==="-") {
-                                        $('.event-tooltip').css({
-                                            top: (jsEvent.pageY - 155)  + "px",
-                                            left: (jsEvent.pageX - 10) + "px"
-                                        });
-
-                                        $('.triangulo-equilatero-bottom').css({
-                                            left:"0px",
-                                            top: "146px",
-                                            borderTop: "10px solid black",
-                                            borderBottom: "10px solid transparent",
-                                            borderLeft: "10px solid transparent",
-                                            borderRight: "10px solid transparent"
-                                        });
-
-                                
-                                        return;
-                                    }
-       
-                                
                                
+                                        var right = $('.event-tooltip').css("right");
+                                        right = right.substr(0,1);
+                                        var bottom = $('.event-tooltip').css("bottom");
+                                        bottom = bottom.substr(0,1);
 
-                            });
-                        
+                                        if(right==="-" && bottom==="-") {
+                                            $('.event-tooltip').css({
+                                                top: (jsEvent.pageY - 155) + "px",
+                                                left: (jsEvent.pageX - 395) + "px"
+                                            });
+
+                                            $('.triangulo-equilatero-bottom').css({
+                                                left:"380px",
+                                                top: "146px",
+                                                borderTop: "10px solid black",
+                                                borderBottom: "10px solid transparent",
+                                                borderLeft: "10px solid transparent",
+                                                borderRight: "10px solid transparent"
+                                            });
+                                           
+                                            
+                                            return;
+                                        }
+
+                                        if(right==="-") {
+                                            $('.event-tooltip').css({
+                                                top: (jsEvent.pageY + 10) + "px",
+                                                left: (jsEvent.pageX - 395) + "px"
+                                            });
+
+                                            $('.triangulo-equilatero-bottom').css({
+                                                left:"380px",
+                                                top: "-20px",
+                                                borderTop: "10px solid transparent",
+                                                borderBottom: "10px solid black",
+                                                borderLeft: "10px solid transparent",
+                                                borderRight: "10px solid transparent"
+                                            });
+
+                                        
+                                            return;
+                                        }
+
+                                        if(bottom==="-") {
+                                            $('.event-tooltip').css({
+                                                top: (jsEvent.pageY - 155)  + "px",
+                                                left: (jsEvent.pageX - 10) + "px"
+                                            });
+
+                                            $('.triangulo-equilatero-bottom').css({
+                                                left:"0px",
+                                                top: "146px",
+                                                borderTop: "10px solid black",
+                                                borderBottom: "10px solid transparent",
+                                                borderLeft: "10px solid transparent",
+                                                borderRight: "10px solid transparent"
+                                            });
+
+                                    
+                                            return;
+                                        }
+           
+                                    
+                                   
+
+                                });
+                            
+
+                            } 
+                            
+                           
                         },
                         eventDrop: function(event) { // called when an event (already on the calendar) is moved
                             
@@ -586,6 +677,10 @@
                                 $('#calendar').fullCalendar( 'refetchEvents' );
                                 $rootScope.toast("No se permite mover elementos en la fecha corriente");
                                 var data = {};
+                                $(".FINALIZADO").css({
+                                        background: "repeating-linear-gradient( 45deg, rgba(255,255,255,1) 20px, rgba(255,255,255,1) 40px, #DF6C4F 40px, #DF6C4F 60px )",
+                                        border: "none"
+                                    });
                                 
                             } else {
                                 var data = {
@@ -598,11 +693,17 @@
                                 };
 
                                 $rootScope.put('api/acto/' + event._id, data).then(function(response) {
-                                    //console.log(response);
+                                    ////console.log(response);
                                     $('#calendar').fullCalendar( 'rerenderEvents' );
+                                    $(".FINALIZADO").css({
+                                        background: "repeating-linear-gradient( 45deg, rgba(255,255,255,1) 20px, rgba(255,255,255,1) 40px, #DF6C4F 40px, #DF6C4F 60px )",
+                                        border: "none"
+                                    });
                                 });
 
                             }
+
+                            
                             
                             
 
@@ -627,17 +728,21 @@
                                 };
 
                                 $rootScope.put('api/acto/' + event._id, data).then(function(response) {
-                                    //console.log(response);
+                                    ////console.log(response);
                                     $('#calendar').fullCalendar( 'rerenderEvents' );
                                 });
                             }
                             
+                            $(".FINALIZADO").css({
+                                        background: "repeating-linear-gradient( 45deg, rgba(255,255,255,1) 20px, rgba(255,255,255,1) 40px, #DF6C4F 40px, #DF6C4F 60px )",
+                                        border: "none"
+                                    });
 
                             
 
                         },
                         select: function( start, end, jsEvent, view, resource) {
-                            console.log(view);
+                            //console.log(view);
                             if($rootScope.formatDate(start._d,"yyyy-MM-dd")==$rootScope.formatDate(new Date(),"yyyy-MM-dd")) {
                                 $rootScope.toast("Por favor, elija una fecha distinta a la de hoy");
                                 var data = {};
@@ -655,6 +760,10 @@
                                 $window.location.href= "#!/acto";
                             }
                   
+                            $(".FINALIZADO").css({
+                                        background: "repeating-linear-gradient( 45deg, rgba(255,255,255,1) 20px, rgba(255,255,255,1) 40px, #DF6C4F 40px, #DF6C4F 60px )",
+                                        border: "none"
+                                    });
 
                             
                            
@@ -677,7 +786,7 @@
 
 
                                     $rootScope.put('api/acto/' + $rootScope.event_card_data.id, data).then(function(response) {
-                                        //console.log(response);
+                                        ////console.log(response);
                                         $('.event-tooltip').fadeOut("fast");
                                         cargarActoEspera();
                                         $('#calendar').fullCalendar( 'removeEvents', event._id );
@@ -698,7 +807,7 @@
                         $rootScope.confirm("¿Estás seguro?","Se procederá a eliminar este acto", "info", function() {
 
                                     $rootScope.delete('api/acto/' + $rootScope.event_card_data.id).then(function(response) {
-                                        //console.log(response);
+                                        ////console.log(response);
                                         $('.event-tooltip').fadeOut("fast");
                                         cargarActoEspera();
                                         $('#calendar').fullCalendar( 'removeEvents', event._id );

@@ -1,6 +1,6 @@
 		app.controller('respaldo', function($rootScope,$scope,$http,$localStorage,$location) {
 			$rootScope.validateToken();
-			$rootScope.objeto = "Respaldo y Restauracion";
+			$rootScope.objeto = "Respaldo";
 
 			angular.element(document).ready(function() {
 				$rootScope.get('api/config_generales').then(function(response) {
@@ -65,6 +65,11 @@
 					}
 					// there's more, have a look at the demos and docs...
 				});
+
+
+				$('#imgCont').css({
+					height : (innerHeight-200) + "px"
+				});
 			});
 
 			$rootScope.cargarDirectorio = function(ruta) {
@@ -77,7 +82,7 @@
 					$rootScope.rutaActual = rutaNueva;
 				}, function(response) {
 					// en caso de error
-					console.log(response);
+					//console.log(response);
 
 				});
 			};
@@ -88,7 +93,7 @@
 					$rootScope.rutaActual = ruta;
 				}, function(response) {
 					// en caso de error
-					console.log(response);
+					//console.log(response);
 
 				});
 			};

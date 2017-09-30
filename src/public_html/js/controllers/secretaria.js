@@ -12,7 +12,7 @@ app.controller('secretaria', function($rootScope,$scope,$http,$q,$localStorage) 
 
 
 		$rootScope.get('api/config_datatables').then(function(response) {
-			console.log(response);
+			//console.log(response);
 			if(response["0"]._keys=="1") {
                 $scope.tConfig.keys = true;
             } else {
@@ -98,20 +98,20 @@ app.controller('secretaria', function($rootScope,$scope,$http,$q,$localStorage) 
 					cedula : $scope.datos.cedula.toUpperCase()
 				};
 
-				console.log(JSON.stringify($scope.persona));
-				console.log(JSON.stringify($scope.obj));
+				//console.log(JSON.stringify($scope.persona));
+				//console.log(JSON.stringify($scope.obj));
 
 				// Si la accion del boton es registrar
 				if($rootScope.button == "registrar") {
 					
 					
 					$rootScope.post('api/' + $scope.obj_padre, $scope.persona).then(function(response) {
-						console.log(response);
+						//console.log(response);
 						if(response!=null) {
 							var id = response[0].id;
 							
 							$rootScope.post('api/' + $scope.obj_hijo, $scope.obj).then(function(response) {
-								console.log(response);
+								//console.log(response);
 								if(response!=null) {
 									$rootScope.post('api/persona_tipo', { cedula: $scope.persona.cedula, tipo_persona : 2}).then(function(response) {
 										$scope.table.ajax.reload();
@@ -208,6 +208,10 @@ app.controller('secretaria', function($rootScope,$scope,$http,$q,$localStorage) 
 
 
 	$scope.rowDelete = function() {
+		if($scope.table.rows('.selected').data().length<=0) {
+                    $rootScope.alert("Error", "Debes seleccionar al menos un registro para eliminar", "warning");
+                    return;
+                }
 		$rootScope.confirm("¿Estás seguro?", "Se procederá a eliminar los registros seleccionados", "warning", function() {
 
 			var cantidad = $scope.table.rows('.selected').data().length;
@@ -280,7 +284,7 @@ app.controller('secretaria', function($rootScope,$scope,$http,$q,$localStorage) 
 			}
 	        
 	    }, function(response) {
-	       	console.log(response);
+	       	//console.log(response);
 	   	});
 
 		
@@ -458,7 +462,7 @@ app.controller('secretaria', function($rootScope,$scope,$http,$q,$localStorage) 
 	        	$rootScope.get('api/vista_' + $scope.obj_hijo + '/' + $scope.clave_primaria).then(function(response) {
 	        		$scope.datos = response[0];
 	        	}, function(response) {
-	        		console.log(response);
+	        		//console.log(response);
 	        	});
 
 

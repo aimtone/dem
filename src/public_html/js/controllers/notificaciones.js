@@ -28,7 +28,7 @@
                         };
 
                         $rootScope.put('api/notificaciones/'+response["0"].id, data).then(function(response) {
-                            console.log(response);
+                            //console.log(response);
                             $rootScope.cargarBadget();
 
                             $('#'+id).css({

@@ -5,8 +5,10 @@
 
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-	<META HTTP-EQUIV="Expires" CONTENT="-1">	
+	<meta http-equiv="Expires" content="0">
+	<meta http-equiv="Last-Modified" content="0">
+	<meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+	<meta http-equiv="Pragma" content="no-cache">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<link rel="icon" type="image/png" href="assets/images/ico/icono.png" />
 	<title>Dirección Ejecutiva de la Magístratura</title>
@@ -54,7 +56,7 @@
 	<meta name="theme-color" content="#14385f">
 
 </head>
-<body ng-controller="main">
+<body ng-controller="main" ng-resize="resizarVentana()">
 <div class="lockscreen">
 	<div  class="centrado-porcentual">
 		<img width="100" height="100" class="responsive-img circle" src="assets/images/upload/{{usuario_en_linea.imagen}}">
@@ -79,7 +81,7 @@
 	<!-- Nabvar Primaria -->
 	<nav id="nav_principal" style="background:#14385f !important;" class="blue darken-4">
 	    <div class="navbar-wrapper" id="nav-primario">
-	    <a href="#!/" class="brand-logo center" style="font-family:'Faster One';"><img width="26%" src="assets/images/tsj_logo_2.png" alt=""></a>
+	    <a href="#!/" class="brand-logo center" style="font-family:'Faster One';"><img  class="responsive-img" src="assets/images/tsj_logo_3.png" alt=""></a>
 
 	     <a id="sidenav-left" ng-show="x === true && usuario_en_linea.nivel === 'ADMINISTRADOR' || usuario_en_linea.nivel === 'USUARIO ESPECIAL'" href="#" data-activates="mobile-demo" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
 
@@ -100,13 +102,15 @@
 				</li> -->
 
 				<li ng-show="x === true">
-		        	<a ng-click="cargarNotificaciones();" id="sidenav-right" data-activates="left-side" class="waves-effect waves-light  right show-on-large">
+		        	<a ng-click="cargarNotificaciones();" id="sidenav-right" data-activates="left-side" class="waves-effect waves-light  right">
 
-		        		<span id="mensajeconectado" style='color:red;'>•</span>
+		        		<span class="hide-on-small-only" id="mensajeconectado" style='color:red;'>•</span>
 		        		
 
-		        		{{usuario_en_linea.nombres}} {{usuario_en_linea.apellidos}} <span data-badge-caption="" class='new badge red'>{{badget}}</span></a>
+		        		<span class="hide-on-small-only">{{usuario_en_linea.nombres}} {{usuario_en_linea.apellidos}}</span> <span data-badge-caption="" class='new badge red'>{{badget}}</span></a>
 		        </li>
+
+		     
 
 				
 
@@ -201,7 +205,8 @@
 				        <img src="assets/images/office.jpg">
 				      </div> -->
 				      <img class="circle" src="assets/images/upload/{{usuario_en_linea.imagen}}">
-				      <a href="#!name"><span class="white-text name">{{usuario_en_linea.nombres}} {{usuario_en_linea.apellidos}} </span></a>
+				      <a href="#!name"><span class="white-text name">
+				      {{usuario_en_linea.nombres}} {{usuario_en_linea.apellidos}} </span></a>
 				      <a href="#!email"><span style="text-transform: lowercase;" class="white-text email">{{usuario_en_linea.email}}</span></a>
 
 
@@ -254,55 +259,71 @@
 	    <div class="navbar-wrapper" id="nav-secundario">
 			<ul ng-show="x === true" class="left toolbar toolbar-left hide-on-med-and-down">
 		        <li>
-		        	<a class="dropdown-button tooltipped" data-position="right"  data-tooltip="{{lang.menu.toolbar.izquierdo.regresar}}" onclick="history.back(-1);"><i class="material-icons">arrow_back</i></a>
+		        	<a class="dropdown-button tooltipped" data-position="right"  data-tooltip="Regresar" onclick="history.back(-1);"><i class="material-icons">arrow_back</i></a>
 		        </li>
 		        <li>
-		        	<a class="dropdown-button tooltipped" data-position="right" data-tooltip="{{lang.menu.toolbar.izquierdo.inicio}}" href="#!/"><i class="material-icons">home</i></a>
+		        	<a class="dropdown-button tooltipped" data-position="right" data-tooltip="Página Principal" onclick="location.href='#!/'"><i class="material-icons">home</i></a>
 				</li>
 	    	</ul>
 
 			<span ng-show="x === true" id="dashboard-titulo">{{objeto}}</span>
 
-	    	<ul class="right toolbar toolbar-right hide-on-med-and-down">
+	    	<ul class="right toolbar toolbar-right hide-on-small-only">
 
 					<li ng-show="x === true">
-		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.menu.toolbar.derecho.programador}}" data-activates='dropdown1' onclick="location.href='#!/programador'" ><i class="material-icons">schedule</i></a>
+		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="Programador de Actos" data-activates='dropdown1' onclick="location.href='#!/programador'" ><i class="material-icons">schedule</i></a>
 		        	<ul id='dropdown1' data-beloworigin="true" class='dropdown-content'>
 					    
 					 </ul>
 				</li>
 
 		        <li ng-show="x === true && usuario_en_linea.nivel === 'ADMINISTRADOR'">
-		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.menu.toolbar.derecho.ajustes}}" data-activates='dropdown1' onclick="location.href='#!/ajustes'"><i class="material-icons">build</i></a>
+		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="Ajustes" data-activates='dropdown1' onclick="location.href='#!/ajustes'"><i class="material-icons">build</i></a>
 		        	<ul id='dropdown1' data-beloworigin="true" class='dropdown-content'>
 					    
 					 </ul>
 				</li>
 
 		        <li ng-show="x === true && usuario_en_linea.nivel === 'ADMINISTRADOR'">
-		        	<a class="dropdown-button tooltipped" data-position="left" data-tooltip="{{lang.menu.toolbar.derecho.bitacora}}" data-activates='dropdown2' onclick="location.href='#!/bitacora'"><i class="material-icons">fingerprint</i></a>
+		        	<a class="dropdown-button tooltipped" data-position="left" data-tooltip="Bitácota" data-activates='dropdown2' onclick="location.href='#!/bitacora'"><i class="material-icons">fingerprint</i></a>
 		        	<ul id='dropdown2' data-beloworigin="true" class='dropdown-content'>
 					    
 					 </ul>
 				</li>
 
 		        <li ng-show="x === true && usuario_en_linea.nivel === 'ADMINISTRADOR'">
-		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.menu.toolbar.derecho.control_usuario}}" data-activates='dropdown3' onclick="location.href='#!/usuario'"><i class="material-icons">group</i></a>
+		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="Control de Usuario" data-activates='dropdown3' onclick="location.href='#!/usuario'"><i class="material-icons">group</i></a>
 		        	<ul id='dropdown3' data-beloworigin="true" class='dropdown-content'>
 				
 					 </ul>
 				</li>
 
 		        <li ng-show="x === true && usuario_en_linea.nivel === 'ADMINISTRADOR'">
-		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.menu.toolbar.derecho.respaldo}}" data-activates='dropdown4' onclick="location.href='#!/respaldo'"><i class="material-icons">backup</i></a>
+		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="Respaldo y Restauración" data-activates='dropdown4' onclick="location.href='#!/respaldo'"><i class="material-icons">backup</i></a>
 		        	<ul id='dropdown4' data-beloworigin="true" class='dropdown-content'>
 					   
 					 </ul>
+				</li>
+
+			
+	    	</ul>
+
+	    	<ul class="right toolbar toolbar-right hide-on-med-and-up">
+	    		<li>
+		        	<a class="dropdown-button" onclick="history.back(-1);"><i class="material-icons">arrow_back</i></a>
+					   
+				</li>
+
+				<li>
+		        	<a class="dropdown-button" onclick="location.href='#!/'"><i class="material-icons">home</i></a>
+		        	
 				</li>
 	    	</ul>
 	    </div>
 	</nav>
 	<!-- /Navbar Secundaria -->
+
+
 	
 	<!-- Contenedor Principal -->
 	<div  class="container contenedor ">
@@ -312,6 +333,19 @@
 
 	
 	</div>
+
+	<div ng-show="objeto === 'Pagina Principal'" class="fixed-action-btn vertical click-to-toggle hide-on-med-and-up">
+	    <a class="btn-floating btn-large blue">
+	      <i class="material-icons">menu</i>
+	    </a>
+	    <ul>
+	      <li><a onclick="location.href='#!/actos'" class="btn-floating blue"><i class="material-icons">schedule</i></a></li>
+	      <li><a onclick="location.href='#!/ajustes'" class="btn-floating blue darken-1"><i class="material-icons">build</i></a></li>
+	      <li><a onclick="location.href='#!/bitacora'" class="btn-floating blue"><i class="material-icons">fingerprint</i></a></li>
+	      <li><a onclick="location.href='#!/usuario'" class="btn-floating blue"><i class="material-icons">group</i></a></li>
+	      <li><a onclick="location.href='#!/respaldo'" class="btn-floating blue"><i class="material-icons">backup</i></a></li>
+	    </ul>
+	  </div>
 	<!-- /Contenedor Principal -->
 	
 <!-- ------------------------------------------------------------------------------------- -->
@@ -417,6 +451,10 @@
 		<script src="assets/js/md5.min.js"></script>
 		<script src="assets/js/sha1.min.js"></script>
 		<script src="assets/js/ion.sound.js"></script>
+		<script src="assets/js/Chart.min.js"></script>
+		<script src="assets/js/angular-chart.js"></script>
+		<script src="assets/js/FileSaver.js"></script>
+		<script src="assets/js/Blob.js"></script>
 		
 	<!-- /JavaScript -->
 

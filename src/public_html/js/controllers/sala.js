@@ -9,7 +9,7 @@ app.controller('sala', function($rootScope,$scope,$http,$q,$localStorage) {
 	// -----------------------------------------------------------------
 	angular.element(document).ready(function() {		
 		$rootScope.get('api/config_datatables').then(function(response) {
-			console.log(response);
+			//console.log(response);
 			if(response["0"]._keys=="1") {
                 $scope.tConfig.keys = true;
             } else {
@@ -89,7 +89,7 @@ app.controller('sala', function($rootScope,$scope,$http,$q,$localStorage) {
 
 				// Si la accion del boton es registrar
 				if($rootScope.button == "registrar") {
-					console.log(JSON.stringify($scope.sala));
+					//console.log(JSON.stringify($scope.sala));
 					
 					$rootScope.post('api/' + $scope.obj_padre, $scope.sala).then(function(response) {
 
@@ -142,6 +142,10 @@ app.controller('sala', function($rootScope,$scope,$http,$q,$localStorage) {
 
 
 	$scope.rowDelete = function() {
+		if($scope.table.rows('.selected').data().length<=0) {
+                    $rootScope.alert("Error", "Debes seleccionar al menos un registro para eliminar", "warning");
+                    return;
+                }
 		$rootScope.confirm("¿Estás seguro?", "Se procederá a eliminar los registros seleccionados", "warning", function() {
 
 			var cantidad = $scope.table.rows('.selected').data().length;
@@ -157,9 +161,9 @@ app.controller('sala', function($rootScope,$scope,$http,$q,$localStorage) {
 				$rootScope.put('api/' + $scope.obj_padre + '/' + $scope.table.rows('.selected').data()[i].id, data).then(function(response) {
 
 					if(response!=null) {
-						console.log("se modifico");
+						//console.log("se modifico");
 					} else {
-						console.log("ocurrio un error interno en el sistema");
+						//console.log("ocurrio un error interno en el sistema");
 					}
 				});
 
@@ -211,7 +215,7 @@ app.controller('sala', function($rootScope,$scope,$http,$q,$localStorage) {
 			}
 	        
 	    }, function(response) {
-	       	console.log(response);
+	       	//console.log(response);
 	   	});
 
 		
@@ -389,7 +393,7 @@ app.controller('sala', function($rootScope,$scope,$http,$q,$localStorage) {
 	        	$rootScope.get('api/' + $scope.obj_padre + '/' + $scope.clave_primaria).then(function(response) {
 	        		$scope.datos = response[0];
 	        	}, function(response) {
-	        		console.log(response);
+	        		//console.log(response);
 	        	});
 
 
