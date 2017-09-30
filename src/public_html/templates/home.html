@@ -11,17 +11,18 @@
 
 						
 						<div class="input-field col s12">
-						    <select>
-						      <optgroup label="team 1">
-						        <option value="1">Option 1</option>
-						        <option value="2">Option 2</option>
+						    <select ng-select="cargarFiltro()" ng-model="filtroSeleccionado" ng-model="filtroSeleccionado">
+						      <optgroup label="Audiencias">
+						        <option value="Todas">Todas</option>
+						        <option value="Asignado">Asignado</option>
+						        <option value="Finalizado">Finalizado</option>
+						        <option value="Diferidas">Diferidas</option>
+						        <option value="Espera">Espera</option>
+
+
 						      </optgroup>
-						      <optgroup label="team 2">
-						        <option value="3">Option 3</option>
-						        <option value="4">Option 4</option>
-						      </optgroup>
+						      
 						    </select>
-						    <label>Optgroups</label>
 						  </div>
 					</div>
 					<div class="col s4">

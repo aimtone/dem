@@ -1082,7 +1082,7 @@
 						// INICIAR LA CONEXION CON EL WEBSOCKET
 
 						////console.log('Conectando...');
-						$rootScope.server = new FancyWebSocket('ws://192.168.1.4:9300');
+						$rootScope.server = new FancyWebSocket('ws://192.168.1.6:9300');
 
 						function send( text ) {
 							$rootScope.server.send( 'message', text );
@@ -1346,77 +1346,77 @@
 					}
 					
 
-					// setInterval(function() {
+					setInterval(function() {
 
 						
-				// 		if($('.lockscreen').css("display")=="none") {
-				// 			if($rootScope.x === true) {
-				// 				//console.log(contador);
-				// 				if(contador==180) {
-				// 					inactividad = true;
-				// 					$localStorage.token = undefined;
-				// 					$rootScope.prompt("Hemos detectado inactividad","Tu sesion finalizara en 60 segundos. Si deseas continuar la sesion, ingresa tu clave","",
-				// 					function(response) {
-				// 						// al presionar ok
-				// 						$rootScope.token = {
-				// 							cedula: $rootScope.cedula,
-				// 							clave : $rootScope.Base64.encode(md5(response))
-				// 						};
+						if($('.lockscreen').css("display")=="none") {
+							if($rootScope.x === true) {
+								//console.log(contador);
+								if(contador==180) {
+									inactividad = true;
+									$localStorage.token = undefined;
+									$rootScope.prompt("Hemos detectado inactividad","Tu sesion finalizara en 60 segundos. Si deseas continuar la sesion, ingresa tu clave","",
+									function(response) {
+										// al presionar ok
+										$rootScope.token = {
+											cedula: $rootScope.cedula,
+											clave : $rootScope.Base64.encode(md5(response))
+										};
 
-				// 						//console.log($rootScope.token);
-				// 						$rootScope.token = JSON.stringify($rootScope.token);
-				// 						$rootScope.token = $rootScope.Base64.encode($rootScope.token);
+										//console.log($rootScope.token);
+										$rootScope.token = JSON.stringify($rootScope.token);
+										$rootScope.token = $rootScope.Base64.encode($rootScope.token);
 
-				// 						$http.get($rootScope.sprintf('api/v1/login/%s',$rootScope.token)).then(function(response) {										
-				// 							if(response.status === 200) {
-				// 								contador = 0;
-				// 								$rootScope.x = true;
-				// 								$localStorage.token = $rootScope.token;
-				// 								$rootScope.timerAlert("Verificado","Has verificado tu sesion",1000);
-				// 							}
+										$http.get($rootScope.sprintf('api/v1/login/%s',$rootScope.token)).then(function(response) {										
+											if(response.status === 200) {
+												contador = 0;
+												$rootScope.x = true;
+												$localStorage.token = $rootScope.token;
+												$rootScope.timerAlert("Verificado","Has verificado tu sesion",1000);
+											}
 
-				// 							if(response.status === 201) {
-				// 								$rootScope.x = false;
-				// 								$localStorage.token = undefined;
-				// 								window.location.href="#!/login";
-				// 								$rootScope.alert("Hemos detectado inactividad", "La clave introducida no coincide, tu sesion se ha cerrado por tu seguridad", "error");
+											if(response.status === 201) {
+												$rootScope.x = false;
+												$localStorage.token = undefined;
+												window.location.href="#!/login";
+												$rootScope.alert("Hemos detectado inactividad", "La clave introducida no coincide, tu sesion se ha cerrado por tu seguridad", "error");
 
-				// 							}
-
-											
+											}
 
 											
-				// 						}, function(response) {
-				// 							if(response.status == 404) {
-				// 								$rootScope.toast(response.statusText);
-				// 							}
-				// 							if(response.status == 500) {
-				// 								$rootScope.toast(response.statusText);
-				// 							}
-				// 						});
-				// 					}, function() {
-				// 						// al presionar cancelar
-				// 						$rootScope.x = false;
-				// 						$localStorage.token = undefined;
-				// 						window.location.href="#!/login";
-				// 					});
+
 											
-				// 				}
+										}, function(response) {
+											if(response.status == 404) {
+												$rootScope.toast(response.statusText);
+											}
+											if(response.status == 500) {
+												$rootScope.toast(response.statusText);
+											}
+										});
+									}, function() {
+										// al presionar cancelar
+										$rootScope.x = false;
+										$localStorage.token = undefined;
+										window.location.href="#!/login";
+									});
+											
+								}
 
 
-				// 				if(contador==240) {
-				// 					$rootScope.x = false;
-				// 					$localStorage.token = undefined;
-				// 					window.location.href="#!/login";
-				// 					$rootScope.alert("Hemos detectado inactividad", "Tu sesión ha sido finalizada por inactividad", "error");
+								if(contador==240) {
+									$rootScope.x = false;
+									$localStorage.token = undefined;
+									window.location.href="#!/login";
+									$rootScope.alert("Hemos detectado inactividad", "Tu sesión ha sido finalizada por inactividad", "error");
 										
-				// 				}
-				// 				contador = contador + 60;
+								}
+								contador = contador + 60;
 
-				// 			}
-				// 		} 
+							}
+						} 
 						
-				// }, 60000);
+				}, 60000);
 						
 			});
 			

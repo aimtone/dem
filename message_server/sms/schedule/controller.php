@@ -17,6 +17,7 @@
 			echo "get";
 			break;
 		case 'POST':
+			shell_exec('echo SET GLOBAL event_scheduler=on | mysql --user=root --password=root');
 			// Decodifica el cuerpo de la solicitud y lo guarda en un array de PHP
 			$array = json_decode($bodyRequest, true);
 

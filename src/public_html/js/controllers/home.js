@@ -25,6 +25,11 @@
 				}
 			];
 
+			$rootScope.cargarFiltro = function() {
+				console.log("entra aca");
+				alert($scope.filtroSeleccionado);
+			};
+
 			$rootScope.b64toBlob = function(b64Data, contentType, sliceSize) {
 				  contentType = contentType || '';
 				  sliceSize = sliceSize || 512;
