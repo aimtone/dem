@@ -273,6 +273,35 @@
 				});
 			};
 
+			$rootScope.adminConfirm = function(okButton, cancelButton) {
+			
+				swal({   
+					title: "Introduce tu clave de administrador",   
+					text: "Solo puedes realizar esta acción si eres administrador, para comprobarlo, por favor, ingresa tu clave de administrador principal",   
+					type: "input",   
+					confirmButtonColor: "#0D47A1",   
+					confirmButtonText: "Confirmar",   
+					cancelButtonText: "Cancelar",
+					showCancelButton: true,   
+					closeOnConfirm: false,
+					inputType : "password",
+					inputPlaceholder: "Introduce la clave de administrador principal" 
+				}, function(inputValue) {   
+					if (inputValue === false)  {
+						cancelButton(this);
+						return false;
+					}
+						  
+					if (inputValue === "") {     
+						swal.showInputError("Campo Vacio");     
+						return false;
+					}  
+
+					okButton(inputValue);
+					
+				});
+			};
+
 			$rootScope.timerAlert = function(title, text, timer, showConfirmButton) {
 				if(typeof showConfirmButton == "undefined") {
 					showConfirmButton = false;

@@ -191,48 +191,81 @@
             }
 
             $scope.rowDelete = function() {
-                if($scope.table.rows('.selected').data().length<=0) {
+        if($scope.table.rows('.selected').data().length<=0) {
                     $rootScope.alert("Error", "Debes seleccionar al menos un registro para eliminar", "warning");
                     return;
-                } 
+                }
 
-                $rootScope.confirm("¿Estás seguro?", "Se procederá a eliminar los casos seleccionados y todos los procesos que esten vinculados con el mismo", "warning", function() {
 
-                    var cantidad = $scope.table.rows('.selected').data().length;
-                    var i = null;
-                    var contador = 0;
-                    for (i = 0; i < cantidad; i++) {
+        $rootScope.adminConfirm(
+            function(response) {
 
-                        var id = $scope.table.rows('.selected').data()[i].id;
-                        $rootScope.delete('api/'+$scope.obj_padre+"/"+id).then(function(response) {
-                            if(response!=null) {
-                                if(cantidad == 1 ) {
-                                        $rootScope.alert("Éxito", "Se ha eliminado " + contador + " de " + cantidad + " registro", "success");
+                var clave = $rootScope.sha1(md5(response));
 
-                                    } else {
-                                        $rootScope.alert("Éxito", "Se ha eliminado " + contador + " de " + cantidad + " registros", "success");
-
-                                    }
-
-                                    $scope.table.ajax.reload();
-
-                            }
-                        });
-
-                        
-
-                        contador++;
-                    };
-
-                        
-                }, function() { 
-                    // codigo del boton cancelar
-
+                var filter = JSON.stringify({
+                    donde: "where nivel = 'ADMINISTRADOR' and clave = '"+clave+"'"
                 });
 
+                $rootScope.get('api/usuario?filter='+filter).then(function(response) {
+                    console.log(response);
+
+                    if(typeof response != "undefined") {
+                        var cantidad = $scope.table.rows('.selected').data().length;
+                        var i = null;
+                        var contador = 0;
+                        for (i = 0; i < cantidad; i++) {
+                            var cedula = $scope.table.rows('.selected').data()[i].cedula;
+                            var filter = JSON.stringify({
+                                donde : "WHERE cedula = '" + cedula + "'"
+                            });
+
+                            $rootScope.get('api/'+$scope.obj_padre+'?filter='+filter).then(function(response) {
+                                var id = response["0"].id;
+                                $rootScope.delete('api/'+$scope.obj_hijo+'/'+id).then(function(response) {
+                                    if(response!=null) {
+                                        var filter_2 = JSON.stringify({
+                                            donde : "WHERE cedula = '" + response["0"].cedula + "'"
+                                        });
+
+                                        $rootScope.get('api/persona_tipo?filter='+filter_2).then(function(response) {
+                                            var id_2 = response["0"].id;
+                                            $rootScope.delete('api/persona_tipo/'+id_2).then(function(response) {
+                                                if(cantidad == 1 ) {
+                                                    $rootScope.alert("Éxito", "Se ha eliminado " + contador + " de " + cantidad + " registro", "success");
+
+                                                } else {
+                                                    $rootScope.alert("Éxito", "Se ha eliminado " + contador + " de " + cantidad + " registros", "success");
+
+                                                }
+
+                                                $scope.table.ajax.reload(); 
+
+                                            });
+
+                                        });
+                                    } else {
+                                        $rootScope.alert("Error", "Ocurrió un error interno el el sistema", "error");
+                                    }
+                                });
+
+                            });
+                            contador++;
+                        };
                 
 
-            };
+                    } else {
+                        $rootScope.timerAlert("Clave incorrecta","Tu clave de administrador no coincide",2000);
+                    }
+                });
+
+            }, 
+            function() {
+            // Al cancelar
+            }
+        );
+        
+
+    };
             
             $scope.closeModal = function(div,button) {
                 if(button=='ok') {

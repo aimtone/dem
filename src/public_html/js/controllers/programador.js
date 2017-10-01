@@ -773,25 +773,51 @@
                     if($rootScope.event_card_data.fecha == "Hoy") {
                         $rootScope.toast("El acto no puede ser enviado a espera");
                     } else {
-                        $rootScope.confirm("¿Estás seguro?","Se procederá a poner el evento en espera y liberar este espacio", "info", function() {
-                            var data = {
-                                        id : null,
-                                        inicio: "0000-00-00T00:00:00",
-                                        fin: "0000-00-00T00:00:00",
-                                        id_sala: 1,
-                                        estatus: "ESPERA"
-                                    };
+                        $rootScope.adminConfirm(
+                            function(response) {
+
+                                var clave = $rootScope.sha1(md5(response));
+
+                                var filter = JSON.stringify({
+                                    donde: "where nivel = 'ADMINISTRADOR' and clave = '"+clave+"'"
+                                });
+
+                                $rootScope.get('api/usuario?filter='+filter).then(function(response) {
+                                    console.log(response);
+
+                                    if(typeof response != "undefined") {
+                                        var data = {
+                                            id : null,
+                                            inicio: "0000-00-00T00:00:00",
+                                            fin: "0000-00-00T00:00:00",
+                                            id_sala: 1,
+                                            estatus: "ESPERA"
+                                        };
 
 
-                                    $rootScope.put('api/acto/' + $rootScope.event_card_data.id, data).then(function(response) {
-                                        ////console.log(response);
-                                        $('.event-tooltip').fadeOut("fast");
-                                        cargarActoEspera();
-                                        $('#calendar').fullCalendar( 'removeEvents', event._id );
-                                        $('#calendar').fullCalendar( 'refetchEvents' );
-                                        $rootScope.alert("Éxito", "El acto ha sido movido a espera", "success");
-                                    });
-                        });
+                                        $rootScope.put('api/acto/' + $rootScope.event_card_data.id, data).then(function(response) {
+                                            ////console.log(response);
+                                            $('.event-tooltip').fadeOut("fast");
+                                            cargarActoEspera();
+                                            $('#calendar').fullCalendar( 'removeEvents', event._id );
+                                            $('#calendar').fullCalendar( 'refetchEvents' );
+                                            $rootScope.alert("Éxito", "El acto ha sido movido a espera", "success");
+                                        });
+                                            
+                                
+
+                                    } else {
+                                        $rootScope.timerAlert("Clave incorrecta","Tu clave de administrador no coincide",2000);
+                                    }
+                                });
+
+                            }, 
+                            function() {
+                            // Al cancelar
+                            }
+                        );
+
+                        
 
                     }
 
@@ -802,17 +828,42 @@
                     if($rootScope.event_card_data.fecha == "Hoy") {
                         $rootScope.toast("El acto no puede ser eliminado");
                     } else {
-                        $rootScope.confirm("¿Estás seguro?","Se procederá a eliminar este acto", "info", function() {
+                        $rootScope.adminConfirm(
+                            function(response) {
 
-                                    $rootScope.delete('api/acto/' + $rootScope.event_card_data.id).then(function(response) {
-                                        ////console.log(response);
-                                        $('.event-tooltip').fadeOut("fast");
-                                        cargarActoEspera();
-                                        $('#calendar').fullCalendar( 'removeEvents', event._id );
-                                        $('#calendar').fullCalendar( 'refetchEvents' );
-                                        $rootScope.alert("Éxito", "El acto ha sido eliminado", "success");
-                                    });
-                        });
+                                var clave = $rootScope.sha1(md5(response));
+
+                                var filter = JSON.stringify({
+                                    donde: "where nivel = 'ADMINISTRADOR' and clave = '"+clave+"'"
+                                });
+
+                                $rootScope.get('api/usuario?filter='+filter).then(function(response) {
+                                    console.log(response);
+
+                                    if(typeof response != "undefined") {
+                                        $rootScope.delete('api/acto/' + $rootScope.event_card_data.id).then(function(response) {
+                                            ////console.log(response);
+                                            $('.event-tooltip').fadeOut("fast");
+                                            cargarActoEspera();
+                                            $('#calendar').fullCalendar( 'removeEvents', event._id );
+                                            $('#calendar').fullCalendar( 'refetchEvents' );
+                                            $rootScope.alert("Éxito", "El acto ha sido eliminado", "success");
+                                        });
+                                        
+                                
+
+                                    } else {
+                                        $rootScope.timerAlert("Clave incorrecta","Tu clave de administrador no coincide",2000);
+                                    }
+                                });
+
+                            }, 
+                            function() {
+                            // Al cancelar
+                            }
+                        );
+
+
                     }
                     
 

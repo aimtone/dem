@@ -146,53 +146,71 @@ app.controller('sala', function($rootScope,$scope,$http,$q,$localStorage) {
                     $rootScope.alert("Error", "Debes seleccionar al menos un registro para eliminar", "warning");
                     return;
                 }
-		$rootScope.confirm("¿Estás seguro?", "Se procederá a eliminar los registros seleccionados", "warning", function() {
-
-			var cantidad = $scope.table.rows('.selected').data().length;
-			var i = null;
-			var contador = 0;
-			var data = {
-				id: null,
-				id_usuario: $rootScope.id_usuario
-			};
-
-			for (i = 0; i < cantidad; i++) {
-
-				$rootScope.put('api/' + $scope.obj_padre + '/' + $scope.table.rows('.selected').data()[i].id, data).then(function(response) {
-
-					if(response!=null) {
-						//console.log("se modifico");
-					} else {
-						//console.log("ocurrio un error interno en el sistema");
-					}
-				});
-
-				$rootScope.delete('api/' + $scope.obj_padre + '/' + $scope.table.rows('.selected').data()[i].id).then(function(response) {
-									if(cantidad == 1 ) {
-										$rootScope.alert("Éxito", "Se ha eliminado " + contador + " de " + cantidad + " registro", "success");
-
-									} else {
-										$rootScope.alert("Éxito", "Se ha eliminado " + contador + " de " + cantidad + " registros", "success");
-
-									}
-
-									$scope.table.ajax.reload();
-								
 
 
+        $rootScope.adminConfirm(
+        	function(response) {
 
-						});
+        		var clave = $rootScope.sha1(md5(response));
 
+        		var filter = JSON.stringify({
+        			donde: "where nivel = 'ADMINISTRADOR' and clave = '"+clave+"'"
+        		});
+
+        		$rootScope.get('api/usuario?filter='+filter).then(function(response) {
+        			console.log(response);
+
+       				if(typeof response != "undefined") {
+       					var cantidad = $scope.table.rows('.selected').data().length;
+						var i = null;
+						var contador = 0;
+						var data = {
+							id: null,
+							id_usuario: $rootScope.id_usuario
+						};
+
+						for (i = 0; i < cantidad; i++) {
+
+							$rootScope.put('api/' + $scope.obj_padre + '/' + $scope.table.rows('.selected').data()[i].id, data).then(function(response) {
+
+								if(response!=null) {
+									//console.log("se modifico");
+								} else {
+									//console.log("ocurrio un error interno en el sistema");
+								}
+							});
+
+							$rootScope.delete('api/' + $scope.obj_padre + '/' + $scope.table.rows('.selected').data()[i].id).then(function(response) {
+												if(cantidad == 1 ) {
+													$rootScope.alert("Éxito", "Se ha eliminado " + contador + " de " + cantidad + " registro", "success");
+
+												} else {
+													$rootScope.alert("Éxito", "Se ha eliminado " + contador + " de " + cantidad + " registros", "success");
+
+												}
+
+												$scope.table.ajax.reload();
+											
+
+
+
+									});
+
+							
+							contador++;
+						};
 				
-				contador++;
-			};
-				
-				
-		}, function() { 
-			// codigo del boton cancelar
 
-		});
+       				} else {
+       					$rootScope.timerAlert("Clave incorrecta","Tu clave de administrador no coincide",2000);
+       				}
+        		});
 
+        	}, 
+        	function() {
+        	// Al cancelar
+        	}
+        );
 		
 
 	};

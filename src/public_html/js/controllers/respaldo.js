@@ -50,14 +50,42 @@
 								var nombre_archivo = $('.selected')["0"].innerText;
 								var ruta = $rootScope.rutaActual;
 								ruta = ruta + "/" + nombre_archivo;
-								$rootScope.confirm("Desea eliminar el archivo '" + nombre_archivo + "'", "una vez eliminado ya no podra recuperarlo", "info", function() {
-									$rootScope.delete(ruta).then(function(response) {
-										$rootScope.cargarRuta($rootScope.rutaActual);
-										$rootScope.timerAlert("Eliminado", "El archivo ha sido eliminado del servidor", 1000);
-									}, function() {
-										$rootScope.alert("Error", "La peticion ha sido ignorada", "info");
-									});
-								});
+
+								$rootScope.adminConfirm(
+		                            function(response) {
+
+		                                var clave = $rootScope.sha1(md5(response));
+
+		                                var filter = JSON.stringify({
+		                                    donde: "where nivel = 'ADMINISTRADOR' and clave = '"+clave+"'"
+		                                });
+
+		                                $rootScope.get('api/usuario?filter='+filter).then(function(response) {
+		                                    console.log(response);
+
+		                                    if(typeof response != "undefined") {
+		                                    	$rootScope.delete(ruta).then(function(response) {
+													$rootScope.cargarRuta($rootScope.rutaActual);
+													$rootScope.timerAlert("Eliminado", "El archivo ha sido eliminado del servidor", 1000);
+												}, function() {
+													$rootScope.alert("Error", "La peticion ha sido ignorada", "info");
+												});
+					                                        
+		                                            
+		                                
+
+		                                    } else {
+		                                        $rootScope.timerAlert("Clave incorrecta","Tu clave de administrador no coincide",2000);
+		                                    }
+		                                });
+
+		                            }, 
+		                            function() {
+		                            // Al cancelar
+		                            }
+		                        );
+
+								
 								
 							}
 						}
