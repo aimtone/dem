@@ -67,8 +67,8 @@ iframe {
 	
 }
 .selected {
-    background:rgba(0,0,0,.3);
-    border:#000000;
+    background:rgba(0,0,0,.3) !important;
+    border:#000000 !important;
 }
 
 #imgCont .icono:hover {

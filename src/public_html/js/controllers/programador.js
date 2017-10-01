@@ -465,7 +465,6 @@
                                         inicio: $rootScope.formatDate(fecha_inicio,"yyyy-MM-ddThh:mm:ss"),
                                         fin: $rootScope.formatDate(fecha_fin,"yyyy-MM-ddThh:mm:ss"),
                                         id_sala: event.resourceId,
-                                        descripcion: event.title,
                                         estatus: "ASIGNADO"
                                     };
 
@@ -687,7 +686,6 @@
                                     id: event._id,
                                     inicio: $rootScope.formatDate(event._start._d,"yyyy-MM-ddThh:mm:ss"),
                                     fin: $rootScope.formatDate(event._end._d,"yyyy-MM-ddThh:mm:ss"),
-                                    descripcion: event.title,
                                     id_sala: event.resourceId,
                                     id_usuario : $rootScope.id_usuario
                                 };

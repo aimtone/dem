@@ -1,6 +1,6 @@
 		app.controller('login', function($rootScope,$scope,$http,$localStorage,$location) {
 			$rootScope.validateSession();
-			$rootScope.objeto = "login";
+			$rootScope.objeto = "";
 		
 		angular.element(document).ready(function() {
 			$("#cedula").mask("l-99999999");

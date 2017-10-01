@@ -84,6 +84,25 @@
                 });
             });
 
+            $('#put').on('click', function() {
+                if($scope.data==undefined) { $rootScope.toast("Rellene los campos"); return; }
+                if($scope.data.numero_caso==undefined) { $rootScope.toast("Ingresa un número de caso"); return; }
+                if($scope.selTipoTribunal==undefined) { $rootScope.toast("Selecciona un tipo de Tribunal"); return; }
+                if($scope.data.id_tribunal==undefined) { $rootScope.toast("Selecciona un tribunal"); return; }
+                if($scope.data.id_actividad==undefined) { $rootScope.toast("Selecciona una actividad"); return; }
+                
+                if($scope.data.descripcion==undefined || $scope.data.descripcion == "") { $rootScope.toast("Campo 'Descripcion' vacio");  return;}
+
+                $rootScope.put('api/acto/'+$routeParams.id, $scope.data).then(function(response) {
+                    if(response!=null) {
+                        var date = $rootScope.formatDate($scope.data.inicio, "yyyy-MM-dd");
+                        $window.location.href = '#!/programador/' + date;
+                    } else {
+                        $rootScope.alert("Ocurrio un error al intentar almacenar la informacion");
+                    }
+                });
+            });
+
             
 
             $rootScope.buscarCaso = function() {
@@ -109,8 +128,13 @@
 
                 var filter = JSON.stringify(filtro).toString();
 
+
                 $rootScope.get('api/caso?filter=' + filter).then(function(response) {
+
                     if(typeof response != "undefined") {
+
+
+
                         $rootScope.descripcion_caso = response["0"].descripcion;
                         obtenerTipoTribunal($http,$scope);
                         $('select').prop("disabled", false);
@@ -120,6 +144,30 @@
                         $('#actividad').prop("disabled", true);
                         $('#tribunal').prop("disabled", true);
                         $('#numero').prop("disabled", false);
+
+                        $rootScope.get('api/tribunal/'+$scope.data.id_tribunal).then(function(response) {
+                            var id_tribunal = $scope.data.id_tribunal;
+                            
+                            $rootScope.get('api/tipo_de_tribunal/'+response["0"].id_tipo_tribunal).then(function(response) {
+                                $scope.selTipoTribunal = response["0"].id;
+                                console.log($scope.selTipoTribunal);
+                                $('#actividad').prop("disabled", false);
+                                $('#tribunal').prop("disabled", false);
+                                
+                                var filter = JSON.stringify({
+                                    donde: "where id_tipo_tribunal = '"+$scope.selTipoTribunal+"'"
+                                });
+
+                                $rootScope.get('api/tribunal?filter='+filter).then(function(response) {
+                                    $scope.JSONTribunal  = response;
+                                });
+
+                                $rootScope.get('api/actividad?filter='+filter).then(function(response) {
+                                    $scope.JSONActividad  = response;
+                                });
+                            });
+
+                        });
 
 
                         var filtro = {
@@ -230,7 +278,7 @@
             }
 
             function obtenerTribunal($http,$scope,idCategoria){
-                ////console.log(idCategoria);
+                console.log("LAS CATEFORIA ES" + idCategoria);
                 var filtro = {
                     donde : "where id_tipo_tribunal = " + idCategoria
                 };
@@ -256,7 +304,7 @@
 
 
             function obtenerActividad($http,$scope,idCategoria){
-               // //console.log(idCategoria);
+               console.log(idCategoria);
                 var filtro = {
                     donde : "where id_tipo_tribunal = " + idCategoria
                 };
@@ -284,6 +332,8 @@
 
             $scope.mostrarTribunal = function() { 
                     // $scope.selCategorias NOS TRAE EL VALOR DEL SELECT DE CATEGORIAS
+
+
                     obtenerTribunal($http,$scope,$scope.selTipoTribunal);
             };
             $scope.mostrarActividad = function() { 
@@ -304,6 +354,7 @@
                     $rootScope.existeParam = true;
                     $rootScope.get('api/acto/'+$routeParams.id).then(function(response) {
                         $scope.data = response["0"];
+                        
                         $rootScope.buscarCaso(); 
                     });
 

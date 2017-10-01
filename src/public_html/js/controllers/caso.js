@@ -3,6 +3,21 @@
 			$rootScope.objeto = "Caso";
             $scope.datos = {};
 
+                    $('#modal1').modal({
+                      opacity: .5, // Opacity of modal background
+                      inDuration: 300, // Transition in duration
+                      outDuration: 200, // Transition out duration
+                      startingTop: '10%', // Starting top style attribute
+                      endingTop: '10%'
+                    }
+                  );
+
+
+            $rootScope.cargarCedula = function(cedula) {
+                $rootScope.buscarPersona(cedula);
+                $('#modal1').modal('close');
+                
+            };
 
             angular.element(document).ready(function() {
                // $("#cedula").mask("l-99999999");
@@ -26,6 +41,51 @@
                     $rootScope.buscarCaso();
                 }
 
+                
+
+
+                $scope.openModal = function(div) {
+
+                    $rootScope.get('api/tipo_persona/'+$scope.selTipoPersona).then(function(response) {
+                        $scope.tipoPersonaSeleccionada = response["0"].descripcion;
+
+                        var filter = JSON.stringify({
+                            donde : "where descripcion = '"+$scope.tipoPersonaSeleccionada+"'"
+                        });
+
+                        console.log(filter);
+                        $rootScope.get('api/persona_tipo_persona?filter='+filter).then(function(response) {
+                            $scope.JSONPersonaPorTipo = response;
+                            if(typeof $scope.JSONPersonaPorTipo == "undefined") {
+                                $rootScope.toast("No se ha encotrado registros para este tipo de persona");
+                            } else {
+                               $(div).modal('open'); 
+                            }
+                            
+                        });
+                        
+                    });
+                    
+                }
+
+                $scope.closeModal = function(div,button) {
+                    if(button=='ok') {
+                        for (var i = 0; i < $scope.JSONPersonaPorTipo.length; i++) {
+                            if($scope.JSONPersonaPorTipo[i].checked==true) {
+                                 $rootScope.buscarPersona($scope.JSONPersonaPorTipo[i].cedula);
+                            }
+                        };
+
+                        $(div).modal('close');
+                    }
+
+                    if(button=='cancelar') {
+                        $(div).modal('close');
+                    }
+
+                    
+
+                }
 
             });
             
@@ -37,29 +97,13 @@
                 var filtro = {
                     donde : "where numero = '" + $scope.datos.numero + "'"
                 };
-
-                var filter = JSON.stringify(filtro).toString();
-                $scope.existeCaso = false;
-
-                if($rootScope.accion_caso=="registrar") {
-                    $rootScope.get('api/caso?filter='+filter).then(function(response) {
-                        if(typeof response != "undefined") {
-                            $rootScope.toast("Ya existe un caso registrado con ese número");
-                            $scope.existeCaso = true;
-                        }
-                    }, function(response) {
-                        $scope.existeCaso = false;
-                    });
-                }
-                
-                if($scope.existeCaso == true) {
-                    return;
-                }
+            
 
                 if($rootScope.tipoDePersonasAgregadas.length!=0) {
                     
                     var existe_imputado = false;
                     var existe_victima = false;
+
                     for(var i = 0; i < $rootScope.tipoDePersonasAgregadas.length; i++) {
                         if($rootScope.tipoDePersonasAgregadas[i].tipo=="imputado") {
                             existe_imputado = true;
@@ -80,7 +124,8 @@
                     }   
 
 
-                    if($scope.existe_caso==false) {
+                    if($rootScope.existe_caso==false) {
+                        console.log("VA A REGISTRAR");
                         $rootScope.post('api/caso', $scope.datos).then(function(response) {
                             //console.log(response);
                             if(response != null) {
@@ -118,9 +163,11 @@
 
                     }
 
-                    if($scope.existe_caso==true) {
+                    if($rootScope.existe_caso==true) {
+                        console.log("VA A MODIFCAR");
                         $rootScope.put('api/caso/'+$scope.datos.id, $scope.datos).then(function(response) {
                             if(response != null) {
+
 
 
                                 if(response.length==1) {
@@ -129,10 +176,12 @@
                                     var tipoPersonas = ["imputado", "victima", "fiscal", "alguacil", "secretaria", "juez", "defensor", "testigo"];
 
                                     for(var x = 0;x < tipoPersonas.length;x++) {
-                                        $rootScope.delete('api/caso_'+tipoPersonas[x]+"?data=numero_caso="+$scope.datos.numero).then(function(response) {
+                                        $rootScope.delete('api/caso_'+tipoPersonas[x]+"?data=numero_caso='"+$scope.datos.numero+"'").then(function(response) {
+                                            console.log(response);
 
                                         });
                                     }
+
 
 
 
@@ -169,7 +218,8 @@
                         });
 
                     }
-                    
+                
+                // AQUI TERMINA EL IF 
 
                 } else {
                     $rootScope.toast("Por favor, agrega a las personas involucradas en el caso");
@@ -215,10 +265,11 @@
                 $rootScope.get('api/caso?filter=' + filter).then(function(response) {
 
                     if(typeof response != "undefined") {
+                        console.log(response);
                         $("#post").attr("disabled", false);
                         $("#post").html("Modificar");
                         $("#post").css("display","block");
-                        $scope.existe_caso = true;
+                        $rootScope.existe_caso = true;
                         $scope.datos = response["0"];
 
                         var filter = JSON.stringify({
@@ -230,7 +281,6 @@
                         for(var x = 0; x < tipoPersonas.length; x++) {
                             $rootScope.get("api/caso_"+tipoPersonas[x]+"?filter=" + filter).then(function(response) {
                                 if(typeof response != "undefined") {
-                                    //console.log(response);
                                     
                                     
                                     
@@ -282,7 +332,7 @@
                                    // //console.log("No hay imputados agregados");
                                 }
                             }, function(response) {
-                                //console.log(response);
+                                console.log(response);
                             });
 
                         }
@@ -290,7 +340,7 @@
                         $("#post").attr("disabled", false);
                         $("#post").html("Registrar");
                         $("#post").css("display","block");
-                        $scope.existe_caso = false;
+                        $rootScope.existe_caso = false;
                         $rootScope.tipoDePersonasAgregadas = [];
                         $scope.datos.descripcion = "";
                         $rootScope.toast("No existe ningún caso registrado con ese número");
@@ -303,8 +353,8 @@
 
             
 
-            $rootScope.buscarPersona = function() {
-                if($scope.persona.cedula==undefined) { $rootScope.toast("Ingrese la cédula de la persona para agregar"); return; }
+            $rootScope.buscarPersona = function(cedula) {
+                if(cedula==undefined) { $rootScope.toast("Ingrese la cédula de la persona para agregar"); return; }
                 if($scope.selTipoPersona==undefined) { $rootScope.toast("Por favor, escoja un tipo de persona a agregar"); return; }
                 
                 var filtro_tipoPersona = {
@@ -317,7 +367,7 @@
                 });
 
                 var filtro = {
-                    donde: "where cedula = '" + $scope.persona.cedula + "' AND id_tipo_persona = " + $scope.selTipoPersona
+                    donde: "where cedula = '" + cedula + "' AND id_tipo_persona = " + $scope.selTipoPersona
                 };
 
                 var filter = JSON.stringify(filtro).toString();
@@ -341,16 +391,23 @@
                         ////console.log(JSONPersonas);
                         
                         $scope.agregar = true;
+
                         for(var i = 0; i < $rootScope.tipoDePersonasAgregadas.length; i++) {
+
                             if(response["0"].cedula==$rootScope.tipoDePersonasAgregadas[i].cedula) {
+                                console.log("se encontro igual y es true"); 
                                 $scope.agregar = false;
+                                break;
                                 
                             } else {
+                                console.log("se encontro diferente y es false");
                                 $scope.agregar = true;
+
                             }
                         }
-                        
+                        console.log($scope.agregar);
                         if($scope.agregar==true) {
+                            response["0"].cedula
                             $rootScope.tipoDePersonasAgregadas.push(JSONPersonas);
                             $scope.persona.cedula = "";
                         } else {

@@ -1,12 +1,12 @@
 <div class="row">
-
     <div class="col s12 m7 l7">
         <div class="row card-panel">
             <form class="col s12">
             <div class="row">
 
                 <div class="input-field col s5">
-                    <input ng-enter="buscarCaso();" id="numero" type="text" class="validate" ng-model="data.numero_caso" ng-value="data.numero_caso" >
+
+                    <input ng-enter="buscarCaso();" ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);" name="numero" id="numero" type="text" class="validate" ng-model="data.numero_caso" ng-value="data.numero_caso" >
                     <label for="titulo">Número de Causa</label>
                 </div>
 
@@ -21,7 +21,7 @@
 
             </div>
 
-            <div ng-show="tipoDePersonasAgregadas.length != 0" class="row col s12 chip">
+            <div ng-show="tipoDePersonasAgregadas.length != 0 && descripcion_caso != ''" class="row col s12 chip">
                 {{descripcion_caso}}
             </div>
 
@@ -34,7 +34,7 @@
             </div>
             <div class="row">
                 <div class="input-field col s4">
-                    <select disabled id="tribunal" ng-model="data.id_tribunal" class="browser-default" ng-options="y.id as y.numero for y in JSONTribunal">
+                    <select disabled id="tribunal" ng-model="data.id_tribunal"  class="browser-default" ng-options="y.id as y.numero for y in JSONTribunal">
                         <option value="" disabled selected>Seleccionar Tribunal</option>
                     </select> 
                 </div>
@@ -71,6 +71,13 @@
                     <a id="post" class="waves-effect waves-light btn-large blue right">Listo</a>
                 </div>
             </div>
+
+            <div ng-show="existeParam === true" class="row">
+                <div class="col s12">
+                    <a id="put" class="waves-effect waves-light btn-large blue right">Listo</a>
+                </div>
+            </div>
+
             </form>
         </div>
     </div>

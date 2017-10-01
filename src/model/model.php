@@ -117,6 +117,8 @@
 					)
 				);
 			} else {
+
+
 				return $this->set_query(sprintf("
 					DELETE FROM 
 						%s 

@@ -1,12 +1,11 @@
 <div class="row">
-
     
     <div class="col s12 m7 l7">
         <div class="row card-panel ">
             <form class="col s12">
             <div class="row">
                 <div class="input-field col s5">
-                    <input  id="titulo" type="text" ng-enter="buscarCaso();" class="validate" ng-model="datos.numero" ng-value="datos.numero" >
+                    <input  id="titulo" name="titulo" type="text" ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);" ng-enter="buscarCaso();" class="validate" ng-model="datos.numero" ng-value="datos.numero" >
                     <label for="titulo">Número de Caso</label>
                 </div>
 
@@ -42,6 +41,7 @@
     <div class="col s12 m4 l4">
        <div class="row">
          <div class="col s11 offset-s1">
+
              <span class="flow-text">Agregar personas</span>
          </div>
 
@@ -49,14 +49,14 @@
         
        <div class="row">
            <div class="input-field col s4 offset-s1">
-                    <select id="selTipoPersona" ng-model="selTipoPersona" class="browser-default" ng-change="" ng-options="x.id as x.descripcion for x in JSONTipoPersona">
+                    <select id="selTipoPersona" ng-model="selTipoPersona" class="browser-default" ng-change="openModal('#modal1')" ng-options="x.id as x.descripcion for x in JSONTipoPersona">
                         <option value="" disabled selected>Seleccionar</option>
                     </select>
                 </div>
 
 
                 <div class="input-field col s7">
-                   <input value="" ng-model="persona.cedula" id="cedula" ng-enter="buscarPersona();" type="text" class="validate">
+                   <input ng-model="persona.cedula" ng-model="persona.cedula" id="cedula" ng-enter="buscarPersona(persona.cedula);" type="text" class="validate">
                     <label class="active" for="first_name2">Cédula</label>
                 </div>
        </div>
@@ -76,3 +76,42 @@
        </div>
     </div>
 </div>
+
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4>Búsqueda Avanzada: <small>{{tipoPersonaSeleccionada}}</small></h4>
+        
+      <ul class="collection">
+        <li  ng-repeat="x in JSONPersonaPorTipo" class="collection-item avatar transparent">
+          <img src="assets/images/icon-user.png" alt="" class="circle">
+          <span class="title">
+          
+                
+              <input type="checkbox" ng-model="x.checked" value="{{x.cedula}}" id="{{x.cedula}}"/>
+              <label for="{{x.cedula}}">{{x.nombre_completo}}</label>
+          </span>
+          <p>&emsp;&emsp;&nbsp;{{x.cedula}} <br>
+             &emsp;&emsp;&nbsp;{{x.telefono}}
+          </p>
+        </li>
+  
+
+       
+      </ul>
+
+      
+
+
+      
+       
+
+    </div>
+    <div class="modal-footer">
+      
+
+      <a href="" ng-click="closeModal('#modal1', 'cancelar');modalAction('cancelar')" class="waves-effect waves-green btn-flat">Cancelar</a>
+      <a href="" ng-click="closeModal('#modal1', 'ok');modalAction('ok')" id="addRow" class="waves-effect waves-green btn-flat">OK</a>
+    </div>
+  </div>
