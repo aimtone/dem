@@ -119,6 +119,13 @@
 							authorized: [1,2]
 						}
 		            })
+		            .when('/actividad', {
+		                templateUrl : 'assets/templates/actividad.html?ver=1.0',
+		                controller  : 'actividad',
+		                data: {
+							authorized: [1,2]
+						}
+		            })
 					.when('/acto', {
 		                templateUrl : 'assets/templates/acto.html?ver=1.0',
 		                controller  : 'acto',
