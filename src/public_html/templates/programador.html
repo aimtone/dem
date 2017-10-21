@@ -50,6 +50,13 @@
     #calendar h2 {
         font-size: 1.3em;
     }
+    .DIFERIDA {
+    	background: red;
+    	border:1px solid red;
+    }
+    .externo {
+    	font-size: 10px;
+    }
     
 
     
@@ -97,7 +104,7 @@
 				
 			</h4>
             <div class="actos">
-				<div ng-repeat="x in JSONEspera" id="{{x.id}}" class="fc-event">{{x.title}}</div>
+				<div ng-repeat="x in JSONEspera" id="{{x.id}}" class="fc-event {{x.estatus}} externo">{{x.title}}</div>
 
 			</div>
 			

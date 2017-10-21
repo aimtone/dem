@@ -4,6 +4,7 @@ set_time_limit(0);
 
 // include the web sockets server script (the server is started at the far bottom of this file)
 require 'class.PHPWebSocket.php';
+require '/var/www/html/dem/src/core/db_model.php';
 
 // when a client sends data to the server
 function wsOnMessage($clientID, $message, $messageLength, $binary) {
@@ -53,12 +54,15 @@ function wsOnClose($clientID, $status) {
 }
 
 // start the server
+
+$credentials = new db_model();
+$credentials = $credentials->get_query("SELECT * FROM config_notificaciones");
 $Server = new PHPWebSocket();
 $Server->bind('message', 'wsOnMessage');
 $Server->bind('open', 'wsOnOpen');
 $Server->bind('close', 'wsOnClose');
 // for other computers to connect, you will probably need to change this to your LAN IP or external IP,
 // alternatively use: gethostbyaddr(gethostbyname($_SERVER['SERVER_NAME']))
-$Server->wsStartServer('192.168.1.6', 9300);
+$Server->wsStartServer($credentials["0"]["socket_address"], $credentials["0"]["socket_port"]);
 
 ?>

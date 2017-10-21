@@ -1,6 +1,6 @@
 		app.controller('bitacora', function($rootScope,$scope,$http,$localStorage,$location) {
 			$rootScope.validateToken();
-			$rootScope.objeto = "Bitacora";
+			$rootScope.objeto = "Bitácora";
 
             $(document).ready(function() {
 
@@ -84,7 +84,10 @@
                         [
                             
                            
-                            { "data": "fecha" },
+                            { "data": "null", render: function ( data, type, row ) {
+                            	var fecha = moment(row.fecha).format("DD/MM/YYYY h:m a");
+						    	return fecha;
+						    } },
                             { "data": "operacion" },
                             { "data": "tabla" },
                             { "data": "accion" },

@@ -1,142 +1,46 @@
 <div class="row">
     <div class="col s12 m4 l4 message-box">
-         <div ng-tabs class="tabbable tab-fixed">
-        <ul class="nav nav-tabs">
-            <li ng-tab-head="active">
-                <a href="#" ng-click="$event.preventDefault()">SMS Saliente</a>
-            </li>
-            <li ng-tab-head>
-                <a href="#" ng-click="$event.preventDefault()">Correos Salientes</a>
-            </li>
- 
-
-        </ul>
-        <input type="text" ng-model="search" placeholder="Buscar">
-        <div class="tab-content content-message">
-            
-            <div ng-tab-body="animated" class="tab-pane">
-                        <ul class="collection message-box">
-                            <li ng-repeat="x in mensajes | filter : search" class="collection-item avatar">
-                                <img src="assets/images/icon-user.png" alt="" class="circle">
-                                <span class="title">{{x.number}}</span>
-                                <p>{{x.insertdate}}<br>
-                                    {{x.text}}
-                                </p>
-                                <a href="#!" class="secondary-content"><i class="material-icons">message</i></a>
-                            </li>
-
-
-                                        
-                                        
-                        </ul>
-
-                        
-                  
-            </div>
-
-            <div ng-tab-body="animated" class="tab-pane">
-                 <ul class="collection message-box">
-                            <li class="collection-item avatar">
-                                <img src="assets/images/icon-user.png" alt="" class="circle">
-                                <span class="title">Juan Morillo</span>
-                                <p>Defensor<br>
-                                    Manana tienes cita en el circuito
-                                </p>
-                                <a href="#!" class="secondary-content"><i class="material-icons">mail</i></a>
-                            </li>
-
-                            <li class="collection-item avatar">
-                                <img src="assets/images/icon-user.png" alt="" class="circle">
-                                <span class="title">Juan Morillo</span>
-                                <p>Defensor<br>
-                                    Manana tienes cita en el circuito
-                                </p>
-                                <a href="#!" class="secondary-content"><i class="material-icons">mail</i></a>
-                            </li>
-
-                            <li class="collection-item avatar">
-                                <img src="assets/images/icon-user.png" alt="" class="circle">
-                                <span class="title">Juan Morillo</span>
-                                <p>Defensor<br>
-                                    Manana tienes cita en el circuito
-                                </p>
-                                <a href="#!" class="secondary-content"><i class="material-icons">mail</i></a>
-                            </li>
-
-                            <li class="collection-item avatar">
-                                <img src="assets/images/icon-user.png" alt="" class="circle">
-                                <span class="title">Juan Morillo</span>
-                                <p>Defensor<br>
-                                    Manana tienes cita en el circuito
-                                </p>
-                                <a href="#!" class="secondary-content"><i class="material-icons">mail</i></a>
-                            </li>
-
-                            <li class="collection-item avatar">
-                                <img src="assets/images/icon-user.png" alt="" class="circle">
-                                <span class="title">Juan Morillo</span>
-                                <p>Defensor<br>
-                                    Manana tienes cita en el circuito
-                                </p>
-                                <a href="#!" class="secondary-content"><i class="material-icons">mail</i></a>
-                            </li>
-
-                            <li class="collection-item avatar">
-                                <img src="assets/images/icon-user.png" alt="" class="circle">
-                                <span class="title">Juan Morillo</span>
-                                <p>Defensor<br>
-                                    Manana tienes cita en el circuito
-                                </p>
-                                <a href="#!" class="secondary-content"><i class="material-icons">mail</i></a>
-                            </li>
-
-                            <li class="collection-item avatar">
-                                <img src="assets/images/icon-user.png" alt="" class="circle">
-                                <span class="title">Juan Morillo</span>
-                                <p>Defensor<br>
-                                    Manana tienes cita en el circuito
-                                </p>
-                                <a href="#!" class="secondary-content"><i class="material-icons">mail</i></a>
-                            </li>
-
-                            <li class="collection-item avatar">
-                                <img src="assets/images/icon-user.png" alt="" class="circle">
-                                <span class="title">Juan Morillo</span>
-                                <p>Defensor<br>
-                                    Manana tienes cita en el circuito
-                                </p>
-                                <a href="#!" class="secondary-content"><i class="material-icons">mail</i></a>
-                            </li>
-
-                            <li class="collection-item avatar">
-                                <img src="assets/images/icon-user.png" alt="" class="circle">
-                                <span class="title">Juan Morillo</span>
-                                <p>Defensor<br>
-                                    Manana tienes cita en el circuito
-                                </p>
-                                <a href="#!" class="secondary-content"><i class="material-icons">mail</i></a>
-                            </li>
-
-
-                                        
-                                        
-                        </ul>
-            
-            </div>
-
-            
-
+        <div ng-tabs class="tabbable tab-fixed">
+            <ul class="nav nav-tabs">
+                <li ng-tab-head="active">
+                    <a href="#" ng-click="$event.preventDefault()">SMS Salientes</a>
+                </li>
+                
+            </ul>
+            <input type="text" ng-model="search" placeholder="Buscar">
+            <div class="tab-content content-message">
+                <div ng-tab-body="animated" class="tab-pane">
+                    <ul class="collection message-box">
+                        <li ng-repeat="x in mensajes | filter : search" class="collection-item avatar">
+                            <img src="assets/images/icon-user.png" alt="" class="circle">
+                            <span class="title">{{x.number}}</span>
+                            <p>{{x.insertdate}}
+                                <br> {{x.text}}
+                            </p>
+                            <a href="#!" class="secondary-content"><i class="material-icons">message</i></a>
+                        </li>
+                    </ul>
+                </div>
+                
             </div>
         </div>
     </div>
-
-
-
-
     <div class="col s12 m6 l6">
-        Enviar nuevo sms
+        <div class="col s12 offset-s2">
+
+            <span id="dashboard-titulo">Enviar un nuevo SMS</span>
+        </div>
+        <div class="input-field col s10 offset-s2">
+            <i class="material-icons prefix">phone</i>
+            <input ng-model="mens.number" ng-value="mens.number" id="icon_telephone" type="text" class="validate">
+            <label for="icon_telephone">Número de Teléfono</label>
+        </div>
+        <div class="input-field col s10 offset-s2">
+            <i class="material-icons prefix">mode_edit</i>
+            <textarea ng-model="mens.text" ng-value="mens.text" id="icon_prefix2" class="materialize-textarea" data-length="120"></textarea>
+            <label for="icon_prefix2">Mensaje</label>
+        </div>
+        <span class="right"><button class="btn waves-effect waves-light blue" ng-click="enviarSMS()">Enviar</button></span>
     </div>
-</div>   
-   
-   
-  
+    
+</div>

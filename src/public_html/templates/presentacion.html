@@ -1,0 +1,91 @@
+<div class="row">
+    <div class="col s4">
+        <div class="input-field col s12">
+            <input ng-enter="buscarActo()" ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);" name="causa" id="causa" type="text" class="validate" ng-model="causa" ng-value="causa" required>
+            <label class="active" for="causa">Número de Acto o Causa</label>
+        </div>
+        <div class="col s12">
+            <div ng-repeat="x in personas" class="chip">
+                <img src="assets/images/icon-user.png" alt="Contact Person"> {{x.nombres}} {{x.apellidos}}
+                <span>{{x.tipoPersona.toLowerCase()}}</span>
+            </div>
+    
+        </div>
+    </div>
+    <div class="col s8">
+
+    	<div ng-show="actoHallado.title == null"> 
+        		<span class="flow-text">Rellene el campo y presione Enter para buscar un acto</span>
+        </div>
+        <div class="row card">
+        	
+            <div ng-show="actoHallado.title != null" class="card-content">
+                <div class="row">
+                    <div class="col s9">
+                        <p class="card-title">{{actoHallado.title}}</p>
+                    </div>
+                    <div class="col s3">
+                        <div class="chip">
+                            {{actoHallado.sala}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row col s12">
+                    <nav>
+                        <div class="nav-wrapper blue darken-4">
+                            <div class="col s12">
+                                <a href="#!" class="breadcrumb">{{actoHallado.tipo_de_tribunal}}</a>
+                                <a href="#!" class="breadcrumb">{{actoHallado.tribunal}}</a>
+                                <a href="#!" class="breadcrumb">ACTO N° {{actoHallado.id}}</a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+                <div class="row center">
+                    <div class="col s4">
+                        <p><i class="material-icons">date_range</i></p>
+                        <p>Fecha</p>
+                        <p>{{actoHallado.fecha}}</p>
+                    </div>
+                    <div class="col s4">
+                        <p><i class="material-icons">access_time</i></p>
+                        <p>Hora de Inicio</p>
+                        <p>{{actoHallado.start}}</p>
+                    </div>
+                    <div class="col s4">
+                        <p><i class="material-icons">access_time</i></p>
+                        <p>Hora de Fin</p>
+                        <p>{{actoHallado.end}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 card">
+                        <div class="card-content">
+                            <p class="card-title">BREVE DESCRIPCIÓN DEL ACTO</p>
+                            <p>{{actoHallado.descripcion_acto}}</p>
+                            <br>
+                            <div ng-show="status == 'ASIGNADO'" class="row center">
+                                <div class="col s4">
+                                    <a class="waves-effect waves-light btn blue darken-4" ng-click="finalizarActo()">Finalizar</a>
+                                </div>
+                                <div class="col s4">
+                                    <a class="waves-effect waves-light btn blue ligthen-4" ng-click="diferirActo()">Diferir</a>
+                                </div>
+                                <div class="col s4">
+                                    <a href="#!/caso" class="waves-effect waves-light btn blue ligthen-4">Agregar Personas</a>
+                                </div>
+                            </div>
+
+
+                            <div ng-show="status == 'FINALIZADO' || status == 'DIFERIDA'" class="row center">
+                                <div class="col s12">
+                                    Este acto ya ha sido gestionado
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

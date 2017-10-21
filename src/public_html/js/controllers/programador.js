@@ -254,12 +254,12 @@
 
             var cargarActoEspera = function() {
                 var filter_acto_sala_espera = JSON.stringify({
-                    donde: "where estatus = 'ESPERA'"
+                    donde: "where estatus = 'ESPERA' OR estatus = 'DIFERIDA'"
                 });
 
                 $rootScope.get('api/acto_sala?filter=' + filter_acto_sala_espera).then(function(response) {
                     $rootScope.JSONEspera = response;
-                    ////console.log($rootScope.JSONEspera);
+                    console.log($rootScope.JSONEspera);
                 });
 
 

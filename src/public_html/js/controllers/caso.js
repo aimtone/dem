@@ -2,6 +2,7 @@
 			$rootScope.validateToken();
 			$rootScope.objeto = "Caso";
             $scope.datos = {};
+            $rootScope.desdePresentacion = false;
 
                     $('#modal1').modal({
                       opacity: .5, // Opacity of modal background
@@ -87,11 +88,10 @@
 
                 }
 
-            });
-            
-            $('#post').on('click', function() {
+
+                $('#post').on('click', function() {
                 if($scope.datos==undefined) { $rootScope.toast("Rellene los campos"); return; }
-			    if($scope.datos.numero==undefined) {  $rootScope.toast("Campo 'número' vacio"); return; }
+                if($scope.datos.numero==undefined) {  $rootScope.toast("Campo 'número' vacio"); return; }
                 if($scope.datos.descripcion==undefined) {  $rootScope.toast("Campo 'descripción' vacio"); return; }
 
                 var filtro = {
@@ -151,7 +151,10 @@
                                     $scope.datos = {};
                                     $rootScope.tipoDePersonasAgregadas = {};
                                     $rootScope.alert("Éxito", "El caso ha sido registrado", "info");
-                                    $window.location.href= "#!/casos";
+                                   
+                                        $window.location.href= "#!/casos";
+                                
+                                    
                                     
                                 } else {
                                     $rootScope.alert("Error", "Ocurrio un error al intentar registrar el caso", "error");
@@ -167,6 +170,7 @@
                         console.log("VA A MODIFCAR");
                         $rootScope.put('api/caso/'+$scope.datos.id, $scope.datos).then(function(response) {
                             if(response != null) {
+                                $rootScope.causa_desde_caso = $scope.datos.numero;
 
 
 
@@ -207,7 +211,13 @@
                                     $scope.datos = {};
                                     $rootScope.tipoDePersonasAgregadas = {};
                                     $rootScope.alert("Éxito", "El caso ha sido modificado", "info");
-                                    $window.location.href= "#!/casos";
+                                    if($rootScope.desdePresentacion!=true) {
+                                        console.log($rootScope.causa_desde_caso);
+                                        $window.location.href= "#!/presentacion";
+
+                                    } else {
+                                        $window.location.href= "#!/casos";
+                                    }
                                     
                                 } else {
                                     $rootScope.alert("Error", "Ocurrió un error al intentar modificar el caso", "error");
@@ -227,6 +237,10 @@
 
                 
             });
+
+            });
+            
+            
 
             $rootScope.sacarElemento = function(e) {
                 

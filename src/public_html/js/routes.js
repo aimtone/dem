@@ -1,18 +1,54 @@
 		// Configuracion de las rutas y sus respectivas plantillas
 		app.config(function($routeProvider) {
+
+		
+		  var acceso = {
+		  	"/" : [1,2,3,4],
+		  	"/perfil": [1,2,3,4],
+		  	"/programador" : [1,2,3],
+		  	"/programador/:fecha" : [1,2,3],
+		  	"/programador/:fecha/:id" : [1,2,3],
+		  	"/defensor" : [1,2],
+		  	"/secretaria" : [1,2],
+		  	"/alguacil" : [1,2],
+		  	"/imputado" : [1,2],
+		  	"/juez" : [1,2],
+		  	"/actividad" : [1,2],
+		  	"/victima" : [1,2],
+		  	"/testigo" : [1,2],
+		  	"/fiscal" : [1,2],
+		  	"/sala" : [1,2],
+		  	"/tribunal" : [1,2],
+		  	"/tipo_de_tribunal" : [1,2],
+		  	"/usuario" : [1],
+		  	"/acto" : [1,2,3],
+		  	"/actos" : [1,2,3],
+		  	"/caso" : [1,2,3],
+		  	"/casos" : [1,2,3],
+		  	"/bitacora" : [1],
+		  	"/respaldo" : [1],
+		  	"/mensajes" : [1,2],
+		  	"/notificaciones" : [1,2,3,4],
+		  	"/ajustes" : [1],
+		  	"/nivel" : [1],
+		  	"/presentacion" : [1,4]
+		  };
+
+
+
 		  $routeProvider
 		            .when('/', {
 		                templateUrl : 'assets/templates/home.html?ver=1.0',
 		                controller  : 'home',
 		                data: {
-							authorized: [1,2,3,4]
+							authorized: acceso["/"]
 						}
 		            })
 		            .when('/perfil', {
 		                templateUrl : 'assets/templates/perfil.html?ver=1.0',
 		                controller  : 'perfil',
 		                data: {
-							authorized: [1,2,3,4]
+							authorized: acceso["/perfil"]
 						}
 		            })
 		          
@@ -24,21 +60,21 @@
 		                templateUrl : 'assets/templates/programador.html?ver=1.0',
 		                controller  : 'programador',
 		                data: {
-							authorized: [1,2,3]
+							authorized: acceso["/programador"]
 						}
 		            })
 					.when('/programador/:fecha', {
 		                templateUrl : 'assets/templates/programador.html?ver=1.0',
 		                controller  : 'programador',
 		                data: {
-							authorized: [1,2,3]
+							authorized: acceso["/programador/:fecha"]
 						}
 		            })
 					.when('/programador/:fecha/:id', {
 		                templateUrl : 'assets/templates/acto.html?ver=1.0',
 		                controller  : 'acto',
 		                data: {
-							authorized: [1,2,3]
+							authorized: acceso["/programador/:fecha/:id"]
 						}
 		            })
 
@@ -46,154 +82,168 @@
 		                templateUrl : 'assets/templates/defensor.html?ver=1.0',
 		                controller  : 'defensor',
 		                data: {
-							authorized: [1,2]
+							authorized: acceso["/defensor"]
 						}
 		            })
 		            .when('/secretaria', {
 		                templateUrl : 'assets/templates/secretaria.html?ver=1.0',
 		                controller  : 'secretaria',
 		                data: {
-							authorized: [1,2]
+							authorized: acceso["/secretaria"]
 						}
 		            })
 		            .when('/alguacil', {
 		                templateUrl : 'assets/templates/alguacil.html?ver=1.0',
 		                controller  : 'alguacil',
 		                data: {
-							authorized: [1,2]
+							authorized: acceso["/alguacil"]
 						}
 		            })
 		            .when('/imputado', {
 		                templateUrl : 'assets/templates/imputado.html?ver=1.0',
 		                controller  : 'imputado',
 		                data: {
-							authorized: [1,2]
+							authorized: acceso["/imputado"]
 						}
 		            })
 		            .when('/juez', {
 		                templateUrl : 'assets/templates/juez.html?ver=1.0',
 		                controller  : 'juez',
 		                data: {
-							authorized: [1,2]
+							authorized: acceso["/juez"]
 						}
 		            })
 		            .when('/victima', {
 		                templateUrl : 'assets/templates/victima.html?ver=1.0',
 		                controller  : 'victima',
 		                data: {
-							authorized: [1,2]
+							authorized: acceso["/victima"]
 						}
 		            })
 		            .when('/testigo', {
 		                templateUrl : 'assets/templates/testigo.html?ver=1.0',
 		                controller  : 'testigo',
 		                data: {
-							authorized: [1,2]
+							authorized: acceso["/testigo"]
 						}
 		            })
 		            .when('/fiscal', {
 		                templateUrl : 'assets/templates/fiscal.html?ver=1.0',
 		                controller  : 'fiscal',
 		                data: {
-							authorized: [1,2]
+							authorized: acceso["/fiscal"]
 						}
 		            })
 		            .when('/usuario', {
 		                templateUrl : 'assets/templates/usuario.html?ver=1.0',
 		                controller  : 'usuario',
 		                data: {
-							authorized: [1]
+							authorized: acceso["/usuario"]
 						}
 		            })
 		            .when('/sala', {
 		                templateUrl : 'assets/templates/sala.html?ver=1.0',
 		                controller  : 'sala',
 		                data: {
-							authorized: [1,2]
+							authorized: acceso["/sala"]
 						}
 		            })
 		            .when('/tribunal', {
 		                templateUrl : 'assets/templates/tribunal.html?ver=1.0',
 		                controller  : 'tribunal',
 		                data: {
-							authorized: [1,2]
+							authorized: acceso["/tribunal"]
 						}
 		            })
 		            .when('/actividad', {
 		                templateUrl : 'assets/templates/actividad.html?ver=1.0',
 		                controller  : 'actividad',
 		                data: {
-							authorized: [1,2]
+							authorized: acceso["/actividad"]
 						}
 		            })
 					.when('/acto', {
 		                templateUrl : 'assets/templates/acto.html?ver=1.0',
 		                controller  : 'acto',
 		                data: {
-							authorized: [1,2,3]
+							authorized: acceso["/acto"]
 						}
 		            })
 					.when('/actos', {
 		                templateUrl : 'assets/templates/actos.html?ver=1.0',
 		                controller  : 'actos',
 		                data: {
-							authorized: [1,2,3]
+							authorized: acceso["/actos"]
 						}
 		            })
 					.when('/casos', {
 		                templateUrl : 'assets/templates/casos.html?ver=1.0',
 		                controller  : 'casos',
 		                data: {
-							authorized: [1,2,3]
+							authorized: acceso["/casos"]
 						}
 		            })
 					.when('/respaldo', {
 		                templateUrl : 'assets/templates/respaldo.html?ver=1.0',
 		                controller  : 'respaldo',
 		                data: {
-							authorized: [1]
+							authorized: acceso["/respaldo"]
+						}
+		            })
+		            .when('/nivel', {
+		                templateUrl : 'assets/templates/nivel.html?ver=1.0',
+		                controller  : 'nivel',
+		                data: {
+							authorized: acceso["/nivel"]
 						}
 		            })
 					.when('/bitacora', {
 		                templateUrl : 'assets/templates/bitacora.html?ver=1.0',
 		                controller  : 'bitacora',
 		                data: {
-							authorized: [1]
+							authorized: acceso["/bitacora"]
 						}
 		            })
 					.when('/mensajes', {
 		                templateUrl : 'assets/templates/mensajes.html?ver=1.0',
 		                controller  : 'mensajes',
 		                data: {
-							authorized: [1,2]
+							authorized: acceso["/mensajes"]
 						}
 		            })
 					.when('/notificaciones', {
 		                templateUrl : 'assets/templates/notificaciones.html?ver=1.0',
 		                controller  : 'notificaciones',
 		                data: {
-							authorized: [1,2,3,4]
+							authorized: acceso["/notificaciones"]
 						}
 		            })
 					.when('/caso', {
 		                templateUrl : 'assets/templates/caso.html?ver=1.0',
 		                controller  : 'caso',
 		                data: {
-							authorized: [1,2,3]
+							authorized: acceso["/caso"]
 						}
 		            })
 		            .when('/tipo_de_tribunal', {
 		                templateUrl : 'assets/templates/tipo_de_tribunal.html?ver=1.0',
 		                controller  : 'tipo_de_tribunal',
 		                data: {
-							authorized: [1,2]
+							authorized: acceso["/tipo_de_tribunal"]
 						}
 		            })
 					.when('/ajustes', {
 		                templateUrl : 'assets/templates/ajustes.html?ver=1.0',
 		                controller  : 'ajustes',
 		                data: {
-							authorized: [1]
+							authorized: acceso["/ajustes"]
+						}
+		            })
+		            .when('/presentacion', {
+		                templateUrl : 'assets/templates/presentacion.html?ver=1.0',
+		                controller  : 'presentacion',
+		                data: {
+							authorized: acceso["/presentacion"]
 						}
 		            })
 		            .otherwise({
@@ -206,8 +256,7 @@
 
 
 		app.run(function($rootScope, $location,$window,$websocket)
-			{
-					
+			{					
 				$rootScope.$on('$routeChangeStart', function (event, next) 
 				{
 					setTimeout(function() {

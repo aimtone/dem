@@ -1,0 +1,59 @@
+<div class="row">
+	<div class="col s12 m4">
+		agenda hoy
+	</div>
+	<div class="col s12 m8">
+		<div class="row">
+			<div class="col s12">
+				<div class="row">
+					<div class="col s8">
+
+						
+						<div class="input-field col s12">
+						    <select ng-select="cargarFiltro()" ng-model="filtroSeleccionado" ng-model="filtroSeleccionado">
+						      <optgroup label="Audiencias">
+						        <option value="Todas">Todas</option>
+						        <option value="Asignado">Asignado</option>
+						        <option value="Finalizado">Finalizado</option>
+						        <option value="Diferidas">Diferidas</option>
+						        <option value="Espera">Espera</option>
+
+
+						      </optgroup>
+						      
+						    </select>
+						  </div>
+					</div>
+					<div class="col s4">
+						<button class="btn waves-effect waves-light blue" ng-click="generarPDF()">Generar PDF</button>
+					</div>
+				</div>
+				
+			</div>
+			<div class="col s12">
+
+				personalizar char
+			</div>
+			<div class="row">
+				<div class="col s12 m6">
+					<canvas id="bar" class="chart chart-bar" chart-data="chart[0].data" chart-labels="chart[0].labels" chart-series="chart[0].series"></canvas>
+				</div>
+				<div class="col s12 m6">
+					<canvas id="pie" class="chart chart-bar" chart-data="chart[1].data" chart-labels="chart[1].labels" chart-series="series"></canvas>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col s12 m6">
+					<canvas id="polar-area" class="chart chart-bar" chart-data="chart[2].data" chart-labels="chart[2].labels" chart-options="chart[2].options">
+					</canvas> 
+				</div>
+				<div class="col s12 m6">
+					<canvas id="radar" class="chart chart-bar" chart-data="chart[3].data" chart-options="chart[3].options" chart-labels="chart[3].labels">
+					</canvas> 
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>

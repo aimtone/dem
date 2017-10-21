@@ -35,6 +35,7 @@
 			 
 			var code = a +  b + c + d  + e + f +  g;
 			document.getElementById("txtCaptcha").value = code
+			document.getElementById("txtInput").value = code
 		}
 
 		// Validate the Entered input aganist the generated security code function   

@@ -1,190 +1,357 @@
-		app.controller('home', function($rootScope,$scope,$http,$localStorage,$location) {
-			$rootScope.validateToken();
-			$rootScope.objeto = "Pagina Principal";
+		app.controller('home', function($rootScope, $scope, $http, $localStorage, $location) {
+		    $rootScope.validateToken();
+		    $rootScope.objeto = "Página Principal";	
+		    $scope.today = moment().format("YYYY-MM-DD");
+		    $scope.chart = [];
+		    $scope.ejeX = [];
 
-			$scope.chart = [
-				{
-					labels : ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
-					data : [
-						[65, 59, 80, 81, 56, 55, 40],
-						[65, 59, 80, 81, 56, 55, 40]
-					],
-					series: ['Serie 1', 'Serie 2']
-				},
-				{
-					labels : ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
-					data : [65, 59, 80, 81, 56, 55, 40]
-				},
-				{
-					labels : ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
-					data : [65, 59, 80, 81, 56, 55, 40]
-				},
-				{
-					labels : ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
-					data : [65, 59, 80, 81, 56, 55, 40]
-				}
-			];
+		    $scope.grafico = {
+		    	tabla: "acto_sala",
+		    	label : "estatus",
+		    	data : "COUNT(*)",
+		    	titulo : "Cantidad de Actos por su estatus",
+		    	tipo : "bar",
+		    	agrupar: "estatus"
+		    };
 
-			$rootScope.cargarFiltro = function() {
-				console.log("entra aca");
-				alert($scope.filtroSeleccionado);
-			};
+		    
 
-			$rootScope.b64toBlob = function(b64Data, contentType, sliceSize) {
-				  contentType = contentType || '';
-				  sliceSize = sliceSize || 512;
+		    $scope.tablas = [
+		    {
+		    		nombre: "TABLAS",
+		    		tablas: [
+		    			{
+		    				nombre: "Actividad",
+		    				nombre_real: "actividad",
+		    				campos: 
+		    					[
+			    					{
+				    					nombre: "ID",
+				    					nombre_real: "ID"
+				    				},
+				   					{
+				   						nombre: "Actividad",
+				   						nombre_real: "actividad"
+				   					},
+				   					{
+			    						nombre: "ID del tipo de tribunal",
+			    						nombre_real: "id_tipo_tribunal"
+			    					}
+		    					]
+		    			},
+		    			{
+		    				nombre: "Actividad2",
+		    				nombre_real: "actividad2",
+		    				campos: 
+		    					[
+			    					{
+				    					nombre: "ID2",
+				    					nombre_real: "ID2"
+				    				},
+				   					{
+				   						nombre: "Actividad2",
+				   						nombre_real: "actividad2"
+				   					},
+				   					{
+			    						nombre: "ID del tipo de tribunal2",
+			    						nombre_real: "id_tipo_tribunal2"
+			    					}
+		    					]
+		    			}
+		    		]
+		    	},
+		    	{
+		    		nombre: "VISTAS",
+		    		tablas: [
+		    			{
+		    				nombre: "Acto",
+		    				nombre_real: "acto_sala",
+		    				campos: 
+		    					[
+			    					{
+				    					nombre: "Estatus",
+				    					nombre_real: "estatus"
+				    				},
+				    				{
+				    					nombre: "Causa",
+				   						nombre_real: "numero"
+				   					},
+			    					{
+			    						nombre: "Tribunal",
+			    						nombre_real: "tribunal"
+			    					},
+				    				{
+				   						nombre: "Tipo de Tribunal",
+				   						nombre_real: "tipo_de_tribunal"
+				    				}
+		    					]
+		    			}
+		    		]
+		    	}
 
-				  var byteCharacters = atob(b64Data);
-				  var byteArrays = [];
 
-				  for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-				    var slice = byteCharacters.slice(offset, offset + sliceSize);
+		    ];
 
-				    var byteNumbers = new Array(slice.length);
-				    for (var i = 0; i < slice.length; i++) {
-				      byteNumbers[i] = slice.charCodeAt(i);
-				    }
+		    console.log($scope.tablas);
 
-				    var byteArray = new Uint8Array(byteNumbers);
+		   /*
+		   @params
+		   titulo : 	titulo del grafico
+		   pocision: 	pocision de la variable donde desea almacenar el grafico
+		   tabla: 		tabla de la BD usada para buscar los datos
+		   etiquetas: 	etiquetas de los datos
+		   datos: 		datos del grafico,
+		   agrupar: 	agrupar
+		   */
 
-				    byteArrays.push(byteArray);
-				  }
-				    
-				  var blob = new Blob(byteArrays, {type: contentType});
-				  return blob;
-				}
+		    $rootScope.cargarChart = function(titulo, pocision, tabla, etiquetas, datos, agrupar) {
+	            var labels = [];
+	            var data = [];
 
-			$rootScope.generarPDF = function() {
+	            var filter1 = JSON.stringify({
+			    	campos: datos + " AS cantidad"
+	            });
 
-					
+	           
+	            $rootScope.get('api/'+tabla+'?filter=' + filter1).then(function(response) {
 
-				 var docDefinition = {
-				  header: "Direccion Ejecutiva de la Magistratura",
-				  footer: function(currentPage, pageCount) { 
-				  	return { text: 'Página ' + currentPage.toString() + ' de ' + pageCount, alignment: 'right'}; 
-				  },
-				  pageSize: 'A4',
-				  pageOrientation: 'portrait',
-				  pageMargins: [ 40, 60, 40, 60 ],
-				  content: [
-				  	{ text: 'This is a header', style: 'header' },
-				    'No styling here, this is a standard paragraph',
-				    { text: 'Another text', style: 'anotherStyle' },
-				    { text: 'Multiple styles applied', style: [ 'header', 'anotherStyle' ] },
-				    {
-				      columns: [
-				        {
-				          // auto-sized columns have their widths based on their content
-				          width: 'auto',
-				          text: 'First column'
-				        },
-				        {
-				          // star-sized columns fill the remaining space
-				          // if there's more than one star-column, available width is divided equally
-				          width: '*',
-				          text: 'Second column'
-				        },
-				        {
-				          // fixed width
-				          width: 100,
-				          text: 'Third column'
-				        },
-				        {
-				          // percentage width
-				          width: '10%',
-				          text: 'Last column'
-				        }
-				      ],
-				      // optional space between columns
-				      columnGap: 10
-				    },
+	            	var cantidad = response["0"].cantidad;
+	            	var filter = JSON.stringify({
+				    	campos: etiquetas + " AS labels, " + datos + " AS data",
+		                agruparPor: "GROUP BY " + agrupar
+		            });
 
-				    {
-				      table: {
-				        // headers are automatically repeated if the table spans over multiple pages
-				        // you can declare how many rows should be treated as headers
-				        headerRows: 1,
-				        widths: [ '*', 'auto', 100, '*' ],
+		            $rootScope.get('api/'+tabla+'?filter=' + filter).then(function(response) {
 
-				        body: [
-				          [ 'First', 'Second', 'Third', 'The last one' ],
-				          [ 'Value 1', 'Value 2', 'Value 3', 'Value 4' ],
-				          [ { text: 'Bold value', bold: true }, 'Val 2', 'Val 3', 'Val 4' ]
-				        ]
-				      }
-    				},
-    				{
-				      ul: [
-				        'Item 1',
-				        'Item 2',
-				        'Item 3',
-				        { text: 'Item 4', bold: true },
-				      ]
-				    },
-				    {
-				      // for numbered lists set the ol key
-				      ol: [
-				        'Item 1',
-				        'Item 2',
-				        'Item 3'
-				      ]
-				    },
-				    { text: 'sample', margin: [ 5, 2, 10, 20 ] },
-				    'paragraph 1',
-				    'paragraph 2',
-				    {
-				      columns: [
-				        'first column is a simple text',
-				        [
-				          // second column consists of paragraphs
-				          'paragraph A',
-				          'paragraph B',
-				          'these paragraphs will be rendered one below another inside the column'
-				        ]
-				      ]
-				    }
-				  ],
-				  styles: {
-				     header: {
-				       fontSize: 22,
-				       bold: true
-				     },
-				     anotherStyle: {
-				       italic: true,
-				       alignment: 'right'
-				     }
-				   }
-				};
+		            	console.log(response);
+		                for (var i = response.length - 1; i >= 0; i--) {
+		                	labels.push(response[i].labels);
+		                	data.push($rootScope.redondear((100 * response[i].data)/cantidad, 2));
+		                }
 
-				var pdf = pdfMake.createPdf(docDefinition);
-				pdf.getBase64((data) => {
-					var contentType = 'application/pdf';
-					var blob = $rootScope.b64toBlob(data, contentType);
-					$('#txtcopy').val(URL.createObjectURL(blob));
+		                var object = {
+		                	title : titulo,
+		                	labels : labels,
+		                	data: data
+		                };
 
-					$rootScope.confirm("Archivo generado", "El archivo generado en la direccion '" + $('#txtcopy').val() + "'. Para visualizar el archivo, copia y pega la direccion en el navegador de tu preferencia o guarda el archivo en tu directorio", "info", function() {
-							var filename = "doc.pdf"
-							var result = saveAs(blob, filename);
-							$rootScope.alert("Éxito","El archivo se ha almacenado en tu directorio","success");
+		                $scope.chart[pocision] = object; 
+		            });
+	            
+	            });
 
-					}, function() {
-							
-							var texto = document.getElementById('txtcopy');
-							texto.select();
-							var successful = document.execCommand('copy');
-							$rootScope.timerAlert("Copiado", $('#txtcopy').val(), 2000);
-							
 
-							
+	            
+		    };
 
 
 
-					}, "Guardar","Copiar");
+		    $rootScope.cargarEventos = function(fecha) {
+
+		    	var filter = JSON.stringify({
+				   	donde : "WHERE start LIKE '"+fecha+"%'"
+		        });
+
+		        $rootScope.get('api/acto_sala?filter=' + filter).then(function(response) {
+		        	$rootScope.eventos_hoy = response;
+		        });
+
+		    }
 
 
-					
-				});
+		    $rootScope.cargarChart($scope.grafico.titulo, 0, $scope.grafico.tabla, $scope.grafico.label, $scope.grafico.data, $scope.grafico.agrupar);
 
-			};
-			
+		    var date = moment().format("YYYY-MM-DD");
+		    $rootScope.cargarEventos(date);
+		    
+		    $rootScope.cargarEjeX = function(array) {
+		    	console.log(array);
+		    	
+		    }
+
+		    $rootScope.cargarFiltro = function() {
+		        console.log("entra aca");
+		        alert($scope.filtroSeleccionado);
+		    };
+
+		    $rootScope.b64toBlob = function(b64Data, contentType, sliceSize) {
+		        contentType = contentType || '';
+		        sliceSize = sliceSize || 512;
+
+		        var byteCharacters = atob(b64Data);
+		        var byteArrays = [];
+
+		        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+		            var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+		            var byteNumbers = new Array(slice.length);
+		            for (var i = 0; i < slice.length; i++) {
+		                byteNumbers[i] = slice.charCodeAt(i);
+		            }
+
+		            var byteArray = new Uint8Array(byteNumbers);
+
+		            byteArrays.push(byteArray);
+		        }
+
+		        var blob = new Blob(byteArrays, {
+		            type: contentType
+		        });
+		        return blob;
+		    }
+
+		    $rootScope.generarPDF = function() {
+
+		    	var filter = JSON.stringify({
+		    		donde: "WHERE HORA LIKE '"+moment().format("YYYY-MM-DD")+"%'"
+		    	});
+
+		    	$rootScope.get('api/vista_acto?filter='+filter).then(function(response) {
+
+		    		var table_body = [['ID','CAUSA','IMPUTADO','TRIBUNAL','ACTO','HORA','SALA']];
+
+		    		for (var i = response.length - 1; i >= 0; i--) {
+		    			var data = [response[i].ID, response[i].CAUSA, response[i].IMPUTADO, response[i].TRIBUNAL, response[i].ACTO, moment(response[i].HORA).format("LT"), response[i].SALA];
+		    			table_body.push(data);
+		    		}
+
+
+		    		var docDefinition = {
+			            //header: "Direccion Ejecutiva de la Magistratura",
+			            footer: function(currentPage, pageCount) {
+			                return {
+			                    text: 'Página ' + currentPage.toString() + ' de ' + pageCount,
+			                    alignment: 'right'
+			                };
+			            },
+			            pageSize: 'A4',
+			            pageOrientation: 'landscape',
+			            pageMargins: [40, 60, 40, 60],
+			            content: [
+			            	{
+			                    text: 'Agenda Unica de Actos',
+			                    style: 'header'
+			                },
+			            	{
+			                    table: {
+			                        headerRows: 1,
+			                        //widths: ['*', 'auto', 100, '*'],
+
+			                        body: table_body
+			                    }
+			                }
+			            ],
+			            styles: {
+			                header: {
+			                    fontSize: 22,
+			                    bold: true
+			                },
+			                anotherStyle: {
+			                    italic: true,
+			                    alignment: 'center'
+			                }
+			            }
+			        };
+
+			        var pdf = pdfMake.createPdf(docDefinition);
+			        pdf.getBase64((data) => {
+			            var contentType = 'application/pdf';
+			            var blob = $rootScope.b64toBlob(data, contentType);
+			            var filename = docDefinition.content["0"].text;
+			            var result = saveAs(blob, filename);
+			        });
+
+		    	});
+
+
+
+		        
+
+		       /* {
+		                    text: 'This is a header',
+		                    style: 'header'
+		                },
+		                'No styling here, this is a standard paragraph', {
+		                    text: 'Another text',
+		                    style: 'anotherStyle'
+		                }, {
+		                    text: 'Multiple styles applied',
+		                    style: ['header', 'anotherStyle']
+		                }, {
+		                    columns: [{
+		                        // auto-sized columns have their widths based on their content
+		                        width: 'auto',
+		                        text: 'First column'
+		                    }, {
+		                        // star-sized columns fill the remaining space
+		                        // if there's more than one star-column, available width is divided equally
+		                        width: '*',
+		                        text: 'Second column'
+		                    }, {
+		                        // fixed width
+		                        width: 100,
+		                        text: 'Third column'
+		                    }, {
+		                        // percentage width
+		                        width: '10%',
+		                        text: 'Last column'
+		                    }],
+		                    // optional space between columns
+		                    columnGap: 10
+		                },
+
+		                {
+		                    table: {
+		                        // headers are automatically repeated if the table spans over multiple pages
+		                        // you can declare how many rows should be treated as headers
+		                        headerRows: 1,
+		                        widths: ['*', 'auto', 100, '*'],
+
+		                        body: [
+		                            ['First', 'Second', 'Third', 'The last one'],
+		                            ['Value 1', 'Value 2', 'Value 3', 'Value 4'],
+		                            [{
+		                                text: 'Bold value',
+		                                bold: true
+		                            }, 'Val 2', 'Val 3', 'Val 4']
+		                        ]
+		                    }
+		                }, {
+		                    ul: [
+		                        'Item 1',
+		                        'Item 2',
+		                        'Item 3', {
+		                            text: 'Item 4',
+		                            bold: true
+		                        },
+		                    ]
+		                }, {
+		                    // for numbered lists set the ol key
+		                    ol: [
+		                        'Item 1',
+		                        'Item 2',
+		                        'Item 3'
+		                    ]
+		                }, {
+		                    text: 'sample',
+		                    margin: [5, 2, 10, 20]
+		                },
+		                'paragraph 1',
+		                'paragraph 2', {
+		                    columns: [
+		                        'first column is a simple text', [
+		                            // second column consists of paragraphs
+		                            'paragraph A',
+		                            'paragraph B',
+		                            'these paragraphs will be rendered one below another inside the column'
+		                        ]
+		                    ]
+		                }*/
+
+		        
+
+		    };
+
+
+
 		});

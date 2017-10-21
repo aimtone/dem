@@ -1,7 +1,6 @@
 		var app = angular.module('dem',['ngRoute','ngStorage','datatables','angucomplete-alt','tabs','ngWebsocket','chart.js']);
-		
 
-
+	
 		app.directive('ngRightClick', function($parse) {
 			return function(scope, element, attrs) {
 				var fn = $parse(attrs.ngRightClick);
@@ -30,12 +29,14 @@
 		
 
 		app.controller('main', function($rootScope,$scope,$http,$q,$localStorage,$location,$window) {
+			
 			//"use strict";	
 			
 
 			
 
 			$rootScope.nuevo_respaldo = false;
+
 			$rootScope.Base64 = {
 				_keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
 				encode: function(e) {
@@ -544,6 +545,18 @@
 				});
 			}
 
+
+
+			$rootScope.redondear = function(sVal, nDec){ 
+			    var n = parseFloat(sVal); 
+			    var s; 
+			    n = Math.round(n * Math.pow(10, nDec)) / Math.pow(10, nDec); 
+			    s = String(n) + "." + String(Math.pow(10, nDec)).substr(1); 
+			    s = s.substr(0, s.indexOf(".") + nDec + 1); 
+			    return s; 
+			} 
+
+
 			$rootScope.sha1 = function(str) {
 				  //  discuss at: http://locutus.io/php/sha1/
 				  // original by: Webtoolkit.info (http://www.webtoolkit.info/)
@@ -801,6 +814,13 @@
 					return promise;
 				};
 
+				$rootScope.get('api/config_notificaciones').then(function(response) {
+					$rootScope.socket_address = response["0"].socket_address;
+					$rootScope.socket_port = response["0"].socket_port;
+				}, function(response) {
+
+				});
+
 				$rootScope.validateToken = function() {
 					$('body').css({
 						background: "white"
@@ -831,6 +851,10 @@
 												  	'Authorization': $localStorage.token
 												  }
 												}).then(function(response) {
+
+											
+
+
 													if(response.data.data["0"].nivel=="ADMINISTRADOR") {
 														$rootScope.current_user = 1;
 													}
@@ -1111,7 +1135,22 @@
 						// INICIAR LA CONEXION CON EL WEBSOCKET
 
 						////console.log('Conectando...');
-						$rootScope.server = new FancyWebSocket('ws://192.168.1.6:9300');
+
+
+						if(typeof $rootScope.socket_address == "undefined") {
+							$rootScope.socket_address = window.location.host;
+						}
+						if(typeof $rootScope.socket_port == "undefined") {
+							$rootScope.socket_port = 9300;
+						}
+
+				
+
+						$rootScope.server = new FancyWebSocket('ws://'+$rootScope.socket_address+':'+$rootScope.socket_port);
+						
+
+						
+
 
 						function send( text ) {
 							$rootScope.server.send( 'message', text );
