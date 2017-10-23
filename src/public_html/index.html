@@ -63,21 +63,9 @@
     <nav id="nav_principal" style="background:#14385f !important;" class="blue darken-4">
         <div class="navbar-wrapper" id="nav-primario">
             <a href="#!/" class="brand-logo center" style="font-family:'Faster One';"><img  class="responsive-img" src="assets/images/tsj_logo_3.png" alt=""></a>
-            <a id="sidenav-left" ng-show="x === true && usuario_en_linea.nivel === 'ADMINISTRADOR' || usuario_en_linea.nivel === 'USUARIO ESPECIAL'" href="#" data-activates="mobile-demo" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
+            <a id="sidenav-left" ng-show="x === true && usuario_en_linea.nivel === 'ADMINISTRADOR' || usuario_en_linea.nivel === 'USUARIO ESPECIAL' || usuario_en_linea.nivel === 'SECRETARIA'" href="#" data-activates="mobile-demo" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
             <ul class="right">
-                <!-- <li class="hide-on-med-and-down">
-		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="{{lang.barra.botones.idioma}}" data-activates='dropdown-lang' href="javascript:void(0);">
-		        		<i class="material-icons">language</i>
-		        	</a>
-		        	<ul id='dropdown-lang' data-beloworigin="true" class='dropdown-content'>
-					    <li><a ng-click="setLang('es-VE');setDatatableLang('es-VE');" href=""><img src="assets/images/venezuela.png" alt=""></a></li>
 
-					    <li><a ng-click="setLang('en-US');setDatatableLang('en-US');" href=""><img src="assets/images/united_states_of_america_usa.png" alt=""></a></a></li>
-
-					    <li><a ng-click="setLang('pt-BR');setDatatableLang('pt-BR');" href=""><img src="assets/images/brazil.png" alt=""></a></a></li>
-
-					</ul>
-				</li> -->
                 <li ng-show="x === true">
                     <a ng-click="cargarNotificaciones();" id="sidenav-right" data-activates="left-side" class="waves-effect waves-light  right">
 
@@ -98,10 +86,10 @@
                     <h3 style="font-family:'Faster One';"><img width="50%" src="assets/images/tsj_logo_2.png" alt=""></h3>
                 </div>
                 <ul>
-                    <li ng-show="x === true"><a href="#!/sala">Sala</a></li>
-                    <li ng-show="x === true"><a href="#!/tipo_de_tribunal">Tipo de Tribunal</a></li>
-                    <li ng-show="x === true"><a href="#!/tribunal">Tribunal</a></li>
-                    <li ng-show="x === true"><a href="#!/actividad">Actividad</a></li>
+                    <li ng-show="x === true && (usuario_en_linea.nivel === 'ADMINISTRADOR' || usuario_en_linea.nivel === 'USUARIO ESPECIAL')"><a href="#!/sala">Sala</a></li>
+                    <li ng-show="x === true && (usuario_en_linea.nivel === 'ADMINISTRADOR' || usuario_en_linea.nivel === 'USUARIO ESPECIAL')"><a href="#!/tipo_de_tribunal">Tipo de Tribunal</a></li>
+                    <li ng-show="x === true && (usuario_en_linea.nivel === 'ADMINISTRADOR' || usuario_en_linea.nivel === 'USUARIO ESPECIAL')"><a href="#!/tribunal">Tribunal</a></li>
+                    <li ng-show="x === true && (usuario_en_linea.nivel === 'ADMINISTRADOR' || usuario_en_linea.nivel === 'USUARIO ESPECIAL')"><a href="#!/actividad">Actividad</a></li>
                     <li ng-show="x === true"><a href="#!/defensor">Defensor</a></li>
                     <li ng-show="x === true"><a href="#!/juez">Juez</a></li>
                     <li ng-show="x === true"><a href="#!/alguacil">Alguacil</a></li>
@@ -110,51 +98,7 @@
                     <li ng-show="x === true"><a href="#!/imputado">Imputado</a></li>
                     <li ng-show="x === true"><a href="#!/testigo">Testigo</a></li>
                     <li ng-show="x === true"><a href="#!/fiscal">Físcal</a></li>
-                    <!-- <li class="no-padding blue darken-3">
-			        <ul class="collapsible collapsible-accordion">
-			          <li>
-			            <a class="collapsible-header">Persona<i class="material-icons">arrow_drop_down</i></a>
-			            <div class="collapsible-body blue darken-2">
-			              <ul>
-
-			                
-			                
-			                
-			          		<li class="no-padding blue darken-3">
-						        <ul class="collapsible collapsible-accordion">
-						          <li>
-						            <a class="collapsible-header">Testigo<i class="material-icons">arrow_drop_down</i></a>
-						            <div class="collapsible-body blue darken-2">
-						              <ul>
-						                <li><a href="">Tipo de Testigo</a></li>
-						              </ul>
-						            </div>
-						          </li>
-						        </ul>
-					    	</li>
-			          		<li>
-								<ul>
-									<li class="no-padding blue darken-3">
-							        <ul class="collapsible collapsible-accordion">
-							          <li>
-							            <a class="collapsible-header">Fiscal<i class="material-icons">arrow_drop_down</i></a>
-							            <div class="collapsible-body blue darken-2">
-							              <ul>
-							                <li><a href="#!">Principal</a></li>
-							                <li><a href="#!">Suplente</a></li>
-							               
-							              </ul>
-							            </div>
-							          </li>
-							        </ul>
-						    	</li>
-								</ul>
-			                </li>
-			              </ul>
-			            </div>
-			          </li>
-			        </ul>
-		    	</li> -->
+                
                 </ul>
             </div>
             <div class="side-nav blue lighten-1" id="left-side">
@@ -214,18 +158,18 @@
                 <li>
                     <a class="dropdown-button tooltipped" data-position="right" data-tooltip="Regresar" onclick="history.back(-1);"><i class="material-icons">arrow_back</i></a>
                 </li>
-                <li>
+                <li ng-show="x === true && usuario_en_linea.nivel === 'ADMINISTRADOR'">
                     <a class="dropdown-button tooltipped" data-position="right" data-tooltip="Página Principal" onclick="location.href='#!/'"><i class="material-icons">home</i></a>
                 </li>
             </ul>
             <span ng-show="x === true" id="dashboard-titulo">{{objeto}}</span>
             <ul class="right toolbar toolbar-right hide-on-small-only">
-                <li ng-show="x === true">
+                <li ng-show="x === true && usuario_en_linea.nivel === 'USUARIO COMUN' || usuario_en_linea.nivel === 'ADMINISTRADOR' || usuario_en_linea.nivel === 'USUARIO ESPECIAL'">
                     <a class="dropdown-button tooltipped" data-position="left" data-tooltip="Programador de Actos" data-activates='dropdown1' onclick="location.href='#!/programador'"><i class="material-icons">schedule</i></a>
                     <ul id='dropdown1' data-beloworigin="true" class='dropdown-content'>
                     </ul>
                 </li>
-                <li ng-show="x === true && usuario_en_linea.nivel === 'SECREATRIA' || usuario_en_linea.nivel === 'ADMINISTRADOR'">
+                <li ng-show="x === true && usuario_en_linea.nivel === 'SECRETARIA' || usuario_en_linea.nivel === 'ADMINISTRADOR'">
                     <a class="dropdown-button tooltipped" data-position="left" data-tooltip="Presentación de Acto" data-activates='dropdown1' onclick="location.href='#!/presentacion'"><i class="material-icons">present_to_all</i></a>
                     <ul id='dropdown1' data-beloworigin="true" class='dropdown-content'>
                     </ul>

@@ -23,7 +23,7 @@
 		function DrawCaptcha()
 		{
 			var claves;
-			claves=Array("A","B","C","D","E","F","G","H","I"," J","K","L","M","N","O","P","Q","R","S","T","U","V" ,"W","X","Y","Z","0","1","2","3","4","5","6","7"," 8","9","0"," ");
+			claves=Array("A","B","C","D","E","F","G","H","I"," J","K","L","M","N","O","P","Q","R","S","T","U","V" ,"W","X","Y","Z","0","1","2","3","4","5","6","7"," 8","9","0");
 			
 			var a = claves[Math.floor(Math.random() * claves.length)];
 			var b = claves[Math.floor(Math.random() * claves.length)];       
@@ -35,7 +35,6 @@
 			 
 			var code = a +  b + c + d  + e + f +  g;
 			document.getElementById("txtCaptcha").value = code
-			document.getElementById("txtInput").value = code
 		}
 
 		// Validate the Entered input aganist the generated security code function   
@@ -160,7 +159,7 @@
 
 
 							
-							$location.url('/');
+							
 
 							var filter = JSON.stringify({
 								donde : "where cedula = '" + $rootScope.cedula + "'"
@@ -178,6 +177,20 @@
 									telefono: response["0"].telefono,
 									nivel: $rootScope.nivel 
 								};
+
+
+								if($rootScope.usuario_en_linea.nivel=="ADMINISTRADOR") {
+									$location.url('/');
+								}
+								if($rootScope.usuario_en_linea.nivel=="USUARIO ESPECIAL") {
+									$location.url('/programador');
+								}
+								if($rootScope.usuario_en_linea.nivel=="USUARIO_COMUN") {
+									$location.url('/programador');
+								}
+								if($rootScope.usuario_en_linea.nivel=="SECRETARIA") {
+									$location.url('/presentacion');
+								}
 
 								
 

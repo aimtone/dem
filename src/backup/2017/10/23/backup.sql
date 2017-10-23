@@ -1024,7 +1024,7 @@ CREATE TABLE `notificaciones` (
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `status` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1033,7 +1033,7 @@ CREATE TABLE `notificaciones` (
 
 LOCK TABLES `notificaciones` WRITE;
 /*!40000 ALTER TABLE `notificaciones` DISABLE KEYS */;
-INSERT INTO `notificaciones` VALUES (1,'HolaAnthony','3.png','Que tal','V-21301059','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:28:26',0),(2,'no','3.png','nn','V-21301061','','ANTHONY JOSE MEDINA FUENTES','192.168.1.2','notificacion','2017-10-23 22:28:01',1),(3,'Holacomo mestas','5.png','Gjhft','','ADMINISTRADOR','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:28:35',1),(4,'Hjj','4.png','Gh','','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:30:35',1),(5,'Ggg','4.png','Hg','','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:31:14',1),(6,'Hftvfyvg','4.png','Hgr','','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:31:34',1),(7,'Hgfy','3.png','Vcg','V-21301059','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:31:52',1),(8,'Vgg','3.png','Hgt','V-21301059','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:32:48',1),(9,'k','4.png','k','','','ANTHONY JOSE MEDINA FUENTES','192.168.1.2','notificacion','2017-10-23 22:33:03',1),(10,'Vg','4.png','Hh','','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:33:19',1),(11,'Hlla','3.png','Hshs','V-21301059','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:33:33',1),(12,'Gff','5.png','Hgt','','ADMINISTRADOR','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:33:51',1),(13,'khkjhk12gh','4.png','lkjl','','','ANTHONY JOSE MEDINA FUENTES','192.168.1.2','notificacion','2017-10-23 22:35:14',1),(14,'Holacomo mestas','4.png','T','','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:35:30',1),(15,'Hhh','4.png','Ggt','','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:43:38',0),(16,'Chao','4.png','Hh','','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:43:32',0),(17,'Hola','4.png','Hola','','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:43:27',0),(18,'jjj','4.png','jj','','','ANTHONY JOSE MEDINA FUENTES','192.168.1.2','notificacion','2017-10-23 22:43:23',0),(19,'holJ','3.png','JHKH','V-21301061','','ANTHONY JOSE MEDINA FUENTES','192.168.1.2','notificacion','2017-10-23 22:42:40',1),(20,'Bd su','3.png','D','V-21301059','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:43:18',0);
+INSERT INTO `notificaciones` VALUES (1,'HolaAnthony','3.png','Que tal','V-21301059','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:28:26',0),(2,'no','3.png','nn','V-21301061','','ANTHONY JOSE MEDINA FUENTES','192.168.1.2','notificacion','2017-10-23 22:28:01',1),(3,'Holacomo mestas','5.png','Gjhft','','ADMINISTRADOR','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:28:35',1),(4,'Hjj','4.png','Gh','','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:30:35',1),(5,'Ggg','4.png','Hg','','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:31:14',1),(6,'Hftvfyvg','4.png','Hgr','','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:31:34',1),(7,'Hgfy','3.png','Vcg','V-21301059','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:31:52',1),(8,'Vgg','3.png','Hgt','V-21301059','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:32:48',1),(9,'k','4.png','k','','','ANTHONY JOSE MEDINA FUENTES','192.168.1.2','notificacion','2017-10-23 22:33:03',1),(10,'Vg','4.png','Hh','','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:33:19',1),(11,'Hlla','3.png','Hshs','V-21301059','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:33:33',1),(12,'Gff','5.png','Hgt','','ADMINISTRADOR','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:33:51',1),(13,'khkjhk12gh','4.png','lkjl','','','ANTHONY JOSE MEDINA FUENTES','192.168.1.2','notificacion','2017-10-23 22:35:14',1),(14,'Holacomo mestas','4.png','T','','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:35:30',1),(15,'Hhh','4.png','Ggt','','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:43:38',0),(16,'Chao','4.png','Hh','','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:43:32',0),(17,'Hola','4.png','Hola','','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:43:27',0),(18,'jjj','4.png','jj','','','ANTHONY JOSE MEDINA FUENTES','192.168.1.2','notificacion','2017-10-23 22:43:23',0),(19,'holJ','3.png','JHKH','V-21301061','','ANTHONY JOSE MEDINA FUENTES','192.168.1.2','notificacion','2017-10-23 22:42:40',1),(20,'Bd su','3.png','D','V-21301059','','JUAN MANUEL GONZALEZ PEREZ','192.168.1.6','notificacion','2017-10-23 22:43:18',0),(21,'Hola','3.png','hOla','V-21301059','','MILDRED DE JESUS VARGAS JUAREZ','192.168.1.2','notificacion','2017-10-23 23:27:44',1);
 /*!40000 ALTER TABLE `notificaciones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1050,7 +1050,7 @@ CREATE TABLE `notificaciones_usuario` (
   `cedula` varchar(20) NOT NULL,
   `status` tinyint(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1059,7 +1059,7 @@ CREATE TABLE `notificaciones_usuario` (
 
 LOCK TABLES `notificaciones_usuario` WRITE;
 /*!40000 ALTER TABLE `notificaciones_usuario` DISABLE KEYS */;
-INSERT INTO `notificaciones_usuario` VALUES (1,1,'V-21301059',0),(3,3,'V-21301059',0),(4,4,'V-21301059',0),(6,4,'V-29355522',1),(7,4,'V-21301062',1),(8,5,'V-21301059',0),(10,5,'V-29355522',1),(11,5,'V-21301062',1),(12,6,'V-21301059',0),(14,6,'V-29355522',1),(15,6,'V-21301062',0),(16,7,'V-21301059',0),(17,8,'V-21301059',0),(18,9,'V-21301059',0),(20,9,'V-29355522',1),(21,9,'V-21301062',1),(22,10,'V-21301059',1),(23,10,'V-21301061',0),(24,10,'V-29355522',1),(25,10,'V-21301062',1),(26,11,'V-21301059',1),(27,12,'V-21301059',1),(28,13,'V-21301059',1),(30,13,'V-29355522',1),(31,13,'V-21301062',1),(32,14,'V-21301059',1),(34,14,'V-29355522',1),(35,14,'V-21301062',1),(36,15,'V-21301059',0),(37,15,'V-21301061',0),(38,15,'V-29355522',1),(39,15,'V-21301062',1),(40,16,'V-21301059',0),(41,16,'V-21301061',0),(42,16,'V-29355522',1),(43,16,'V-21301062',1),(44,17,'V-21301059',0),(46,17,'V-29355522',1),(47,17,'V-21301062',1),(48,18,'V-21301059',0),(50,18,'V-29355522',1),(51,18,'V-21301062',1),(52,19,'V-21301061',0),(53,20,'V-21301059',0);
+INSERT INTO `notificaciones_usuario` VALUES (1,1,'V-21301059',0),(3,3,'V-21301059',0),(4,4,'V-21301059',0),(6,4,'V-29355522',1),(7,4,'V-21301062',1),(8,5,'V-21301059',0),(10,5,'V-29355522',1),(11,5,'V-21301062',1),(12,6,'V-21301059',0),(14,6,'V-29355522',1),(15,6,'V-21301062',0),(16,7,'V-21301059',0),(17,8,'V-21301059',0),(18,9,'V-21301059',0),(20,9,'V-29355522',1),(21,9,'V-21301062',1),(22,10,'V-21301059',1),(23,10,'V-21301061',0),(24,10,'V-29355522',1),(25,10,'V-21301062',1),(26,11,'V-21301059',1),(27,12,'V-21301059',1),(28,13,'V-21301059',1),(30,13,'V-29355522',1),(31,13,'V-21301062',1),(32,14,'V-21301059',1),(34,14,'V-29355522',1),(35,14,'V-21301062',1),(36,15,'V-21301059',0),(37,15,'V-21301061',0),(38,15,'V-29355522',1),(39,15,'V-21301062',1),(40,16,'V-21301059',0),(41,16,'V-21301061',0),(42,16,'V-29355522',1),(43,16,'V-21301062',0),(44,17,'V-21301059',0),(46,17,'V-29355522',1),(47,17,'V-21301062',0),(48,18,'V-21301059',0),(50,18,'V-29355522',1),(51,18,'V-21301062',0),(52,19,'V-21301061',0),(53,20,'V-21301059',0),(54,21,'V-21301059',1);
 /*!40000 ALTER TABLE `notificaciones_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1873,7 +1873,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'V-21301059','ae45ad6d9902c5483018e334239613881a77b5dd','icon-user.png','ADMINISTRADOR',0,'2017-10-01 23:01:49'),(3,'V-21301061','459f8140b2d1fb5df5af039c301f09d4cb88b7a1','icon-user.png','USUARIO ESPECIAL',NULL,'2017-10-22 20:39:46'),(4,'V-29355522','8c886f47c17317dd6809341353e1a1eb64288c1b','icon-user.png','USUARIO COMUN',NULL,'2017-10-21 14:41:02'),(5,'V-21301062','89576498b8d56d414db65d7e0194b76e3c4ccba7','icon-user.png','SECRETARIA',NULL,'2017-10-21 14:42:11');
+INSERT INTO `usuario` VALUES (1,'V-21301059','ae45ad6d9902c5483018e334239613881a77b5dd','icon-user.png','ADMINISTRADOR',0,'2017-10-01 23:01:49'),(3,'V-21301061','459f8140b2d1fb5df5af039c301f09d4cb88b7a1','icon-user.png','USUARIO ESPECIAL',NULL,'2017-10-22 20:39:46'),(4,'V-29355522','8c886f47c17317dd6809341353e1a1eb64288c1b','icon-user.png','USUARIO COMUN',NULL,'2017-10-21 14:41:02'),(5,'V-21301062','bf0c261aac38cbdc59337cd40f0201a07dc8ac8d','icon-user.png','SECRETARIA',NULL,'2017-10-23 23:23:59');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2504,4 +2504,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-23 19:07:44
+-- Dump completed on 2017-10-23 19:39:24
