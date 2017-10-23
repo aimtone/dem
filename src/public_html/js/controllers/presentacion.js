@@ -176,6 +176,7 @@
 	        		$rootScope.put('api/acto/'+$scope.actoHallado.id, data).then(function(response) {
 	        			$scope.causa = $scope.actoHallado.id;
 	        			$scope.buscarActo();
+	        			$rootScope.enviarNotificacion($rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " HA PUESTO UN ACTO EN ESPERA", "EL USUARIO " + $rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " CUYA CEDULA DE IDENTIDAD ES " + $rootScope.usuario_en_linea.cedula + " HA FINALIZADO EL ACTO NUMERO " + response["0"].id+ " DE LA CAUSA " + response["0"].numero_caso + " DE FECHA " + moment(response["0"].inicio).format("DD/MM/YYYY"), "ADMINISTRADOR", null);
 		   			});
 		    	} , function() {}, "Finalizar acto", "Cancelar", true);
 		    }
@@ -191,6 +192,7 @@
 	        		$rootScope.put('api/acto/'+$scope.actoHallado.id, data).then(function(response) {
 	        			$scope.causa = $scope.actoHallado.id;
 	        			$scope.buscarActo();
+	        			$rootScope.enviarNotificacion($rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " HA PUESTO UN ACTO EN ESPERA", "EL USUARIO " + $rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " CUYA CEDULA DE IDENTIDAD ES " + $rootScope.usuario_en_linea.cedula + " HA DIFERIDO EL ACTO NUMERO " + response["0"].id+ " DE LA CAUSA " + response["0"].numero_caso + " DE FECHA " + moment(response["0"].inicio).format("DD/MM/YYYY"), "ADMINISTRADOR", null);
 		   			});
 		    	} , function() {}, "Diferir acto", "Cancelar", true);
 		    }

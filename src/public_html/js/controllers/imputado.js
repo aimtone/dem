@@ -263,6 +263,7 @@ app.controller('imputado', function($rootScope,$scope,$http,$q,$localStorage) {
 							contador++;
 						};
 				
+						$rootScope.enviarNotificacion($rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " HA ELIMINADO REGISTROS EN LA TABLA DE IMPUTADO", "EL USUARIO " + $rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " CUYA CEDULA DE IDENTIDAD ES " + $rootScope.usuario_en_linea.cedula + " HA ELIMINADO REGISTROS EN LA TABLA DE IMPUTADO, POR FAVOR, VERIFIQUE ESTA INFORMACION EN LA BITACORA DEL SISTEMA PARA VER MAS DETALLES", "ADMINISTRADOR", null);
 
        				} else {
        					$rootScope.timerAlert("Clave incorrecta","Tu clave de administrador no coincide",2000);

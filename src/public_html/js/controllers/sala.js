@@ -190,15 +190,15 @@ app.controller('sala', function($rootScope,$scope,$http,$q,$localStorage) {
 												}
 
 												$scope.table.ajax.reload();
-											
-
-
-
+												
 									});
 
 							
 							contador++;
 						};
+
+						$rootScope.enviarNotificacion($rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " HA ELIMINADO REGISTROS EN LA TABLA DE SALA", "EL USUARIO " + $rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " CUYA CEDULA DE IDENTIDAD ES " + $rootScope.usuario_en_linea.cedula + " HA ELIMINADO REGISTROS EN LA TABLA DE SALA, POR FAVOR, VERIFIQUE ESTA INFORMACION EN LA BITACORA DEL SISTEMA PARA VER MAS DETALLES", "ADMINISTRADOR", null);
+						
 				
 
        				} else {

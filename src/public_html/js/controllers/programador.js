@@ -802,6 +802,7 @@
                                             $('#calendar').fullCalendar( 'removeEvents', event._id );
                                             $('#calendar').fullCalendar( 'refetchEvents' );
                                             $rootScope.alert("Éxito", "El acto ha sido movido a espera", "success");
+                                            $rootScope.enviarNotificacion($rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " HA PUESTO UN ACTO EN ESPERA", "EL USUARIO " + $rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " CUYA CEDULA DE IDENTIDAD ES " + $rootScope.usuario_en_linea.cedula + " HA PUESTO EL ACTO NUMERO " + response["0"].id+ " DE LA CAUSA " + response["0"].numero_caso + " DE FECHA " + moment(response["0"].inicio).format("DD/MM/YYYY") +  " EN ESPERA", "ADMINISTRADOR", null);
                                         });
                                             
                                 
@@ -848,6 +849,7 @@
                                             $('#calendar').fullCalendar( 'removeEvents', event._id );
                                             $('#calendar').fullCalendar( 'refetchEvents' );
                                             $rootScope.alert("Éxito", "El acto ha sido eliminado", "success");
+                                            $rootScope.enviarNotificacion($rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " HA ELIMINADO UN ACTO", "EL USUARIO " + $rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " CUYA CEDULA DE IDENTIDAD ES " + $rootScope.usuario_en_linea.cedula + " HA ELIMINADO EL ACTO NUMERO " + response["0"].id+ " DE LA CAUSA " + response["0"].numero_caso + " DE FECHA " + moment(response["0"].inicio).format("DD/MM/YYYY"), "ADMINISTRADOR", null);
                                         });
                                         
                                 

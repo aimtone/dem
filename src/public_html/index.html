@@ -176,19 +176,28 @@
 							Notificaciones recientes
 						</h5>
 					</span>
-                <div style="border:none;color:white;" class="collection">
-                    <a ng-click="notificacionVista(n.id);cargarMensaje(n.id);" style="border:none;color:white;" href="javascript:void(0)" ng-repeat="n in notificaciones | limitTo : 5" class="collection-item avatar blue">
+                <div ng-show="notificaciones != null" style="border:none;color:white;" class="collection">
+                    <a ng-click="notificacionVista(n.id);cargarMensaje(n.id_notificaciones_usuario);" style="border:none;color:white;" href="javascript:void(0)" ng-repeat="n in notificaciones | limitTo : 5" class="collection-item avatar blue">
 
 						
 					      <img src="assets/images/{{n.icon}}" alt="" class="circle">
 
-					      <b ng-show="n.status == 1" class="title">{{n.title}}</b>
-					      <span ng-show="n.status == 0" class="title">{{n.title}}</span>
-					      <span ng-show="n.status == 2" class="title">{{n.title}}</span>
+					      <b ng-show="n.status == 1" class="title">
+
+                            {{n.emisor}}   <br>
+                          {{n.title}}</b>
+					      <span ng-show="n.status == 0" class="title">
+
+                            {{n.emisor}}   <br>
+                          {{n.title}}</span>
+					      
 					    </a>
                     <a href="#!/notificaciones" class="blue center">
 					      Ver todos
 					    </a>
+                </div>
+                <div class="center" ng-show="notificaciones == null">
+                    <a href="#!/notificaciones">No hay notificaciones</a>
                 </div>
                 <div class="button-group">
                     <a href="#!/perfil" class="waves-effect">Perfil</a>
@@ -368,6 +377,8 @@
     <script src="assets/js/angular-chart.js"></script>
     <script src="assets/js/FileSaver.js"></script>
     <script src="assets/js/Blob.js"></script>
+    <script src="assets/js/html2canvas.js"></script>
+    
     <!-- /JavaScript -->
     <!-- ------------------------------------------------------------------------------------- -->
 </body>

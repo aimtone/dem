@@ -11,7 +11,8 @@
 		    	data : "COUNT(*)",
 		    	titulo : "Cantidad de Actos por su estatus",
 		    	tipo : "bar",
-		    	agrupar: "estatus"
+		    	agrupar: ["estatus"],
+		    	representacion: "porcentaje"
 		    };
 
 		    
@@ -36,25 +37,6 @@
 				   					{
 			    						nombre: "ID del tipo de tribunal",
 			    						nombre_real: "id_tipo_tribunal"
-			    					}
-		    					]
-		    			},
-		    			{
-		    				nombre: "Actividad2",
-		    				nombre_real: "actividad2",
-		    				campos: 
-		    					[
-			    					{
-				    					nombre: "ID2",
-				    					nombre_real: "ID2"
-				    				},
-				   					{
-				   						nombre: "Actividad2",
-				   						nombre_real: "actividad2"
-				   					},
-				   					{
-			    						nombre: "ID del tipo de tribunal2",
-			    						nombre_real: "id_tipo_tribunal2"
 			    					}
 		    					]
 		    			}
@@ -92,7 +74,6 @@
 
 		    ];
 
-		    console.log($scope.tablas);
 
 		   /*
 		   @params
@@ -104,7 +85,7 @@
 		   agrupar: 	agrupar
 		   */
 
-		    $rootScope.cargarChart = function(titulo, pocision, tabla, etiquetas, datos, agrupar) {
+		    $rootScope.cargarChart = function(titulo, pocision, tabla, etiquetas, datos, agrupar, representacion) {
 	            var labels = [];
 	            var data = [];
 
@@ -112,13 +93,17 @@
 			    	campos: datos + " AS cantidad"
 	            });
 
+	            var join_agrupar = agrupar.join();
+
+	            
+
 	           
 	            $rootScope.get('api/'+tabla+'?filter=' + filter1).then(function(response) {
 
 	            	var cantidad = response["0"].cantidad;
 	            	var filter = JSON.stringify({
 				    	campos: etiquetas + " AS labels, " + datos + " AS data",
-		                agruparPor: "GROUP BY " + agrupar
+		                agruparPor: "GROUP BY " + join_agrupar
 		            });
 
 		            $rootScope.get('api/'+tabla+'?filter=' + filter).then(function(response) {
@@ -126,7 +111,14 @@
 		            	console.log(response);
 		                for (var i = response.length - 1; i >= 0; i--) {
 		                	labels.push(response[i].labels);
-		                	data.push($rootScope.redondear((100 * response[i].data)/cantidad, 2));
+
+		                	if(representacion=="porcentaje") {
+		                		data.push($rootScope.redondear((100 * response[i].data)/cantidad, 2));
+		                	} else {
+		                		data.push(response[i].data);
+		                	}
+		                	
+		                	
 		                }
 
 		                var object = {
@@ -159,13 +151,20 @@
 		    }
 
 
-		    $rootScope.cargarChart($scope.grafico.titulo, 0, $scope.grafico.tabla, $scope.grafico.label, $scope.grafico.data, $scope.grafico.agrupar);
+		    $rootScope.cargarChart($scope.grafico.titulo, 0, $scope.grafico.tabla, $scope.grafico.label, $scope.grafico.data, $scope.grafico.agrupar, $scope.grafico.representacion);
 
 		    var date = moment().format("YYYY-MM-DD");
 		    $rootScope.cargarEventos(date);
 		    
 		    $rootScope.cargarEjeX = function(array) {
-		    	console.log(array);
+		    	if(array=="actividad") {
+		    		$scope.data_field = $scope.tablas["0"].tablas["0"].campos;
+
+		    	}
+		    	if(array=="acto_sala") {
+		    		$scope.data_field = $scope.tablas["1"].tablas["0"].campos;
+
+		    	}
 		    	
 		    }
 
@@ -200,6 +199,43 @@
 		        return blob;
 		    }
 
+		    $rootScope.canvasToPDF = function() {
+		    	html2canvas($('div.grafico:not(.ng-hide) canvas'), {
+	            onrendered: function (canvas) {
+	                var data = canvas.toDataURL();
+	                var docDefinition = {
+	                    content: [
+	                    	{
+			                    text: 'AGENDA UNICA DE ACTOS',
+			                    alignment: 'center'
+			                },
+			                {
+			                    text: 'CIRCUITO JUDICIAL PENAL DEL ESTADO YARACUY',
+			                    alignment: 'center'
+			                },
+			                {
+			                    text: moment().format("DD/MM/YYYY"),
+			                    alignment: 'center',
+			                    margin: [5, 2, 10, 20]
+			                },
+		                    {
+		                    	text: $scope.grafico.titulo,
+		                    	alignment: "center",
+		                    	style: "bold"
+		                    },
+		                    {
+		                        image: data,
+		                        width: 400,
+		                        alignment:"center",
+		                        margin: [20, 20, 20, 20]
+		                    }
+	                    ]
+	                };
+	                pdfMake.createPdf(docDefinition).download($scope.grafico.titulo + ".pdf");
+	            }
+	        });
+		    }
+
 		    $rootScope.generarPDF = function() {
 
 		    	var filter = JSON.stringify({
@@ -217,7 +253,7 @@
 
 
 		    		var docDefinition = {
-			            //header: "Direccion Ejecutiva de la Magistratura",
+			            //header:"",
 			            footer: function(currentPage, pageCount) {
 			                return {
 			                    text: 'Página ' + currentPage.toString() + ' de ' + pageCount,
@@ -229,12 +265,22 @@
 			            pageMargins: [40, 60, 40, 60],
 			            content: [
 			            	{
-			                    text: 'Agenda Unica de Actos',
-			                    style: 'header'
+			                    text: 'AGENDA UNICA DE ACTOS',
+			                    alignment: 'center'
+			                },
+			                {
+			                    text: 'CIRCUITO JUDICIAL PENAL DEL ESTADO YARACUY',
+			                    alignment: 'center'
+			                },
+			                {
+			                    text: moment().format("DD/MM/YYYY"),
+			                    alignment: 'center',
+			                    margin: [5, 2, 10, 20]
 			                },
 			            	{
 			                    table: {
 			                        headerRows: 1,
+			                        alignment: "center",
 			                        //widths: ['*', 'auto', 100, '*'],
 
 			                        body: table_body
@@ -243,7 +289,7 @@
 			            ],
 			            styles: {
 			                header: {
-			                    fontSize: 22,
+			                    fontSize: 16,
 			                    bold: true
 			                },
 			                anotherStyle: {
