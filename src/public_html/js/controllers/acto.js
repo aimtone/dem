@@ -192,7 +192,7 @@
 
                                 var filter = JSON.stringify(filtro).toString();
 
-                                var tipoPersonas = ["imputado", "victima", "fiscal", "alguacil", "secretaria", "juez", "defensor", "testigo"];
+                                var tipoPersonas = ["imputado", "victima", "fiscal", "alguacil", "juez", "defensor", "testigo"];
 
                                 for (var x = 0; x < tipoPersonas.length; x++) {
                                     $rootScope.get("api/caso_" + tipoPersonas[x] + "?filter=" + filter).then(function(response) {
@@ -339,7 +339,7 @@
 
                                 var filter = JSON.stringify(filtro).toString();
 
-                                var tipoPersonas = ["imputado", "victima", "fiscal", "alguacil", "secretaria", "juez", "defensor", "testigo"];
+                                var tipoPersonas = ["imputado", "victima", "fiscal", "alguacil", "juez", "defensor", "testigo"];
 
                                 for (var x = 0; x < tipoPersonas.length; x++) {
                                     $rootScope.get("api/caso_" + tipoPersonas[x] + "?filter=" + filter).then(function(response) {

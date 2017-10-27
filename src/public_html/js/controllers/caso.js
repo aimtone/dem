@@ -123,7 +123,8 @@
                         return;
                     }   
 
-
+                    $scope.datos.id_usuario = $rootScope.id_usuario;
+                    
                     if($rootScope.existe_caso==false) {
                         console.log("VA A REGISTRAR");
                         $rootScope.post('api/caso', $scope.datos).then(function(response) {
@@ -177,7 +178,7 @@
                                 if(response.length==1) {
 
                                     
-                                    var tipoPersonas = ["imputado", "victima", "fiscal", "alguacil", "secretaria", "juez", "defensor", "testigo"];
+                                    var tipoPersonas = ["imputado", "victima", "fiscal", "alguacil", "juez", "defensor", "testigo"];
 
                                     for(var x = 0;x < tipoPersonas.length;x++) {
                                         $rootScope.delete('api/caso_'+tipoPersonas[x]+"?data=numero_caso='"+$scope.datos.numero+"'").then(function(response) {
@@ -290,7 +291,7 @@
                             donde: "where numero_caso = '" + $scope.datos.numero + "'"
                         });
 
-                        var tipoPersonas = ["imputado", "victima", "fiscal", "alguacil", "secretaria", "juez", "defensor", "testigo"];
+                        var tipoPersonas = ["imputado", "victima", "fiscal", "alguacil", "juez", "defensor", "testigo"];
 
                         for(var x = 0; x < tipoPersonas.length; x++) {
                             $rootScope.get("api/caso_"+tipoPersonas[x]+"?filter=" + filter).then(function(response) {

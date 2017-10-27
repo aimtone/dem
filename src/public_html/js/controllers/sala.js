@@ -154,7 +154,7 @@ app.controller('sala', function($rootScope,$scope,$http,$q,$localStorage) {
         		var clave = $rootScope.sha1(md5(response));
 
         		var filter = JSON.stringify({
-        			donde: "where nivel = 'ADMINISTRADOR' and clave = '"+clave+"'"
+        			donde: "where nivel = 'ADMINISTRADOR' AND id_usuario = 0 AND clave = '"+clave+"'"
         		});
 
         		$rootScope.get('api/usuario?filter='+filter).then(function(response) {
@@ -293,10 +293,12 @@ app.controller('sala', function($rootScope,$scope,$http,$q,$localStorage) {
 	            	className: 'toolbar csv'
 	            },
 	            {
-	            	extend: 'pdf',
-	            	text: "<i title='Exportar a PDF' class='fa fa-file-pdf-o'></i>",
-	            	className: 'toolbar pdf'
-	            }
+                            extend: 'pdfHtml5',
+                            orientation: 'landscape',
+                            pageSize: 'LEGAL',
+                            text: "<i title='Exportar a PDF' class='fa fa-file-pdf-o'></i>",
+                            className: 'toolbar pdf'
+                        }
 
 	        ],
 			ajax: {

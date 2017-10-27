@@ -1,98 +1,83 @@
 <table id="example" class="display order-column compact" cellspacing="0" width="100%">
-
-        
 </table>
-
-
- <div class="fixed-action-btn toolbar" >
+<div class="fixed-action-btn toolbar">
     <a class="btn-floating btn-large blue">
       <i class="large material-icons">mode_edit</i>
     </a>
     <ul>
-      <li class="waves-effect waves-light" ><a href="" ng-click="openModal('#modal1','registrar')"><i class="material-icons">add_circle</i></a></li>
-      <li class="waves-effect waves-light"><a href="" ng-click="openModal('#modal1','modificar')"><i class="material-icons">create</i></a></li>
-      <li class="waves-effect waves-light"><a ng-click="rowDelete()" href=""><i class="material-icons">delete</i></a></li>
-      
+        <li class="waves-effect waves-light"><a href="" ng-click="openModal('#modal1','registrar')"><i class="material-icons">add_circle</i></a></li>
+        <li class="waves-effect waves-light"><a href="" ng-click="openModal('#modal1','modificar')"><i class="material-icons">create</i></a></li>
+        <li class="waves-effect waves-light"><a ng-click="rowDelete()" href=""><i class="material-icons">delete</i></a></li>
     </ul>
-  </div>
-
-
-
-  <!-- Modal Structure -->
-  <div id="modal1" class="modal modal-fixed-footer">
+</div>
+<!-- Modal Structure -->
+<div id="modal1" class="modal modal-fixed-footer">
     <div class="modal-content">
-      <h4>{{objeto}}</h4>
-      <div class="row">
-        <div class="input-field col s12">
-          <input name="id" type="hidden" ng-model="datos.id" ng-value="datos.id">
-
-          <input  name="id_usuario" type="hidden" ng-model="datos.id_usuario" ng-value="datos.id_usuario">
-
-          <input name="fecha_de_registro" type="hidden" ng-model="data.fecha_de_registro" ng-value="data.fecha_de_registro">
-
-          <input name="cedula" ng-disabled="button == 'modificar'"  ng-blur="getPersona(datos.cedula)" id="cedula" type="text" class="validate" required ng-keyup="getPersonas(datos)" ng-model="datos.cedula" ng-value="datos.cedula">
-
-          <ul class="collection autocomplete">
-            <li ng-click="getPersona(x.cedula)"  ng-repeat="x in personas" class="collection-item">
-              <i class="material-icons left">perm_identity</i> {{x.descripcion}} <span class="right hide-on-small-only"><b>{{x.cedula}}</b></span>
-            </li>
-          </ul>
-
-          <label class="active" for="cedula">Cédula</label>
+        <h4>{{objeto}}</h4>
+        <div class="row">
+            <div class="input-field col s12">
+                <input name="id" type="hidden" ng-model="datos.id" ng-value="datos.id">
+                <input name="id_usuario" type="hidden" ng-model="datos.id_usuario" ng-value="datos.id_usuario">
+                <input name="fecha_de_registro" type="hidden" ng-model="data.fecha_de_registro" ng-value="data.fecha_de_registro">
+                <input name="cedula" ng-disabled="button == 'modificar'" ng-blur="getPersona(datos.cedula)" id="cedula" type="text" class="validate" required ng-keyup="getPersonas(datos)" ng-model="datos.cedula" ng-value="datos.cedula">
+                <ul class="collection autocomplete">
+                    <li ng-click="getPersona(x.cedula)" ng-repeat="x in personas" class="collection-item">
+                        <i class="material-icons left">perm_identity</i> {{x.descripcion}} <span class="right hide-on-small-only"><b>{{x.cedula}}</b></span>
+                    </li>
+                </ul>
+                <label class="active" for="cedula">Cédula</label>
+            </div>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="input-field col s12 m12 l4">
-          <input name="nombres" type="text" class="validate" ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);" ng-model="datos.nombres" ng-value="datos.nombres" required>
-          <label class="active" for="nombres">Nombres</label>
+        <div class="row">
+            <div class="input-field col s12 m12 l4">
+                <input name="nombres" type="text" class="validate" ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);" ng-model="datos.nombres" ng-value="datos.nombres" required>
+                <label class="active" for="nombres">Nombres</label>
+            </div>
+            <div class="input-field col s12 m12 l4">
+                <input name="apellidos" type="text" class="validate" ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);" ng-model="datos.apellidos" ng-value="datos.apellidos" required>
+                <label class="active" for="apellidos">Apellidos</label>
+            </div>
+            <div class="input-field col s12 m12 l4">
+                <input name="fecha_de_nacimiento" id="fecha_de_nacimiento" type="text" class="validate" ng-model="datos.fecha_de_nacimiento" ng-value="datos.fecha_de_nacimiento" required>
+                <label class="active" for="fecha_de_nacimiento">Fecha de Nacimiento</label>
+            </div>
         </div>
-
-        <div class="input-field col s12 m12 l4">
-          <input  name="apellidos" type="text" class="validate" ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);" ng-model="datos.apellidos" ng-value="datos.apellidos" required>
-          <label class="active" for="apellidos">Apellidos</label>
+        <div class="row">
+            <div class="input-field col s12 m12 l4">
+                <input name="email" type="email" class="validate" ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);" ng-model="datos.email" ng-value="datos.email" required>
+                <label class="active" for="email">Email</label>
+            </div>
+            <div class="input-field col s12 m12 l4">
+                <input name="telefono" id="telefono" type="text" class="validate" ng-model="datos.telefono" ng-value="datos.telefono" required>
+                <label class="active" for="telefono">Teléfono</label>
+            </div>
+            <div class="input-field col s12 m12 l4">
+                <input name="numero" id="numero" type="number" class="validate" ng-model="datos.numero" ng-value="datos.numero" required>
+                <label class="active" for="numero">Número</label>
+            </div>
         </div>
-
-        <div class="input-field col s12 m12 l4">
-          <input  name="fecha_de_nacimiento" id="fecha_de_nacimiento" type="text" class="validate" ng-model="datos.fecha_de_nacimiento" ng-value="datos.fecha_de_nacimiento" required>
-          <label class="active" for="fecha_de_nacimiento">Fecha de Nacimiento</label>
+        <div class="row">
+            <div class="input-field col s12 m12 l4">
+                <select ng-model="selTipoTribunal" class="browser-default" ng-change="mostrarTribunal();" ng-options="x.id as x.descripcion for x in JSONTipoTribunal">
+                    <option value="" selected>Seleccionar Tipo de Tribunal</option>
+                </select>
+            </div>
+            <div class="input-field col s12 m12 l4">
+                <select disabled id="tribunal" ng-model="datos.id_tribunal" class="browser-default" ng-options="y.id as y.numero for y in JSONTribunal">
+                    <option value="" disabled selected>Seleccionar Tribunal</option>
+                </select>
+            </div>
+            <div class="input-field col s12 m12 l4">
+                <select class="browser-default" name="tipo" id="tipo" ng-model="datos.tipo">
+                    <option value="PRINCIPAL">PRINCIPAL</option>
+                    <option value="SUPLENTE">SUPLENTE</option>
+                </select>
+                <label class="active" for="tipo">Tipo</label>
+            </div>
         </div>
-      </div>
-
-      
-     
-
-      <div class="row">
-
-
-        <div class="input-field col s12 m12 l4">
-          <input name="email" type="email" class="validate" ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);" ng-model="datos.email" ng-value="datos.email" required>
-          <label class="active" for="email">Email</label>
-        </div>
-
-        <div class="input-field col s12 m12 l4">
-          <input name="telefono" id="telefono" type="text" class="validate" ng-model="datos.telefono" ng-value="datos.telefono" required>
-          <label class="active" for="telefono">Teléfono</label>
-        </div>
-
-        <div class="input-field col s12 m12 l4">
-          <input name="numero" id="numero" type="number" class="validate" ng-model="datos.numero" ng-value="datos.numero" required>
-          <label class="active" for="numero">Número</label>
-        </div>
-      </div>
-
-
-
-
-      
-       
-
     </div>
     <div class="modal-footer">
-      <a href="" ng-click="closeModal('#modal1', 'cancelar');modalAction('cancelar')" class="waves-effect waves-green btn-flat">Cancelar</a>
-      <a href="" ng-click="closeModal('#modal1', 'ok');modalAction('ok')" id="addRow" class="waves-effect waves-green btn-flat">OK</a>
+        <a href="" ng-click="closeModal('#modal1', 'cancelar');modalAction('cancelar')" class="waves-effect waves-green btn-flat">Cancelar</a>
+        <a href="" ng-click="closeModal('#modal1', 'ok');modalAction('ok')" id="addRow" class="waves-effect waves-green btn-flat">OK</a>
     </div>
-  </div>
-
-
- 
+</div>

@@ -93,8 +93,8 @@
                     <li ng-show="x === true"><a href="#!/defensor">Defensor</a></li>
                     <li ng-show="x === true"><a href="#!/juez">Juez</a></li>
                     <li ng-show="x === true"><a href="#!/alguacil">Alguacil</a></li>
-                    <li ng-show="x === true"><a href="#!/secretaria">Secretaria</a></li>
-                    <li ng-show="x === true"><a href="#!/victima">Víctima</a></li>
+<!--                     <li ng-show="x === true"><a href="#!/secretaria">Secretaria</a></li>
+ -->                    <li ng-show="x === true"><a href="#!/victima">Víctima</a></li>
                     <li ng-show="x === true"><a href="#!/imputado">Imputado</a></li>
                     <li ng-show="x === true"><a href="#!/testigo">Testigo</a></li>
                     <li ng-show="x === true"><a href="#!/fiscal">Físcal</a></li>
@@ -121,19 +121,17 @@
 						</h5>
 					</span>
                 <div ng-show="notificaciones != null" style="border:none;color:white;" class="collection">
-                    <a ng-click="notificacionVista(n.id);cargarMensaje(n.id_notificaciones_usuario);" style="border:none;color:white;" href="javascript:void(0)" ng-repeat="n in notificaciones | limitTo : 5" class="collection-item avatar blue">
+                    <a ng-click="notificacionVista(n.id);cargarMensaje(n.id_notificaciones_usuario);" style="border:none;color:white;font-size: 10px" href="javascript:void(0)" ng-repeat="n in notificaciones | limitTo : 5" class="collection-item avatar blue">
 
 						
 					      <img src="assets/images/{{n.icon}}" alt="" class="circle">
 
 					      <b ng-show="n.status == 1" class="title">
 
-                            {{n.emisor}}   <br>
-                          {{n.title}}</b>
+                          <span style="font-size: 12px">{{n.title}}</span></b>
 					      <span ng-show="n.status == 0" class="title">
 
-                            {{n.emisor}}   <br>
-                          {{n.title}}</span>
+                          <span style="font-size: 12px">{{n.title}}</span></span>
 					      
 					    </a>
                     <a href="#!/notificaciones" class="blue center">
@@ -288,8 +286,8 @@
     <script src="assets/js/controllers/casos.js?ver=1.0"></script>
     <script src="assets/js/controllers/actos.js?ver=1.0"></script>
     <script src="assets/js/controllers/caso.js?ver=1.0"></script>
-    <script src="assets/js/controllers/secretaria.js?ver=1.0"></script>
-    <script src="assets/js/controllers/alguacil.js?ver=1.0"></script>
+<!--     <script src="assets/js/controllers/secretaria.js?ver=1.0"></script>
+ -->    <script src="assets/js/controllers/alguacil.js?ver=1.0"></script>
     <script src="assets/js/controllers/imputado.js?ver=1.0"></script>
     <script src="assets/js/controllers/juez.js?ver=1.0"></script>
     <script src="assets/js/controllers/victima.js?ver=1.0"></script>

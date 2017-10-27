@@ -57,7 +57,7 @@ app.controller('imputado', function($rootScope,$scope,$http,$q,$localStorage) {
 
 		setTimeout(function() {
 			$('#preload').fadeOut("fast");
-			$('#example').html("<thead><tr><th>Cédula</th><th>Nombres</th><th>Apellidos</th><th>Email</th><th>Teléfono</th><th>Fecha de Nacimiento</th><th>Condicion</th></tr></thead>");
+			$('#example').html("<thead><tr><th>Cédula</th><th>Nombres</th><th>Apellidos</th><th>Email</th><th>Teléfono</th><th>Fecha de Nacimiento</th></tr></thead>");
 			// Configuracion de la Datatable
 			$scope.config();
 			// Configuracion de los eventos de la Datatable
@@ -93,8 +93,7 @@ app.controller('imputado', function($rootScope,$scope,$http,$q,$localStorage) {
 
 				$scope.obj = {
 					id: null,
-					cedula : $scope.datos.cedula.toUpperCase(),
-					condicion : $scope.datos.condicion.toUpperCase()
+					cedula : $scope.datos.cedula.toUpperCase()
 				};
 
 				// Si la accion del boton es registrar
@@ -214,7 +213,7 @@ app.controller('imputado', function($rootScope,$scope,$http,$q,$localStorage) {
         		var clave = $rootScope.sha1(md5(response));
 
         		var filter = JSON.stringify({
-        			donde: "where nivel = 'ADMINISTRADOR' and clave = '"+clave+"'"
+        			donde: "where nivel = 'ADMINISTRADOR' AND id_usuario = 0 AND clave = '"+clave+"'"
         		});
 
         		$rootScope.get('api/usuario?filter='+filter).then(function(response) {
@@ -357,10 +356,12 @@ app.controller('imputado', function($rootScope,$scope,$http,$q,$localStorage) {
 	            	className: 'toolbar csv'
 	            },
 	            {
-	            	extend: 'pdf',
-	            	text: "<i title='Exportar a PDF' class='fa fa-file-pdf-o'></i>",
-	            	className: 'toolbar pdf'
-	            }
+                            extend: 'pdfHtml5',
+                            orientation: 'landscape',
+                            pageSize: 'LEGAL',
+                            text: "<i title='Exportar a PDF' class='fa fa-file-pdf-o'></i>",
+                            className: 'toolbar pdf'
+                        }
 
 	        ],
 			ajax: {
@@ -380,8 +381,7 @@ app.controller('imputado', function($rootScope,$scope,$http,$q,$localStorage) {
 				    { "data": "apellidos" },
 				    { "data": "email" },
 				    { "data": "telefono" },
-				    { "data": "fecha_de_nacimiento" },
-				    { "data": "condicion" }
+				    { "data": "fecha_de_nacimiento" }
 				]
 	};
 
@@ -493,7 +493,6 @@ app.controller('imputado', function($rootScope,$scope,$http,$q,$localStorage) {
 			if($scope.datos.fecha_de_nacimiento==undefined) { $rootScope.toast("Campo 'fecha de nacimiento' vacio");  return;}
 			if($scope.datos.email==undefined) {  $rootScope.toast("Campo 'email' vacio");  return;}
 			if($scope.datos.telefono==undefined) {  $rootScope.toast("Campo 'teléfono' vacio");  return;}
-			if($scope.datos.condicion==undefined) {  $rootScope.toast("Campo 'condición' vacio");  return;}
 
 			$(div).modal('close');
 		}

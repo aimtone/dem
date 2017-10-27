@@ -1142,7 +1142,7 @@
 
 		    $rootScope.enviarNotificacion = function(title, body, rol, user) {
 
-		    	if(rol == null && user == null) {
+		    	if(rol == null && user == null) { // DIFUSION
 		    		var mensaje = JSON.stringify({
 		                tipo: "notificacion",
 		                ip: $rootScope.ip,
@@ -1155,7 +1155,7 @@
 		    	}
 
 		        if (rol != null) {
-		            var mensaje = JSON.stringify({
+		            var mensaje = JSON.stringify({ // PERSONAL
 		                tipo: "notificacion",
 		                ip: $rootScope.ip,
 		                icon: "5.png",
@@ -1167,7 +1167,7 @@
 		        }
 
 		        if (user != null) {
-		            var mensaje = JSON.stringify({
+		            var mensaje = JSON.stringify({ // GRUPO
 		                tipo: "notificacion",
 		                ip: $rootScope.ip,
 		                icon: "3.png",
@@ -1229,12 +1229,15 @@
 		        		});
 
 		        	}
-
-		        	$rootScope.cargarNotificacionesCompletas();
+		        	setTimeout(function() {
+		        		$rootScope.cargarNotificacionesCompletas();
                     $rootScope.cargarBadget();
 
 		        	var payload = JSON.stringify(response["0"]);
 		        	$rootScope.server.send('message', payload);
+		        	}, 5000);
+
+		        	
 
 		        }, function(response) {});
 		    };

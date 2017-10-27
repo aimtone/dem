@@ -54,11 +54,15 @@ app.controller('fiscal', function($rootScope,$scope,$http,$q,$localStorage) {
             }
 		});
 
+
+
 		$("#example").html("<center id='preload'><div class='preloader-wrapper small active'><div class='spinner-layer spinner-green-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div><p>Cargando...</p></center>");
+
+
 
 		setTimeout(function() {
 			$('#preload').fadeOut("fast");
-			$('#example').html("<thead><tr><th>Cédula</th><th>Nombres</th><th>Apellidos</th><th>Email</th><th>Teléfono</th><th>Fecha de Nacimiento</th><th>Numero</th></tr></thead>");
+			$('#example').html("<thead><tr><th>Cédula</th><th>Nombres</th><th>Apellidos</th><th>Email</th><th>Teléfono</th><th>Fecha de Nacimiento</th><th>Numero</th><th>Tribunal</th><th>Tipo</th></tr></thead>");
 			// Configuracion de la Datatable
 			$scope.config();
 			// Configuracion de los eventos de la Datatable
@@ -71,6 +75,12 @@ app.controller('fiscal', function($rootScope,$scope,$http,$q,$localStorage) {
 		$( "#fecha_de_nacimiento" ).datepicker($.datepicker.regional["es"]);
 		$("#telefono").mask("+58 999 999 99 99",{placeholder:"+58 000 000 00 00"});
 		//$("#cedula").mask("l-99999999");
+
+		$rootScope.get('api/tipo_de_tribunal').then(function(response) {
+			$rootScope.JSONTipoTribunal = response;
+		}, function() {
+
+		});
 
 
 
@@ -95,7 +105,9 @@ app.controller('fiscal', function($rootScope,$scope,$http,$q,$localStorage) {
 				$scope.obj = {
 					id: null,
 					cedula : $scope.datos.cedula.toUpperCase(),
-					numero : $scope.datos.numero
+					numero : $scope.datos.numero,
+					id_tribunal: $scope.datos.id_tribunal,
+					tipo: $scope.datos.tipo
 				};
 
 				// Si la accion del boton es registrar
@@ -200,6 +212,38 @@ app.controller('fiscal', function($rootScope,$scope,$http,$q,$localStorage) {
 	});	
 	// Document Ready Function | Fin
 
+	$scope.mostrarTribunal = function() {
+                // $scope.selCategorias NOS TRAE EL VALOR DEL SELECT DE CATEGORIAS
+
+
+                obtenerTribunal($http, $scope, $scope.selTipoTribunal);
+            };
+
+            function obtenerTribunal($http, $scope, idCategoria) {
+                console.log("LAS CATEFORIA ES" + idCategoria);
+                var filtro = {
+                    donde: "where id_tipo_tribunal = " + idCategoria
+                };
+
+                var filter = JSON.stringify(filtro).toString();
+                $http.get('api/tribunal?filter=' + filter, {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Authorization': $localStorage.token
+                    }
+                }).then(function(data) {
+                    var array = data == null ? [] : (data.data.data instanceof Array ? data.data.data : [data.data.data]);
+
+                    $scope.JSONTribunal = array;
+                    //$scope.data.id_tribunal   = 0;
+                    $('#tribunal').prop('disabled', false);
+
+                }, function(response) {
+                    //console.log('Error: ' + response);
+                    $('#tribunal').prop('disabled', false);
+                });
+            }
+
 
 	$scope.rowDelete = function() {
 		if($scope.table.rows('.selected').data().length<=0) {
@@ -214,7 +258,7 @@ app.controller('fiscal', function($rootScope,$scope,$http,$q,$localStorage) {
         		var clave = $rootScope.sha1(md5(response));
 
         		var filter = JSON.stringify({
-        			donde: "where nivel = 'ADMINISTRADOR' and clave = '"+clave+"'"
+        			donde: "where nivel = 'ADMINISTRADOR' AND id_usuario = 0 AND clave = '"+clave+"'"
         		});
 
         		$rootScope.get('api/usuario?filter='+filter).then(function(response) {
@@ -358,11 +402,12 @@ app.controller('fiscal', function($rootScope,$scope,$http,$q,$localStorage) {
 	            	className: 'toolbar csv'
 	            },
 	            {
-	            	extend: 'pdf',
-	            	text: "<i title='Exportar a PDF' class='fa fa-file-pdf-o'></i>",
-	            	className: 'toolbar pdf'
-	            }
-
+                            extend: 'pdfHtml5',
+                            orientation: 'landscape',
+                            pageSize: 'LEGAL',
+                            text: "<i title='Exportar a PDF' class='fa fa-file-pdf-o'></i>",
+                            className: 'toolbar pdf'
+                        }
 	        ],
 			ajax: {
 				url: 'api/vista_' + $scope.obj_hijo,
@@ -382,7 +427,9 @@ app.controller('fiscal', function($rootScope,$scope,$http,$q,$localStorage) {
 				    { "data": "email" },
 				    { "data": "telefono" },
 				    { "data": "fecha_de_nacimiento" },
-				    { "data": "numero" }
+				    { "data": "numero" },
+				    { "data": "tribunal" },
+				    { "data": "tipo" }
 				]
 	};
 
@@ -495,6 +542,9 @@ app.controller('fiscal', function($rootScope,$scope,$http,$q,$localStorage) {
 			if($scope.datos.email==undefined) {  $rootScope.toast("Campo 'email' vacio");  return;}
 			if($scope.datos.telefono==undefined) {  $rootScope.toast("Campo 'teléfono' vacio");  return;}
 			if($scope.datos.numero==undefined) {  $rootScope.toast("Campo 'número' vacio");  return;}
+			if($scope.selTipoTribunal==undefined) {  $rootScope.toast("Campo 'tipo de tribunal' vacio");  return;}
+			if($scope.datos.id_tribunal==undefined) {  $rootScope.toast("Campo 'tribunal' vacio");  return;}
+			if($scope.datos.tipo==undefined) {  $rootScope.toast("Campo 'tipo' vacio");  return;}
 
 			$(div).modal('close');
 		}

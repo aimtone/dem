@@ -57,8 +57,8 @@
 		                                var clave = $rootScope.sha1(md5(response));
 
 		                                var filter = JSON.stringify({
-		                                    donde: "where nivel = 'ADMINISTRADOR' and clave = '"+clave+"'"
-		                                });
+        			donde: "where nivel = 'ADMINISTRADOR' AND id_usuario = 0 AND clave = '"+clave+"'"
+        		});
 
 		                                $rootScope.get('api/usuario?filter='+filter).then(function(response) {
 		                                    console.log(response);

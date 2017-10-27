@@ -82,7 +82,8 @@ app.controller('tipo_de_tribunal', function($rootScope,$scope,$http,$q,$localSto
 
 				$scope.tipo_de_tribunal = {
 					id: null,
-					descripcion : $scope.datos.descripcion.toUpperCase()
+					descripcion : $scope.datos.descripcion.toUpperCase(),
+					id_usuario : $rootScope.id_usuario
 				};
 
 
@@ -151,7 +152,7 @@ app.controller('tipo_de_tribunal', function($rootScope,$scope,$http,$q,$localSto
         		var clave = $rootScope.sha1(md5(response));
 
         		var filter = JSON.stringify({
-        			donde: "where nivel = 'ADMINISTRADOR' and clave = '"+clave+"'"
+        			donde: "where nivel = 'ADMINISTRADOR' AND id_usuario = 0 AND clave = '"+clave+"'"
         		});
 
         		$rootScope.get('api/usuario?filter='+filter).then(function(response) {
@@ -279,10 +280,12 @@ app.controller('tipo_de_tribunal', function($rootScope,$scope,$http,$q,$localSto
 	            	className: 'toolbar csv'
 	            },
 	            {
-	            	extend: 'pdf',
-	            	text: "<i title='Exportar a PDF' class='fa fa-file-pdf-o'></i>",
-	            	className: 'toolbar pdf'
-	            }
+                            extend: 'pdfHtml5',
+                            orientation: 'landscape',
+                            pageSize: 'LEGAL',
+                            text: "<i title='Exportar a PDF' class='fa fa-file-pdf-o'></i>",
+                            className: 'toolbar pdf'
+                        }
 
 	        ],
 			ajax: {

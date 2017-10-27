@@ -15,7 +15,7 @@
             
                 // DataTable
                 var filter = JSON.stringify({
-                    ordenarPor : "ORDER BY id DESC"
+                    ordenarPor : "ORDER BY fecha DESC"
                 });
                 $scope.table = $('#example').DataTable( {
                     language: {
@@ -23,6 +23,7 @@
                     },
                    processing: false,
                     ordering: true,
+                    order: [[ 1, "desc" ]],
                     keys: false,
                     info: false,
                     stateSave: true,
@@ -85,7 +86,7 @@
                             
                            
                             { "data": "null", render: function ( data, type, row ) {
-                            	var fecha = moment(row.fecha).format("DD/MM/YYYY h:m a");
+                            	var fecha = moment(row.fecha).format("dddd, DD MMMM YYYY hh:mm a");
 						    	return fecha;
 						    } },
                             { "data": "operacion" },

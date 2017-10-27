@@ -779,8 +779,8 @@
                                 var clave = $rootScope.sha1(md5(response));
 
                                 var filter = JSON.stringify({
-                                    donde: "where nivel = 'ADMINISTRADOR' and clave = '"+clave+"'"
-                                });
+                    donde: "where nivel = 'ADMINISTRADOR' AND id_usuario = 0 AND clave = '"+clave+"'"
+                });
 
                                 $rootScope.get('api/usuario?filter='+filter).then(function(response) {
                                     console.log(response);
@@ -802,7 +802,7 @@
                                             $('#calendar').fullCalendar( 'removeEvents', event._id );
                                             $('#calendar').fullCalendar( 'refetchEvents' );
                                             $rootScope.alert("Éxito", "El acto ha sido movido a espera", "success");
-                                            $rootScope.enviarNotificacion($rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " HA PUESTO UN ACTO EN ESPERA", "EL USUARIO " + $rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " CUYA CEDULA DE IDENTIDAD ES " + $rootScope.usuario_en_linea.cedula + " HA PUESTO EL ACTO NUMERO " + response["0"].id+ " DE LA CAUSA " + response["0"].numero_caso + " DE FECHA " + moment(response["0"].inicio).format("DD/MM/YYYY") +  " EN ESPERA", "ADMINISTRADOR", null);
+                                            $rootScope.enviarNotificacion($rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " HA PUESTO UN ACTO EN ESPERA", "EL USUARIO " + $rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " CUYA CEDULA DE IDENTIDAD ES " + $rootScope.usuario_en_linea.cedula + " HA PUESTO EL ACTO NUMERO " + response["0"].id+ " DE LA CAUSA " + response["0"].numero_caso + " EN ESPERA", "ADMINISTRADOR", null);
                                         });
                                             
                                 
@@ -835,8 +835,8 @@
                                 var clave = $rootScope.sha1(md5(response));
 
                                 var filter = JSON.stringify({
-                                    donde: "where nivel = 'ADMINISTRADOR' and clave = '"+clave+"'"
-                                });
+                    donde: "where nivel = 'ADMINISTRADOR' AND id_usuario = 0 AND clave = '"+clave+"'"
+                });
 
                                 $rootScope.get('api/usuario?filter='+filter).then(function(response) {
                                     console.log(response);

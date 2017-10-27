@@ -9,7 +9,6 @@
 		  	"/programador/:fecha" : [1,2,3],
 		  	"/programador/:fecha/:id" : [1,2,3],
 		  	"/defensor" : [1,2,4],
-		  	"/secretaria" : [1,2,4],
 		  	"/alguacil" : [1,2,4],
 		  	"/imputado" : [1,2,4],
 		  	"/juez" : [1,2,4],
@@ -85,13 +84,7 @@
 							authorized: acceso["/defensor"]
 						}
 		            })
-		            .when('/secretaria', {
-		                templateUrl : 'assets/templates/secretaria.html?ver=1.0',
-		                controller  : 'secretaria',
-		                data: {
-							authorized: acceso["/secretaria"]
-						}
-		            })
+		            
 		            .when('/alguacil', {
 		                templateUrl : 'assets/templates/alguacil.html?ver=1.0',
 		                controller  : 'alguacil',

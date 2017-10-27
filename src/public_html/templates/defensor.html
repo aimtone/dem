@@ -91,7 +91,10 @@
         </div>
 
         <div class="input-field col s12 m12 l3">
-          <input name="tipo" id="tipo" type="text" class="validate" ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);" ng-model="datos.tipo" ng-value="datos.tipo" required>
+          <select class="browser-default" name="tipo" id="tipo" ng-model="datos.tipo" ng-value="datos.tipo" required>
+            <option selected value="PUBLICO">PUBLICO</option>
+            <option value="PRIVADO">PRIVADO</option>
+          </select>
           <label class="active" for="tipo">Tipo</label>
         </div>
       </div>
