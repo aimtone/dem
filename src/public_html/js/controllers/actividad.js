@@ -59,7 +59,7 @@ app.controller('actividad', function($rootScope,$scope,$http,$q,$localStorage) {
 
 		setTimeout(function() {
 			$('#preload').fadeOut("fast");
-			$('#example').html("<thead><tr><th>Numero</th><th>Tipo de Tribunal</th></tr></thead>");
+			$('#example').html("<thead><tr><th>Actividad</th><th>Tipo de Tribunal</th></tr></thead>");
 			// Configuracion de la Datatable
 			$scope.config();
 			// Configuracion de los eventos de la Datatable

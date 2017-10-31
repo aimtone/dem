@@ -67,7 +67,22 @@
 				   						nombre_real: "tipo_de_tribunal"
 				    				}
 		    					]
-		    			}
+		    			},
+		    			{
+		    				nombre: "Actividad",
+		    				nombre_real: "vista_actividad",
+		    				campos: 
+		    					[
+			    					{
+				    					nombre: "Actividad",
+				    					nombre_real: "actividad"
+				    				},
+				    				{
+				    					nombre: "Descripcion",
+				   						nombre_real: "descripcion"
+				   					}
+		    					]
+		    			},
 		    		]
 		    	}
 
@@ -108,7 +123,6 @@
 
 		            $rootScope.get('api/'+tabla+'?filter=' + filter).then(function(response) {
 
-		            	console.log(response);
 		                for (var i = response.length - 1; i >= 0; i--) {
 		                	labels.push(response[i].labels);
 
@@ -165,11 +179,14 @@
 		    		$scope.data_field = $scope.tablas["1"].tablas["0"].campos;
 
 		    	}
+		    	if(array=="vista_actividad") {
+		    		$scope.data_field = $scope.tablas["1"].tablas["1"].campos;
+
+		    	}
 		    	
 		    }
 
 		    $rootScope.cargarFiltro = function() {
-		        console.log("entra aca");
 		        alert($scope.filtroSeleccionado);
 		    };
 
@@ -253,10 +270,14 @@
 
 		    	$rootScope.get('api/vista_acto?filter='+filter).then(function(response) {
 
-		    		var table_body = [['ID','CAUSA','IMPUTADO','TRIBUNAL','FISCAL','DEFENSOR','ACTO','HORA','ALGUACIL','SALA','OBSERVACION']];
+		    		var table_body = [['ID','CAUSA','IMPUTADO','TRIBUNAL','TIPO DE TRIBUNAL','FISCAL','DEFENSOR','ACTO','HORA','ALGUACIL','SALA','OBSERVACION']];
 
 		    		for (var i = 0; i < response.length; i++) {
-		    			var data = [response[i].ID, response[i].CAUSA, response[i].IMPUTADO, response[i].TRIBUNAL,response[i].FISCAL,response[i].DEFENSOR, response[i].ACTO, moment(response[i].HORA).format("hh:mm a"), response[i].ALGUACIL,response[i].SALA, response[i].OBSERVACION];
+
+		    	
+		    			var data = [response[i].ID, response[i].CAUSA, response[i].IMPUTADO, response[i].TRIBUNAL, response[i].TIPO_DE_TRIBUNAL,response[i].FISCAL,response[i].DEFENSOR, response[i].ACTO, moment(response[i].HORA).format("hh:mm a"), response[i].ALGUACIL,response[i].SALA, response[i].OBSERVACION];
+
+
 		    			table_body.push(data);
 		    		}
 
@@ -300,13 +321,13 @@
 			                        alignment: "center",
 
 			                        body: table_body,
-			                        fontSize: 12,
+			                        fontSize: 10,
 			                    }
 			                }
 			            ],
 			            styles: {
 			                header: {
-			                    fontSize: 16,
+			                    fontSize: 10,
 			                    bold: true
 			                },
 			                anotherStyle: {
@@ -320,7 +341,7 @@
 			        pdf.getBase64((data) => {
 			            var contentType = 'application/pdf';
 			            var blob = $rootScope.b64toBlob(data, contentType);
-			            var filename = docDefinition.content["0"].text;
+			            var filename = docDefinition.content["0"].text + " " + moment().format("DD-MM-YYYY");
 			            var result = saveAs(blob, filename);
 			        });
 

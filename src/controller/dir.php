@@ -35,7 +35,8 @@
 				$contador++;
 			}
 
-
+			array_multisort($arr);
+			
 			if(count($listado)!=0) {
 				print_json(200, true, $arr);
 			} else {

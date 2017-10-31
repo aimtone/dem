@@ -57,7 +57,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 
 		setTimeout(function() {
 			$('#preload').fadeOut("fast");
-			$('#example').html("<thead><tr><th>Cédula</th><th>Nombres</th><th>Apellidos</th><th>Email</th><th>Teléfono</th><th>Fecha de Nacimiento</th><th>Tipo</th><th>Impres</th></tr></thead>");
+			$('#example').html("<thead><tr><th>Cédula</th><th>Nombres</th><th>Apellidos</th><th>Email</th><th>Teléfono</th><th>Fecha de Nacimiento</th><th>Tipo</th><th>Numero</th></tr></thead>");
 			// Configuracion de la Datatable
 			$scope.config();
 			// Configuracion de los eventos de la Datatable
@@ -68,7 +68,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 		// Mascaras de los campos
 		$("#fecha_de_nacimiento").mask("99/99/9999",{placeholder:"DD/MM/AAAA"});
 		$( "#fecha_de_nacimiento" ).datepicker($.datepicker.regional["es"]);
-		$("#telefono").mask("+58 999 999 99 99",{placeholder:"+58 000 000 00 00"});
+		$("#telefono").mask("+589999999999",{placeholder:"+580000000000"});
 		//$("#cedula").mask("l-99999999");
 
 
@@ -287,6 +287,22 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 
 	};
 
+	$rootScope.activarNumero = function() {
+		if($scope.datos.tipo=="PRIVADO") {
+			$('#impres').prop("disabled", true);
+			$('#label_impres').css("display", "none");
+			$scope.datos.impres = 0;
+			$scope.datos.tipo = "PRIVADO";
+		}
+		if($scope.datos.tipo=="PUBLICO") {
+			$('#impres').prop("disabled", false);
+			$('#label_impres').css("display", "block");
+			$scope.datos.impres = null;
+			$scope.datos.tipo = "PUBLICO";
+		}
+
+	};
+
 	// Funcion para autocompletar
 	$rootScope.getPersona = function(cedula) {
 		$('.autocomplete').fadeOut('fast','linear');
@@ -391,7 +407,14 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 				    { "data": "telefono" },
 				    { "data": "fecha_de_nacimiento" },
 				    { "data": "tipo" },
-				    { "data": "impres" }
+				    { "data": "null", render: function ( data, type, row ) {
+				    	if(row.impres==0) {
+				    		return " ";
+				    	} else {
+				    		return row.impres;
+				    	}
+				        
+				    } }
 				]
 	};
 
@@ -486,6 +509,18 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 
 	        	$rootScope.get('api/vista_' + $scope.obj_hijo + '/' + $scope.clave_primaria).then(function(response) {
 	        		$scope.datos = response[0];
+
+	        		if($scope.datos.tipo=="PRIVADO") {
+						$('#impres').prop("disabled", true);
+						$('#label_impres').css("display", "none");
+						$scope.datos.impres = 0;
+						$scope.datos.tipo = "PRIVADO";
+					}
+					if($scope.datos.tipo=="PUBLICO") {
+						$('#impres').prop("disabled", false);
+						$('#label_impres').css("display", "block");
+						$scope.datos.tipo = "PUBLICO";
+					}
 	        	}, function(response) {
 	        		//console.log(response);
 	        	});
@@ -504,7 +539,7 @@ app.controller('defensor', function($rootScope,$scope,$http,$q,$localStorage) {
 			if($scope.datos.fecha_de_nacimiento==undefined) { $rootScope.toast("Campo 'fecha de nacimiento' vacio");  return;}
 			if($scope.datos.email==undefined) {  $rootScope.toast("Campo 'email' vacio");  return;}
 			if($scope.datos.telefono==undefined) {  $rootScope.toast("Campo 'teléfono' vacio");  return;}
-			if($scope.datos.impres==undefined) {  $rootScope.toast("Campo 'impres' vacio");  return;}
+			if($scope.datos.impres==undefined) {  $rootScope.toast("Campo 'numero' vacio");  return;}
 			if($scope.datos.tipo==undefined) {  $rootScope.toast("Campo 'tipo' vacio");  return;}
 			
 

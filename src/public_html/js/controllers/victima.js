@@ -69,7 +69,7 @@ app.controller('victima', function($rootScope,$scope,$http,$q,$localStorage) {
 		// Mascaras de los campos
 		$("#fecha_de_nacimiento").mask("99/99/9999",{placeholder:"DD/MM/AAAA"});
 		$( "#fecha_de_nacimiento" ).datepicker($.datepicker.regional["es"]);
-		$("#telefono").mask("+58 999 999 99 99",{placeholder:"+58 000 000 00 00"});
+		$("#telefono").mask("+589999999999",{placeholder:"+580000000000"});
 		//$("#cedula").mask("l-99999999");
 
 

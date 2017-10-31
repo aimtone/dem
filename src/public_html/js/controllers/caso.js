@@ -103,6 +103,9 @@
                     
                     var existe_imputado = false;
                     var existe_victima = false;
+                    var existe_fiscal = false;
+                    var existe_alguacil = false;
+                    var existe_defensor = false;
 
                     for(var i = 0; i < $rootScope.tipoDePersonasAgregadas.length; i++) {
                         if($rootScope.tipoDePersonasAgregadas[i].tipo=="imputado") {
@@ -111,6 +114,16 @@
                         if($rootScope.tipoDePersonasAgregadas[i].tipo=="victima") {
                             existe_victima = true;
                         }
+                        if($rootScope.tipoDePersonasAgregadas[i].tipo=="defensor") {
+                            existe_defensor = true;
+                        }
+                        if($rootScope.tipoDePersonasAgregadas[i].tipo=="fiscal") {
+                            existe_fiscal = true;
+                        }
+                        if($rootScope.tipoDePersonasAgregadas[i].tipo=="alguacil") {
+                            existe_alguacil = true;
+                        }
+
                     }
 
                     if(existe_imputado==false) {
@@ -121,7 +134,20 @@
                     if(existe_victima==false) {
                         $rootScope.toast("Debes agregar por lo menos una víctima");
                         return;
+                    }  
+
+                    if(existe_defensor==false) {
+                        $rootScope.toast("Debes agregar por lo menos un defensor");
+                        return;
                     }   
+                    if(existe_fiscal==false) {
+                        $rootScope.toast("Debes agregar un fiscal");
+                        return;
+                    }  
+                    if(existe_alguacil==false) {
+                        $rootScope.toast("Debes agregar un alguacil");
+                        return;
+                    }  
 
                     $scope.datos.id_usuario = $rootScope.id_usuario;
                     

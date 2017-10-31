@@ -38,7 +38,7 @@
 			};
 
             angular.element(document).ready(function() {
-            	$("#icon_telephone").mask("+58 999 999 99 99",{placeholder:"+58 000 000 00 00"});
+            	$("#icon_telephone").mask("+589999999999",{placeholder:"+580000000000"});
 
             	$rootScope.get('api/config_notificaciones').then(function(response) {
                             $rootScope.data_notificaciones = response["0"];
