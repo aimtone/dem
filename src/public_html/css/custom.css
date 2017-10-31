@@ -212,13 +212,13 @@ transform: perspective(160px) rotateX(-180deg) rotateY(-180deg);
 }
 
 #txtCaptcha {
-  background-image:url('../images/captcha.JPG'); 
+  
+
   text-align:center; 
   border:none;
-  color:#14385f;
   font-weight:bold; 
   font-size:2em; 
-  font-family:'Barrio';
+  
 }
 
 .autocomplete {

@@ -22,8 +22,40 @@
 		//Created / Generates the captcha function    
 		function DrawCaptcha()
 		{
+
+			var imagenes = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19"];
+			var colores = ["white", "red", "yellow", "blue", "black", "orange", "brown", "pink", "green"];
+			var fuentes = ["Barrio", "Times New Roman", "Arial", "Ubuntu", "Verdana", "Gothic"];
+			var tamanoFuente = ["25px", "26px","27px","28px","29px","30px","31px","32px","33px","34px","35px","36px","37px"];
+			var primera_position = ["right","top","left","bottom","center"];
+			var segunda_position = ["right","top","left","bottom","center"];
+
+			console.log(Math.floor(Math.random() * colores.length + 1));
+
+			var color = colores[Math.floor(Math.random() * colores.length)];
+
+			if(color=="white") {
+				$('#txtCaptcha').css({
+					background: "#ffffff url('assets/images/captcha"+Math.floor(Math.random() * imagenes.length + 1)+".JPG') no-repeat "+primera_position[Math.floor(Math.random() * primera_position.length)]+" " + segunda_position[Math.floor(Math.random() * segunda_position.length)],
+					color: color ,
+					fontFamily: fuentes[Math.floor(Math.random() * fuentes.length)],
+					textShadow : "1px 1px 1px black",
+					fontSize: tamanoFuente[Math.floor(Math.random() * tamanoFuente.length)]
+				});
+			} else {
+				$('#txtCaptcha').css({
+					background: "#ffffff url('assets/images/captcha"+Math.floor(Math.random() * imagenes.length + 1)+".JPG') no-repeat right top",
+					color: color ,
+					fontFamily: fuentes[Math.floor(Math.random() * fuentes.length)],
+					textShadow : "1px 1px 1px " + color,
+					fontSize: tamanoFuente[Math.floor(Math.random() * tamanoFuente.length)]
+				});
+			}
+			
+
+
 			var claves;
-			claves=Array("A","B","C","D","E","F","G","H","I"," J","K","L","M","N","O","P","Q","R","S","T","U","V" ,"W","X","Y","Z","0","1","2","3","4","5","6","7"," 8","9","0");
+			claves=Array("A","B","C","D","E","F","G","H","I"," J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i"," j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","0","1","2","3","4","5","6","7"," 8","9","0");
 			
 			var a = claves[Math.floor(Math.random() * claves.length)];
 			var b = claves[Math.floor(Math.random() * claves.length)];       
@@ -39,7 +71,7 @@
 
 		// Validate the Entered input aganist the generated security code function   
 		function ValidCaptcha(){
-			var str1 = removeSpaces(document.getElementById('txtCaptcha').value);
+			var str1 = (document.getElementById('txtCaptcha').value);
 			var str2 = (document.getElementById('txtInput').value);
 			if (str1 == str2) { 
 				return true; 
