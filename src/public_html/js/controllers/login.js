@@ -44,7 +44,7 @@
 				});
 			} else {
 				$('#txtCaptcha').css({
-					background: "#ffffff url('assets/images/captcha"+Math.floor(Math.random() * imagenes.length + 1)+".JPG') no-repeat right top",
+					background: "#ffffff url('assets/images/captcha"+Math.floor(Math.random() * imagenes.length + 1)+".JPG') no-repeat "+primera_position[Math.floor(Math.random() * primera_position.length)]+" " + segunda_position[Math.floor(Math.random() * segunda_position.length)],
 					color: color ,
 					fontFamily: fuentes[Math.floor(Math.random() * fuentes.length)],
 					textShadow : "1px 1px 1px " + color,
