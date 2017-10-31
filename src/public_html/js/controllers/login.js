@@ -22,6 +22,9 @@
 		//Created / Generates the captcha function    
 		function DrawCaptcha()
 		{
+			$('#chaptcha_image').css("display", "none");
+			
+                      
 
 			var imagenes = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19"];
 			var colores = ["white", "red", "yellow", "blue", "black", "orange", "brown", "pink", "green"];
@@ -67,6 +70,27 @@
 			 
 			var code = a +  b + c + d  + e + f +  g;
 			document.getElementById("txtCaptcha").value = code
+			$('#txtCaptcha').css("display", "block");
+			html2canvas($('#txtCaptcha'), {
+                  onrendered: function(canvas) {
+                      theCanvas = canvas;
+
+
+                      console.log(canvas);
+                      
+                      $('#txtCaptcha').css("display", "none");
+                      $('#chaptcha_image').css("display", "block");
+                      $('#chaptcha_image').html(canvas);
+                      $('#chaptcha_image canvas').css({
+                      	width: "100%",
+                      	height: "45px"
+                      });
+
+                      
+                      
+                      
+                  }
+              });
 		}
 
 		// Validate the Entered input aganist the generated security code function   
