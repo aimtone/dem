@@ -39,6 +39,7 @@
 						)
 					);
 				} else {
+					
 					return $this->get_query(sprintf("
 					SELECT 
 						%s 
