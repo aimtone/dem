@@ -9,16 +9,13 @@
                 <img src="assets/images/icon-user.png" alt="Contact Person"> {{x.nombres}} {{x.apellidos}}
                 <span>{{x.tipoPersona.toLowerCase()}}</span>
             </div>
-    
         </div>
     </div>
     <div class="col s8">
-
-    	<div ng-show="actoHallado.title == null"> 
-        		<span class="flow-text">Rellene el campo y presione Enter para buscar un acto</span>
+        <div ng-show="actoHallado.title == null">
+            <span class="flow-text">Rellene el campo y presione Enter para buscar un acto</span>
         </div>
         <div class="row card">
-        	
             <div ng-show="actoHallado.title != null" class="card-content">
                 <div class="row">
                     <div class="col s9">
@@ -75,8 +72,6 @@
                                     <a href="#!/caso" class="waves-effect waves-light btn blue ligthen-4">Agregar Personas</a>
                                 </div>
                             </div>
-
-
                             <div ng-show="status == 'FINALIZADO' || status == 'DIFERIDA'" class="row center">
                                 <div class="col s12">
                                     Este acto ya ha sido gestionado

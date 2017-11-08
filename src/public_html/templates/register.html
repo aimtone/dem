@@ -1,0 +1,50 @@
+<div class="login container" oncontextmenu="return false">
+    <div class="row">
+        <div class="col s12 m12 card login-box container">
+            <h3 class="center-align">Bienvenido al</h3>
+            <h6 class="center">Sistema Informático de Control de la Agenda Única de Actos</h6>
+            <div class="row">
+                <form class="col s12" autocomplete="off">
+                    <div class="input-field col s10 offset-s1">
+                        <input id="cedula" type="text" class="validate" ng-model="datos.cedula" required>
+                        <label for="cedula">Cédula de Identidad</label>
+                    </div>
+                    <div class="input-field col s5 offset-s1">
+                        <input id="nombres" name="nombres" ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);" type="text" class="validate" ng-model="datos.nombres" required>
+                        <label for="nombres">Nombres</label>
+                    </div>
+                    <div class="input-field col s5">
+                        <input id="apeliidos" name="apeliidos" ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);" type="text" class="validate" ng-model="datos.apellidos" required>
+                        <label for="apeliidos">Apellidos</label>
+                    </div>
+                    <div class="input-field col s3 offset-s1">
+                        <input id="fecha_de_nacimiento" type="text" class="validate" ng-model="datos.fecha_de_nacimiento" required>
+                        <label for="fecha_de_nacimiento">Fecha de Nacimiento</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input id="email" name="email" ng-keyup="aMayusculas($event);" ng-blur="aMayusculas($event);" type="text" class="validate" ng-model="datos.email" required>
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input id="telefono" type="text" class="validate" ng-model="datos.telefono" required>
+                        <label for="telefono">Telefono</label>
+                    </div>
+                    <div class="input-field col s5 offset-s1">
+                        <input id="clave" type="password" class="validate" ng-model="datos.clave" required>
+                        <label for="clave">Clave</label>
+                    </div>
+                    <div class="input-field col s5">
+                        <input id="confirmar_clave" type="password" class="validate" ng-model="datos.confirmar_clave" required>
+                        <label for="confirmar_clave">Confirmar Clave</label>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="row">
+                        <div class="col s12">
+                            <button class="btn blue darken-4 waves-effect waves-light right" type="button" id="login" name="login">Registrarme</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

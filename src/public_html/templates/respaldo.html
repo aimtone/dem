@@ -2,16 +2,14 @@
     <a class="waves-effect waves-light btn blue darken-3" ng-click="irAtras()"><i class="material-icons left">backspace</i>Atrás</a>
     <a class="waves-effect waves-light btn blue darken-5" ng-click="volverARaiz()"><i class="material-icons left">cloud</i>Raíz</a>
     <a class="waves-effect waves-light btn blue darken-5" ng-click="crearNuevo()"><i class="material-icons left">add_box</i>Crear nuevo</a>
-
-	<div id="imgCont">
+    <div id="imgCont">
         <div ng-repeat="x in directorio track by x.item | orderBy : 'x.item'" class="icono directorio" ng-if="x.is_dir == true" ng-dblclick="cargarDirectorio(x.item);">
             <img src="assets/images/carpeta.png" alt="dir">
             <p>{{x.item}}</p>
         </div>
-
         <div ng-right-click="seleccionarFichero($event)" ng-click="seleccionarFichero($event)" ng-cont ng-repeat="x in directorio track by x.item | orderBy : 'x.item'" class="icono fichero" ng-if="x.is_dir == false">
             <img src="assets/images/sql.ico" alt="dir">
             <p>{{x.item}}</p>
         </div>
-	</div>
+    </div>
 </div>

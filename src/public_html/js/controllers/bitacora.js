@@ -1,6 +1,6 @@
-		app.controller('bitacora', function($rootScope,$scope,$http,$localStorage,$location) {
-			$rootScope.validateToken();
-			$rootScope.objeto = "Bitácora";
+        app.controller('bitacora', function($rootScope, $scope, $http, $localStorage, $location) {
+            $rootScope.validateToken();
+            $rootScope.objeto = "Bitácora";
 
             $(document).ready(function() {
 
@@ -8,22 +8,24 @@
                     //console.log(response);
                 });
                 // Setup - add a text input to each footer cell
-                $('#example tfoot th').each( function () {
+                $('#example tfoot th').each(function() {
                     var title = $(this).text();
-                    $(this).html( '<input type="text" placeholder="'+title+'" />' );
-                } );
-            
+                    $(this).html('<input type="text" placeholder="' + title + '" />');
+                });
+
                 // DataTable
                 var filter = JSON.stringify({
-                    ordenarPor : "ORDER BY fecha DESC"
+                    ordenarPor: "ORDER BY fecha DESC"
                 });
-                $scope.table = $('#example').DataTable( {
+                $scope.table = $('#example').DataTable({
                     language: {
                         "url": "public_html/lang/datatables/" + $localStorage.locale + ".json"
                     },
-                   processing: false,
+                    processing: false,
                     ordering: true,
-                    order: [[ 1, "desc" ]],
+                    order: [
+                        [0, 'desc']
+                    ],
                     keys: false,
                     info: false,
                     stateSave: true,
@@ -36,18 +38,17 @@
                     colReorder: true,
                     dom: 'Bfrtip',
                     select: true,
-                    buttons: [
-                        {
+                    buttons: [{
                             text: "<i title='Marcar todo' class='fa fa-check-square'></i>",
                             className: 'toolbar check_all',
-                            action: function () {
+                            action: function() {
                                 $scope.table.rows().select();
                             }
                         },
                         {
                             text: "<i title='Desmarcar todo' class='fa fa-square'></i>",
                             className: 'toolbar uncheck_all',
-                            action: function () {
+                            action: function() {
                                 $scope.table.rows().deselect();
                             }
 
@@ -75,40 +76,41 @@
 
                     ],
                     ajax: {
-                        url: 'api/vista_bitacora?filter='+filter,
+                        url: 'api/vista_bitacora',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
-                            'Authorization' : $localStorage.token
+                            'Authorization': $localStorage.token
                         }
                     },
-                    columns: 
-                        [
-                            
-                           
-                            { "data": "null", render: function ( data, type, row ) {
-                            	var fecha = moment(row.fecha).format("dddd, DD MMMM YYYY hh:mm a");
-						    	return fecha;
-						    } },
-                            { "data": "operacion" },
-                            { "data": "tabla" },
-                            { "data": "accion" },
-                            
-                            { "data" : "usuario"}
-                        ]
-                } );
-            
+                    columns: [
+
+                        {
+                            "data": "null",
+                            render: function(data, type, row) {
+                                var fecha = moment(row.fecha).format("dddd, DD MMMM YYYY hh:mm a");
+                                return fecha;
+                            }
+                        },
+                        { "data": "operacion" },
+                        { "data": "tabla" },
+                        { "data": "accion" },
+
+                        { "data": "usuario" }
+                    ]
+                });
+
                 // Apply the search
-                $scope.table.columns().every( function () {
+                $scope.table.columns().every(function() {
                     var that = this;
-            
-                    $( 'input', this.footer() ).on( 'keyup change', function () {
-                        if ( that.search() !== this.value ) {
+
+                    $('input', this.footer()).on('keyup change', function() {
+                        if (that.search() !== this.value) {
                             that
-                                .search( this.value )
+                                .search(this.value)
                                 .draw();
                         }
-                    } );
-                } );
-            } );
-			
-		});
+                    });
+                });
+            });
+
+        });

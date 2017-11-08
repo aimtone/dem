@@ -65,21 +65,20 @@
             <a href="#!/" class="brand-logo center" style="font-family:'Faster One';"><img  class="responsive-img" src="assets/images/tsj_logo_3.png" alt=""></a>
             <a id="sidenav-left" ng-show="x === true && usuario_en_linea.nivel === 'ADMINISTRADOR' || usuario_en_linea.nivel === 'USUARIO ESPECIAL' || usuario_en_linea.nivel === 'SECRETARIA'" href="#" data-activates="mobile-demo" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
             <ul class="right">
-
                 <li ng-show="x === true">
                     <a ng-click="cargarNotificaciones();" id="sidenav-right" data-activates="left-side" class="waves-effect waves-light  right">
 
-		        		<span class="hide-on-small-only" id="mensajeconectado" style='color:red;'>•</span>
-		        		
+                        <span class="hide-on-small-only" id="mensajeconectado" style='color:red;'>•</span>
+                        
 
-		        		<span class="hide-on-small-only">{{usuario_en_linea.nombres}} {{usuario_en_linea.apellidos}}</span> <span data-badge-caption="" class='new badge red'>{{badget}}</span></a>
+                        <span class="hide-on-small-only">{{usuario_en_linea.nombres}} {{usuario_en_linea.apellidos}}</span> <span data-badge-caption="" class='new badge red'>{{badget}}</span></a>
                 </li>
                 <!--<li ng-show="x === true" class="hide-on-med-and-down">
-		        	<a ng-click="logout()" id="logout" name="logout" class="waves-effect waves-light btn blue lighten-2">
-		        		Salir
-		        	</a>
-		        
-				</li>-->
+                    <a ng-click="logout()" id="logout" name="logout" class="waves-effect waves-light btn blue lighten-2">
+                        Salir
+                    </a>
+                
+                </li>-->
             </ul>
             <div style="background:#14385f !important;" class="side-nav blue darken-4" id="mobile-demo">
                 <div class="center">
@@ -93,12 +92,12 @@
                     <li ng-show="x === true"><a href="#!/defensor">Defensor</a></li>
                     <li ng-show="x === true"><a href="#!/juez">Juez</a></li>
                     <li ng-show="x === true"><a href="#!/alguacil">Alguacil</a></li>
-<!--                     <li ng-show="x === true"><a href="#!/secretaria">Secretaria</a></li>
- -->                    <li ng-show="x === true"><a href="#!/victima">Víctima</a></li>
+                    <!--                     <li ng-show="x === true"><a href="#!/secretaria">Secretaria</a></li>
+ -->
+                    <li ng-show="x === true"><a href="#!/victima">Víctima</a></li>
                     <li ng-show="x === true"><a href="#!/imputado">Imputado</a></li>
                     <li ng-show="x === true"><a href="#!/testigo">Testigo</a></li>
                     <li ng-show="x === true"><a href="#!/fiscal">Físcal</a></li>
-                
                 </ul>
             </div>
             <div class="side-nav blue lighten-1" id="left-side">
@@ -106,37 +105,37 @@
                     <li>
                         <div class="userView">
                             <!-- <div class="background">
-				        <img src="assets/images/office.jpg">
-				      </div> -->
+                        <img src="assets/images/office.jpg">
+                      </div> -->
                             <img class="circle" src="assets/images/upload/{{usuario_en_linea.imagen}}">
                             <a href="#!name"><span class="white-text name">
-				      {{usuario_en_linea.nombres}} {{usuario_en_linea.apellidos}} </span></a>
+                      {{usuario_en_linea.nombres}} {{usuario_en_linea.apellidos}} </span></a>
                             <a href="#!email"><span style="text-transform: lowercase;" class="white-text email">{{usuario_en_linea.email}}</span></a>
                         </div>
                     </li>
                 </ul>
                 <span class="center">
-						<h5>
-							Notificaciones recientes
-						</h5>
-					</span>
+                        <h5>
+                            Notificaciones recientes
+                        </h5>
+                    </span>
                 <div ng-show="notificaciones != null" style="border:none;color:white;" class="collection">
                     <a ng-click="notificacionVista(n.id);cargarMensaje(n.id_notificaciones_usuario);" style="border:none;color:white;font-size: 10px" href="javascript:void(0)" ng-repeat="n in notificaciones | limitTo : 5" class="collection-item avatar blue">
 
-						
-					      <img src="assets/images/{{n.icon}}" alt="" class="circle">
+                        
+                          <img src="assets/images/{{n.icon}}" alt="" class="circle">
 
-					      <b ng-show="n.status == 1" class="title">
+                          <b ng-show="n.status == 1" class="title">
 
                           <span style="font-size: 12px">{{n.title}}</span></b>
-					      <span ng-show="n.status == 0" class="title">
+                          <span ng-show="n.status == 0" class="title">
 
                           <span style="font-size: 12px">{{n.title}}</span></span>
-					      
-					    </a>
+                          
+                        </a>
                     <a href="#!/notificaciones" class="blue center">
-					      Ver todos
-					    </a>
+                          Ver todos
+                        </a>
                 </div>
                 <div class="center" ng-show="notificaciones == null">
                     <a href="#!/notificaciones">No hay notificaciones</a>
@@ -172,7 +171,6 @@
                     <ul id='dropdown1' data-beloworigin="true" class='dropdown-content'>
                     </ul>
                 </li>
-                
                 <li ng-show="x === true && usuario_en_linea.nivel === 'ADMINISTRADOR'">
                     <a class="dropdown-button tooltipped" data-position="left" data-tooltip="Bitácora" data-activates='dropdown2' onclick="location.href='#!/bitacora'"><i class="material-icons">fingerprint</i></a>
                     <ul id='dropdown2' data-beloworigin="true" class='dropdown-content'>
@@ -184,12 +182,10 @@
                     </ul>
                 </li>
                 <li ng-show="x === true && usuario_en_linea.nivel === 'ADMINISTRADOR'">
-		        	<a class="dropdown-button tooltipped" data-position="left"  data-tooltip="Mensajería" data-activates='dropdown4' onclick="location.href='#!/mensajes'"><i class="material-icons">sms</i></a>
-		        	<ul id='dropdown4' data-beloworigin="true" class='dropdown-content'>
-					   
-					 </ul>
-				</li>
-
+                    <a class="dropdown-button tooltipped" data-position="left" data-tooltip="Mensajería" data-activates='dropdown4' onclick="location.href='#!/mensajes'"><i class="material-icons">sms</i></a>
+                    <ul id='dropdown4' data-beloworigin="true" class='dropdown-content'>
+                    </ul>
+                </li>
                 <li ng-show="x === true && usuario_en_linea.nivel === 'ADMINISTRADOR'">
                     <a class="dropdown-button tooltipped" data-position="left" data-tooltip="Respaldo y Restauración" data-activates='dropdown4' onclick="location.href='#!/respaldo'"><i class="material-icons">backup</i></a>
                     <ul id='dropdown4' data-beloworigin="true" class='dropdown-content'>
@@ -218,8 +214,8 @@
     </div>
     <div ng-show="objeto === 'Pagina Principal'" class="fixed-action-btn vertical click-to-toggle hide-on-med-and-up">
         <a class="btn-floating btn-large blue">
-	      <i class="material-icons">menu</i>
-	    </a>
+          <i class="material-icons">menu</i>
+        </a>
         <ul>
             <li><a onclick="location.href='#!/actos'" class="btn-floating blue"><i class="material-icons">schedule</i></a></li>
             <li><a onclick="location.href='#!/ajustes'" class="btn-floating blue darken-1"><i class="material-icons">build</i></a></li>
@@ -274,20 +270,19 @@
     <script src="assets/js/routes.js?ver=1.0"></script>
     <!-- /Routes -->
     <!-- Controllers -->
+    <script src="assets/js/controllers/register.js?ver=1.0"></script>
+    <script src="assets/js/controllers/login.js?ver=1.0"></script>
     <script src="assets/js/controllers/home.js?ver=1.0"></script>
     <script src="assets/js/controllers/respaldo.js?ver=1.0"></script>
     <script src="assets/js/controllers/bitacora.js?ver=1.0"></script>
     <script src="assets/js/controllers/mensajes.js?ver=1.0"></script>
-    <script src="assets/js/controllers/login.js?ver=1.0"></script>
     <script src="assets/js/controllers/programador.js?ver=1.0"></script>
-    <script src="assets/js/controllers/nivel.js?ver=1.0"></script>
     <script src="assets/js/controllers/perfil.js?ver=1.0"></script>
     <script src="assets/js/controllers/defensor.js?ver=1.0"></script>
     <script src="assets/js/controllers/casos.js?ver=1.0"></script>
     <script src="assets/js/controllers/actos.js?ver=1.0"></script>
     <script src="assets/js/controllers/caso.js?ver=1.0"></script>
-<!--     <script src="assets/js/controllers/secretaria.js?ver=1.0"></script>
- -->    <script src="assets/js/controllers/alguacil.js?ver=1.0"></script>
+    <script src="assets/js/controllers/alguacil.js?ver=1.0"></script>
     <script src="assets/js/controllers/imputado.js?ver=1.0"></script>
     <script src="assets/js/controllers/juez.js?ver=1.0"></script>
     <script src="assets/js/controllers/victima.js?ver=1.0"></script>
@@ -320,7 +315,6 @@
     <script src="assets/js/FileSaver.js"></script>
     <script src="assets/js/Blob.js"></script>
     <script src="assets/js/html2canvas.js"></script>
-    
     <!-- /JavaScript -->
     <!-- ------------------------------------------------------------------------------------- -->
 </body>

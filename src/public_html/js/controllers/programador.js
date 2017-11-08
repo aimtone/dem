@@ -333,6 +333,7 @@
                         text: 'Nuevo acto',
                         click: function() {
                             $localStorage.evento = undefined;
+                            $rootScope.desdeBotonEnProgramador = true;
                             $window.location.href = "#!/acto";
 
                         }
@@ -341,6 +342,7 @@
                         text: 'Nuevo caso',
                         click: function() {
                             $rootScope.accion_caso == "registrar";
+                            $rootScope.desdePresentacion = false;
                             $window.location.href = "#!/caso";
                         }
                     },
@@ -769,21 +771,23 @@
 
                         if ($rootScope.usuario_en_linea.nivel == "ADMINISTRADOR") {
                             var data = {
-                            id: event._id,
-                            inicio: $rootScope.formatDate(start._d, "yyyy-MM-ddThh:mm:ss"),
-                            fin: $rootScope.formatDate(end._d, "yyyy-MM-ddThh:mm:ss"),
-                            descripcion: "",
-                            id_sala: resource.id,
-                            id_usuario: $rootScope.id_usuario
-                        };
+                                id: event._id,
+                                inicio: $rootScope.formatDate(start._d, "yyyy-MM-ddThh:mm:ss"),
+                                fin: $rootScope.formatDate(end._d, "yyyy-MM-ddThh:mm:ss"),
+                                descripcion: "",
+                                id_sala: resource.id,
+                                id_usuario: $rootScope.id_usuario
+                            };
 
-                        $localStorage.evento = data;
-                        $window.location.href = "#!/acto";
+                            $localStorage.evento = data;
+                            $rootScope.desdeBotonEnProgramador = false;
+                            $window.location.href = "#!/acto";
+
                         } else {
-                                $rootScope.toast("No tienes permiso para ingresar actos el dia de hoy");
-                        var data = {};
+                            $rootScope.toast("No tienes permiso para ingresar actos el dia de hoy");
+                            var data = {};
                         }
-                        
+
                     } else {
                         var data = {
                             id: event._id,
@@ -795,7 +799,9 @@
                         };
 
                         $localStorage.evento = data;
+                        $rootScope.desdeBotonEnProgramador = false;
                         $window.location.href = "#!/acto";
+
                     }
 
                     $(".FINALIZADO").css({
@@ -811,55 +817,55 @@
 
             $rootScope.aEspera = function() {
                 if ($rootScope.event_card_data.fecha == "Hoy") {
-                    if($rootScope.usuario_en_linea.nivel=="ADMINISTRADOR") {
+                    if ($rootScope.usuario_en_linea.nivel == "ADMINISTRADOR") {
                         $rootScope.adminConfirm(
-                        function(response) {
+                            function(response) {
 
-                            var clave = $rootScope.sha1(md5(response));
+                                var clave = $rootScope.sha1(md5(response));
 
-                            var filter = JSON.stringify({
-                                donde: "where nivel = 'ADMINISTRADOR' AND id_usuario = 0 AND clave = '" + clave + "'"
-                            });
+                                var filter = JSON.stringify({
+                                    donde: "where nivel = 'ADMINISTRADOR' AND id_usuario = 0 AND clave = '" + clave + "'"
+                                });
 
-                            $rootScope.get('api/usuario?filter=' + filter).then(function(response) {
-                                console.log(response);
+                                $rootScope.get('api/usuario?filter=' + filter).then(function(response) {
+                                    console.log(response);
 
-                                if (typeof response != "undefined") {
-                                    var data = {
-                                        id: null,
-                                        inicio: "0000-00-00T00:00:00",
-                                        fin: "0000-00-00T00:00:00",
-                                        id_sala: 1,
-                                        estatus: "ESPERA"
-                                    };
-
-
-                                    $rootScope.put('api/acto/' + $rootScope.event_card_data.id, data).then(function(response) {
-                                        ////console.log(response);
-                                        $('.event-tooltip').fadeOut("fast");
-                                        cargarActoEspera();
-                                        $('#calendar').fullCalendar('removeEvents', event._id);
-                                        $('#calendar').fullCalendar('refetchEvents');
-                                        $rootScope.alert("Éxito", "El acto ha sido movido a espera", "success");
-                                        $rootScope.enviarNotificacion($rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " HA PUESTO UN ACTO EN ESPERA", "EL USUARIO " + $rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " CUYA CEDULA DE IDENTIDAD ES " + $rootScope.usuario_en_linea.cedula + " HA PUESTO EL ACTO NUMERO " + response["0"].id + " DE LA CAUSA " + response["0"].numero_caso + " EN ESPERA", "ADMINISTRADOR", null);
-                                    });
+                                    if (typeof response != "undefined") {
+                                        var data = {
+                                            id: null,
+                                            inicio: "0000-00-00T00:00:00",
+                                            fin: "0000-00-00T00:00:00",
+                                            id_sala: 1,
+                                            estatus: "ESPERA"
+                                        };
 
 
+                                        $rootScope.put('api/acto/' + $rootScope.event_card_data.id, data).then(function(response) {
+                                            ////console.log(response);
+                                            $('.event-tooltip').fadeOut("fast");
+                                            cargarActoEspera();
+                                            $('#calendar').fullCalendar('removeEvents', event._id);
+                                            $('#calendar').fullCalendar('refetchEvents');
+                                            $rootScope.alert("Éxito", "El acto ha sido movido a espera", "success");
+                                            $rootScope.enviarNotificacion($rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " HA PUESTO UN ACTO EN ESPERA", "EL USUARIO " + $rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " CUYA CEDULA DE IDENTIDAD ES " + $rootScope.usuario_en_linea.cedula + " HA PUESTO EL ACTO NUMERO " + response["0"].id + " DE LA CAUSA " + response["0"].numero_caso + " EN ESPERA", "ADMINISTRADOR", null);
+                                        });
 
-                                } else {
-                                    $rootScope.timerAlert("Clave incorrecta", "Tu clave de administrador no coincide", 2000);
-                                }
-                            });
 
-                        },
-                        function() {
-                            // Al cancelar
-                        }
-                    );
+
+                                    } else {
+                                        $rootScope.timerAlert("Clave incorrecta", "Tu clave de administrador no coincide", 2000);
+                                    }
+                                });
+
+                            },
+                            function() {
+                                // Al cancelar
+                            }
+                        );
                     } else {
                         $rootScope.toast("No tienes permiso para poner este acto en espera");
                     }
-                    
+
                 } else {
                     $rootScope.adminConfirm(
                         function(response) {
@@ -915,46 +921,46 @@
 
             $rootScope.eliminarActo = function() {
                 if ($rootScope.event_card_data.fecha == "Hoy") {
-                    if($rootScope.usuario_en_linea.nivel=="ADMINISTRADOR") {
+                    if ($rootScope.usuario_en_linea.nivel == "ADMINISTRADOR") {
                         $rootScope.adminConfirm(
-                        function(response) {
+                            function(response) {
 
-                            var clave = $rootScope.sha1(md5(response));
+                                var clave = $rootScope.sha1(md5(response));
 
-                            var filter = JSON.stringify({
-                                donde: "where nivel = 'ADMINISTRADOR' AND id_usuario = 0 AND clave = '" + clave + "'"
-                            });
+                                var filter = JSON.stringify({
+                                    donde: "where nivel = 'ADMINISTRADOR' AND id_usuario = 0 AND clave = '" + clave + "'"
+                                });
 
-                            $rootScope.get('api/usuario?filter=' + filter).then(function(response) {
-                                console.log(response);
+                                $rootScope.get('api/usuario?filter=' + filter).then(function(response) {
+                                    console.log(response);
 
-                                if (typeof response != "undefined") {
-                                    $rootScope.delete('api/acto/' + $rootScope.event_card_data.id).then(function(response) {
-                                        ////console.log(response);
-                                        $('.event-tooltip').fadeOut("fast");
-                                        cargarActoEspera();
-                                        $('#calendar').fullCalendar('removeEvents', event._id);
-                                        $('#calendar').fullCalendar('refetchEvents');
-                                        $rootScope.alert("Éxito", "El acto ha sido eliminado", "success");
-                                        $rootScope.enviarNotificacion($rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " HA ELIMINADO UN ACTO", "EL USUARIO " + $rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " CUYA CEDULA DE IDENTIDAD ES " + $rootScope.usuario_en_linea.cedula + " HA ELIMINADO EL ACTO NUMERO " + response["0"].id + " DE LA CAUSA " + response["0"].numero_caso + " DE FECHA " + moment(response["0"].inicio).format("DD/MM/YYYY"), "ADMINISTRADOR", null);
-                                    });
+                                    if (typeof response != "undefined") {
+                                        $rootScope.delete('api/acto/' + $rootScope.event_card_data.id).then(function(response) {
+                                            ////console.log(response);
+                                            $('.event-tooltip').fadeOut("fast");
+                                            cargarActoEspera();
+                                            $('#calendar').fullCalendar('removeEvents', event._id);
+                                            $('#calendar').fullCalendar('refetchEvents');
+                                            $rootScope.alert("Éxito", "El acto ha sido eliminado", "success");
+                                            $rootScope.enviarNotificacion($rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " HA ELIMINADO UN ACTO", "EL USUARIO " + $rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos + " CUYA CEDULA DE IDENTIDAD ES " + $rootScope.usuario_en_linea.cedula + " HA ELIMINADO EL ACTO NUMERO " + response["0"].id + " DE LA CAUSA " + response["0"].numero_caso + " DE FECHA " + moment(response["0"].inicio).format("DD/MM/YYYY"), "ADMINISTRADOR", null);
+                                        });
 
 
 
-                                } else {
-                                    $rootScope.timerAlert("Clave incorrecta", "Tu clave de administrador no coincide", 2000);
-                                }
-                            });
+                                    } else {
+                                        $rootScope.timerAlert("Clave incorrecta", "Tu clave de administrador no coincide", 2000);
+                                    }
+                                });
 
-                        },
-                        function() {
-                            // Al cancelar
-                        }
-                    );
+                            },
+                            function() {
+                                // Al cancelar
+                            }
+                        );
                     } else {
                         $rootScope.toast("No tienes permiso para eliminar este acto");
                     }
-                    
+
                 } else {
                     $rootScope.adminConfirm(
                         function(response) {

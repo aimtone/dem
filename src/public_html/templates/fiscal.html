@@ -61,11 +61,13 @@
                 <select ng-model="selTipoTribunal" class="browser-default" ng-change="mostrarTribunal();" ng-options="x.id as x.descripcion for x in JSONTipoTribunal">
                     <option value="" selected>Seleccionar Tipo de Tribunal</option>
                 </select>
+                <label class="active" for="tipo_de_tribunal">Tipo de tribunal</label>
             </div>
             <div class="input-field col s12 m12 l4">
                 <select disabled id="tribunal" ng-model="datos.id_tribunal" class="browser-default" ng-options="y.id as y.numero for y in JSONTribunal">
                     <option value="" disabled selected>Seleccionar Tribunal</option>
                 </select>
+                <label class="active" for="tribunal">Tribunal</label>
             </div>
             <div class="input-field col s12 m12 l4">
                 <select class="browser-default" name="tipo" id="tipo" ng-model="datos.tipo">

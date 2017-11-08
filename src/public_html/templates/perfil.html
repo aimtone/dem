@@ -1,71 +1,64 @@
 <div class="row">
-        <div class="col s12 m4">
-          <div class="card">
+    <div class="col s12 m4">
+        <div class="card">
             <div class="card-image">
-              <img width="100px" src="assets/images/upload/{{usuario_en_linea.imagen}}">
-              <span class="card-title">{{usuario_en_linea.nombres}} {{usuario_en_linea.apellidos}}</span>
+                <img width="100px" src="assets/images/upload/{{usuario_en_linea.imagen}}">
+                <span class="card-title">{{usuario_en_linea.nombres}} {{usuario_en_linea.apellidos}}</span>
             </div>
             <div class="card-content">
-            <div class="row">
-            		<div class="col s3">
-            			<b>Email</b>
-            		</div>
-            		<div class="col s9">
-            			{{usuario_en_linea.email}}
-            		</div>
-            		<div class="col s3">
-            			<b>Telefono</b>
-            		</div>
-            		<div class="col s9">
-            			{{usuario_en_linea.telefono}}
-            		</div>
-            		<div class="col s3">
-            			<b>Nivel</b>
-            		</div>
-            		<div class="col s9">
-            			{{usuario_en_linea.nivel}}
-            		</div>
-              
-            </div>
+                <div class="row">
+                    <div class="col s3">
+                        <b>Email</b>
+                    </div>
+                    <div class="col s9">
+                        {{usuario_en_linea.email}}
+                    </div>
+                    <div class="col s3">
+                        <b>Telefono</b>
+                    </div>
+                    <div class="col s9">
+                        {{usuario_en_linea.telefono}}
+                    </div>
+                    <div class="col s3">
+                        <b>Nivel</b>
+                    </div>
+                    <div class="col s9">
+                        {{usuario_en_linea.nivel}}
+                    </div>
+                </div>
             </div>
             <div class="card-action">
                 <div class="file-field input-field">
-                  <div class="btn blue darken-4">
-                    <span>Archivo</span>
-                    <input id="inputFileToLoad" type="file">
-                  </div>
-                  <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text">
-                  </div>
+                    <div class="btn blue darken-4">
+                        <span>Archivo</span>
+                        <input id="inputFileToLoad" type="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
                 </div>
-
-              <button class="btn-large waves-effect waves-light blue btn-floating right" ng-click="encodeImageFileAsURL()"><i class="material-icons">add</i></button>
+                <button class="btn-large waves-effect waves-light blue btn-floating right" ng-click="encodeImageFileAsURL()"><i class="material-icons">add</i></button>
             </div>
-          </div>
         </div>
-
-        <div class="col s12 m5 offset-m1">
+    </div>
+    <div class="col s12 m5 offset-m1">
         {{imagenString}}
         <br>
-        		<span id="dashboard-titulo">Cambio de Clave</span>
-        		<div class="input-field col s12">
-		          <input id="clave_anterior" ng-model="clave_anterior" type="password" class="validate">
-		          <label for="clave_anterior">Clave anterior</label>
-		        </div>
-		        <div class="input-field col s12">
-		          <input id="clave_nueva" ng-model="clave_nueva" type="password" class="validate">
-		          <label for="clave_nueva">Clave Nueva</label>
-		        </div>
-		        <div class="input-field col s12">
-		          <input id="clave_repetida" ng-model="clave_repetida" type="password" class="validate">
-		          <label for="clave_repetida">Confirmar clave</label>
-		        </div>
-		        <div class="col s12">
-		          <a ng-click="cambiarClave()" class="waves-effect waves-light btn blue right">Guardar cambios</a>
-		        </div>
-		        
-
-
-        	
+        <span id="dashboard-titulo">Cambio de Clave</span>
+        <div class="input-field col s12">
+            <input id="clave_anterior" ng-model="clave_anterior" type="password" class="validate">
+            <label for="clave_anterior">Clave anterior</label>
         </div>
-      </div>
+        <div class="input-field col s12">
+            <input id="clave_nueva" ng-model="clave_nueva" type="password" class="validate">
+            <label for="clave_nueva">Clave Nueva</label>
+        </div>
+        <div class="input-field col s12">
+            <input id="clave_repetida" ng-model="clave_repetida" type="password" class="validate">
+            <label for="clave_repetida">Confirmar clave</label>
+        </div>
+        <div class="col s12">
+            <a ng-click="cambiarClave()" class="waves-effect waves-light btn blue right">Guardar cambios</a>
+        </div>
+    </div>
+</div>

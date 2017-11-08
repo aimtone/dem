@@ -1,151 +1,112 @@
 <div class="row">
-   <div class="col s12 m3 l3">
-      <div class="row">
-            
-         <h6>Actos de hoy <span class="right"><button class="btn waves-effect waves-light blue" ng-click="generarPDF()"><i class="material-icons">print</i></button></span></h6>
-
-         <div ng-show="eventos_hoy != null" class="col s12  collection">
-            <div  ng-repeat="x in eventos_hoy" class="">
-               <a href="#!/programador/{{today}}/{{x.id}}" class="collection-item">{{x.title}}</a>
+    <div class="col s12 m3 l3">
+        <div class="row">
+            <h6>Actos de hoy <span class="right"><button class="btn waves-effect waves-light blue" ng-click="generarPDF()"><i class="material-icons">print</i></button></span></h6>
+            <div ng-show="eventos_hoy != null" class="col s12  collection">
+                <div ng-repeat="x in eventos_hoy" class="">
+                    <a href="#!/programador/{{today}}/{{x.id}}" class="collection-item">{{x.title}}</a>
+                </div>
             </div>
-         </div>
-
-         <div ng-show="eventos_hoy == null" class="col s12 ">
-            <div class="center">
-              <br />
-              <br />
-              <br />
-              No hay eventos para mostrar
+            <div ng-show="eventos_hoy == null" class="col s12 ">
+                <div class="center">
+                    <br />
+                    <br />
+                    <br /> No hay eventos para mostrar
+                </div>
             </div>
-         </div>
-         
-
-      </div>
-   </div>
-   <div class="col s12 m9 l9">
-      
-      <div class="row ">
-         <div class="col s12 m4 l4">
-            <h6>Generar gráfico</h6>
-            <span class="right"><button class="btn waves-effect waves-light blue" ng-click="canvasToPDF()"><i class="material-icons">print</i></button></span>            
-            <div class="input-field col s12">
-             <input name="titulo" type="text" class="validate" ng-model="grafico.titulo" ng-value="grafico.titulo" required>
-             <label class="active" for="titulo">Título</label>
-           </div>
-
-            
-
-           
-
-            <div class="input-field col col s12 m6 l6">
-              <select required class="browser-default" name="label"  class="validate" ng-model="grafico.label" ng-value="grafico.label">
-                    <option ng-repeat="x in tablas" value="{{x.nombre_real}}">{{x.nombre}}</option>
-               </select>
-             <label class="active" for="label">Eje X</label>
-           </div>
-
-       
-
-           <div class="input-field col col s12 m6 l6">
-               <select class="browser-default"  id="representacion" ng-model="grafico.representacion" ng-value="grafico.representacion">
-                     <option value="porcentaje">PORCENTAJE</option>
-                     <option value="numero">NUMEROS REALES</option>
-               </select>
-           </div>
-
-           <div class="input-field col s12 m6 l6">
-             <input name="fecha_inicial" type="date" ng-model="fechas.fecha_inicial" >
-             <label class="active" for="fecha_inicial">Desde:</label>
-           </div>
-           <div class="input-field col s12 m6 l6">
-             <input name="fecha_final" type="date" ng-model="fechas.fecha_final" >
-             <label class="active" for="fecha_final">Hasta:</label>
-           </div>
-
-           <div class="input-field col col s12 m12 l12">
-               <select class="browser-default"  id="tipo" ng-model="grafico.tipo" ng-value="grafico.tipo">
-                     <option value="pie">Gráfico de pastel</option>
-                     <option value="bar">Gráfico de barras</option>
-                     <option value="dona">Gráfico de dona</option>
-                     <option value="radar">Gráfico de radar</option>
-                     <option value="polar-area">Gráfico de area polar</option>
-                     <option value="horizontal-bar">Gráfico de barras horizontal</option>
-                  
-               </select>
-           </div>
-
-           <div class="input-field col col s12 m12 l12">
-             <select required class="browser-default" name="agrupar"  class="validate" ng-model="grafico.agrupar" ng-value="grafico.agrupar">
-                    <option ng-repeat="x in tablas" value="{{x.nombre_real}}">{{x.nombre}}</option>
-               </select>
-             <label class="active" for="agrupar">Agrupar Por</label>
-           </div>
-            
-
-           
-
-            
-
-            <div class="col s12 m4 l4 right">
-               <button class="btn waves-effect waves-light blue" ng-click="cargarChart(grafico.titulo, 0, grafico.label, grafico.agrupar, grafico.representacion);">Generar gráfico</button>
-
-            </div> 
-
-         </div>
-
-         <div ng-show="grafico.tipo == 'pie'" class="col s12 m8 l8 grafico">
-            <center>
-            <h6>{{chart[0].title}}</h6>
-            <h6>{{chart[0].subtitle}}</h6>
-            <center>
-
-            <canvas id="chart_0" class="chart chart-pie" chart-data="chart[0].data" chart-labels="chart[0].labels" chart-series="chart[0].series" ></canvas>
-
-         </div>
-
-         <div ng-show="grafico.tipo == 'bar'" class="col s12 m8 l8 grafico">
-            <center>
-            <h6>{{chart[0].title}}</h6>
-            <h6>{{chart[0].subtitle}}</h6>
-            <center>
-            <canvas id="chart_1" class="chart chart-bar" chart-data="chart[0].data" chart-labels="chart[0].labels" chart-series="chart[0].series" ></canvas>
-         </div>
-
-         <div ng-show="grafico.tipo == 'dona'" class="col s12 m8 l8 grafico">
-            <center>
-            <h6>{{chart[0].title}}</h6>
-            <h6>{{chart[0].subtitle}}</h6>
-            <center>
-            <canvas id="chart_3" class="chart chart-doughnut" chart-data="chart[0].data" chart-labels="chart[0].labels" chart-series="chart[0].series" ></canvas>
-         </div>
-
-         <div ng-show="grafico.tipo == 'radar'" class="col s12 m8 l8 grafico">
-            <center>
-            <h6>{{chart[0].title}}</h6>
-            <h6>{{chart[0].subtitle}}</h6>
-            <center>
-            <canvas id="chart_4" class="chart chart-radar" chart-data="chart[0].data" chart-labels="chart[0].labels" chart-series="chart[0].series" ></canvas>
-         </div>
-
-         <div ng-show="grafico.tipo == 'polar-area'" class="col s12 m8 l8 grafico">
-            <center>
-            <h6>{{chart[0].title}}</h6>
-            <h6>{{chart[0].subtitle}}</h6>
-            <center>
-            <canvas id="chart_5" class="chart chart-polar-area" chart-data="chart[0].data" chart-labels="chart[0].labels" chart-series="chart[0].series" ></canvas>
-         </div>
-
-         <div ng-show="grafico.tipo == 'horizontal-bar'" class="col s12 m8 l8 grafico">
-            <center>
-            <h6>{{chart[0].title}}</h6>
-            <h6>{{chart[0].subtitle}}</h6>
-            <center>
-            <canvas id="chart_6" class="chart chart-horizontal-bar" chart-data="chart[0].data" chart-labels="chart[0].labels" chart-series="chart[0].series" ></canvas>
-         </div>
-
-
-
-         
-      </div>
-   </div>
+        </div>
+    </div>
+    <div class="col s12 m9 l9">
+        <div class="row ">
+            <div class="col s12 m4 l4">
+                <h6>Generar gráfico</h6>
+                <span class="right"><button class="btn waves-effect waves-light blue" ng-click="canvasToPDF()"><i class="material-icons">print</i></button></span>
+                <div class="input-field col s12">
+                    <input name="titulo" type="text" class="validate" ng-model="grafico.titulo" ng-value="grafico.titulo" required>
+                    <label class="active" for="titulo">Título</label>
+                </div>
+                <div class="input-field col col s12 m6 l6">
+                    <select required class="browser-default" name="label" class="validate" ng-model="grafico.label" ng-value="grafico.label">
+                        <option ng-repeat="x in tablas" value="{{x.nombre_real}}">{{x.nombre}}</option>
+                    </select>
+                    <label class="active" for="label">Eje X</label>
+                </div>
+                <div class="input-field col col s12 m6 l6">
+                    <select class="browser-default" id="representacion" ng-model="grafico.representacion" ng-value="grafico.representacion">
+                        <option value="porcentaje">PORCENTAJE</option>
+                        <option value="numero">NUMEROS REALES</option>
+                    </select>
+                </div>
+                <div class="input-field col s12 m6 l6">
+                    <input name="fecha_inicial" type="date" ng-model="fechas.fecha_inicial">
+                    <label class="active" for="fecha_inicial">Desde:</label>
+                </div>
+                <div class="input-field col s12 m6 l6">
+                    <input name="fecha_final" type="date" ng-model="fechas.fecha_final">
+                    <label class="active" for="fecha_final">Hasta:</label>
+                </div>
+                <div class="input-field col col s12 m12 l12">
+                    <select class="browser-default" id="tipo" ng-model="grafico.tipo" ng-value="grafico.tipo">
+                        <option value="pie">Gráfico de pastel</option>
+                        <option value="bar">Gráfico de barras</option>
+                        <option value="dona">Gráfico de dona</option>
+                        <option value="radar">Gráfico de radar</option>
+                        <option value="polar-area">Gráfico de area polar</option>
+                        <option value="horizontal-bar">Gráfico de barras horizontal</option>
+                    </select>
+                </div>
+                <div class="input-field col col s12 m12 l12">
+                    <select required class="browser-default" name="agrupar" class="validate" ng-model="grafico.agrupar" ng-value="grafico.agrupar">
+                        <option ng-repeat="x in tablas" value="{{x.nombre_real}}">{{x.nombre}}</option>
+                    </select>
+                    <label class="active" for="agrupar">Agrupar Por</label>
+                </div>
+                <div class="col s12 m4 l4 right">
+                    <button class="btn waves-effect waves-light blue" ng-click="cargarChart(grafico.titulo, 0, grafico.label, grafico.agrupar, grafico.representacion);">Generar gráfico</button>
+                </div>
+            </div>
+            <div ng-show="grafico.tipo == 'pie'" class="col s12 m8 l8 grafico">
+                <center>
+                    <h6>{{chart[0].title}}</h6>
+                    <h6>{{chart[0].subtitle}}</h6>
+                    <center>
+                        <canvas id="chart_0" class="chart chart-pie" chart-data="chart[0].data" chart-labels="chart[0].labels" chart-series="chart[0].series"></canvas>
+            </div>
+            <div ng-show="grafico.tipo == 'bar'" class="col s12 m8 l8 grafico">
+                <center>
+                    <h6>{{chart[0].title}}</h6>
+                    <h6>{{chart[0].subtitle}}</h6>
+                    <center>
+                        <canvas id="chart_1" class="chart chart-bar" chart-data="chart[0].data" chart-labels="chart[0].labels" chart-series="chart[0].series"></canvas>
+            </div>
+            <div ng-show="grafico.tipo == 'dona'" class="col s12 m8 l8 grafico">
+                <center>
+                    <h6>{{chart[0].title}}</h6>
+                    <h6>{{chart[0].subtitle}}</h6>
+                    <center>
+                        <canvas id="chart_3" class="chart chart-doughnut" chart-data="chart[0].data" chart-labels="chart[0].labels" chart-series="chart[0].series"></canvas>
+            </div>
+            <div ng-show="grafico.tipo == 'radar'" class="col s12 m8 l8 grafico">
+                <center>
+                    <h6>{{chart[0].title}}</h6>
+                    <h6>{{chart[0].subtitle}}</h6>
+                    <center>
+                        <canvas id="chart_4" class="chart chart-radar" chart-data="chart[0].data" chart-labels="chart[0].labels" chart-series="chart[0].series"></canvas>
+            </div>
+            <div ng-show="grafico.tipo == 'polar-area'" class="col s12 m8 l8 grafico">
+                <center>
+                    <h6>{{chart[0].title}}</h6>
+                    <h6>{{chart[0].subtitle}}</h6>
+                    <center>
+                        <canvas id="chart_5" class="chart chart-polar-area" chart-data="chart[0].data" chart-labels="chart[0].labels" chart-series="chart[0].series"></canvas>
+            </div>
+            <div ng-show="grafico.tipo == 'horizontal-bar'" class="col s12 m8 l8 grafico">
+                <center>
+                    <h6>{{chart[0].title}}</h6>
+                    <h6>{{chart[0].subtitle}}</h6>
+                    <center>
+                        <canvas id="chart_6" class="chart chart-horizontal-bar" chart-data="chart[0].data" chart-labels="chart[0].labels" chart-series="chart[0].series"></canvas>
+            </div>
+        </div>
+    </div>
 </div>

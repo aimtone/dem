@@ -384,17 +384,17 @@
 		            $rootScope.cargarMensaje(id);
 		        } else {
 
-		        	var filter = JSON.stringify({
-		        		donde: "WHERE cedula = '"+$rootScope.usuario_en_linea.cedula+"' AND id_notificacion = " + id
-		        	});
+		            var filter = JSON.stringify({
+		                donde: "WHERE cedula = '" + $rootScope.usuario_en_linea.cedula + "' AND id_notificacion = " + id
+		            });
 
-		        	$rootScope.get('api/notificaciones_usuario?filter='+filter).then(function(response) {
-		        		$rootScope.id_not = response["0"].id;
-		        		$rootScope.cargarNotificacionesCompletas();
-		            window.location.href = "#!/notificaciones";
+		            $rootScope.get('api/notificaciones_usuario?filter=' + filter).then(function(response) {
+		                $rootScope.id_not = response["0"].id;
+		                $rootScope.cargarNotificacionesCompletas();
+		                window.location.href = "#!/notificaciones";
 
-		        	});
-		            
+		            });
+
 		        }
 
 		    };
@@ -768,6 +768,7 @@
 		        return promise;
 		    };
 
+
 		    $rootScope.post = function(url, data) {
 		        var defered = $q.defer();
 		        var promise = defered.promise;
@@ -819,6 +820,13 @@
 		        });
 		        return promise;
 		    };
+
+		    $rootScope.get('register').then(function(response) {
+		        if (response.existe_bd == 0) {
+		            $window.location = "#!/register";
+
+		        }
+		    });
 
 		    $rootScope.get('api/config_notificaciones').then(function(response) {
 		        $rootScope.socket_address = response["0"].socket_address;
@@ -1055,7 +1063,7 @@
 		    $rootScope.cargarNotificacionesCompletas = function() {
 
 		        var filter = JSON.stringify({
-		            donde: "WHERE cedula = '"+$rootScope.usuario_en_linea.cedula+"'",
+		            donde: "WHERE cedula = '" + $rootScope.usuario_en_linea.cedula + "'",
 		            ordenarPor: "ORDER BY id DESC"
 		        });
 		        $rootScope.get('api/vista_notificaciones?filter=' + filter).then(function(response) {
@@ -1067,37 +1075,37 @@
 		    $rootScope.notificacionVista = function(id) {
 
 
-		    	var filter = JSON.stringify({
-		    		donde : "WHERE cedula = '"+$rootScope.usuario_en_linea.cedula+"' AND id_notificacion = " + id
-		    	});
+		        var filter = JSON.stringify({
+		            donde: "WHERE cedula = '" + $rootScope.usuario_en_linea.cedula + "' AND id_notificacion = " + id
+		        });
 
-		    	$rootScope.get('api/notificaciones_usuario?filter='+filter).then(function(response) {
-		    		console.log(response);
-		    		var data = {
-			            id: response["0"].id,
-			            status: 0
-			        };
-
-
-
-			        $rootScope.put('api/notificaciones/' + id, data).then(function(response) {
-			            //console.log(response);
-			        });
-
-			        $rootScope.cargarNot(id);
-		    	});
-		        
+		        $rootScope.get('api/notificaciones_usuario?filter=' + filter).then(function(response) {
+		            console.log(response);
+		            var data = {
+		                id: response["0"].id,
+		                status: 0
+		            };
 
 
 
-		        
+		            $rootScope.put('api/notificaciones/' + id, data).then(function(response) {
+		                //console.log(response);
+		            });
+
+		            $rootScope.cargarNot(id);
+		        });
+
+
+
+
+
 		    };
 
 		    $rootScope.cargarBadget = function() {
 		        //console.log('ejecuta cargarNotificaciones');
 
 		        var filter = JSON.stringify({
-		            donde: "WHERE status = 1 AND cedula = '"+$rootScope.usuario_en_linea.cedula+"'"
+		            donde: "WHERE status = 1 AND cedula = '" + $rootScope.usuario_en_linea.cedula + "'"
 		        });
 
 		        $rootScope.get('api/vista_notificaciones?filter=' + filter).then(function(response) {
@@ -1142,8 +1150,8 @@
 
 		    $rootScope.enviarNotificacion = function(title, body, rol, user) {
 
-		    	if(rol == null && user == null) { // DIFUSION
-		    		var mensaje = JSON.stringify({
+		        if (rol == null && user == null) { // DIFUSION
+		            var mensaje = JSON.stringify({
 		                tipo: "notificacion",
 		                ip: $rootScope.ip,
 		                icon: "4.png",
@@ -1152,7 +1160,7 @@
 		                title: title,
 		                emisor: $rootScope.usuario_en_linea.nombres + " " + $rootScope.usuario_en_linea.apellidos
 		            });
-		    	}
+		        }
 
 		        if (rol != null) {
 		            var mensaje = JSON.stringify({ // PERSONAL
@@ -1180,64 +1188,64 @@
 
 		        $rootScope.post('api/notificaciones', mensaje).then(function(response) {
 
-		        	var id_notificacion = response["0"].id;
+		            var id_notificacion = response["0"].id;
 
-		        	if(response["0"].icon=="4.png") { // MENSAJE DE DIFUSION, SE AGREGA LA NOTIFICACION PARA TODOS LOS USUARIOS
-		        		$rootScope.get('api/usuario').then(function(response) {
-		        			$.each(response, function(key, value) {
+		            if (response["0"].icon == "4.png") { // MENSAJE DE DIFUSION, SE AGREGA LA NOTIFICACION PARA TODOS LOS USUARIOS
+		                $rootScope.get('api/usuario').then(function(response) {
+		                    $.each(response, function(key, value) {
 
-		        				var data = JSON.stringify({
-		        					id_notificacion: id_notificacion,
-		        					cedula: value.cedula
-		        				});
+		                        var data = JSON.stringify({
+		                            id_notificacion: id_notificacion,
+		                            cedula: value.cedula
+		                        });
 
-		        				$rootScope.post('api/notificaciones_usuario', data).then(function(response) {
-		        					//console.log(response);
-		        				});
-		        			});
-		        			
-		        		});
-		        	}
+		                        $rootScope.post('api/notificaciones_usuario', data).then(function(response) {
+		                            //console.log(response);
+		                        });
+		                    });
 
-		        	if(response["0"].icon=="3.png") { // MENSAJE PERSONAL, SOLO A LA PERSONA
-		        		var data = JSON.stringify({
-		        			id_notificacion: id_notificacion,
-		        			cedula: response["0"].user
-		        		});
-		        		$rootScope.post('api/notificaciones_usuario', data).then(function(response) {
-		        			//console.log(response);
-		        		});
-		        	}
+		                });
+		            }
 
-		        	if(response["0"].icon=="5.png") { // MENSAJE GRUPAL, SOLO A LAS PERSONAS PERTENECEN A CIERTO GRUPO
-		        		var filter = JSON.stringify({
-		        			donde: "WHERE nivel = '"+response["0"].rol+"'"
-		        		});
-		        		$rootScope.get('api/usuario?filter='+filter).then(function(response) {
-		        			$.each(response, function(key, value) {
+		            if (response["0"].icon == "3.png") { // MENSAJE PERSONAL, SOLO A LA PERSONA
+		                var data = JSON.stringify({
+		                    id_notificacion: id_notificacion,
+		                    cedula: response["0"].user
+		                });
+		                $rootScope.post('api/notificaciones_usuario', data).then(function(response) {
+		                    //console.log(response);
+		                });
+		            }
 
-		        				var data = JSON.stringify({
-		        					id_notificacion: id_notificacion,
-		        					cedula: value.cedula
-		        				});
+		            if (response["0"].icon == "5.png") { // MENSAJE GRUPAL, SOLO A LAS PERSONAS PERTENECEN A CIERTO GRUPO
+		                var filter = JSON.stringify({
+		                    donde: "WHERE nivel = '" + response["0"].rol + "'"
+		                });
+		                $rootScope.get('api/usuario?filter=' + filter).then(function(response) {
+		                    $.each(response, function(key, value) {
 
-		        				$rootScope.post('api/notificaciones_usuario', data).then(function(response) {
-		        					//console.log(response);
-		        				});
-		        			});
-		        			
-		        		});
+		                        var data = JSON.stringify({
+		                            id_notificacion: id_notificacion,
+		                            cedula: value.cedula
+		                        });
 
-		        	}
-		        	setTimeout(function() {
-		        		$rootScope.cargarNotificacionesCompletas();
-                    $rootScope.cargarBadget();
+		                        $rootScope.post('api/notificaciones_usuario', data).then(function(response) {
+		                            //console.log(response);
+		                        });
+		                    });
 
-		        	var payload = JSON.stringify(response["0"]);
-		        	$rootScope.server.send('message', payload);
-		        	}, 5000);
+		                });
 
-		        	
+		            }
+		            setTimeout(function() {
+		                $rootScope.cargarNotificacionesCompletas();
+		                $rootScope.cargarBadget();
+
+		                var payload = JSON.stringify(response["0"]);
+		                $rootScope.server.send('message', payload);
+		            }, 5000);
+
+
 
 		        }, function(response) {});
 		    };
@@ -1303,17 +1311,17 @@
 
 		            setTimeout(function() {
 
-		            if (mensaje.tipo == "notificacion") {
+		                if (mensaje.tipo == "notificacion") {
 
-		            		$rootScope.cargarNotificacionesCompletas();
+		                    $rootScope.cargarNotificacionesCompletas();
 		                    $rootScope.cargarBadget();
 
-		                    
+
 		                    // MENSAJE DE DIFUSION
 		                    if ((mensaje.rol === "") && (mensaje.user === "")) {
 		                        ion.sound.play("Tethys");
 		                        if ($rootScope.objeto != "Notificaciones") {
-		                            $rootScope.toast("<img width='20' height='20' src='assets/images/" + mensaje.icon + "'/>" + " <a onclick='angular.element(this).scope().cargarNot("+mensaje.id+")' style='padding-left:5px;'>" + mensaje.title + "<a>", 15000, "notificacion");
+		                            $rootScope.toast("<img width='20' height='20' src='assets/images/" + mensaje.icon + "'/>" + " <a onclick='angular.element(this).scope().cargarNot(" + mensaje.id + ")' style='padding-left:5px;'>" + mensaje.title + "<a>", 15000, "notificacion");
 		                        }
 
 
@@ -1325,7 +1333,7 @@
 		                        if (mensaje.rol == $rootScope.usuario_en_linea.nivel) {
 		                            ion.sound.play("Tethys");
 		                            if ($rootScope.objeto != "Notificaciones") {
-		                                $rootScope.toast("<img width='20' height='20' src='assets/images/" + mensaje.icon + "'/>" + " <a onclick='angular.element(this).scope().cargarNot("+mensaje.id+")' style='padding-left:5px;'>" + mensaje.title + "<a>", 15000, "notificacion");
+		                                $rootScope.toast("<img width='20' height='20' src='assets/images/" + mensaje.icon + "'/>" + " <a onclick='angular.element(this).scope().cargarNot(" + mensaje.id + ")' style='padding-left:5px;'>" + mensaje.title + "<a>", 15000, "notificacion");
 		                            }
 
 
@@ -1338,7 +1346,7 @@
 		                        if (mensaje.user == $rootScope.usuario_en_linea.cedula) {
 		                            ion.sound.play("Tethys");
 		                            if ($rootScope.objeto != "Notificaciones") {
-		                                $rootScope.toast("<img width='20' height='20' src='assets/images/" + mensaje.icon + "'/>" + " <a onclick='angular.element(this).scope().cargarNot("+mensaje.id+")' style='padding-left:5px;'>" + mensaje.title + "<a>", 15000, "notificacion");
+		                                $rootScope.toast("<img width='20' height='20' src='assets/images/" + mensaje.icon + "'/>" + " <a onclick='angular.element(this).scope().cargarNot(" + mensaje.id + ")' style='padding-left:5px;'>" + mensaje.title + "<a>", 15000, "notificacion");
 		                            }
 
 
@@ -1346,10 +1354,10 @@
 
 		                    }
 
-		                    
-		            } else if (mensaje.tipo == "chat") {
-		                //console.log("es chat");
-		            }		            	
+
+		                } else if (mensaje.tipo == "chat") {
+		                    //console.log("es chat");
+		                }
 
 		            }, 5000);
 

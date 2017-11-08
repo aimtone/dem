@@ -19,7 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `smsgw`
 --
-
+CREATE DATABASE IF NOT EXISTS `smsgw`;
+USE `smsgw`; 
 -- --------------------------------------------------------
 
 --

@@ -1,44 +1,38 @@
-
-<div class="login container">
+<div class="login container" oncontextmenu="return false">
     <div class="row">
-        
         <div class="col s12 m6 card login-box offset-m3 container">
             <h3 class="center-align">Iniciar sesión</h3>
             <div class="row">
                 <form class="col s12" autocomplete="off">
                     <div class="row">
                         <div class="input-field col s10 offset-s1">
-                            <input id="cedula" type="text" class="validate" ng-model="datos.cedula"  required>
+                            <input id="cedula" type="text" class="validate" ng-model="datos.cedula" required>
                             <label for="cedula">Cédula de Identidad</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s10 offset-s1">
-                            <input id="clave" type="password" class="validate" ng-model="datos.clave"  required>
+                            <input id="clave" type="password" class="validate" ng-model="datos.clave" required>
                             <label for="clave">Clave</label>
                         </div>
                     </div>
                     <div class="row col s10">
                         <div class="row">
-                            <div class="col s9 offset-s1">
-                                <input type="text" disabled style="user-select: none;-webkit-user-select: none;-moz-user-select: none;" oncontextmenu="return false;" readonly id="txtCaptcha"/>
+                            <div class="col s12 m12 l9 offset-l1 center">
+                                <span id="text_generando"><h6>Cargando captcha... Por favor, espere</h6></span>
+                                <input type="text" disabled="disabled" style="user-select: none;-webkit-user-select: none;-moz-user-select: none;display: none" oncopy="return false" oncut="return false" onpaste="return false" readonly="readonly" id="txtCaptcha" />
                                 <div id="chaptcha_image"></div>
-                                <input type="text" id="txtInput" name="txtInput" placeholder="{{lang.login.formulario.mensaje_captcha}}"/>
+                                <input oncopy="return false" oncut="return false" type="text" id="txtInput" onpaste="return false" name="txtInput" placeholder="{{lang.login.formulario.mensaje_captcha}}" />
                             </div>
-
                             <div class="col s2">
                                 <button class="btn blue waves-effect waves-light" type="button" id="btnrefresh"><i class="material-icons">refresh</i></button>
-                                 
                             </div>
-
                         </div>
-                        
                     </div>
-                  
                     <div class="divider"></div>
                     <div class="row">
                         <div class="col s12">
-                                <button class="btn blue darken-4 waves-effect waves-light right" type="button" id="login" name="login">Acceder</button>
+                            <button class="btn blue darken-4 waves-effect waves-light right" type="button" id="login" name="login">Acceder</button>
                         </div>
                     </div>
                 </form>

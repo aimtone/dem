@@ -1,76 +1,60 @@
-   <div ng-tabs class="tabbable">
-        <ul class="nav nav-tabs">
-            <li ng-tab-head="active">
-                <a href="#" ng-click="$event.preventDefault()">Generales</a>
-            </li>
-            <li ng-tab-head>
-                <a href="#" ng-click="$event.preventDefault()">Programador</a>
-            </li>
-            <li ng-tab-head>
-                <a href="#" ng-click="$event.preventDefault()">Tablas de Datos</a>
-            </li>
-            <li ng-tab-head>
-                <a href="#" ng-click="$event.preventDefault()">Notificaciones</a>
-            </li>
-
-        </ul>
-        <div class="tab-content" style="overflow: hidden">
-            <div ng-tab-body="animated fadeInRightBig" class="tab-pane">
-                <h5>Respaldo y Restauración de datos</h5>
-
-                <p>Por favor, proporcione las credenciales correctas de los sobre la base de datos que desea respaldar, si no conoce esta información, por favor, consulte con el personal encargado en el área de informática en su empresa</p>
-
-                <table class="highlight">
-                    <thead>
+<div ng-tabs class="tabbable">
+    <ul class="nav nav-tabs">
+        <li ng-tab-head="active">
+            <a href="#" ng-click="$event.preventDefault()">Generales</a>
+        </li>
+        <li ng-tab-head>
+            <a href="#" ng-click="$event.preventDefault()">Programador</a>
+        </li>
+        <li ng-tab-head>
+            <a href="#" ng-click="$event.preventDefault()">Tablas de Datos</a>
+        </li>
+        <li ng-tab-head>
+            <a href="#" ng-click="$event.preventDefault()">Notificaciones</a>
+        </li>
+    </ul>
+    <div class="tab-content" style="overflow: hidden">
+        <div ng-tab-body="animated fadeInRightBig" class="tab-pane">
+            <h5>Respaldo y Restauración de datos</h5>
+            <p>Por favor, proporcione las credenciales correctas de los sobre la base de datos que desea respaldar, si no conoce esta información, por favor, consulte con el personal encargado en el área de informática en su empresa</p>
+            <table class="highlight">
+                <thead>
                     <tr>
                         <th></th>
                         <th></th>
                     </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr>
-                            <td><b>Nombre de la base de datos de MySQL a respaldar</b></td>
-                            <td>
-                                <input id="basedatos" type="text" ng-model="data_generales.basedatos" class="validate">
-
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><b>Nombre de usuario de MySQL</b></td>
-                            <td>
-                                <input id="usuario" type="text" ng-model="data_generales.usuario" class="validate">
-
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><b>Contraseña de MySQL</b></td>
-                            <td>
-                             <input id="clave" type="password" ng-model="data_generales.clave"  class="validate">
-                            </td>
-                        </tr>
-
-                
-                    </tbody>
-                </table>
-            </div>
-
-            <div ng-tab-body="animated fadeInRightBig" class="tab-pane">
-            
-            
-
-                <table class="highlight">
-                    <thead>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Nombre de la base de datos de MySQL a respaldar</b></td>
+                        <td>
+                            <input id="basedatos" type="text" ng-model="data_generales.basedatos" class="validate">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Nombre de usuario de MySQL</b></td>
+                        <td>
+                            <input id="usuario" type="text" ng-model="data_generales.usuario" class="validate">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Contraseña de MySQL</b></td>
+                        <td>
+                            <input id="clave" type="password" ng-model="data_generales.clave" class="validate">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div ng-tab-body="animated fadeInRightBig" class="tab-pane">
+            <table class="highlight">
+                <thead>
                     <tr>
                         <th></th>
                         <th></th>
-                        
                     </tr>
-                    </thead>
-
-                    <tbody>
+                </thead>
+                <tbody>
                     <tr>
                         <td><b>Mostrar fines de semana</b></td>
                         <td>
@@ -85,7 +69,6 @@
                             <label for="weekNumbers">Marcar para mostrar</label>
                         </td>
                     </tr>
-
                     <tr>
                         <td><b>Establecer los días como enlaces</b></td>
                         <td>
@@ -93,9 +76,6 @@
                             <label for="weekNumbersWithinDays">Marcar para establecer</label>
                         </td>
                     </tr>
-
-                 
-
                     <tr>
                         <td><b>Permitir arrastrar los actos dentro del programador</b></td>
                         <td>
@@ -103,7 +83,6 @@
                             <label for="droppable">Marcar para permitir</label>
                         </td>
                     </tr>
-
                     <tr>
                         <td><b>Permitir seleccionar un rango de horas para crear un acto</b></td>
                         <td>
@@ -111,7 +90,6 @@
                             <label for="selectable">Marcar para permitir</label>
                         </td>
                     </tr>
-
                     <tr>
                         <td><b>Permitir la superpocisión de los actos</b></td>
                         <td>
@@ -126,40 +104,34 @@
                             <label for="nowIndicator">Marcar para indicar</label>
                         </td>
                     </tr>
-
-
                     <tr>
                         <td><b>Intervalo de tiempo entre horas</b></td>
                         <td>
-                             <input id="slotDuration" type="text" ng-model="data_programador.slotDuration" class="validate">
+                            <input id="slotDuration" type="text" ng-model="data_programador.slotDuration" class="validate">
                         </td>
                     </tr>
-
                     <tr>
                         <td><b>Mensaje al mostrar cuando no hayan actos disponibles</b></td>
                         <td>
-                             <input id="noEventsMessage" type="text" ng-model="data_programador.noEventsMessage" class="validate">
+                            <input id="noEventsMessage" type="text" ng-model="data_programador.noEventsMessage" class="validate">
                         </td>
                     </tr>
-
                     <tr>
                         <td><b>Vista por defecto</b></td>
                         <td>
-                             <select class="browser-default" ng-model="data_programador.defaultView" ng-value="data_programador.defaultView">
+                            <select class="browser-default" ng-model="data_programador.defaultView" ng-value="data_programador.defaultView">
                                 <option value="" disabled selected>Escoje una opción</option>
                                 <option value="agendaDay">Día</option>
                                 <option value="agendaWeek">Semana</option>
                                 <option value="month">Més</option>
                                 <option value="listWeek">Agenda</option>
-                                
                             </select>
                         </td>
                     </tr>
-
                     <tr>
                         <td><b>Días no laborales</b></td>
                         <td>
-                             <select multiple="multiple" class="browser-default" ng-model="data_programador.hiddenDays" ng-value="data_programador.hiddenDays">
+                            <select multiple="multiple" class="browser-default" ng-model="data_programador.hiddenDays" ng-value="data_programador.hiddenDays">
                                 <option value="" selected>Escoje las opciones</option>
                                 <option value="1">Lunes</option>
                                 <option value="2">Martes</option>
@@ -171,59 +143,42 @@
                             </select>
                         </td>
                     </tr>
-
                     <tr>
                         <td><b>Horario de entrada</b></td>
                         <td>
-                             <input id="start" type="text" ng-model="data_programador.start" class="validate">
+                            <input id="start" type="text" ng-model="data_programador.start" class="validate">
                         </td>
                     </tr>
-
                     <tr>
                         <td><b>Horario de Salida</b></td>
                         <td>
-                             <input id="end" type="text" ng-model="data_programador.end" class="validate">
+                            <input id="end" type="text" ng-model="data_programador.end" class="validate">
                         </td>
                     </tr>
-
                     <tr>
                         <td><b>Hora mínima a mostrar en el programador</b></td>
                         <td>
-                             <input id="minTime" type="text" ng-model="data_programador.minTime" class="validate">
+                            <input id="minTime" type="text" ng-model="data_programador.minTime" class="validate">
                         </td>
                     </tr>
-
                     <tr>
                         <td><b>Hora máxima a mostrar en el programador</b></td>
                         <td>
-                             <input id="maxTime" type="text" ng-model="data_programador.maxTime" class="validate">
+                            <input id="maxTime" type="text" ng-model="data_programador.maxTime" class="validate">
                         </td>
                     </tr>
-                    
-
-                    </tbody>
-                </table>
-
-                
-
-                
-               
-            </div>
-
-            <div ng-tab-body="animated fadeInRightBig" class="tab-pane">
-                
-            
-
-                <table class="highlight">
-                    <thead>
+                </tbody>
+            </table>
+        </div>
+        <div ng-tab-body="animated fadeInRightBig" class="tab-pane">
+            <table class="highlight">
+                <thead>
                     <tr>
                         <th></th>
                         <th></th>
-                        
                     </tr>
-                    </thead>
-
-                    <tbody>
+                </thead>
+                <tbody>
                     <tr>
                         <td><b>Permitir la navegación con el teclado</b></td>
                         <td>
@@ -238,7 +193,6 @@
                             <label for="info">Marcar para mostrar</label>
                         </td>
                     </tr>
-
                     <tr>
                         <td><b>Guardar estado de la tabla al recargar</b></td>
                         <td>
@@ -246,9 +200,6 @@
                             <label for="stateSave">Marcar para establecer</label>
                         </td>
                     </tr>
-
-                 
-
                     <tr>
                         <td><b>Ajustar alto de la tabla</b></td>
                         <td>
@@ -256,7 +207,6 @@
                             <label for="scrollCollapse">Marcar para permitir</label>
                         </td>
                     </tr>
-
                     <tr>
                         <td><b>Hacer la tabla adaptable a cualquier resolución</b></td>
                         <td>
@@ -264,7 +214,6 @@
                             <label for="responsive">Marcar para permitir</label>
                         </td>
                     </tr>
-
                     <tr>
                         <td><b>Mostrar la paginación de los registros</b></td>
                         <td>
@@ -279,138 +228,106 @@
                             <label for="colReorder">Marcar para indicar</label>
                         </td>
                     </tr>
-                    
-
-                    </tbody>
-                </table>
-               
-            </div>
-
-            <div ng-tab-body="animated fadeInRightBig" class="tab-pane">
-                <h5>Websockets</h5>
-
-                <p>Por favor, rellene los siguiente campos con las direcciones correctas, si la dirección introducida presentara un error, las notificaciones en el sistema no llegaran correctamente, en caso de no conocer esta información, consulte el personal de informática de la institución</p>
-
-                <table class="highlight">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr>
-                            <td><b>Dirección del servidor de Websocket</b></td>
-                            <td>
-                                <input id="socket_address" type="text" ng-model="data_notificaciones.socket_address" ng-value="data_notificaciones.socket_address" class="validate">
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>Puerto TCP de conexión del socket</b></td>
-                            <td>
-                                <input id="socket_port" type="text" ng-model="data_notificaciones.socket_port" ng-value="data_notificaciones.socket_port" class="validate">
-
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-
-                <h5>Mensajes de Texto</h5>
-
-                <p>Por favor, rellene los siguiente campos con las direcciones correctas, si la dirección introducida presentara un error, la salida de los mensajes de textos no se realizará correctamente</p>
-
-                <table class="highlight">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr>
-                            <td><b>Dirección de API de servidor de mensajes de texto instántaneo</b></td>
-                            <td>
-                                <input id="servSMSinst" type="text" ng-model="data_notificaciones.servSMSinst" ng-value="data_notificaciones.servSMSinst" class="validate">
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>Dirección de API de servidor de mensajes de texto programados</b></td>
-                            <td>
-                                <input id="servSMSprog" type="text" ng-model="data_notificaciones.servSMSprog" ng-value="data_notificaciones.servSMSprog" class="validate">
-
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h5>Correo Electrónico</h5>
-
-                <p>Por favor, rellene los campos con una dirección de correo electrónico válida para generar la salida de mensajes d correo electrónico, solicite ayuda con el equipo informático de su empresa si no conoce la dirección del servidor SMTP o el puerto de salida</p>
-
-                <table class="highlight">
-                    <thead>
+                </tbody>
+            </table>
+        </div>
+        <div ng-tab-body="animated fadeInRightBig" class="tab-pane">
+            <h5>Websockets</h5>
+            <p>Por favor, rellene los siguiente campos con las direcciones correctas, si la dirección introducida presentara un error, las notificaciones en el sistema no llegaran correctamente, en caso de no conocer esta información, consulte el personal de informática de la institución</p>
+            <table class="highlight">
+                <thead>
                     <tr>
                         <th></th>
                         <th></th>
                     </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr>
-                            <td><b>Dirección de API de servidor de correo electrónico</b></td>
-                            <td>
-                                <input id="servEmail" type="text" ng-model="data_notificaciones.servEmail" class="validate">
-
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><b>Dirección de Correo Electrónico</b></td>
-                            <td>
-                                <input id="email" type="email" ng-model="data_notificaciones.email" class="validate">
-
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><b>Contraseña</b></td>
-                            <td>
-                             <input id="clave" type="password" ng-model="data_notificaciones.clave" ng-value="data_notificaciones.clave" class="validate">
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><b>Servidor SMTP</b></td>
-                            <td>
-                             <input id="servSMTP" type="text" ng-model="data_notificaciones.servSMTP" class="validate">
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><b>Puerto</b></td>
-                            <td>
-                             <input id="puerto" type="number" ng-model="data_notificaciones.puerto" ng-value="data_notificaciones.puerto" class="validate">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-
-            </div>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Dirección del servidor de Websocket</b></td>
+                        <td>
+                            <input id="socket_address" type="text" ng-model="data_notificaciones.socket_address" ng-value="data_notificaciones.socket_address" class="validate">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Puerto TCP de conexión del socket</b></td>
+                        <td>
+                            <input id="socket_port" type="text" ng-model="data_notificaciones.socket_port" ng-value="data_notificaciones.socket_port" class="validate">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5>Mensajes de Texto</h5>
+            <p>Por favor, rellene los siguiente campos con las direcciones correctas, si la dirección introducida presentara un error, la salida de los mensajes de textos no se realizará correctamente</p>
+            <table class="highlight">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Dirección de API de servidor de mensajes de texto instántaneo</b></td>
+                        <td>
+                            <input id="servSMSinst" type="text" ng-model="data_notificaciones.servSMSinst" ng-value="data_notificaciones.servSMSinst" class="validate">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Dirección de API de servidor de mensajes de texto programados</b></td>
+                        <td>
+                            <input id="servSMSprog" type="text" ng-model="data_notificaciones.servSMSprog" ng-value="data_notificaciones.servSMSprog" class="validate">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5>Correo Electrónico</h5>
+            <p>Por favor, rellene los campos con una dirección de correo electrónico válida para generar la salida de mensajes d correo electrónico, solicite ayuda con el equipo informático de su empresa si no conoce la dirección del servidor SMTP o el puerto de salida</p>
+            <table class="highlight">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Dirección de API de servidor de correo electrónico</b></td>
+                        <td>
+                            <input id="servEmail" type="text" ng-model="data_notificaciones.servEmail" class="validate">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Dirección de Correo Electrónico</b></td>
+                        <td>
+                            <input id="email" type="email" ng-model="data_notificaciones.email" class="validate">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Contraseña</b></td>
+                        <td>
+                            <input id="clave" type="password" ng-model="data_notificaciones.clave" ng-value="data_notificaciones.clave" class="validate">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Servidor SMTP</b></td>
+                        <td>
+                            <input id="servSMTP" type="text" ng-model="data_notificaciones.servSMTP" class="validate">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Puerto</b></td>
+                        <td>
+                            <input id="puerto" type="number" ng-model="data_notificaciones.puerto" ng-value="data_notificaciones.puerto" class="validate">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col s12">
-               <a id="post" class="waves-effect waves-light btn-large blue right">Guardar cambios</a>
-        </div>
-  </div>
-
+</div>
+</div>
+<div class="row">
+    <div class="col s12">
+        <a id="post" class="waves-effect waves-light btn-large blue right">Guardar cambios</a>
+    </div>
+</div>

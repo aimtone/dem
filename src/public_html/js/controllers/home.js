@@ -1,4 +1,7 @@
 		app.controller('home', function($rootScope, $scope, $http, $localStorage, $location) {
+
+
+
 		    $rootScope.validateToken();
 		    $rootScope.objeto = "Página Principal";
 		    $scope.today = moment().format("YYYY-MM-DD");
@@ -118,7 +121,7 @@
 
 
 		        $rootScope.get('api/vista_estadistica?filter=' + filter1).then(function(response) {
-		        	console.log(response);
+		            console.log(response);
 
 		            var cantidad = response["0"].cantidad;
 
@@ -134,23 +137,23 @@
 
 		            } else {
 		                var filter = JSON.stringify({
-		                    campos: etiquetas + " AS labels, COUNT(*) AS data," + agrupar  + " AS agrupar",
+		                    campos: etiquetas + " AS labels, COUNT(*) AS data," + agrupar + " AS agrupar",
 		                    agruparPor: "GROUP BY " + agrupar
 		                });
 		            }
 
 		            $rootScope.get('api/vista_estadistica?filter=' + filter).then(function(response) {
 
-		            	console.log(response);
+		                console.log(response);
 
 		                for (var i = response.length - 1; i >= 0; i--) {
 
-		                	if(response[i].labels == response[i].agrupar) {
-		                		labels.push(response[i].labels);
-		                	} else  {
-		                		labels.push(response[i].labels + " ("+ response[i].agrupar+ ")");
-		                	}
-		                    
+		                    if (response[i].labels == response[i].agrupar) {
+		                        labels.push(response[i].labels);
+		                    } else {
+		                        labels.push(response[i].labels + " (" + response[i].agrupar + ")");
+		                    }
+
 
 		                    if (representacion == "porcentaje") {
 		                        data.push($rootScope.redondear((100 * response[i].data) / cantidad, 2));
@@ -191,7 +194,7 @@
 		        });
 
 
-		        
+
 
 
 
@@ -293,7 +296,7 @@
 		                            style: "bold"
 		                        },
 
-		                    
+
 		                        {
 		                            image: data,
 		                            width: 400,
@@ -321,8 +324,11 @@
 
 		            for (var i = 0; i < response.length; i++) {
 
-
-		                var data = [response[i].ID, response[i].CAUSA, response[i].IMPUTADO, response[i].TRIBUNAL, response[i].TIPO_DE_TRIBUNAL, response[i].FISCAL, response[i].DEFENSOR, response[i].ACTO, moment(response[i].HORA).format("hh:mm a"), response[i].ALGUACIL, response[i].SALA, response[i].OBSERVACION];
+		                if (response[i].NUMERO == "0") {
+		                    var data = [response[i].ID, response[i].CAUSA, response[i].IMPUTADO, response[i].TRIBUNAL, response[i].TIPO_DE_TRIBUNAL, response[i].FISCAL, response[i].DEFENSOR, response[i].ACTO, moment(response[i].HORA).format("hh:mm a"), response[i].ALGUACIL, response[i].SALA, response[i].OBSERVACION];
+		                } else {
+		                    var data = [response[i].ID, response[i].CAUSA, response[i].IMPUTADO, response[i].TRIBUNAL, response[i].TIPO_DE_TRIBUNAL, response[i].FISCAL, response[i].NUMERO, response[i].ACTO, moment(response[i].HORA).format("hh:mm a"), response[i].ALGUACIL, response[i].SALA, response[i].OBSERVACION];
+		                }
 
 
 		                table_body.push(data);

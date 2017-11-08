@@ -1,127 +1,107 @@
 <style>
+#wrap {
+    width: 100%;
+    margin: 0 auto;
+}
 
+#external-events {
+    word-wrap: break-word;
+    position: absolute;
+    float: left;
+    left: 0px;
+    height: 500px;
+    min-height: 500px;
+    max-height: 500px;
+    padding: 0 10px;
+    text-align: left;
+}
 
-		
-	#wrap {
-		width: 100%;
-		margin: 0 auto;
-	}
-		
-	#external-events {
-		word-wrap: break-word;
-        position:absolute;
-		float: left;
-        left:0px;
-        height:500px;
-        min-height: 500px;
-        max-height: 500px;
-		padding: 0 10px;
-	    text-align: left;
-    }
-		
-	#external-events h4 {
-		font-size: 16px;
-		margin-top: 0;
-		padding-top: 1em;
-	}
-		
-	#external-events .fc-event {
-		margin: 2px 0;
-		cursor: pointer;
-	}
-		
-	#external-events p {
-		margin: 1.5em 0;
-		font-size: 11px;
-		color: #666;
-	}
-		
-	#external-events p input {
-		margin: 0;
-		vertical-align: middle;
-	}
+#external-events h4 {
+    font-size: 16px;
+    margin-top: 0;
+    padding-top: 1em;
+}
 
-	#calendar {
-		position:absolute;
-		float: left;
-		background:white;
-		left:0px;
-	}
-    #calendar h2 {
-        font-size: 1.3em;
-    }
-    .DIFERIDA {
-    	background: red;
-    	border:1px solid red;
-    }
-    .externo {
-    	font-size: 10px;
-    }
-    
+#external-events .fc-event {
+    margin: 2px 0;
+    cursor: pointer;
+}
 
-    
+#external-events p {
+    margin: 1.5em 0;
+    font-size: 11px;
+    color: #666;
+}
 
+#external-events p input {
+    margin: 0;
+    vertical-align: middle;
+}
+
+#calendar {
+    position: absolute;
+    float: left;
+    background: white;
+    left: 0px;
+}
+
+#calendar h2 {
+    font-size: 1.3em;
+}
+
+.DIFERIDA {
+    background: red;
+    border: 1px solid red;
+}
+
+.externo {
+    font-size: 10px;
+}
 </style>
-		<div class="event-tooltip">
-				<div class="triangulo-equilatero-bottom">
-					
-				</div>
-				<div class="meta">
-					<h2>{{event_card_data.titulo}}</h2>
-					<p>{{event_card_data.descripcion_acto}}</p>
-				</div>
-				<div class="tiempo">
-					<div class="fecha">
-						<label>Fecha</label>
-						<p>{{event_card_data.fecha}}</p>
-					</div>
-					<div class="Inicio">
-						<label>Hora de Inicio</label>
-						<p>{{event_card_data.start}}</p>
-					</div>
-					<div class="fin">
-						<label>Hora de Fin</label>
-						<p>{{event_card_data.end}}</p>
-					</div>
-				</div>
+<div class="event-tooltip">
+    <div class="triangulo-equilatero-bottom">
+    </div>
+    <div class="meta">
+        <h2>{{event_card_data.titulo}}</h2>
+        <p ng-show="event_card_data.descripcion_acto !== ''">{{event_card_data.descripcion_acto}}</p>
+        <p ng-show="event_card_data.descripcion_acto === ''"><i>Ninguna descripción establecida</i></p>
 
-				<div class="btn-group">
-					<a href="{{LinkMasDetalles}}">Más detalles</a>
-					<a ng-click="aEspera()">A espera</a>
-					<a ng-click="eliminarActo()">Eliminar</a>
-				</div>
-		</div>
-
-	<div class="mensaje_de_error"></div>
-	<div id='wrap' class="">
-
-		
-
-		<div class="hide-on-med-and-down" id='external-events'>
-			
-			<h4>
+    </div>
+    <div class="tiempo">
+        <div class="fecha">
+            <label>Fecha</label>
+            <p>{{event_card_data.fecha}}</p>
+        </div>
+        <div class="Inicio">
+            <label>Hora de Inicio</label>
+            <p>{{event_card_data.start}}</p>
+        </div>
+        <div class="fin">
+            <label>Hora de Fin</label>
+            <p>{{event_card_data.end}}</p>
+        </div>
+    </div>
+    <div class="btn-group">
+        <a href="{{LinkMasDetalles}}">Más detalles</a>
+        <a ng-click="aEspera()">A espera</a>
+        <a ng-click="eliminarActo()">Eliminar</a>
+    </div>
+</div>
+<div class="mensaje_de_error"></div>
+<div id='wrap' class="">
+    <div class="hide-on-med-and-down" id='external-events'>
+        <h4>
 				Actos en Espera
 				
 			</h4>
-            <div class="actos">
-				<div ng-repeat="x in JSONEspera" id="{{x.id}}" class="fc-event {{x.estatus}} externo">{{x.title}}</div>
-
-			</div>
-			
-			
-
-			
-
-			<p>
-				<input checked  disabled type='checkbox' id='drop-remove' />
-				<label for='drop-remove'>Remover</label>
-			</p>
-		</div>
-		
-		<div id='calendar'></div>
-
-		<div style='clear:both'></div>
-
-	</div>
-
-	
+        <div class="actos">
+            <div ng-repeat="x in JSONEspera" id="{{x.id}}" class="fc-event {{x.estatus}} externo">{{x.title}}</div>
+        </div>
+        <p>
+            <input checked disabled type='checkbox' id='drop-remove' />
+            <label for='drop-remove'>Remover</label>
+        </p>
+    </div>
+    <div id='calendar'></div>
+    <div style='clear:both'></div>
+</div>
