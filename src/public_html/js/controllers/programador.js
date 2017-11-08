@@ -446,64 +446,94 @@
                     }
                 },
                 eventReceive: function(event, jsEvent) { // called when a proper external event is dropped
+
                     if ($(".fc-view")["0"].classList[1] == "fc-agendaDay-view") {
                         var fecha_inicio = new Date(event._start._d);
-                        var fecha_fin = new Date(event._start._d);
-                        fecha_fin.setHours(fecha_inicio.getHours() + 2);
 
-                        if ($rootScope.formatDate(fecha_inicio, "yyyy-MM-dd") == $rootScope.formatDate(new Date(), "yyyy-MM-dd")) {
-                            if ($rootScope.usuario_en_linea.nivel == "ADMINISTRADOR") {
-                                var data = {
-                                    id: null,
-                                    inicio: $rootScope.formatDate(fecha_inicio, "yyyy-MM-ddThh:mm:ss"),
-                                    fin: $rootScope.formatDate(fecha_fin, "yyyy-MM-ddThh:mm:ss"),
-                                    id_sala: event.resourceId,
-                                    estatus: "ASIGNADO"
-                                };
+                        $rootScope.get('api/acto/' + $rootScope.id_evento_arrastrado).then(function(response) {
+                            var numero_caso = response["0"].numero_caso;
+                            var fecha_calendario = $rootScope.formatDate(fecha_inicio, "yyyy-MM-dd");
 
-
-                                $rootScope.put('api/acto/' + $rootScope.id_evento_arrastrado, data).then(function(response) {
-                                    ////console.log(response);
-                                    $('#calendar').fullCalendar('removeEvents', event._id);
-                                    $('#calendar').fullCalendar('refetchEvents');
-                                });
-
-                            } else {
-                                $('#calendar').fullCalendar('removeEvents', event._id);
-                                $rootScope.toast("No tienes permiso para ingresar actos el dia de hoy");
-                                cargarActoEspera();
-
-                                var data = {};
-
-                                $(".FINALIZADO").css({
-                                    background: "repeating-linear-gradient( 45deg, rgba(255,255,255,1) 20px, rgba(255,255,255,1) 40px, #DF6C4F 40px, #DF6C4F 60px )",
-                                    border: "none"
-                                });
-                            }
-
-
-
-
-                        } else {
-
-                            var data = {
-                                id: null,
-                                inicio: $rootScope.formatDate(fecha_inicio, "yyyy-MM-ddThh:mm:ss"),
-                                fin: $rootScope.formatDate(fecha_fin, "yyyy-MM-ddThh:mm:ss"),
-                                id_sala: event.resourceId,
-                                estatus: "ASIGNADO"
-                            };
-
-
-                            $rootScope.put('api/acto/' + $rootScope.id_evento_arrastrado, data).then(function(response) {
-                                ////console.log(response);
-                                $('#calendar').fullCalendar('removeEvents', event._id);
-                                $('#calendar').fullCalendar('refetchEvents');
+                            var filter = JSON.stringify({
+                                donde: "where numero = '" + numero_caso + "' AND DATE(start) = '" + fecha_calendario + "'"
                             });
 
+                            $rootScope.get('api/acto_sala?filter=' + filter).then(function(response) {
+                                if (typeof response == "undefined") {
 
 
-                        }
+                                    var fecha_fin = new Date(event._start._d);
+                                    fecha_fin.setHours(fecha_inicio.getHours() + 2);
+
+
+
+                                    if ($rootScope.formatDate(fecha_inicio, "yyyy-MM-dd") == $rootScope.formatDate(new Date(), "yyyy-MM-dd")) {
+                                        if ($rootScope.usuario_en_linea.nivel == "ADMINISTRADOR") {
+                                            var data = {
+                                                id: null,
+                                                inicio: $rootScope.formatDate(fecha_inicio, "yyyy-MM-ddThh:mm:ss"),
+                                                fin: $rootScope.formatDate(fecha_fin, "yyyy-MM-ddThh:mm:ss"),
+                                                id_sala: event.resourceId,
+                                                estatus: "ASIGNADO"
+                                            };
+
+
+                                            $rootScope.put('api/acto/' + $rootScope.id_evento_arrastrado, data).then(function(response) {
+                                                ////console.log(response);
+                                                $('#calendar').fullCalendar('removeEvents', event._id);
+                                                $('#calendar').fullCalendar('refetchEvents');
+                                            });
+
+                                        } else {
+                                            $('#calendar').fullCalendar('removeEvents', event._id);
+                                            $rootScope.toast("No tienes permiso para ingresar actos el dia de hoy");
+                                            cargarActoEspera();
+
+                                            var data = {};
+
+                                            $(".FINALIZADO").css({
+                                                background: "repeating-linear-gradient( 45deg, rgba(255,255,255,1) 20px, rgba(255,255,255,1) 40px, #DF6C4F 40px, #DF6C4F 60px )",
+                                                border: "none"
+                                            });
+                                        }
+
+
+
+
+                                    } else {
+
+                                        var data = {
+                                            id: null,
+                                            inicio: $rootScope.formatDate(fecha_inicio, "yyyy-MM-ddThh:mm:ss"),
+                                            fin: $rootScope.formatDate(fecha_fin, "yyyy-MM-ddThh:mm:ss"),
+                                            id_sala: event.resourceId,
+                                            estatus: "ASIGNADO"
+                                        };
+
+
+                                        $rootScope.put('api/acto/' + $rootScope.id_evento_arrastrado, data).then(function(response) {
+                                            ////console.log(response);
+                                            $('#calendar').fullCalendar('removeEvents', event._id);
+                                            $('#calendar').fullCalendar('refetchEvents');
+                                        });
+
+
+
+                                    }
+                                } else {
+                                    $('#calendar').fullCalendar('removeEvents', event._id);
+                                    $('#calendar').fullCalendar('refetchEvents');
+                                    cargarActoEspera();
+                                    $rootScope.toast("Ya existe un acto registrado para este dia para la causa " + numero_caso);
+
+
+                                }
+                            });
+                        });
+
+
+
+
 
                     } else {
                         $('#calendar').fullCalendar('removeEvents', event._id);
